@@ -18,9 +18,12 @@
     <div class="content-header">
         <div class="container">
             <div class="row mb-2 justify-content-first">
-                <div class="col-sm-12">
-                    <h1 class="m-0 text-dark">@yield('content-header')</h1>
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark">{{ $title ?? '' }}</h1>
                 </div><!-- /.col -->
+                <div class="col-sm-6 text-left">
+                    @yield('nav-buttons')
+                </div>
                 {{--                   <div class="col-sm-6">--}}
                 {{--                       <ol class="breadcrumb float-sm-left">--}}
                 {{--                           <li class="breadcrumb-item"><a href="#">خانه</a></li>--}}
@@ -36,12 +39,13 @@
         <section class="content">
             <div class="container-fluid">
                 @include('partials.flashes')
-                <div class="row">
+                <div class="row justify-content-center">
                     @yield('content')
                 </div>
             </div>
         </section>
     </div>
+
 @include('layouts.partials.admin.footer')
 
 @include('layouts.partials.admin.control-aside')

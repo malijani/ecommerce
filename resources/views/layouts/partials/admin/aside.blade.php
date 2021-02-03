@@ -53,27 +53,72 @@
 
                     <li class="nav-item has-treeview">
                         <a href="#" class="nav-link">
-                            <i class="nav-icon fa fa-product-hunt"></i>
+                            <i class="nav-icon fa fa-list-alt"></i>
                             <p>
-                                محصولات
+                                دسته بندی ها
                                 <i class="right fa fa-angle-left"></i>
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="#" class="nav-link">
+                                <a href="{{ route('categories.index') }}" class="nav-link">
                                     <i class="fa fa-circle-o nav-icon"></i>
-                                    <p>لیست محصولات</p>
+                                    <p>لیست دسته بندی ها</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="#" class="nav-link">
+                                <a href="{{ route('categories.create') }}" class="nav-link">
                                     <i class="fa fa-circle-o nav-icon"></i>
-                                    <p>افزودن محصول</p>
+                                    <p>افزودن دسته بندی</p>
                                 </a>
                             </li>
                         </ul>
                     </li>
+
+
+
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fa fa-list"></i>
+                            <p>
+                                برند ها
+                                <i class="right fa fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ route('brands.index') }}" class="nav-link">
+                                    <i class="fa fa-circle-o nav-icon"></i>
+                                    <p>لیست برند ها</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('brands.create') }}" class="nav-link">
+                                    <i class="fa fa-circle-o nav-icon"></i>
+                                    <p>افزودن برند</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+{{--                    <li class="nav-item has-treeview">--}}
+{{--                        <a href="#" class="nav-link">--}}
+{{--                            <i class="nav-icon fa fa-trash"></i>--}}
+{{--                            <p>--}}
+{{--                                سطل زباله--}}
+{{--                                <i class="right fa fa-angle-left"></i>--}}
+{{--                            </p>--}}
+{{--                        </a>--}}
+{{--                        <ul class="nav nav-treeview">--}}
+{{--                            <li class="nav-item">--}}
+{{--                                <a href="{{ route('t-categories.index') }}" class="nav-link">--}}
+{{--                                    <i class="fa fa-circle-o nav-icon"></i>--}}
+{{--                                    <p>دسته بندی های حذف شده</p>--}}
+{{--                                </a>--}}
+{{--                            </li>--}}
+
+{{--                        </ul>--}}
+{{--                    </li>--}}
 
 {{--                    <li class="nav-item">--}}
 {{--                        <a href="pages/widgets.html" class="nav-link">--}}

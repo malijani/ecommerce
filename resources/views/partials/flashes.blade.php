@@ -4,7 +4,7 @@
 
         <button type="button" class="close" data-dismiss="alert">×</button>
 
-        <strong>{{ $message }}</strong>
+        <strong class="mr-3">{{ $message }}</strong>
 
     </div>
 
@@ -17,7 +17,7 @@
 
         <button type="button" class="close" data-dismiss="alert">×</button>
 
-        <strong>{{ $message }}</strong>
+        <strong class="mr-3">{{ $message }}</strong>
 
     </div>
 
@@ -30,7 +30,7 @@
 
         <button type="button" class="close" data-dismiss="alert">×</button>
 
-        <strong>{{ $message }}</strong>
+        <strong class="mr-3">{{ $message }}</strong>
 
     </div>
 
@@ -43,7 +43,7 @@
 
         <button type="button" class="close" data-dismiss="alert">×</button>
 
-        <strong>{{ $message }}</strong>
+        <strong class="mr-3">{{ $message }}</strong>
 
     </div>
 
@@ -56,9 +56,9 @@
 
         <button type="button" class="close" data-dismiss="alert">×</button>
 
-        خطاهای زیر را بررسی نمایید :
+        خطاهای زیر را بررسی نمایید :<br>
         @foreach($errors->all() as $error)
-            {{ $error }} <br>
+            <strong class="mr-3">{{ $error }}</strong><br>
         @endforeach
 
     </div>

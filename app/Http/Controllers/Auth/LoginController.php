@@ -35,7 +35,7 @@ class LoginController extends Controller
      */
     public function redirectTo()
     {
-        if(Auth::user()->level == 121){
+        if(Auth::user()->isAdmin()){
             return '/admin';
         } else {
             return '/home';

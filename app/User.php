@@ -6,10 +6,12 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Passport\HasApiTokens;
+
 class User extends Authenticatable
 {
-    use Notifiable;
-    use SoftDeletes;
+    use Notifiable, SoftDeletes, HasApiTokens;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -36,4 +38,27 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    /**
+     * Check if user is admin // ADMIN LEVEL == 121
+     * @return bool
+     */
+    public function isAdmin()
+    {
+        if(!is_null($this->level) && $this->level == 121){
+            return true;
+        }
+        return false;
+    }
+    /**
+     * Check if user is normal // NORMAL LEVEL == 0
+     */
+    public function isNormal()
+    {
+        if(!is_null($this->level) && $this->level == 0){
+            return true;
+        }
+        return false;
+    }
 }
