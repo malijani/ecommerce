@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-    @include('layouts.partials.admin.metas')
-    <title>{{ $title ?? env('app.name') }}</title>
-    @include('layouts.partials.admin.styles')
+    @include('admin.partials.metas')
+    <title>{{ $title ?? config('app.name') }}</title>
+    @include('admin.partials.styles')
     @yield('page-styles')
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
 
-@include('layouts.partials.admin.navbar')
+@include('admin.partials.navbar')
 
-@include('layouts.partials.admin.aside')
+@include('admin.partials.aside')
 <!-- Main content -->
 {{--       CONTENT HEADER--}}
 <!-- Content Header (Page header) -->
@@ -46,12 +46,12 @@
         </section>
     </div>
 
-@include('layouts.partials.admin.footer')
+@include('admin.partials.footer')
 
-@include('layouts.partials.admin.control-aside')
+@include('admin.partials.control-aside')
 
 <!-- ./wrapper -->
-@include('layouts.partials.admin.scripts')
+@include('admin.partials.scripts')
 @yield('page-scripts')
 </body>
 </html>

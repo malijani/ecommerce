@@ -84,7 +84,7 @@ class CategoryController extends Controller
             'menu'=>['required', 'numeric'],
         ]);
 
-        $pic = $this->imageUploader($request, 'pic', 'category');
+        $pic = imageUploader($request, 'pic', 'category', 300, 300, true);
 
         Category::query()->create(array_merge(
             $request->except(['pic','title_en']),
@@ -245,7 +245,7 @@ class CategoryController extends Controller
             }
         }
 
-        $pic = $this->imageUploader($request, 'pic', 'category');
+        $pic = imageUploader($request, 'pic', 'category', 300, 300, true);
         if(isset($pic) && isset($category->pic)){
             unlink(public_path($category->pic));
         }
@@ -291,35 +291,6 @@ class CategoryController extends Controller
         return $ids;
     }
 
-    /**
-     * Image uploader
-     * @param Request
-     * @param string
-     * @return mixed
-     */
-    private function imageUploader(Request $request, $field, $path_from_images) : ?string
-    {
-        if ($request->hasFile($field)){
-            $file = $request->file($field);
-            $name = Str::random(20) . '.' . $file->extension()??'png';
-            $path = 'images/'.$path_from_images;
-            $pic = $path .'/'. $name;
-            // CONVERT IMAGE TO 300x300 PNG WITH WATERMARK
-            $manager = new ImageManager(['driver'=>'imagick']);
-            $manager
-                ->make($file->path())
-                ->resize(300, 300, function($c){
-//                    $c->aspectRatio();
-//                    $c->upsize();
-                })
-                ->insert(env('WATERMARK_PATH', 'images/watermark/watermark-80.png'), 'bottom-right', 5, 5)
-                ->encode('png')
-                ->save($pic);
-            return $pic;
-        } else {
-            return null;
-        }
-    }
 
 }
 

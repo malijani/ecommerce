@@ -49,8 +49,8 @@ class BrandController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title'=>['required', 'min:3', 'max:70', 'unique:categories,title'],
-            'title_en'=>['required', 'min:3', 'max:70', 'unique:categories,title_en'],
+            'title'=>['required', 'min:3', 'max:70', 'unique:brands,title'],
+            'title_en'=>['required', 'min:3', 'max:70', 'unique:brands,title_en'],
             'text'=>['nullable', 'min:2', 'max:40000'],
             'pic'=>['nullable', 'mimes:jpg,jpeg,png,gif', 'max:10240'],
             'pic_alt'=>['nullable','min:2', 'max:70'],
@@ -60,7 +60,7 @@ class BrandController extends Controller
             'status'=>['required', 'numeric'],
         ]);
 
-        $pic = $this->imageUploader($request, 'pic', 'brand');
+        $pic = imageUploader($request, 'pic', 'brand', 300, 300, true);
 
         Brand::query()->create(array_merge(
             $request->except(['pic','title_en']),
@@ -109,8 +109,8 @@ class BrandController extends Controller
     {
         $brand = Brand::withoutTrashed()->findOrFail($id);
         $request->validate([
-            'title'=>['required', 'min:3', 'max:70', 'unique:categories,title,'.$brand->id],
-            'title_en'=>['required', 'min:3', 'max:70', 'unique:categories,title_en,'.$brand->id],
+            'title'=>['required', 'min:3', 'max:70', 'unique:brands,title,'.$brand->id],
+            'title_en'=>['required', 'min:3', 'max:70', 'unique:brands,title_en,'.$brand->id],
             'text'=>['nullable', 'min:2', 'max:40000'],
             'pic'=>['nullable', 'mimes:jpg,jpeg,png,gif', 'max:10240'],
             'pic_alt'=>['nullable','min:2', 'max:70'],
@@ -127,7 +127,7 @@ class BrandController extends Controller
             }
         }
 
-        $pic = $this->imageUploader($request, 'pic', 'brand');
+        $pic = imageUploader($request, 'pic', 'brand', 300, 300, true);
         if(isset($pic) && isset($brand->pic)){
             unlink(public_path($brand->pic));
         }
@@ -156,36 +156,5 @@ class BrandController extends Controller
 
 
 
-    /**
-     * Image uploader
-     * @param Request
-     * @param string
-     * @return mixed
-     */
-    private function imageUploader(Request $request, $field, $dir) : ?string
-    {
-        if ($request->hasFile($field)){
-            $file = $request->file($field);
-            $name = Str::random(20) . '.' . $file->extension()??'png';
-            $path = 'images/'.$dir;
-            if(!is_dir($path)){
-                mkdir($path, 0777, true);
-            }
-            $pic = $path .'/'. $name;
-            // CONVERT IMAGE TO 300x300 PNG WITH WATERMARK
-            $manager = new ImageManager(['driver'=>'imagick']);
-            $manager
-                ->make($file->path())
-                ->resize(300, 300, function($c){
-//                    $c->aspectRatio();
-//                    $c->upsize();
-                })
-                ->insert(env('WATERMARK_PATH', 'images/watermark/watermark-80.png'), 'bottom-right', 5, 5)
-                ->encode('png')
-                ->save($pic);
-            return $pic;
-        } else {
-            return null;
-        }
-    }
+
 }

@@ -12,10 +12,17 @@
 <!-- Bootstrap 4 -->
 <script src="{{ asset('adminrc/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
+
 <!-- Slimscroll -->
 <script src="{{ asset('adminrc/plugins/slimScroll/jquery.slimscroll.min.js') }}"></script>
 <!-- FastClick -->
 <script src="{{ asset('adminrc/plugins/fastclick/fastclick.js') }}"></script>
 <!-- AdminLTE App -->
 <script src="{{ asset('adminrc/dist/js/adminlte.js') }}"></script>
+
+
+{{--DEMO--}}
+{{--<script src="{{ asset('adminrc/dist/js/pages/dashboard.js') }}"></script>--}}
+<script src="{{ asset('adminrc/dist/js/demo.js') }}"></script>
+
 

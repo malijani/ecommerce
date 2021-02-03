@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -22,8 +23,15 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function home()
     {
-        return view('home');
+        $categories = Category::withoutTrashed()
+            ->where('parent_id', 0)
+            ->orderBy('created_at', 'DESC')
+            ->orderBy('sort', 'ASC')
+            ->get();
+        return view('home', [
+            'categories'=>$categories,
+        ]);
     }
 }

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e8efdf04fdd2e27c9e977611b959089e",
+    "content-hash": "466038a6a242f10de3201fde40f363d3",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -184,6 +184,77 @@
                 "source": "https://github.com/defuse/php-encryption/tree/master"
             },
             "time": "2018-07-24T23:27:56+00:00"
+        },
+        {
+            "name": "diglactic/laravel-breadcrumbs",
+            "version": "v6.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/diglactic/laravel-breadcrumbs.git",
+                "reference": "027178500b57295290d9930f113f81df1a7188cb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/diglactic/laravel-breadcrumbs/zipball/027178500b57295290d9930f113f81df1a7188cb",
+                "reference": "027178500b57295290d9930f113f81df1a7188cb",
+                "shasum": ""
+            },
+            "require": {
+                "facade/ignition-contracts": "^1.0",
+                "laravel/framework": "^6.0 || ^7.0 || ^8.0",
+                "php": "^7.2 || ^8.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^4.10 || ^5.9 || ^6.4",
+                "php-coveralls/php-coveralls": "^2.4",
+                "phpunit/phpunit": "^8.5 || ^9.4",
+                "spatie/phpunit-snapshot-assertions": "^2.2 || ^4.2"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Diglactic\\Breadcrumbs\\ServiceProvider"
+                    ],
+                    "aliases": {
+                        "Breadcrumbs": "Diglactic\\Breadcrumbs\\Breadcrumbs"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Diglactic\\Breadcrumbs\\": "src/"
+                },
+                "files": [
+                    "src/deprecated.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sheng Slogar",
+                    "email": "sheng@diglactic.com",
+                    "role": "Maintainer"
+                },
+                {
+                    "name": "Dave James Miller",
+                    "email": "dave@davejamesmiller.com",
+                    "role": "Original Creator"
+                }
+            ],
+            "description": "A simple Laravel-style way to create breadcrumbs.",
+            "homepage": "https://github.com/diglactic/laravel-breadcrumbs",
+            "keywords": [
+                "laravel"
+            ],
+            "support": {
+                "issues": "https://github.com/diglactic/laravel-breadcrumbs/issues",
+                "source": "https://github.com/diglactic/laravel-breadcrumbs/tree/v6.1.0"
+            },
+            "time": "2021-01-25T18:38:42+00:00"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -528,6 +599,59 @@
                 }
             ],
             "time": "2020-12-29T14:50:06+00:00"
+        },
+        {
+            "name": "facade/ignition-contracts",
+            "version": "1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/facade/ignition-contracts.git",
+                "reference": "3c921a1cdba35b68a7f0ccffc6dffc1995b18267"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/facade/ignition-contracts/zipball/3c921a1cdba35b68a7f0ccffc6dffc1995b18267",
+                "reference": "3c921a1cdba35b68a7f0ccffc6dffc1995b18267",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.3|^8.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^v2.15.8",
+                "phpunit/phpunit": "^9.3.11",
+                "vimeo/psalm": "^3.17.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Facade\\IgnitionContracts\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "homepage": "https://flareapp.io",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Solution contracts for Ignition",
+            "homepage": "https://github.com/facade/ignition-contracts",
+            "keywords": [
+                "contracts",
+                "flare",
+                "ignition"
+            ],
+            "support": {
+                "issues": "https://github.com/facade/ignition-contracts/issues",
+                "source": "https://github.com/facade/ignition-contracts/tree/1.0.2"
+            },
+            "time": "2020-10-16T08:27:54+00:00"
         },
         {
             "name": "fideloper/proxy",
@@ -949,6 +1073,124 @@
                 "source": "https://github.com/guzzle/psr7/tree/1.7.0"
             },
             "time": "2020-09-30T07:37:11+00:00"
+        },
+        {
+            "name": "hekmatinasser/notowo",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hekmatinasser/notowo.git",
+                "reference": "c51ad5dcedac966dd93ce558ac7e6a84e0020d6d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hekmatinasser/notowo/zipball/c51ad5dcedac966dd93ce558ac7e6a84e0020d6d",
+                "reference": "c51ad5dcedac966dd93ce558ac7e6a84e0020d6d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Hekmatinasser\\Notowo\\": "src"
+                },
+                "files": [
+                    "src/helpers.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nasser Hekmati",
+                    "email": "hekmati.nasser@gmail.com"
+                }
+            ],
+            "description": "This Package helps developers change number to word for all language on Laravel freamwork PHP",
+            "keywords": [
+                "Notowo",
+                "laravel",
+                "n2w",
+                "number",
+                "word"
+            ],
+            "support": {
+                "issues": "https://github.com/hekmatinasser/notowo/issues",
+                "source": "https://github.com/hekmatinasser/notowo/tree/v1.0.1"
+            },
+            "time": "2017-09-22T13:41:16+00:00"
+        },
+        {
+            "name": "hekmatinasser/verta",
+            "version": "v1.11.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hekmatinasser/verta.git",
+                "reference": "2aa9685b169806949f4c8780a730455c3787ed65"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hekmatinasser/verta/zipball/2aa9685b169806949f4c8780a730455c3787ed65",
+                "reference": "2aa9685b169806949f4c8780a730455c3787ed65",
+                "shasum": ""
+            },
+            "require": {
+                "hekmatinasser/notowo": "^1.0",
+                "illuminate/support": "^5|^6|^7|^8",
+                "illuminate/validation": "^5|^6|^7|^8",
+                "php": "^7.2.5|^8.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.0",
+                "phpunit/phpunit": "7.2.*"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Hekmatinasser\\Verta\\VertaServiceProvider"
+                    ],
+                    "aliases": {
+                        "Verta": "Hekmatinasser\\Verta\\Verta"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Hekmatinasser\\Verta\\": "src"
+                },
+                "files": [
+                    "src/helpers.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nasser Hekmati",
+                    "email": "hekmati.nasser@gmail.com"
+                }
+            ],
+            "description": "This Package helps developers to work with Jalali Datetime class for Laravel Framework PHP",
+            "keywords": [
+                "Jalali",
+                "Verta",
+                "date",
+                "datetime",
+                "laravel",
+                "shamsi"
+            ],
+            "support": {
+                "issues": "https://github.com/hekmatinasser/verta/issues",
+                "source": "https://github.com/hekmatinasser/verta/tree/v1.11.8"
+            },
+            "time": "2021-01-13T13:43:42+00:00"
         },
         {
             "name": "intervention/image",
@@ -5776,6 +6018,85 @@
             "time": "2020-07-13T06:12:54+00:00"
         },
         {
+            "name": "unisharp/laravel-filemanager",
+            "version": "v2.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/UniSharp/laravel-filemanager.git",
+                "reference": "34202590a88ecfc598c6dc70dae8b306710d4df2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/UniSharp/laravel-filemanager/zipball/34202590a88ecfc598c6dc70dae8b306710d4df2",
+                "reference": "34202590a88ecfc598c6dc70dae8b306710d4df2",
+                "shasum": ""
+            },
+            "require": {
+                "ext-exif": "*",
+                "ext-fileinfo": "*",
+                "illuminate/config": "5.4.* || 5.5.* || 5.6.* || 5.7.* || 5.8.* || ^6.0 || ^7.0 || ^8.0",
+                "illuminate/container": "5.4.* || 5.5.* || 5.6.* || 5.7.* || 5.8.* || ^6.0 || ^7.0 || ^8.0",
+                "illuminate/filesystem": "5.4.* || 5.5.* || 5.6.* || 5.7.* || 5.8.* || ^6.0 || ^7.0 || ^8.0",
+                "illuminate/http": "5.4.* || 5.5.* || 5.6.* || 5.7.* || 5.8.* || ^6.0 || ^7.0 || ^8.0",
+                "illuminate/support": "5.4.* || 5.5.* || 5.6.* || 5.7.* || 5.8.* || ^6.0 || ^7.0 || ^8.0",
+                "intervention/image": "2.*",
+                "php": ">=7.2.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "^0.9.9",
+                "phpunit/phpunit": "^6.2",
+                "squizlabs/php_codesniffer": "^3.1"
+            },
+            "suggest": {
+                "ext-gd": "to use GD library based image processing.",
+                "ext-imagick": "to use Imagick based image processing."
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "UniSharp\\LaravelFilemanager\\LaravelFilemanagerServiceProvider"
+                    ],
+                    "aliases": []
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "UniSharp\\LaravelFilemanager\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Trevor Sawler",
+                    "email": "trevor.sawler@gmail.com"
+                },
+                {
+                    "name": "UniSharp Ltd.",
+                    "email": "opensource@unisharp.com"
+                }
+            ],
+            "description": "A file upload/editor intended for use with Laravel 5 to 6 and CKEditor / TinyMCE",
+            "keywords": [
+                "CKEditor",
+                "file",
+                "filemanager",
+                "image",
+                "laravel",
+                "manager",
+                "tinymce",
+                "upload"
+            ],
+            "support": {
+                "issues": "https://github.com/UniSharp/laravel-filemanager/issues",
+                "source": "https://github.com/UniSharp/laravel-filemanager/tree/v2.2.0"
+            },
+            "time": "2020-11-16T10:51:46+00:00"
+        },
+        {
             "name": "vlucas/phpdotenv",
             "version": "v4.2.0",
             "source": {
@@ -6139,59 +6460,6 @@
                 "source": "https://github.com/facade/ignition"
             },
             "time": "2020-12-29T09:12:55+00:00"
-        },
-        {
-            "name": "facade/ignition-contracts",
-            "version": "1.0.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/facade/ignition-contracts.git",
-                "reference": "3c921a1cdba35b68a7f0ccffc6dffc1995b18267"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/facade/ignition-contracts/zipball/3c921a1cdba35b68a7f0ccffc6dffc1995b18267",
-                "reference": "3c921a1cdba35b68a7f0ccffc6dffc1995b18267",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.3|^8.0"
-            },
-            "require-dev": {
-                "friendsofphp/php-cs-fixer": "^v2.15.8",
-                "phpunit/phpunit": "^9.3.11",
-                "vimeo/psalm": "^3.17.1"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Facade\\IgnitionContracts\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Freek Van der Herten",
-                    "email": "freek@spatie.be",
-                    "homepage": "https://flareapp.io",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Solution contracts for Ignition",
-            "homepage": "https://github.com/facade/ignition-contracts",
-            "keywords": [
-                "contracts",
-                "flare",
-                "ignition"
-            ],
-            "support": {
-                "issues": "https://github.com/facade/ignition-contracts/issues",
-                "source": "https://github.com/facade/ignition-contracts/tree/1.0.2"
-            },
-            "time": "2020-10-16T08:27:54+00:00"
         },
         {
             "name": "fakerphp/faker",
