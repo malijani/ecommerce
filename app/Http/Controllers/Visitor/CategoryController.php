@@ -54,26 +54,13 @@ class CategoryController extends Controller
             ->with('user', 'children')
             ->where('title_en', $slug)
             ->firstOrFail();
-//        $child_category_products = [];
-//        foreach ($category->children as $child_category) {
-//            array_push($child_category_products,
-//                [
-//                    'category_child' => $child_category,
-//                    Product::withoutTrashed()
-//                        ->with('user', 'files')
-//                        ->where('category_id', $child_category->id)
-//                        ->orderBy('created_at', 'DESC')
-//                        ->orderBy('sort', 'ASC')
-//                        ->get()
-//                ]
-//            );
-//        }
+        $sub_categories = $category->activeChildren();
         $products = Product::withoutTrashed()
             ->with('user', 'category', 'files')
             ->where('category_id', $category->id)
             ->orderBy('created_at', 'DESC')
             ->orderBy('sort', 'ASC')
-            ->paginate(1);
+            ->paginate(100);
 
         $title = $category->title;
 
@@ -81,7 +68,8 @@ class CategoryController extends Controller
             'title'=>$title,
             'category'=>$category,
             'products'=>$products,
-        ], 200);
+            'sub_categories'=>$sub_categories,
+        ]);
     }
 
     /**

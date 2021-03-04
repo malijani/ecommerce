@@ -2,7 +2,9 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Category extends Model
@@ -38,13 +40,18 @@ class Category extends Model
         return $this->children()->with('childrenRecursive');
     }
 
-    public function scopeActive($q, $val)
+    public function activeChildren() : Collection
     {
-        return $q->where('status', $val);
+        return $this->children()->where('status',1)->where('menu', 1)->get();
+    }
+
+    public function scopeActive($q)
+    {
+        return $q->where('status', '1');
     }
 
 
-    public function childrenArray()
+    public function childrenArray() : array
     {
         $ids=[];
         foreach($this->children as $children){

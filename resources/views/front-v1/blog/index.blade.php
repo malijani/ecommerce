@@ -12,7 +12,7 @@
                 <div class="col-12 col-lg-3 my-3">
                     <div class="card" style="width: 18rem;">
                         <div class="d-flex align-items-center justify-content-center img-size-swiper">
-                            <img class="img card-img-top"
+                            <img class="img img-fluid"
                                  src="{{ asset($article->pic ?? 'images/fallback/article.png') }}"
                                  alt="{{$article->pic_alt ?? $article->title_en}}"
                             >

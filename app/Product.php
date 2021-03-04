@@ -64,6 +64,32 @@ class Product extends Model
         return $this->belongsTo(Product::class, 'after')->where('status', 1)->select('id', 'title', 'title_en');
     }
 
+
+    public function getShowPriceAttribute() : string
+    {
+        return number_format($this->price);
+    }
+
+    public function getDiscountPriceAttribute()
+    {
+        if($this->price_type == "0" && $this->discount_percent != "0"){
+            return ($this->price - ($this->price * $this->discount_percent)/100) ;
+        } else {
+            return 'تخفیف به درستی تعیین نشده.';
+        }
+    }
+    public function getShowDiscountPriceAttribute():string
+    {
+        return number_format($this->discount_price);
+    }
+
+
+    public function getFinalPriceAttribute()
+    {
+
+    }
+
+
     public function getPriceTypeTextAttribute() : string
     {
         switch ($this->getAttribute('price_type')){
