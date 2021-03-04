@@ -1,6 +1,8 @@
 @extends('layouts.app_admin')
 
 @section('content')
+
+
     <div class="col-md-12">
 
         <div class="card card-primary">
@@ -115,18 +117,19 @@
                             class="form-control d-block"
                             title="با انتخاب گروه، دسته بندی ایجاد شده جزو زیر مجموعه های این دسته بندی خواهد شد."
                         >
+
                             <option value="0" selected>دسته بندی والد</option>
                             @foreach($categories as $parent_category)
                                 <option value="{{ $parent_category->id }}"
                                     @if(!is_null($parent_id) && $parent_category->id == $parent_id)
                                         selected
                                     @endif
-                                    @if($parent_category->id == $category->id)
-                                        disabled
-                                    @endif
+{{--                                    @if($parent_category->id == $category->id)--}}
+{{--                                        disabled--}}
+{{--                                    @endif--}}
                                 >{{ '+>'.' '.$parent_category->title }}</option>
                                 @if($parent_category->childrenRecursive->count())
-                                    @include('admin.category.partials.edit_form_category_child', ['last_parent'=>$parent_category->id,'parent_id'=>$parent_id ?? null, 'category_id'=>$category->id, 'children'=>$parent_category->childrenRecursive, 'level'=>1])
+                                    @include('admin.category.partials.edit_form_category_child', ['last_parent'=>$parent_category->id,'parent_id'=>$parent_id ?? null, 'category_id'=>$category->id,'this_children'=>$children, 'children'=>$parent_category->childrenRecursive, 'level'=>1])
                                 @endif
                             @endforeach
                         </select>
@@ -199,7 +202,7 @@
                             </label>
                             <input
                                 name="color"
-                                type="text"
+                                type="color"
                                 class="form-control @error('color') is-invalid @enderror"
                                 minlength="3"
                                 maxlength="10"

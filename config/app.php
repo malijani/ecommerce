@@ -168,6 +168,7 @@ return [
         Hekmatinasser\Verta\VertaServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         UniSharp\LaravelFilemanager\LaravelFilemanagerServiceProvider::class,
+//        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
 
         /*
          * Application Service Providers...

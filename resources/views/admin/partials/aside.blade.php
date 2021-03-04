@@ -15,7 +15,7 @@
         <div style="direction: rtl">
             <!-- Sidebar user panel (optional) -->
             <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                <div class="image">
+                <div class="image mr-2">
                     <img src="https://place-hold.it/50x50"
                          class="img-circle elevation-2"
                          alt="User Image"

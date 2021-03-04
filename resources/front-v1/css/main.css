@@ -1,0 +1,203 @@
+
+@font-face{font-family:'iransans';src:url('../fonts/iransans/IRANSansWeb(FaNum).ttf') format('truetype');src:url('../fonts/iransans/IRANSansWeb(FaNum).eot?#iefix') format('embedded-opentype'),
+url('../fonts/iransans/IRANSansWeb(FaNum).eot'),
+url('../fonts/iransans/IRANSansWeb(FaNum).woff2') format('woff2'),
+url('../fonts/iransans/IRANSansWeb(FaNum).woff') format('woff');}
+
+
+
+html, body{
+    direction: rtl;
+    text-align: right;
+    font-size: 14px;
+    font-family: 'iransans' !important;
+    background: rgb(247, 247, 247);
+}
+
+a:hover{
+    text-decoration: none;
+}
+
+.list-unstyled li{
+    padding: 5px 0px 5px 0px;
+}
+
+
+.border-bottom-footer{
+    margin-top: 4rem;
+    padding-top: 4rem;
+    border-top: 0.1rem solid rgba(0, 0, 0, 0.2);
+}
+
+.footer{
+    margin-top: 2rem;
+    background-color: rgb(240, 240, 240);
+    color: rgb(0, 0, 0);
+    font-size: 1.3rem;
+    padding: 5rem 0px;
+}
+
+.add_new_ad_btn {
+    position: fixed;
+    margin: 0 auto;
+    background-color: white;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    max-width: 100%;
+    text-align: center;
+    color: #fff;
+    z-index: 1020;
+}
+
+.font-10{
+    font-size: 10px !important;
+}
+.font-12{
+    font-size: 12px !important;
+}
+
+.font-14{
+    font-size: 14px !important;
+}
+
+.font-16{
+    font-size: 16px !important;
+}
+
+.font-18{
+    font-size: 18px !important;
+}
+
+.rounded-7{
+    border-radius: 7px;
+}
+
+.ltr{
+    direction: ltr !important;
+}
+
+h1,h2,h3,h4,h5,h6{
+    line-height: 1.5;
+    color: #455A64;
+}
+
+.left-top-0{
+    left: 0;
+    top: 0;
+}
+
+.discount-label{
+    background-color: rgb(232, 16, 74);
+    border-width: 0.5px;
+    border-style: solid;
+    border-color: rgb(232, 16, 74);
+    border-image: initial;
+    margin-bottom: 0.5rem;
+    display: block;
+    color: rgb(255, 255, 255);
+    bottom: 7rem;
+    padding: 2px 7px;
+    border-radius: 5px;
+}
+
+.add_card{
+    color: rgb(66, 176, 41);
+    width: 24px;
+    height: 24px;
+    display: block;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 100%;
+    /*font: 1.3rem / 9px is;*/
+    border-width: 2px;
+    border-style: solid;
+    border-color: rgb(66, 176, 41);
+    border-image: initial;
+    background: rgb(255, 255, 255);
+    outline: 0px;
+    padding: 0px;
+    margin: 0px;
+}
+
+.discount{
+    opacity: 0.7;
+    text-decoration: line-through;
+}
+
+
+
+/*******************************
+* MODAL AS LEFT/RIGHT SIDEBAR
+* Add "left" or "right" in modal parent div, after class="modal".
+* Get free snippets on bootpen.com
+*******************************/
+.modal.left .modal-dialog,
+.modal.right .modal-dialog {
+    position: fixed;
+    margin: auto;
+    width: 500px;
+    max-width: 99%;
+    height: 100%;
+    -webkit-transform: translate3d(0%, 0, 0);
+    -ms-transform: translate3d(0%, 0, 0);
+    -o-transform: translate3d(0%, 0, 0);
+    transform: translate3d(0%, 0, 0);
+}
+
+.modal-back-color{
+    background-color: #f7f7f7 !important;
+}
+
+.modal.left .modal-content,
+.modal.right .modal-content {
+    height: 100%;
+    overflow-y: auto;
+}
+
+.modal.left .modal-body,
+.modal.right .modal-body {
+    padding: 15px 15px 80px;
+}
+
+/*Left*/
+.modal.left.fade .modal-dialog{
+    left: -320px;
+    -webkit-transition: opacity 0.3s linear, left 0.3s ease-out;
+    -moz-transition: opacity 0.3s linear, left 0.3s ease-out;
+    -o-transition: opacity 0.3s linear, left 0.3s ease-out;
+    transition: opacity 0.3s linear, left 0.3s ease-out;
+}
+
+.modal.left.fade.in .modal-dialog{
+    left: 0;
+}
+
+/*Right*/
+.modal.right.fade .modal-dialog {
+    /*right: -320px;*/
+    -webkit-transition: opacity 0.3s linear, right 0.3s ease-out;
+    -moz-transition: opacity 0.3s linear, right 0.3s ease-out;
+    -o-transition: opacity 0.3s linear, right 0.3s ease-out;
+    transition: opacity 0.3s linear, right 0.3s ease-out;
+}
+
+.modal.right.fade.in .modal-dialog {
+    right: 0;
+}
+
+/* ----- MODAL STYLE ----- */
+.modal-content {
+    border-radius: 0;
+    border: none;
+}
+
+.modal-header {
+    border-bottom-color: #EEEEEE;
+    background-color: #FAFAFA;
+}
+
+#modalrightmenu{
+    padding-right: 0px !important;
+}
+

@@ -10,7 +10,8 @@ Auth::routes();
 Route::redirect('home', '/');
 Route::group(['prefix'=>'/'], function(){
     Route::get('', 'HomeController@home')->name('home');
-    Route::resource('blog', 'Visitor\BlogController');
+    Route::resource('blog', 'Visitor\BlogController')->only(['index', 'show']);
+    Route::resource('category', 'Visitor\CategoryController')->only(['index','show']);
 });
 
 

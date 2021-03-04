@@ -202,16 +202,19 @@ class CategoryController extends Controller
             ->orderBy('sort', 'ASC')
             ->get();
 
+
+
         $category = Category::query()->findOrFail($id);
+        $children = $this->getChildren($category);
         $parent_id = ($category->parent_id != 0 ? $category->parent_id : null);
         $title = 'ویرایش '. $category->title;
         return view('admin.category.edit',
             [
                 'title'=> $title,
                 'category'=>$category,
+                'children'=>$children,
                 'parent_id'=>$parent_id,
                 'categories'=>$categories,
-
             ]);
     }
 
@@ -246,14 +249,14 @@ class CategoryController extends Controller
         }
 
         $pic = imageUploader($request, 'pic', 'category', 300, 300, true);
-        if(isset($pic) && isset($category->pic)){
+        if(!is_null($pic) && !is_null($category->pic)){
             unlink(public_path($category->pic));
         }
 
         $category->update(array_merge(
             $request->except(['pic','title_en']),
             ['title_en'=>Str::slug($request->input('title_en'))],
-            ['pic'=>$pic],
+            ['pic'=>$pic??$category->pic],
             ['user_id'=>$category->user_id]
         ));
 

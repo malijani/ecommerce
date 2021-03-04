@@ -25,11 +25,16 @@ class HomeController extends Controller
      */
     public function home()
     {
+        // TODO : MAKE PRODUCT OR ARTICLES AS ENUM OR TINYINT SELECTION TYPE
+        // get Products category by title_en : products :> it's important
         $categories = Category::withoutTrashed()
-            ->where('parent_id', 0)
+            ->where('title_en', 'products')
+            ->with('children')
+            ->where('menu', 1)
             ->orderBy('created_at', 'DESC')
             ->orderBy('sort', 'ASC')
-            ->get();
+            ->firstOrFail()
+            ->children;
         return view('home', [
             'categories'=>$categories,
         ]);

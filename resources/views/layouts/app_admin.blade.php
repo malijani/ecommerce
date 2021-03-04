@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="fa">
 <head>
     @include('admin.partials.metas')
     <title>{{ $title ?? config('app.name') }}</title>
@@ -17,11 +17,11 @@
 <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container">
-            <div class="row mb-2 justify-content-first">
-                <div class="col-sm-6">
-                    <h1 class="m-0 text-dark">{{ $title ?? '' }}</h1>
+            <div class="row mb-2 justify-content-center">
+                <div class="col-sm-10">
+                    <h1 class="text-dark">{{ $title ?? '' }}</h1>
                 </div><!-- /.col -->
-                <div class="col-sm-6 text-left">
+                <div class="col-sm-2 text-left">
                     @yield('nav-buttons')
                 </div>
                 {{--                   <div class="col-sm-6">--}}
@@ -53,5 +53,6 @@
 <!-- ./wrapper -->
 @include('admin.partials.scripts')
 @yield('page-scripts')
+</div>
 </body>
 </html>

@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+
 class Category extends Model
 {
     use SoftDeletes;
@@ -22,6 +23,11 @@ class Category extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function parent()
+    {
+        return $this->belongsTo(Category::class, 'parent_id', 'id');
+    }
+
     public function children()
     {
         return $this->hasMany(Category::class, 'parent_id', 'id');
@@ -35,5 +41,16 @@ class Category extends Model
     public function scopeActive($q, $val)
     {
         return $q->where('status', $val);
+    }
+
+
+    public function childrenArray()
+    {
+        $ids=[];
+        foreach($this->children as $children){
+            $ids[]= $children->id;
+            $ids = array_merge($ids, $this->childrenArray($children));
+        }
+        return $ids;
     }
 }

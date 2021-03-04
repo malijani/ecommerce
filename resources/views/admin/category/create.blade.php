@@ -175,7 +175,7 @@
                             </label>
                             <input
                                 name="color"
-                                type="text"
+                                type="color"
                                 class="form-control @error('color') is-invalid @enderror"
                                 minlength="3"
                                 maxlength="10"
@@ -268,6 +268,7 @@
 
     <script type="text/javascript" src="{{ asset('adminrc/plugins/ckeditor-full/ckeditor.js') }}"></script>
     <script type="text/javascript">
+        // TODO : CONFIGURE CKEDITOR FOR ALL PAGES OF ADMIN
         CKEDITOR.replace('text', {
             height: 400,
             baseFloatZIndex: 10005,
