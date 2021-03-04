@@ -3,23 +3,14 @@
 
 @section('content')
 
-{{--        {{ \Diglactic\Breadcrumbs\Breadcrumbs::render('category') }}--}}
+        {{ \Diglactic\Breadcrumbs\Breadcrumbs::render('categories') }}
 
     <div class="container my-3">
 
         <div class="row">
-{{--            @foreach($products as $product)--}}
 
-{{--            @endforeach--}}
 
         </div>{{--row--}}
-        <div class="row my-3">
-            <div class="col-12">
-                <div class="d-flex align-items-center justify-content-center">
-                    {{ $products->links() }}
-                </div>
-            </div>
-        </div>
-    </div>{{--container--}}
 
+    </div>{{--container--}}
 @endsection

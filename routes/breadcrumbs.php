@@ -20,9 +20,15 @@ Breadcrumbs::for('blog.article', function ($trail, $article) {
     $trail->push($article->title, route('blog.show', $article->id));
 });
 
-//// Home > Category
-//Breadcrumbs::for('category', function ($trail) {
-//    $trail->parent('category');
-//    $trail->push('دسته بندی ها', route('category.index'));
-//});
-//
+
+// Home > Categories
+Breadcrumbs::for('categories', function ($trail) {
+    $trail->parent('home');
+    $trail->push('دسته بندی ها', route('category.index'));
+});
+
+// Home > Categories > [Category]
+Breadcrumbs::for('categories.category', function ($trail, $category) {
+    $trail->parent('categories');
+    $trail->push($category->title, route('category.show', $category->id));
+});

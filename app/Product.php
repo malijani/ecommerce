@@ -64,13 +64,6 @@ class Product extends Model
         return $this->belongsTo(Product::class, 'after')->where('status', 1)->select('id', 'title', 'title_en');
     }
 
-
-
-    public function scopePicDefault($q) : Builder
-    {
-        return $q->where('status', 2) ?? $q->latest('created_at')->first();
-    }
-
     public function getPriceTypeTextAttribute() : string
     {
         switch ($this->getAttribute('price_type')){

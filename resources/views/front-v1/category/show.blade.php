@@ -3,28 +3,49 @@
 
 @section('content')
 
-{{--    {{ \Diglactic\Breadcrumbs\Breadcrumbs::render('blog.article', $product) }}--}}
+    {{ \Diglactic\Breadcrumbs\Breadcrumbs::render('categories.category', $category) }}
 
     <div class="container my-3 rounded">
         <div class="row bg-white">
             <div class="col-12 py-4 text-center">
-                <h1 class="font-24">{{$article->title}}</h1>
+                <h1 class="font-24">{{$category->title}}</h1>
             </div>
 
             <div class="col-12">
-                <div class="parallax-window img-size-swiper rounded">
-                    <img class="img img-fluid card-img-top main-img"
-                         src="{{ asset($article->pic ?? 'images/fallback/article.png') }}"
-                         alt="{{$article->pic_alt ?? $article->title_en}}"
-                    >
+
+                @foreach($products as $product)
+                    <div class="col-12 col-md-3 col-lg-2 text-center">
+                        <img class="img-fluid mb-3"
+                             src="{{ asset($product->files()->defaultFile()->link ?? 'images/fallback/article.png') }}"
+                             alt="{{$product->files()->defaultFile()->title}}"
+                        >
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span>{{$product->price}} تومان</span>
+                            <small class="discount">۵٬۴۰۰</small>
+                        </div>
+                        <h4 class="font-14 mt-2 text-right">{{ $product->title }}</h4>
+                        <span class="position-absolute left-top-0">
+                            <button class="add_card">+</button>
+                        </span>
+                    </div>
+                @endforeach
+
+            </div>
+            <div class="col-12 p-4">
+                {!! $category->long_text !!}
+            </div>
+        </div>{{--row--}}
+
+
+        <div class="row my-3">
+            <div class="col-12">
+                <div class="d-flex align-items-center justify-content-center">
+                    {{ $products->links() }}
                 </div>
             </div>
+        </div>
 
-            <div class="col-12 p-4">
-                {!! $article->long_text !!}
-            </div>
 
-        </div>{{--row--}}
     </div>{{--container--}}
 @endsection
 

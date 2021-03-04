@@ -3,7 +3,7 @@
 
 @section('content')
 
-{{--    {{ \Diglactic\Breadcrumbs\Breadcrumbs::render('home') }}--}}
+    {{--    {{ \Diglactic\Breadcrumbs\Breadcrumbs::render('home') }}--}}
 
     <div class="container-fluid my-3">
         <div class="row">

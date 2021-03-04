@@ -14,11 +14,11 @@ class CategoryController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
-    public function index()
+    public function index() : Response
     {
-        //
+        return response()->view('front-v1.category.index');
     }
 
     /**
@@ -46,9 +46,9 @@ class CategoryController extends Controller
      * Display the specified resource.
      *
      * @param string $slug
-     * @return  \Illuminate\Http\Response
+     * @return  Response
      */
-    public function show($slug)
+    public function show(string $slug) : Response
     {
         $category = Category::withoutTrashed()
             ->with('user', 'children')
@@ -77,7 +77,7 @@ class CategoryController extends Controller
 
         $title = $category->title;
 
-        return  response()->view('front-v1.category.index', [
+        return  response()->view('front-v1.category.show', [
             'title'=>$title,
             'category'=>$category,
             'products'=>$products,
