@@ -19,7 +19,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::resource('products', 'Api\Product\ProductController')->only(['index', 'show']);
-
+Route::resource('categories', 'Api\Category\CategoryController')->only(['index', 'show']);
 
 Route::post('login', 'Api\Auth\LoginController@login');
 

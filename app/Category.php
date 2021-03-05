@@ -2,8 +2,8 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -20,29 +20,34 @@ class Category extends Model
       'user_id',
     ];
 
-    public function user()
+    public function user() : BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function parent()
+    public function parent() : BelongsTo
     {
         return $this->belongsTo(Category::class, 'parent_id', 'id');
     }
 
-    public function children()
+    public function children() : HasMany
     {
         return $this->hasMany(Category::class, 'parent_id', 'id');
     }
 
-    public function childrenRecursive()
+    public function childrenRecursive() : HasMany
     {
         return $this->children()->with('childrenRecursive');
     }
 
-    public function activeChildren() : Collection
+    public function activeChildren() : HasMany
     {
-        return $this->children()->where('status',1)->where('menu', 1)->get();
+        return $this->children()->where('status',1)->where('menu', 1);
+    }
+
+    public function subActiveChildren() : HasMany
+    {
+        return $this->childrenRecursive()->where('status',1);
     }
 
     public function scopeActive($q)

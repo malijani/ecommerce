@@ -54,7 +54,7 @@ class CategoryController extends Controller
             ->with('user', 'children')
             ->where('title_en', $slug)
             ->firstOrFail();
-        $sub_categories = $category->activeChildren();
+        $sub_categories = $category->activeChildren()->get();
         $products = Product::withoutTrashed()
             ->with('user', 'category', 'files')
             ->where('category_id', $category->id)
