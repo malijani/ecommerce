@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Api\Category;
 
 use App\Category;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Categories;
+use App\Http\Resources\Categories as CategoriesResource;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -11,9 +14,9 @@ class CategoryController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Categories
      */
-    public function index()
+    public function index() : Categories
     {
         $categories = Category::withoutTrashed()
             ->where('title_en', 'products')
@@ -24,7 +27,7 @@ class CategoryController extends Controller
             ->subActiveChildren()
             ->paginate(50);
 
-        return response($categories);
+        return new CategoriesResource($categories);
     }
 
     /**
