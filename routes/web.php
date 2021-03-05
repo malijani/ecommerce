@@ -12,6 +12,7 @@ Route::group(['prefix'=>'/'], function(){
     Route::get('', 'HomeController@home')->name('home');
     Route::resource('blog', 'Visitor\BlogController')->only(['index', 'show']);
     Route::resource('category', 'Visitor\CategoryController')->only(['index','show']);
+    Route::resource('product', 'Visitor\ProductController')->only(['index', 'show']);
 });
 
 

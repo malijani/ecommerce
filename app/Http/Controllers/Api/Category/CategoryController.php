@@ -14,9 +14,9 @@ class CategoryController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return Categories
+     * @return JsonResponse
      */
-    public function index() : Categories
+    public function index() : JsonResponse
     {
         $categories = Category::withoutTrashed()
             ->where('title_en', 'products')
@@ -27,7 +27,7 @@ class CategoryController extends Controller
             ->subActiveChildren()
             ->paginate(50);
 
-        return new CategoriesResource($categories);
+        return response()->json(new CategoriesResource($categories));
     }
 
     /**

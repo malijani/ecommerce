@@ -1,6 +1,6 @@
 @foreach($products as $product)
     {{--                    TODO : LINK IT TO PRODUCT SHOW PAGE--}}
-    <a href="#">
+    <a href="{{ route('product.show', $product->title_en) }}">
     <div class="col-12 col-md-3 col-lg-2 text-center py-3">
         <div class="d-flex align-items-center justify-content-center img-size-swiper">
             <img class="img card-img-top"

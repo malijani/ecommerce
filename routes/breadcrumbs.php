@@ -32,3 +32,17 @@ Breadcrumbs::for('categories.category', function ($trail, $category) {
     $trail->parent('categories');
     $trail->push($category->title, route('category.show', $category->id));
 });
+
+
+// Home > Products
+Breadcrumbs::for('products', function ($trail) {
+    $trail->parent('home');
+    $trail->push('محصولات', route('product.index'));
+});
+
+// Home > Products > [Product]
+Breadcrumbs::for('products.product', function ($trail, $product) {
+    $trail->parent('products');
+    $trail->push($product->title, route('product.show', $product->id));
+});
+

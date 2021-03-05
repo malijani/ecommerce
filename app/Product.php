@@ -7,10 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
-use Lcobucci\JWT\Token\Builder;
 
 
+/**
+ * Product Model
+ */
 class Product extends Model
 {
     use SoftDeletes;
@@ -31,7 +34,7 @@ class Product extends Model
 
     public function scopeActive($q) : Builder
     {
-        return $q->where('status', 1);
+        return $q->where('status', 1)->where('entity', '>', 0);
     }
 
     public function user() : BelongsTo
@@ -84,10 +87,10 @@ class Product extends Model
     }
 
 
-    public function getFinalPriceAttribute()
-    {
-
-    }
+//    public function getFinalPriceAttribute()
+//    {
+//
+//    }
 
 
     public function getPriceTypeTextAttribute() : string
