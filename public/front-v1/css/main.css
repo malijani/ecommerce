@@ -18,6 +18,8 @@ html, body{
     background: rgb(247, 247, 247);
 }
 
+
+
 .breadcrumb-item + .breadcrumb-item::before {
     /*padding-right: 1rem;*/
     /*padding-left: 1rem;*/
@@ -30,11 +32,25 @@ html, body{
     max-height: 180px;
     background: transparent;
 }
+
+
 .img-size-swiper{
     max-height: 180px;
     min-height: 180px;
     overflow-y: hidden;
 }
+.product-thumbnails{
+    max-height: 500px;
+    overflow-y: scroll;
+}
+.product-thumbnails::-webkit-scrollbar {
+    display: none;
+}
+
+.product-image{
+    max-height: 500px;
+}
+
 
 a:hover{
     text-decoration: none;

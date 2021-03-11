@@ -166,6 +166,14 @@
                         </ul>
                     </li>
 
+                    <li class="nav-item">
+                        <a href="{{ route('attributes.index') }}" class="nav-link">
+                            <i class="nav-icon fa fa-sitemap"></i>
+                            <p>
+                                ویژگی های محصول
+                            </p>
+                        </a>
+                    </li>
 
 
                     <li class="nav-item">

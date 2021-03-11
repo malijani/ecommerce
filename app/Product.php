@@ -5,6 +5,7 @@ namespace App;
 use Hekmatinasser\Verta\Verta;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Builder;
@@ -55,6 +56,11 @@ class Product extends Model
     public function files() : HasMany
     {
         return $this->hasMany(ProductFile::class, 'product_id')->orderBy('created_at');
+    }
+
+    public function attrs(): BelongsToMany
+    {
+        return $this->belongsToMany(Attribute::class)->withPivot('attr_value');
     }
 
     public function bef() : BelongsTo

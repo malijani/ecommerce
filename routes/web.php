@@ -25,6 +25,7 @@ Route::group(['prefix'=>'admin', 'middleware'=>['web', 'auth', 'auth.admin']], f
     Route::resource('brands', 'Admin\BrandController');
     Route::resource('articles', 'Admin\ArticleController');
     Route::resource('products', 'Admin\ProductController');
+    Route::resource('attributes', 'Admin\AttributeController')->only(['index','store', 'update']);
 
     // FILE MANAGER
     Route::view('files','admin.file-manager.index')->name('admin.fm-frame');

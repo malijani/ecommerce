@@ -301,7 +301,7 @@
                                             title="بخش بندی محصولات یک برند به دسترسی هرچه سریعتر کاربر به محصولات کمک فراوانی میکند."
                                             class="select2 form-control @error('brand_id') is-invalid @enderror"
                                     >
-{{--                                 :CONSTRAINT ERROR:       <option {{ old('brand_id')==0 ? 'selected' : '' }} value="0">بدون برند</option> --}}
+                                        {{--                                 :CONSTRAINT ERROR:       <option {{ old('brand_id')==0 ? 'selected' : '' }} value="0">بدون برند</option> --}}
                                         @foreach($brands as $brand)
                                             <option value="{{ $brand->id }}"
                                                     @if(old('brand_id')==$brand->id)
@@ -445,7 +445,6 @@
                                                              width="100vw"
                                                              height="100vh"
                                                              onmouseover="configImgCheckbox(this.id)"
-
                                                         >
                                                     </div>{{--./IMG--}}
                                                 </div>
@@ -457,6 +456,7 @@
                                     {{--########################OLDS##############################--}}
 
                                     @if(!is_null(old('file'))){{--GENERATE OLD FILE FIELDS--}}
+                                {{--WHY NOT $loop->index ?? THERE'S file-0 UP THERE!--}}
                                     @foreach(old('file.title') as $file_title)
                                         @if($loop->last)
                                             @continue
@@ -535,10 +535,10 @@
 
                             <div class="col-12">{{--ADD/REMOVE BUTTONS--}}
                                 <div class="text-center">
-                                    <button type="button" class="add-row btn btn-success btn-sm">
+                                    <button type="button" class="add-file-row btn btn-success btn-sm">
                                         <i class="fa fa-plus"></i>
                                     </button>
-                                    <button type="button" class="del-row btn btn-danger btn-sm">
+                                    <button type="button" class="del-file-row btn btn-danger btn-sm">
                                         <i class="fa fa-minus"></i>
                                     </button>
                                 </div>
@@ -551,6 +551,111 @@
                                 <hr class="w-50">
                             </div>{{--./HR--}}
                         </div>{{--./PICTURES--}}
+
+
+                        <div class="col-md-12">{{--Attributes : many to many relation (attribute, value)--}}
+                            <div class="col-12">{{--HR--}}
+                                <hr class="w-50">
+                            </div>{{--./HR--}}
+
+                            <div class="row justify-content-center">{{--HEADER & DESCRIPTION--}}
+                                <div class="col-lg-8">
+                                    <div class="text-center">
+                                        <h3 class="font-weight-light">ویژگی ها</h3>
+                                    </div>
+                                    <div class="callout callout-info text-info text-center">
+                                        <span
+                                            class="">* محصولات با قیمت یکسان اما خصوصیات متفاوتی مانند طعم، رنگ و...</span><br>
+                                        <span class="">* هر محصول می‌تواند داری یک یا چند ویژگی باشد.</span><br>
+                                        <span class="">* این ویژگی ها در تغییر قیمت محصول نقشی ندارند.</span>
+                                    </div>
+                                </div>
+                            </div>{{--./HEADER & DESCRIPTION--}}
+
+                            <div class="col-12">{{--ATTRIBUTE FIELDS--}}
+                                <div id="row-attribute">
+                                    {{--!!DYNAMIC FIELDS GOES HERE!!--}}
+                                    {{--########################OLDS##############################--}}
+                                    @if(!is_null(old('attribute'))){{--GENERATE OLD ATTRIBUTE FIELDS--}}
+                                    @foreach(old('attribute.value') as $attribute_value)
+                                        {{--GENERATE OLD ATTRIBUTES--}}
+                                        <div class="attribute-{{$loop->index}}">
+                                            <div
+                                                class="form-group row align-items-center align-middle">{{--MAIN FIELDS ROW--}}
+
+                                                <div class="col-md-6">{{--ATTRIBUTE>TITLE--}}
+                                                    <div class="form-group row">
+                                                        <label for="attribute-id-{{$loop->index}}"
+                                                               class="col-form-label col-md-3 text-center">
+                                                            <i class="fa fa-asterisk text-danger"></i>
+                                                            ویژگی
+                                                        </label>
+                                                        <div class="col-md-9">
+                                                            <select id="attribute-id-{{$loop->index}}"
+                                                                    name="attribute[id][{{$loop->index}}]"
+                                                                    class="select2 form-control d-block @error('attribute.id.'.$loop->index) is-invalid @enderror"
+                                                                    title="این ویژگی ها در ثبت سفارش های شخصی سازی شده به مشتری کمک میکند!"
+                                                            >
+                                                                @foreach($attributes as $attr)
+                                                                    <option value="{{ $attr->id }}"
+                                                                        @if($attr->id == old('attribute.id.'.$loop->parent->index))
+                                                                           selected
+                                                                        @endif
+
+                                                                    >{{ $attr->title }}</option>
+                                                                @endforeach
+                                                            </select>
+                                                            @include('partials.form_error', ['input'=>'attribute.id.'.$loop->index])
+                                                        </div>
+                                                    </div>
+                                                </div>{{--./ATTRIBUTE>TITLE--}}
+
+                                                <div class="col-md-6">{{--ATTRIBUTE>VALUE--}}
+                                                    <div class="form-group row">
+                                                        <label for="attribute-value-{{$loop->index}}"
+                                                               class="col-form-label col-md-3 text-center">
+                                                            <i class="fa fa-asterisk text-danger"></i>
+                                                            مقدار
+                                                        </label>
+                                                        <div class="col-md-9">
+                                                            <input id="attribute-value-{{$loop->index}}"
+                                                                   name="attribute[value][{{$loop->index}}]"
+                                                                   type="text"
+                                                                   class="form-control @error('attribute.value.'.$loop->index) is-invalid @enderror"
+                                                                   title="مقدار دهی الزامی"
+                                                                   minlength="2"
+                                                                   maxlength="70"
+                                                                   value="{{ old('attribute.value.'.$loop->index) }}"
+                                                                   required
+                                                            >
+                                                            @include('partials.form_error', ['input'=>'attribute.value.'.$loop->index])
+                                                        </div>
+                                                    </div>
+                                                </div>{{--./ATTRIBUTE>VALUE--}}
+
+                                            </div>{{--./MAIN FIELDS ROW--}}
+                                        </div>{{--./ATTRIBUTE-0--}}
+                                    @endforeach
+                                    @endif{{--END OLD FILE FIELDS GENERATION--}}
+
+                                </div>
+                            </div>{{--./ATTRIBUTE FIELDS--}}
+
+                            <div class="col-12">{{--ADD/REMOVE BUTTONS--}}
+                                <div class="text-center">
+                                    <button type="button" id="add-attribute-field" class="btn btn-success btn-sm">
+                                        <i class="fa fa-plus"></i>
+                                    </button>
+                                    <button type="button" id="del-attribute-field" class=" btn btn-danger btn-sm">
+                                        <i class="fa fa-minus"></i>
+                                    </button>
+                                </div>
+                            </div>{{--./ADD+REMOVE BUTTONS--}}
+
+                            <div class="col-12">{{--HR--}}
+                                <hr class="w-50">
+                            </div>{{--./HR--}}
+                        </div>{{--./ATTRIBUTES--}}
 
                         <div class="col-md-6">{{--BEFORE : number--}}
                             <div class="form-group row">
@@ -713,7 +818,14 @@
     <script src="{{ asset('adminrc/plugins/img-checkbox/jquery.imgcheckbox.js') }}"></script>
 
     <script>
+        // Configure select2
+        function configSelect2(selectClass) {
+            $(selectClass).select2({
+                dir: "rtl",
+            });
+        }
 
+        // Configure checkbox
         function configImgCheckbox(imageId) {
             // Image is checkable to set as default picture
             $("#" + imageId).imgCheckbox({
@@ -748,7 +860,6 @@
             });
         }
 
-
         // Set image src for selected image tag
         function readURL(input, img) {
             if (input.files && input.files[0]) {
@@ -778,9 +889,6 @@
         });
 
         $(document).ready(function () {
-
-
-
             // CKEDITOR CONFIGURATION
             CKEDITOR.replace('long_text', {
                 height: 400,
@@ -790,7 +898,6 @@
                 contentsLanguage: 'fa',
                 content: 'fa',
                 language: 'fa',
-
 
 
                 filebrowserImageBrowseUrl: '{{route('unisharp.lfm.show')}}',
@@ -815,11 +922,7 @@
                 editorplaceholder: 'متن مقاله...',
             });
 
-            $('.select2').select2({
-                dir: "rtl",
-            });
-
-
+            configSelect2('.select2');
             // Show warning if default image isn't selected
             let status = $(".show_default_status");
             if ($("#show_default").val() !== '') {
@@ -829,17 +932,16 @@
                 status.show();
 
             }
-
             /*DYNAMIC FILE INPUT*/
             let max_fields = 5;
             let wrapper = $(".row-file");
-            let add_button = $(".add-row");
-            let del_button = $(".del-row")
+            let add_file_button = $(".add-file-row");
+            let del_file_button = $(".del-file-row")
             // Get last item count by extracting file-X class and removing file- to get x
             let wrapper_last_child_classes = wrapper.children().last().attr('class').split(' ');
             let x = wrapper_last_child_classes['0'].substr(-1, wrapper_last_child_classes['0'].length);
             // Add a new field for file upload
-            add_button.click(function (e) {
+            add_file_button.click(function (e) {
                 e.preventDefault();
                 if (x < max_fields) {
                     ++x;
@@ -902,7 +1004,7 @@
                         '                     id="img-' + x + '"  ' +
                         '                     width="100vw"  ' +
                         '                     height="100vh"  ' +
-                        '                     onmouseover="configImgCheckbox(this.id);"'+
+                        '                     onmouseover="configImgCheckbox(this.id);"' +
                         '                     >  ' +
                         '               </div>  ' +
                         '               {{--./IMG--}}  ' +
@@ -925,9 +1027,8 @@
                     });
                 }
             });
-
             // Remove last created upload file field
-            del_button.click(function () {
+            del_file_button.click(function () {
                 if (x < 0) {
                     $('.file-' + x).remove();
                     x = -1;
@@ -944,7 +1045,7 @@
 
                 let show_default = $("#show_default");
                 let show_warning = $(".show_default_status");
-                if (show_default.val() > x || show_default.val()==='') {
+                if (show_default.val() > x || show_default.val() === '') {
                     show_warning.show();
                     show_warning.text('لطفاً یک تصویر را بعنوان تصویر پیشفرض محصول انتخاب نمایید!');
                     show_default.val('');
@@ -953,7 +1054,6 @@
                 }
 
             });
-
             // select picture
             @if(!is_null(old('show_default')))
             let selector = $(".img-" +{{old('show_default')}});
@@ -962,7 +1062,96 @@
             selector.click();
             @endif
 
+
+
+
+            {{--!! ATTRIBUTE HANDLING!!--}}
+            let max_attribute_fields = 5;
+            let attribute_wrapper = $("#row-attribute");
+            let add_attribute_button = $("#add-attribute-field");
+            let del_attribute_button = $("#del-attribute-field");
+            let attribute_field_count = -1;
+            if (attribute_wrapper.children().length > 0) {
+                let attribute_wrapper_last_child = attribute_wrapper.children().last();
+                let attribute_wrapper_last_child_classes = attribute_wrapper_last_child.attr('class').split(' ');
+                attribute_field_count = attribute_wrapper_last_child_classes['0'].substr(-1, wrapper_last_child_classes['0'].length);
+            }
+
+            add_attribute_button.on('click', function (e) {
+                e.preventDefault();
+                if (attribute_field_count < max_attribute_fields) {
+                    ++attribute_field_count;
+                    attribute_wrapper.append(
+                        '<div class="attribute-' + attribute_field_count + '">' +
+                        '    <div' +
+                        '        class="form-group row align-items-center align-middle">' +
+                        '        <div class="col-md-6">' +
+                        '            <div class="form-group row">' +
+                        '                <label for="attribute-id-' + attribute_field_count + '"' +
+                        '                    class="col-form-label col-md-3 text-center">' +
+                        '                <i class="fa fa-asterisk text-danger"></i>' +
+                        '                ویژگی' +
+                        '                </label>' +
+                        '                <div class="col-md-9">' +
+                        '                    <select id="attribute-id-' + attribute_field_count + '"' +
+                        '                        name="attribute[id][' + attribute_field_count + ']"' +
+                        '                        class="select2 form-control d-block"' +
+                        '                        title="با انتخاب دسته بندی، مقاله شما از طریق دسته بندی منتخب قابل دسترسی خواهد بود."' +
+                        '                        >' +
+                        '                    @foreach($attributes as $attr)' +
+                        '                    <option value="{{ $attr->id }}">{{ $attr->title }}</option>' +
+                        '                    @endforeach' +
+                        '                    </select>' +
+                        '                </div>' +
+                        '            </div>' +
+                        '        </div>' +
+                        '        {{--./ATTRIBUTE>TITLE--}}' +
+                        '        <div class="col-md-6">' +
+                        '            <div class="form-group row">' +
+                        '                <label for="attribute-value-' + attribute_field_count + '"' +
+                        '                    class="col-form-label col-md-3 text-center">' +
+                        '                <i class="fa fa-asterisk text-danger"></i>' +
+                        '                مقدار' +
+                        '                </label>' +
+                        '                <div class="col-md-9">' +
+                        '                    <input id="attribute-value-' + attribute_field_count + '"' +
+                        '                        name="attribute[value][' + attribute_field_count + ']"' +
+                        '                        type="text"' +
+                        '                        class="form-control"' +
+                        '                        title="مقدار دهی الزامی"' +
+                        '                        minlength="2"' +
+                        '                        maxlength="70"' +
+                        '                        required' +
+                        '                        >' +
+                        '                </div>' +
+                        '            </div>' +
+                        '        </div>' +
+                        '    </div>' +
+                        '</div>'
+                    );
+                    /*CONFIGURE SELECT2 FOR DYNAMIC ELEMENT*/
+                    configSelect2('.select2');
+                } else {
+                    swal({
+                        text: "برای هر محصول حداکثر 6 ویژگی در نظر گرفته شده است.",
+                        icon: 'error',
+                        button: "اوکی",
+                    });
+                }
+            });
+
+            del_attribute_button.on('click', function () {
+
+                if (attribute_field_count >= 0) {
+                    --attribute_field_count;
+                    attribute_wrapper.children().last().remove();
+                } else {
+                    attribute_field_count = -1;
+                }
+            });
         });
+
+
     </script>
 @endsection
 

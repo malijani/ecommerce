@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Attribute;
 use App\Brand;
 use App\Category;
 use App\Http\Controllers\Controller;
@@ -58,6 +59,9 @@ class ProductController extends Controller
             ->orderBy('created_at', 'DESC')
             ->orderBy('sort', 'ASC')
             ->get();
+        $attributes = Attribute::query()
+            ->orderBy('created_at', 'DESC')
+            ->get();
         $products = Product::withoutTrashed()
             ->where('status', 1)
             ->orderBy('created_at', 'DESC')
@@ -67,6 +71,7 @@ class ProductController extends Controller
             'title' => $title,
             'categories' => $categories,
             'brands' => $brands,
+            'attributes'=>$attributes,
             'products' => $products,
         ]);
     }
@@ -79,12 +84,22 @@ class ProductController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+        /*TODO : LOGIC OF SAVING POST WITH ATTRIBUTES*/
+
 
         $request->validate([
-            'file.title' => ['required', 'array', 'min:1'],
-            'file.file' => ['required', 'array', 'min:1'],
+            /*FILES*/
+            'file.title' => ['required', 'array', 'min:1','max:6'],
+            'file.file' => ['required', 'array', 'min:1', 'max:6'],
             'file.title.*' => ['required', 'min:2', 'max:70'],
             'file.file.*' => ['required', 'mimes:jpg,jpeg,png,gif', 'max:10240'],
+
+            /*ATTRIBUTES*/
+            'attribute.id'=> ['sometimes', 'required', 'array',  'max:6'],
+            'attribute.value'=>['sometimes', 'required', 'array', 'max:6'],
+            'attribute.id.*'=>['sometimes', 'required', 'exists:attributes,id'],
+            'attribute.value.*'=>['sometimes', 'required', 'min:2', 'max:70'],
+
             'brand_id' => ['required', 'numeric'],
             'category_id' => ['required', 'numeric'],
             'title' => ['required', 'min:2', 'max:100', 'unique:products,title'],
@@ -110,13 +125,32 @@ class ProductController extends Controller
 
         $show_default = $request->input('show_default'); // selected image to show as default
 
+
+
+
         $product = Product::query()->create(array_merge(
             $request->except('title_en', 'show_default'),
             ['title_en' => Str::slug($request->input('title_en'))],
             ['user_id' => Auth::id()]
         ));
 
+        /*SAVE ATTRIBUTES*/
+        if($request->has('attribute.id')){
+            $attr_ids = $request->input('attribute.id');
+            $attr_values = $request->input('attribute.value');
+            foreach($attr_ids as $id_key=>$id_val){
+                //['attr.id' => ["attr_value"=>'attr.value']]
+                //['8'=> ["attr_value"=>"300g"]]
 
+                /*DIRECT ATTACH ATTRIBUTE*/
+                $product->attrs()->attach(
+                    [$id_val=> ['attr_value'=>$attr_values[$id_key]]]
+                );
+            }
+        }
+
+
+        /*SAVE FILES*/
         if ($request->hasFile('file.file')) {
             $files = [];
             $fields = range(0, count($request->file('file.file')) - 1);
@@ -163,7 +197,7 @@ class ProductController extends Controller
     public function edit(int $id): Response
     {
         $product = Product::withoutTrashed()
-            ->with('user', 'category', 'brand', 'files')
+            ->with('user', 'category', 'brand', 'files', 'attrs')
             ->findOrFail($id);
         $title = ' ویرایش محصول ' . $product->getAttribute('title');
         $categories = Category::withoutTrashed()
@@ -182,13 +216,16 @@ class ProductController extends Controller
             ->orderBy('created_at', 'DESC')
             ->orderBy('sort', 'ASC')
             ->get();
-
+        $attributes = Attribute::query()
+            ->orderBy('created_at', 'DESC')
+            ->get();
         return response()->view('admin.product.edit', [
             'product' => $product,
             'categories' => $categories,
             'title' => $title,
             'products' => $products,
             'brands' => $brands,
+            'attributes'=>$attributes
         ]);
     }
 
@@ -205,10 +242,18 @@ class ProductController extends Controller
 
         $product = Product::withoutTrashed()->findOrFail($id);
         $request->validate([
+            /*FILES*/
             'file.title' => ['required', 'array', 'min:1'],
             'file.file' => ['sometimes', 'array', 'min:1'],
             'file.title.*' => ['required', 'min:2', 'max:70'],
             'file.file.*' => ['sometimes', 'mimes:jpg,jpeg,png,gif', 'max:10240'],
+
+            /*ATTRIBUTES*/
+            'attribute.id'=> ['sometimes', 'required', 'array',  'max:6'],
+            'attribute.value'=>['sometimes', 'required', 'array', 'max:6'],
+            'attribute.id.*'=>['sometimes', 'required', 'exists:attributes,id'],
+            'attribute.value.*'=>['sometimes', 'required', 'min:2', 'max:70'],
+
             'brand_id' => ['required', 'numeric'],
             'category_id' => ['required', 'numeric'],
             'title' => ['required', 'min:2', 'max:100', 'unique:products,title,' . $product->getAttribute('id')],
@@ -328,6 +373,27 @@ class ProductController extends Controller
             }
         }
 
+        /*TODO: MAKE MORE PROFESSIONAL WITHOUT DETACHING EVERY TIME*/
+        /*UPDATE ATTRIBUTES*/
+        if($request->has('attribute.id')){
+            /*DELETE OLD VALUES*/
+            if($product->attrs->count()){
+                $product->attrs()->detach();
+            }
+
+            $attr_ids = $request->input('attribute.id');
+            $attr_values = $request->input('attribute.value');
+
+            foreach($attr_ids as $id_key=>$id_val){
+                //['attr.id' => ["attr_value"=>'attr.value']]
+                //['8'=> ["attr_value"=>"300g"]]
+                /*DIRECT ATTACH ATTRIBUTE*/
+                $product->attrs()->attach(
+                    [$id_val=> ['attr_value'=>$attr_values[$id_key]]]
+                );
+            }
+        }
+
         $product->update(array_merge(
             $request->except('title_en'),
             ['title_en' => Str::slug($request->input('title_en'))]
@@ -347,6 +413,11 @@ class ProductController extends Controller
     public function destroy(int $id): JsonResponse
     {
         $product = Product::withoutTrashed()->findOrFail($id);
+        /*DELETE PRODUCT ATTRIBUTES*/
+        if($product->attrs->count()){
+            $product->attrs->detach();
+        }
+
         $product->delete();
         return response()->json('محصول ' . $product->getAttribute('title') . ' با موفقیت حذف شد');
     }
