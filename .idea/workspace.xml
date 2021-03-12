@@ -5,29 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="00f5ae84-d71d-47c5-aa01-f2581affa6d5" name="Default Changelist" comment="Minor changes of frontend + Product section in admin">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/d397dc6e-b890-4051-bc0c-1fbc2975fd26.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/d397dc6e-b890-4051-bc0c-1fbc2975fd26.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/ProductController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/ProductController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Visitor/ProductController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Visitor/ProductController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Product.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Product.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/front-v1/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/front-v1/css/main.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/front-v1/jquery-zoom-image-carousel/Codehim - Free Web Design Code &amp; Scripts.url" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/front-v1/jquery-zoom-image-carousel/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/front-v1/jquery-zoom-image-carousel/images/1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/front-v1/jquery-zoom-image-carousel/images/2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/front-v1/jquery-zoom-image-carousel/images/3.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/front-v1/jquery-zoom-image-carousel/images/4.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/front-v1/jquery-zoom-image-carousel/images/next-icon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/front-v1/jquery-zoom-image-carousel/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/front-v1/jquery-zoom-image-carousel/info.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/front-v1/jquery-zoom-image-carousel/scripts/main.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/front-v1/jquery-zoom-image-carousel/scripts/zoom-image.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/front-v1/jquery-zoom-image-carousel/style.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/partials/aside.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/partials/aside.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/product/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/product/create.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/product/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/product/edit.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/front-v1/category/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/front-v1/category/show.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/front-v1/partials/products.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/front-v1/partials/products.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/front-v1/product/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/front-v1/product/index.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/front-v1/product/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/front-v1/product/show.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/home.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/home.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -317,7 +302,8 @@
       <workItem from="1615382986045" duration="9600000" />
       <workItem from="1615401570841" duration="517000" />
       <workItem from="1615461211610" duration="6665000" />
-      <workItem from="1615483841475" duration="2503000" />
+      <workItem from="1615483841475" duration="2557000" />
+      <workItem from="1615522327426" duration="10801000" />
     </task>
     <task id="LOCAL-00001" summary="Minor changes of frontend + Product section in admin">
       <created>1613451037291</created>

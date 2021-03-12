@@ -44,6 +44,16 @@ class ProductController extends Controller
         /*SET PAGE TITLE*/
         $title = $product->title;
 
+        /*GET SIMILAR PRODUCTS*/
+        $similar_products = Product::withoutTrashed()
+            ->active()
+            ->orderBy('created_at', 'DESC')
+            ->orderBy('sort', 'ASC')
+            ->where('category_id', $product->category_id)
+            ->where('id', '!=', $product->id)
+            ->get();
+
+
         /*GENERATE ATTRIBUTES FOR OPTION SELECTION*/
         $attributes = [];
         if ($product->attrs->count()) {
@@ -72,6 +82,7 @@ class ProductController extends Controller
             'title' => $title,
             'product' => $product,
             'attributes'=>$attributes,
+            'similar_products'=>$similar_products,
         ]);
     }
 

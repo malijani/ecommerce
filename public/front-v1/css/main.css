@@ -18,7 +18,9 @@ html, body{
     background: rgb(247, 247, 247);
 }
 
-
+.cursor-pointer{
+    cursor: pointer;
+}
 
 .breadcrumb-item + .breadcrumb-item::before {
     /*padding-right: 1rem;*/
@@ -143,7 +145,7 @@ h1,h2,h3,h4,h5,h6{
 
 .discount-label{
     background-color: rgb(232, 16, 74);
-    border-width: 0.5px;
+    border-width: 1px;
     border-style: solid;
     border-color: rgb(232, 16, 74);
     border-image: initial;

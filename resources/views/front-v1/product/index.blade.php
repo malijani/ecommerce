@@ -8,7 +8,7 @@
         <div class="container my-3 rounded">
             <div class="row px-0 bg-white py-3">
                 <div class="col-12">
-                    @include('front-v1.partials.products', ['products'=>$products])
+                    @include('front-v1.partials.products', ['products'=>$products, 'carousel'=>false])
                 </div>
             </div>{{--row--}}
 

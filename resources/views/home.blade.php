@@ -21,7 +21,7 @@
                 </a>
             </div>
             <div class="col-12 mt-2 mb-5">
-                @include('front-v1.partials.products', ['products'=>$products])
+                @include('front-v1.partials.products', ['products'=>$products, 'carousel'=>false])
             </div>
         </div>
     </div>
