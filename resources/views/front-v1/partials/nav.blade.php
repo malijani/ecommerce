@@ -50,6 +50,12 @@
                             <i class="fa fa-home"></i>
                             خانه
                         </a>
+
+                        <a class="mx-2" href="{{ route('product.index') }}">
+                        <i class="fa fa-diamond"></i>
+                            محصولات
+                        </a>
+
                         <a class="mx-2" href="{{ route('blog.index') }}">
                             <i class="fa fa-file"></i>
                             مقالات
