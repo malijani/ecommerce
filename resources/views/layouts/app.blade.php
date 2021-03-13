@@ -11,7 +11,14 @@
 
 <body>
 @include('front-v1.partials.nav')
-@include('partials.flashes')
+
+<div class="container">
+    <div class="row">
+        <div class="col-12 mt-3">
+            @include('partials.flashes')
+        </div>
+    </div>
+</div>
 @yield('content')
 
 

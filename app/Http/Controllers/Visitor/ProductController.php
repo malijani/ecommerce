@@ -19,6 +19,8 @@ class ProductController extends Controller
     {
         $products = Product::withoutTrashed()
             ->active()
+//            ->where('entity', '>', 0)
+            ->orderBy('entity', 'DESC')
             ->orderBy('created_at', 'DESC')
             ->orderBy('sort', 'ASC')
             ->paginate(100);

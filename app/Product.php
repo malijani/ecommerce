@@ -14,6 +14,11 @@ use Illuminate\Support\Str;
 
 /**
  * Product Model
+ * @property mixed discount_price
+ * @property mixed price
+ * @property mixed discount_percent
+ * @property mixed price_type
+ * @property int entity
  */
 class Product extends Model
 {
@@ -35,7 +40,7 @@ class Product extends Model
 
     public function scopeActive($q) : Builder
     {
-        return $q->where('status', 1)->where('entity', '>', 0);
+        return $q->where('status', 1);/*->where('entity', '>', 0);*/
     }
 
     public function user() : BelongsTo
@@ -79,6 +84,11 @@ class Product extends Model
         return number_format($this->price);
     }
 
+    public function getShowDiscountPriceAttribute():string
+    {
+        return number_format($this->discount_price);
+    }
+
     public function getDiscountPriceAttribute()
     {
         if($this->price_type == "0" && $this->discount_percent != "0"){
@@ -87,16 +97,18 @@ class Product extends Model
             return 'تخفیف به درستی تعیین نشده.';
         }
     }
-    public function getShowDiscountPriceAttribute():string
+
+
+    public function getFinalPriceAttribute()
     {
-        return number_format($this->discount_price);
+        if($this->price_type == 0){
+           return $this->discount_price;
+        } elseif($this->price_type == 1){
+            return $this->price;
+        } else {
+          return 0;
+        }
     }
-
-
-//    public function getFinalPriceAttribute()
-//    {
-//
-//    }
 
 
     public function getPriceTypeTextAttribute() : string

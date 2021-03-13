@@ -31,9 +31,6 @@
                 @endif
             </div>
 
-            {{--    <span class="position-absolute left-top-15">--}}
-            {{--                            <button class="add_card">+</button>--}}
-            {{--                        </span>--}}
         </div>
     </a>
 

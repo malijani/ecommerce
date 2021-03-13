@@ -8,6 +8,12 @@ Breadcrumbs::for('home', function ($trail) {
 });
 
 
+// Home > Cart
+Breadcrumbs::for('cart', function($trail){
+    $trail->parent('home');
+    $trail->push('سبد خرید', route('cart.index'));
+});
+
 // Home > Blog
 Breadcrumbs::for('blog', function ($trail) {
     $trail->parent('home');

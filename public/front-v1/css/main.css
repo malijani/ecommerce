@@ -22,6 +22,10 @@ html, body{
     cursor: pointer;
 }
 
+.img-cart{
+    max-height: 200px !important;
+}
+
 .breadcrumb-item + .breadcrumb-item::before {
     /*padding-right: 1rem;*/
     /*padding-left: 1rem;*/

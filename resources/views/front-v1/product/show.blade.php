@@ -58,7 +58,7 @@
                     </p>
                 </div>
                 <div class="price w-50">
-                    <p class="border border-dark p-2 rounded text-center">
+                    <p class="border p-2 rounded text-center">
                         @if($product->price_type=="0" && $product->discount_percent != "0")
                             <span class="font-weight-bolder">{{$product->show_discount_price}} تومن</span><br>
                             <span class="discount font-weight-bold">{{ $product->show_price}} تومن</span>
@@ -83,8 +83,10 @@
                 </div>
 
                 <div class="col-12">{{--ORDER SECTION--}}
-                    {{--TODO : SEND ORDER FORM TO OrderController--}}
-                    <form action="">
+                    @if($product->status != 2 && $product->price_type != 2 &&  $product->entity > 0)
+                    <form action="{{ route('cart.store') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="order[product_id]" value="{{ $product->id }}">
                         {{--CUSTOMIZE ORDER WITH ATTRIBUTES--}}
                         @if(count($attributes))
                             <div class="form-group row">
@@ -93,28 +95,28 @@
                                         <label for="order-attribute-{{ $attr_id }}"
                                                class="col-form-label col-md-2 text-right">{{ key($attr_values)}}
                                             :</label>
-                                        <div class="col-md-6 mt-1 ">
-                                            <select name="order-attribute-{{$attr_id}}"
+                                        <div class="col-md-6 mt-1">
+
+                                            <select name="order[attribute][{{ $attr_id }}]"
                                                     id="order-attribute-{{$attr_id}}"
                                                     class="form-control"
                                             >
                                                 @foreach($attr_values as $attr_value)
                                                     @foreach($attr_value as $attribute)
-                                                        <option value="{{ $loop->index  }}"> {{ $attribute }} </option>
+                                                        <option value="{{ $attribute  }}"> {{ $attribute }} </option>
                                                     @endforeach
                                                 @endforeach
-
                                             </select>
+                                            @include('partials.form_error',['input'=>'order.attribute.'.$attr_id])
                                         </div>
                                     </div>
-
                                 @endforeach
                             </div>
                         @endif
 
                         {{--SHOW DYNAMIC ENTITY--}}
                         <div class="form-group row">
-                            <label for="order-product-count"
+                            <label for="order-count"
                                    class="text-dark col-form-label col-md-12 text-center">موجودی:
                                 <span id="entity" class="font-weight-bolder">{{ $product->entity - 1 }}</span>
                                 عدد</label>
@@ -134,10 +136,10 @@
 
                                 <input
                                     class="text-center form-control font-weight-bolder"
-                                    name="order-product-count"
+                                    name="order[count]"
                                     type="number"
-                                    id="order-product-count"
-                                    value="{{ old("order-product-count") ?? 1 }}"
+                                    id="order-count"
+                                    value="{{ old("order.count") ?? 1 }}"
                                     min="1"
                                     max="{{ $product->entity - 1 }}"
 
@@ -154,13 +156,25 @@
 
                         </div>
 
+
+
                         <button
                             type="submit"
                             class="btn btn-primary form-control"
                         >
+                            <i class="fa fa-plus-square px-2"></i>
                             افزودن به سبد خرید
                         </button>
+
                     </form>
+                    @else
+                        <div class="alert alert-danger rounded text-center">
+                            <i class="fa fa-times-circle-o fa-2x"></i>
+                            <strong class="align-middle px-2">ناموجود</strong>
+
+                        </div>
+                    @endif
+
                 </div>{{--./ORDER SECTION--}}
             </div>{{--./PRODUCT MAIN CONTENT--}}
         </div>
@@ -226,7 +240,7 @@
             @endforeach
 
             /*USER ORDER HANDLING*/
-            let orderProductCount = $("#order-product-count");
+            let orderProductCount = $("#order-count");
             let addProductCount = $("#add-product-count");
             let subProductCount = $("#sub-product-count");
             let entity = $("#entity");
@@ -251,8 +265,12 @@
             orderProductCount.on('input change', function () {
                 if ($(this).val() <= 0) {
                     $(this).val(1);
-                } else if ($(this).val() > productCount) {
-                    $(this).val(productCount);
+                    entity.text({{ $product->entity - 1 }})
+                } else if ($(this).val() > {{ $product->entity }}) {
+                    $(this).val({{ $product->entity}});
+                    entity.text("0");
+                } else {
+                    entity.text({{$product->entity - 1 }} - $(this).val());
                 }
 
             });
