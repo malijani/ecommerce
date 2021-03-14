@@ -4,14 +4,21 @@
             <div class="col-9 col-md-4 d-flex justify-content-center align-items-center mb-2">
 
                 {{--SHOPPING CART--}}
+
                 <a href="{{ route('cart.index') }}"
                    title="سبد خرید"
                    role="button"
-                class="btn btn-primary mx-1"
+                class="btn btn-outline-info mx-1"
                 >
                     <i class="fa fa-shopping-cart"></i>
                     سبد خرید
+                    @if(session()->get('basket'))
+                        <span class="badge badge-danger rounded-circle">{{ count(session()->get('basket')) }}</span>
+                    @else
+                        <span class="badge badge-danger rounded-circle">0</span>
+                    @endif
                 </a>
+
 
 
                 {{--USER LOGIN/REGISTER--}}

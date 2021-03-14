@@ -19,14 +19,15 @@ class CartController extends Controller
     {
         $title = 'سبد خرید';
         $basket = session()->get('basket');
-        if(is_null($basket) || count($basket) == 0){
+
+        if (is_null($basket) || count($basket) == 0) {
             return response()->view('front-v1.user.cart.null', [
-               'title'=>$title,
+                'title' => $title,
             ]);
         }
         return response()->view('front-v1.user.cart.index', [
             'title' => $title,
-            'basket'=>$basket,
+            'basket' => $basket,
         ]);
     }
 
@@ -49,6 +50,7 @@ class CartController extends Controller
     public function store(Request $request)
     {
 
+
         /*PREPARE ATTRIBUTE IDS AND VALUE FOR VALIDATION */
         if ($request->has('order.attribute')) {
             $request->request->add(['attr_id' => collect($request->input('order.attribute'))->keys()->toArray()]);
@@ -63,7 +65,6 @@ class CartController extends Controller
             'order.attribute' => ['sometimes', 'required', 'array', 'max:6'],
             'attr_id' => ['sometimes', 'required', 'exists:attributes,id'],
             'attr_value' => ['sometimes', 'required', 'exists:attribute_product,attr_value'],
-
         ]);
         /*
          * $request :
@@ -75,19 +76,39 @@ class CartController extends Controller
             return redirect()->back()->with('error', 'اتمام موجودی محصول برای سفارش و اطلاعات بیشتر با مدیریت تماس بگیرید.');
         }
 
+
+        /*PREPARE VALUES*/
+        $quantity = $request->input('order.count');
+        $attribute = [];
+        if ($request->has('order.attribute')) {
+            $attr_id = $request->input('attr_id');
+            $attr_id = array_merge($attr_id, ['quantity']); // ['attr_id',...,'attr_id', 'quantity']
+            $attr_value = array_merge($request->input('order.attribute'), ['quantity' => $quantity]);
+            $attribute = [array_combine($attr_id, $attr_value)];
+        }
+
+        /*FUNCTION TO REMOVE QUANTITY KEY FROM ARRAY*/
+        $quantity_remover = function ($array) {
+            if (is_array($array) && array_key_exists('quantity', $array)) {
+                return array_diff_key($array, array_flip(['quantity']));
+            } else {
+                return [];
+            }
+        };
+
         /*SESSION SECTION*/
         $basket = session()->get('basket');
         if (!$basket) {
             $basket = [
                 $product->id => [
                     'title' => $product->title,
-                    'title_en'=>$product->title_en,
+                    'title_en' => $product->title_en,
                     'quantity' => $request->input('order.count'),
-                    'attribute' => [$request->input('order.attribute'), 'quantity' => $request->input('order.count')] ?? null,
+                    'attribute' => $attribute,
                     'price' => $request->input('order.count') * $product->final_price,
                     'price_type' => $product->price_type,
                     'discount_percent' => $product->discount_percent,
-                    'total_discount'=>($product->price_type == 0 && $product->discount_percent > 0) ? (($product->price - $product->discount_price) * $request->input('order.count')) : 0,
+                    'total_discount' => ($product->price_type == 0 && $product->discount_percent > 0) ? (($product->price - $product->discount_price) * $request->input('order.count')) : 0,
                     'pic' => $product->files()->defaultFile()->link,
                 ],
             ];
@@ -96,10 +117,30 @@ class CartController extends Controller
             $quantity = &$basket[$product->id]['quantity'];
             $price = &$basket[$product->id]['price'];
             $total_discount = &$basket[$product->id]['total_discount'];
+
+            $order_attribute = &$basket[$product->id]['attribute'];
+            $attr_diff = null;
+
+            if (count($order_attribute) > 0) {
+                foreach ($order_attribute as $order_attr_key => $order_attr_val) {
+                    $check_diff = array_diff($quantity_remover($attribute[0]), $quantity_remover($order_attr_val));
+                    if (!$check_diff) {
+                        /*INCREMENT ORDER ATTRIBUTE QUANTITY*/
+                        $attr_diff = $order_attr_key;
+                    }
+                }
+            }
+
             if ($product->entity > $quantity) {
                 $quantity += $request->input('order.count');
                 $price += $request->input('order.count') * $product->final_price;
-                $total_discount+=($product->price_type == 0 && $product->discount_percent > 0) ? (($product->price - $product->discount_price) * $request->input('order.count')) : 0;
+                $total_discount += ($product->price_type == 0 && $product->discount_percent > 0) ? (($product->price - $product->discount_price) * $request->input('order.count')) : 0;
+                if (!is_null($attr_diff)) {
+                    $order_attribute[$attr_diff]['quantity'] += $request->input('order.count');
+                } else {
+                    $order_attribute = array_merge($order_attribute, $attribute);
+                }
+
             } else {
                 return redirect()->back()->with('warning', 'تعداد محصول درخواستی شما در انبار موجود نیست');
             }
@@ -107,17 +148,19 @@ class CartController extends Controller
             $basket[$product->id] =
                 [
                     'title' => $product->title,
-                    'title_en'=>$product->title_en,
+                    'title_en' => $product->title_en,
                     'quantity' => $request->input('order.count'),
-                    'attribute' => [$request->input('order.attribute'), 'quantity' => $request->input('order.count')] ?? null,
+                    'attribute' => $attribute,
                     'price' => $request->input('order.count') * $product->final_price,
                     'price_type' => $product->price_type,
                     'discount_percent' => $product->discount_percent,
-                    'total_discount'=>($product->price_type == 0 && $product->discount_percent > 0) ? (($product->price - $product->discount_price) * $request->input('order.count')) : 0,
+                    'total_discount' => ($product->price_type == 0 && $product->discount_percent > 0) ? (($product->price - $product->discount_price) * $request->input('order.count')) : 0,
                     'pic' => $product->files()->defaultFile()->link,
                 ];
         }
+
         session()->put('basket', $basket);
+
 
         return response()->redirectTo(route('cart.index'));
     }
