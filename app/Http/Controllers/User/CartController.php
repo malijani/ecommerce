@@ -207,6 +207,11 @@ class CartController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $basket = session()->get('basket');
+        if(isset($basket[$id])){
+            unset($basket[$id]);
+            session()->put('basket', $basket);
+        }
+        return response()->json('محصول مورد نظر از سبد خرید حذف شد.');
     }
 }
