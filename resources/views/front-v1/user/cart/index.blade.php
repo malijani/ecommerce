@@ -40,8 +40,8 @@
                                 <div class="btn-group btn-group-lg direction-ltr border rounded"
                                      role="group"
                                      aria-label="Basic example">
-                                    <button href="https://stavitastore.net/cart_delete/757"
-                                            class="text-dark bg-white btn border-0 my-0">-
+                                    <button
+                                        class="text-dark bg-white btn border-0 my-0">-
                                     </button>
                                     <button type="button"
                                             class="text-dark bg-white btn my-0">{{ $value['quantity'] }}</button>
@@ -95,7 +95,7 @@
                                                     <div class="col mt-2 mb-2 font-weight-bold">
                                                         @if($attr_key == "quantity")
                                                             <div
-                                                                class="btn-group btn-group direction-ltr border rounded"
+                                                                class="btn-group btn-group direction-ltr border roundd"
                                                                 role="group"
                                                             >
                                                                 <a href="{{--TODO : ADD REMOVE FOR ATTR--}}"
@@ -193,12 +193,7 @@
                         });
                     }
                 });
-
-
         }
-        /*APPEND ONE PRODUCT OR ATTRIBUTE TO SHOPPING CART*/
-        /*REMOVE ONE PRODUCT OR ATTRIBUTE FROM SHOPPING CART */
-
 
         $(document).ready(function () {
             /*CONTROL THE DIRECTION OF CARET IN ATTRIBUTE SHOW*/
@@ -208,6 +203,7 @@
                 console.error('showing{{$key}}');
                 $("#product-attr-button-{{$key}}").html('<i class="fa fa-caret-square-o-up fa-2x"></i>');
             });
+            p
             $("#product-attr-{{$key}}").on('hide.bs.collapse', function () {
                 console.error('hiding{{$key}}');
                 $("#product-attr-button-{{$key}}").html('<i class="fa fa-caret-square-o-down fa-2x"></i>');

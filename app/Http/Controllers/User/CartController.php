@@ -214,4 +214,6 @@ class CartController extends Controller
         }
         return response()->json('محصول مورد نظر از سبد خرید حذف شد.');
     }
+
+
 }
