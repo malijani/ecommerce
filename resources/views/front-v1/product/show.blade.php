@@ -118,7 +118,9 @@
                         <div class="form-group row">
                             <label for="order-count"
                                    class="text-dark col-form-label col-md-12 text-center">موجودی:
-                                <span id="entity" class="font-weight-bolder">{{ $product->entity - 1 }}</span>
+                                <span id="entity" class="font-weight-bolder">
+                                    {{ $product->entity -1 }}
+                                </span>
                                 عدد</label>
                         </div>
 
@@ -133,7 +135,6 @@
                                     <i class="fa fa-plus"></i>
                                 </button>
 
-
                                 <input
                                     class="text-center form-control font-weight-bolder"
                                     name="order[count]"
@@ -141,8 +142,7 @@
                                     id="order-count"
                                     value="{{ old("order.count") ?? 1 }}"
                                     min="1"
-                                    max="{{ $product->entity - 1 }}"
-
+                                    max="{{ $product->entity}}"
                                 >
 
                                 <button type="button"

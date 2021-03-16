@@ -5,20 +5,19 @@
 
     {{ \Diglactic\Breadcrumbs\Breadcrumbs::render('cart') }}
 
-
     <div class="container my-3 rounded">
         <div class="row bg-white">
 
             <div class="col-12  col-lg-8 py-4">{{--PRODUCTS--}}
                 <h4>سبد خرید</h4>
                 @foreach($basket as $key=>$value)
-                    <div class="row d-flex align-items-center text-center mb-5" id="product-{{$key}}">
+                    <div class="row d-flex align-items-center text-center mb-4 ml-1 mr-1  p-3 rounded bg-whitesmoke" id="product-{{$key}}">
                         {{--SHOW IMAGE--}}
                         <div class="col-3">
                             <a href="{{ route('product.show', $value['title_en'])  }}">
                                 <img src="{{ asset($value['pic']) }}"
                                      alt="{{ $value['title']  }}"
-                                     class="img-fluid img-cart"
+                                     class="img-fluid img-cart rounded"
                                 >
                             </a>
                         </div>
@@ -36,17 +35,32 @@
                                     {{ $value['quantity'] }}
                                 </button>
                             @else
-                                {{-- TODO : Adding/Removing product like Buying section--}}
-                                <div class="btn-group btn-group-lg direction-ltr border rounded"
-                                     role="group"
-                                     aria-label="Basic example">
-                                    <button
-                                        class="text-dark bg-white btn border-0 my-0">-
-                                    </button>
+                                <div
+                                    class="btn-group btn-group direction-ltr border rounded"
+                                    role="group"
+                                >
                                     <button type="button"
-                                            class="text-dark bg-white btn my-0">{{ $value['quantity'] }}</button>
-                                    <button href="https://stavitastore.net/cart/757"
-                                            class="text-dark bg-white btn border-0 my-0">+
+                                            data-target="{{route('cart.update', $key)}}"
+                                            onclick="update(this, 'remove');"
+                                            id="remove-one-{{$key}}"
+                                            class="text-dark bg-white btn border-0 my-0"
+                                    >
+                                        -
+                                    </button>
+
+                                    <button type="button"
+                                            class="text-dark bg-white btn my-0 font-weight-bolder"
+                                    >
+                                        {{ $value['quantity']  }}
+                                    </button>
+
+                                    <button type="button"
+                                            data-target="{{route('cart.update', $key)}}"
+                                            onclick="update(this, 'add');"
+                                            id="add-one-{{$key}}"
+                                            class="text-dark bg-white btn border-0 my-0"
+                                    >
+                                        +
                                     </button>
                                 </div>
                             @endif
@@ -65,7 +79,7 @@
                                     class="btn btn-light"
                                     onclick="del({{$key}});"
                                     id="del-{{$key}}"
-                                    data-target="{{ route('cart.destroy', [$key]) }}"
+                                    data-target="{{ route('cart.destroy', [$key] ) }}"
                             >
                                 <i class="fa fa-trash fa-2x text-danger"></i>
                             </button>
@@ -90,19 +104,22 @@
                                          id="product-attr-{{$key}}"
                                     >
                                         <div class="row align-items-center">
-                                            @foreach($value['attribute'] as $attr_array)
+                                            @foreach($value['attribute'] as $product_attr_key => $attr_array)
                                                 @foreach($attr_array as $attr_key => $attr_value)
                                                     <div class="col mt-2 mb-2 font-weight-bold">
                                                         @if($attr_key == "quantity")
                                                             <div
-                                                                class="btn-group btn-group direction-ltr border roundd"
+                                                                class="btn-group btn-group direction-ltr border rounded"
                                                                 role="group"
                                                             >
-                                                                <a href="{{--TODO : ADD REMOVE FOR ATTR--}}"
+                                                                <button type="button"
+                                                                        data-target="{{route('cart.update', $key)}}"
+                                                                        onclick="update(this, 'remove', {{$product_attr_key}});"
+                                                                        id="remove-one-{{$key}}-{{$product_attr_key}}"
                                                                    class="text-dark bg-white btn border-0 my-0"
                                                                 >
                                                                     -
-                                                                </a>
+                                                                </button>
 
                                                                 <button type="button"
                                                                         class="text-dark bg-white btn my-0 font-weight-bolder"
@@ -110,14 +127,15 @@
                                                                     {{ $attr_value }}
                                                                 </button>
 
-                                                                <a href="{{--TODO : ADD PLUS FOR ATTR--}}"
-                                                                   class="text-dark bg-white btn border-0 my-0"
+                                                                <button type="button"
+                                                                        data-target="{{route('cart.update', $key)}}"
+                                                                        onclick="update(this, 'add', {{$product_attr_key}});"
+                                                                        id="add-one-{{$key}}-{{$product_attr_key}}"
+                                                                        class="text-dark bg-white btn border-0 my-0"
                                                                 >
                                                                     +
-                                                                </a>
+                                                                </button>
                                                             </div>
-
-
                                                         @else
                                                             {{ $attr_value }}
                                                         @endif
@@ -133,21 +151,6 @@
                         @endif
                     </div>
                 @endforeach
-
-
-                <div class="table-responsive">
-                    <table class="table table-borderless">
-                        <tbody class="text-center">
-                        @foreach($basket as $key=>$value)
-                            <tr dir="ltr" class="text-left">
-                                <pre>
-                                {{ print_r($basket[$key]) }}
-                                </pre>
-                            </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
-                </div>
             </div>{{--./PRODUCTS--}}
 
             <div class="col-12 col-lg-4 py-4">{{--FINAL DESCRIPTION--}}
@@ -180,8 +183,9 @@
                                 '_method': 'DELETE',
                                 'id': id,
                             },
-                            success: function () {
+                            success: function (result) {
                                 location.reload();
+
                             },
                             error: function () {
                                 swal({
@@ -195,23 +199,47 @@
                 });
         }
 
+        function update(element, type, attribute=null){
+            // type : how to manipulate on product? 'add' or 'remove'
+            // attribute is optional : attribute of product :
+            //         if you're looking for product id that is stored in basket
+            //         "data-target" is generated for the product! /update/20
+            let update_url = $(element).attr('data-target');
+            $.ajax({
+                url:  update_url,
+                type: 'POST',
+                data: {
+                    '_token': "{{ csrf_token() }}",
+                    '_method': "PUT",
+                    'type': type,
+                    'attribute': attribute,
+                },
+                success: function(){
+                    location.reload();
+                },
+                error: function(){
+                    swal({
+                        text: "خطای غیر منتظره ای رخ داده!",
+                        icon: 'error',
+                        button: 'فهمیدم',
+                    });
+                }
+            });
+        }
+
         $(document).ready(function () {
             /*CONTROL THE DIRECTION OF CARET IN ATTRIBUTE SHOW*/
             @foreach($basket as $key=>$value)
             @if(is_array($value['attribute']) && count($value['attribute']))
-            $("#product-attr-{{$key}}").on('show.bs.collapse', function () {
-                console.error('showing{{$key}}');
+            $("#product-attr-{{$key}}").on('show.bs.collapse hide.bs.collapse', function (e) {
+                if (e.type === 'show') {
                 $("#product-attr-button-{{$key}}").html('<i class="fa fa-caret-square-o-up fa-2x"></i>');
+                } else {
+                    $("#product-attr-button-{{$key}}").html('<i class="fa fa-caret-square-o-down fa-2x"></i>');
+                }
             });
-            p
-            $("#product-attr-{{$key}}").on('hide.bs.collapse', function () {
-                console.error('hiding{{$key}}');
-                $("#product-attr-button-{{$key}}").html('<i class="fa fa-caret-square-o-down fa-2x"></i>');
-            });
-
             @endif
             @endforeach
-
         });
     </script>
 @endsection

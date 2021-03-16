@@ -4,7 +4,6 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Product;
-use http\Env\Response;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
@@ -25,6 +24,8 @@ class CartController extends Controller
                 'title' => $title,
             ]);
         }
+
+
         return response()->view('front-v1.user.cart.index', [
             'title' => $title,
             'basket' => $basket,
@@ -49,8 +50,6 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
-
-
         /*PREPARE ATTRIBUTE IDS AND VALUE FOR VALIDATION */
         if ($request->has('order.attribute')) {
             $request->request->add(['attr_id' => collect($request->input('order.attribute'))->keys()->toArray()]);
@@ -171,13 +170,13 @@ class CartController extends Controller
      * @param int $id
      * @param int $id
      * @return \Illuminate\Http\Response
-     *
-     * public function show($id)
-     * {
-     * //
-     * }
-     *
-     * /**
+     */
+     public function show($id)
+     {
+     //
+     }
+
+     /**
      * Show the form for editing the specified resource.
      *
      * @return \Illuminate\Http\Response
@@ -192,11 +191,63 @@ class CartController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return void
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, int $id) : void
     {
-        //
+        // attribute is optional
+        $request->validate([
+            'type'=>['required', 'string', 'max:6'],
+            'attribute'=>['nullable','numeric', 'max:6'],
+        ]);
+
+
+        // set shorthand of ajax request data
+        $type = $request->input('type');
+        $attribute = $request->input('attribute')??null;
+        /*closure to manipulate more faster with less amount of code*/
+        $manipulator = function($type, $quantity){
+            if ($type=='remove'){
+                $quantity--;
+            } elseif ($type=='add'){
+                $quantity++;
+            }
+            return $quantity;
+        };
+
+        // find product
+        $product = Product::query()->findOrFail($id);
+        // get basket session
+        $basket = session()->get('basket');
+        // manipulate product
+        /*check ordered product existence*/
+        if(isset($basket[$id]) && is_array($basket[$id])){
+            /*set $product pointer from $basket array to manipulate it directly*/
+            $ordered_product = &$basket[$id];
+            /*check quantity of ordered product if its right manipulate it!*/
+            if(($type=='remove' && $ordered_product['quantity'] > 1) || ($type=="add" && $ordered_product['quantity'] < $product->entity)){
+                /*manipulate quantity*/
+                $ordered_product['quantity'] = $manipulator($type, $ordered_product['quantity']);
+                /*change prices*/
+                $ordered_product['price'] = $ordered_product['quantity'] * $product->final_price;
+                $ordered_product['total_discount'] = ($product->price_type == 0 && $product->discount_percent > 0) ? (($product->price - $product->discount_price) * $ordered_product['quantity']) : 0;
+                /*check if request also has attribute*/
+                if (!is_null($attribute) && isset($ordered_product['attribute'][$attribute])){
+
+                    /*check if product attribute quantity has the right amount*/
+                    if(($type=='remove' && $ordered_product['attribute'][$attribute]['quantity']>1) || $ordered_product['attribute'][$attribute]['quantity'] >=1){
+                        $ordered_product['attribute'][$attribute]['quantity']=$manipulator($type, $ordered_product['attribute'][$attribute]['quantity']);
+                    } else {
+                        unset($basket[$id]['attribute'][$attribute]);
+                    }
+                }
+            }
+            /*check quantity of ordered product if its less than one, remove whole product*/
+            elseif($type=='remove' && $ordered_product['quantity']<=1){
+                unset($basket[$id]);
+            }
+        }
+        session()->put('basket', $basket);
     }
 
     /**
@@ -205,14 +256,13 @@ class CartController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id) : void
     {
         $basket = session()->get('basket');
-        if(isset($basket[$id])){
+        if (isset($basket[$id])) {
             unset($basket[$id]);
             session()->put('basket', $basket);
         }
-        return response()->json('محصول مورد نظر از سبد خرید حذف شد.');
     }
 
 

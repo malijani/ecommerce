@@ -18,6 +18,10 @@ html, body{
     background: rgb(247, 247, 247);
 }
 
+.bg-whitesmoke{
+    background-color: #F5F5F5 !important;
+}
+
 .cursor-pointer{
     cursor: pointer;
 }

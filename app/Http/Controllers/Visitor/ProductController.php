@@ -27,6 +27,7 @@ class ProductController extends Controller
 
         return response()->view('front-v1.product.index', [
             'products' => $products,
+
         ]);
     }
 
@@ -45,6 +46,13 @@ class ProductController extends Controller
             ->firstOrFail();
         /*SET PAGE TITLE*/
         $title = $product->title;
+
+
+        $basket = session()->get('basket')??null;
+        /*do not over ordering product if its already in the users basket*/
+        if(isset($basket) && isset($basket[$product->id])) {
+            $product->entity = $product->entity - $basket[$product->id]['quantity'];
+        }
 
         /*GET SIMILAR PRODUCTS*/
         $similar_products = Product::withoutTrashed()
@@ -80,6 +88,8 @@ class ProductController extends Controller
                 }
             }
         }
+
+
         return response()->view('front-v1.product.show', [
             'title' => $title,
             'product' => $product,
