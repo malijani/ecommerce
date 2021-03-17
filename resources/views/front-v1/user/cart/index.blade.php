@@ -8,6 +8,7 @@
     <div class="container my-3 rounded">
         <div class="row bg-white">
 
+
             <div class="col-12  col-lg-8 py-4">{{--PRODUCTS--}}
                 <h4>سبد خرید</h4>
                 @foreach($basket as $key=>$value)
@@ -154,7 +155,27 @@
             </div>{{--./PRODUCTS--}}
 
             <div class="col-12 col-lg-4 py-4">{{--FINAL DESCRIPTION--}}
-                مجموع سبد
+                <h6>مجموع سبد</h6>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <tbody>
+                        <tr class="">
+                            <th scope="row">جمع قیمت</th>
+                            <td>{{ number_format($total['price']) }} تومن</td>
+                        </tr>
+                        <tr class="text-success">
+                            <th scope="row">جمع تخفیف</th>
+                            <td>{{ number_format($total['discount']) }} تومن</td>
+                        </tr>
+                        <tr class="">
+                            <td colspan="2">
+                                <button type="button" class="btn btn-outline-primary w-100">پرداخت</button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
             </div>{{--./FINAL DESCRIPTION--}}
 
         </div>{{--row--}}
@@ -183,16 +204,12 @@
                                 '_method': 'DELETE',
                                 'id': id,
                             },
-                            success: function (result) {
+                            success: function () {
                                 location.reload();
 
                             },
                             error: function () {
-                                swal({
-                                    text: "خطای غیر منتظره ای رخ داده.",
-                                    icon: 'error',
-                                    button: "فهمیدم.",
-                                });
+                                location.reload();
                             }
                         });
                     }
@@ -218,11 +235,7 @@
                     location.reload();
                 },
                 error: function(){
-                    swal({
-                        text: "خطای غیر منتظره ای رخ داده!",
-                        icon: 'error',
-                        button: 'فهمیدم',
-                    });
+                    location.reload();
                 }
             });
         }

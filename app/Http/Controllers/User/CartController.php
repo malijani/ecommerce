@@ -18,17 +18,26 @@ class CartController extends Controller
     {
         $title = 'سبد خرید';
         $basket = session()->get('basket');
-
+        /*show null page of basket*/
         if (is_null($basket) || count($basket) == 0) {
             return response()->view('front-v1.user.cart.null', [
                 'title' => $title,
             ]);
         }
 
+        /*append total order price and discount to basket*/
+        $total = ['price'=>0, 'discount'=>0];
+        if(count($basket)){
+            foreach($basket as $order){
+                $total['price'] += $order['price'];
+                $total['discount'] += $order['total_discount'];
+            }
+        }
 
         return response()->view('front-v1.user.cart.index', [
             'title' => $title,
             'basket' => $basket,
+            'total'=>$total,
         ]);
     }
 
@@ -206,11 +215,11 @@ class CartController extends Controller
         $type = $request->input('type');
         $attribute = $request->input('attribute')??null;
         /*closure to manipulate more faster with less amount of code*/
-        $manipulator = function($type, $quantity){
+        $manipulator = function($type, $quantity, $step = 1){
             if ($type=='remove'){
-                $quantity--;
+                $quantity -= $step;
             } elseif ($type=='add'){
-                $quantity++;
+                $quantity += $step;
             }
             return $quantity;
         };
@@ -233,10 +242,10 @@ class CartController extends Controller
                 $ordered_product['total_discount'] = ($product->price_type == 0 && $product->discount_percent > 0) ? (($product->price - $product->discount_price) * $ordered_product['quantity']) : 0;
                 /*check if request also has attribute*/
                 if (!is_null($attribute) && isset($ordered_product['attribute'][$attribute])){
-
+                    $ordered_product_attribute = &$ordered_product['attribute'][$attribute];
                     /*check if product attribute quantity has the right amount*/
-                    if(($type=='remove' && $ordered_product['attribute'][$attribute]['quantity']>1) || $ordered_product['attribute'][$attribute]['quantity'] >=1){
-                        $ordered_product['attribute'][$attribute]['quantity']=$manipulator($type, $ordered_product['attribute'][$attribute]['quantity']);
+                    if(($type=='remove' && $ordered_product_attribute['quantity']>1) || ($type=='add'&&$ordered_product_attribute['quantity'] >=1)){
+                        $ordered_product_attribute['quantity']=$manipulator($type, $ordered_product['attribute'][$attribute]['quantity']);
                     } else {
                         unset($basket[$id]['attribute'][$attribute]);
                     }
