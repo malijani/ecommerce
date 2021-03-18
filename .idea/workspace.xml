@@ -6,8 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="00f5ae84-d71d-47c5-aa01-f2581affa6d5" name="Default Changelist" comment="Minor changes of frontend + Product section in admin">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/User/CartController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/User/CartController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/front-v1/user/cart/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/front-v1/user/cart/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Factor.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Factor.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2021_03_17_150637_create_factors_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2021_03_17_150637_create_factors_table.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -311,7 +311,8 @@
       <workItem from="1615876536762" duration="2228000" />
       <workItem from="1615896727314" duration="928000" />
       <workItem from="1615904124759" duration="9176000" />
-      <workItem from="1615965395190" duration="7731000" />
+      <workItem from="1615965395190" duration="7835000" />
+      <workItem from="1616036628776" duration="5090000" />
     </task>
     <task id="LOCAL-00001" summary="Minor changes of frontend + Product section in admin">
       <created>1613451037291</created>
