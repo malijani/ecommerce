@@ -46,5 +46,3 @@ Route::group(['prefix'=>'admin', 'middleware'=>['web', 'auth', 'auth.admin']], f
 
 
 
-
-
