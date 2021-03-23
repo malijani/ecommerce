@@ -26,18 +26,24 @@ class CartController extends Controller
         }
 
         /*append total order price and discount to basket*/
-        $total = ['price'=>0, 'discount'=>0];
-        if(count($basket)){
-            foreach($basket as $order){
-                $total['price'] += $order['price'];
-                $total['discount'] += $order['total_discount'];
+        $total = ['raw_price' => 0, 'final_price' => 0, 'discount' => 0, 'count' => 0, 'weight' => 0];
+        if (count($basket)) {
+            foreach ($basket as $order) {
+                $total['raw_price'] += (int)$order['raw_price'];
+                $total['final_price'] += (int)$order['price'];
+                $total['discount'] += (int)$order['total_discount'];
+                $total['count'] += (int)$order['quantity'];
+                $total['weight'] += (int)$order['weight'];
             }
         }
+
+        session()->put('total', $total);
+        $total = session()->get('total');
 
         return response()->view('front-v1.user.cart.index', [
             'title' => $title,
             'basket' => $basket,
-            'total'=>$total,
+            'total' => $total,
         ]);
     }
 
@@ -114,9 +120,11 @@ class CartController extends Controller
                     'quantity' => $request->input('order.count'),
                     'attribute' => $attribute,
                     'price' => $request->input('order.count') * $product->final_price,
+                    'raw_price' => $request->input('order.count') * $product->price,
                     'price_type' => $product->price_type,
                     'discount_percent' => $product->discount_percent,
                     'total_discount' => ($product->price_type == 0 && $product->discount_percent > 0) ? (($product->price - $product->discount_price) * $request->input('order.count')) : 0,
+                    'weight' => $request->input('order.count') * $product->weight,
                     'pic' => $product->files()->defaultFile()->link,
                 ],
             ];
@@ -125,8 +133,9 @@ class CartController extends Controller
             $quantity = &$basket[$product->id]['quantity'];
             $price = &$basket[$product->id]['price'];
             $total_discount = &$basket[$product->id]['total_discount'];
-
+            $weight = &$basket[$product->id]['weight'];
             $order_attribute = &$basket[$product->id]['attribute'];
+            $raw_price = &$basket[$product->id]['raw_price'];
             $attr_diff = null;
 
             if (count($order_attribute) > 0) {
@@ -142,6 +151,8 @@ class CartController extends Controller
             if ($product->entity > $quantity) {
                 $quantity += $request->input('order.count');
                 $price += $request->input('order.count') * $product->final_price;
+                $raw_price += $request->input('order.count') * $product->price;
+                $weight += (int)$request->input('order.count') * (int)$product->weight;
                 $total_discount += ($product->price_type == 0 && $product->discount_percent > 0) ? (($product->price - $product->discount_price) * $request->input('order.count')) : 0;
                 if (!is_null($attr_diff)) {
                     $order_attribute[$attr_diff]['quantity'] += $request->input('order.count');
@@ -160,9 +171,11 @@ class CartController extends Controller
                     'quantity' => $request->input('order.count'),
                     'attribute' => $attribute,
                     'price' => $request->input('order.count') * $product->final_price,
+                    'raw_price' => $request->input('order.count') * $product->price,
                     'price_type' => $product->price_type,
                     'discount_percent' => $product->discount_percent,
                     'total_discount' => ($product->price_type == 0 && $product->discount_percent > 0) ? (($product->price - $product->discount_price) * $request->input('order.count')) : 0,
+                    'weight' => $request->input('order.count') * $product->weight,
                     'pic' => $product->files()->defaultFile()->link,
                 ];
         }
@@ -180,12 +193,12 @@ class CartController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-     public function show($id)
-     {
-     //
-     }
+    public function show($id)
+    {
+        //
+    }
 
-     /**
+    /**
      * Show the form for editing the specified resource.
      *
      * @return \Illuminate\Http\Response
@@ -202,23 +215,23 @@ class CartController extends Controller
      * @param int $id
      * @return void
      */
-    public function update(Request $request, int $id) : void
+    public function update(Request $request, int $id): void
     {
         // attribute is optional
         $request->validate([
-            'type'=>['required', 'string', 'max:6'],
-            'attribute'=>['nullable','numeric', 'max:6'],
+            'type' => ['required', 'string', 'max:6'],
+            'attribute' => ['nullable', 'numeric', 'max:6'],
         ]);
 
 
         // set shorthand of ajax request data
         $type = $request->input('type');
-        $attribute = $request->input('attribute')??null;
+        $attribute = $request->input('attribute') ?? null;
         /*closure to manipulate more faster with less amount of code*/
-        $manipulator = function($type, $quantity, $step = 1){
-            if ($type=='remove'){
+        $manipulator = function ($type, $quantity, $step = 1) {
+            if ($type == 'remove') {
                 $quantity -= $step;
-            } elseif ($type=='add'){
+            } elseif ($type == 'add') {
                 $quantity += $step;
             }
             return $quantity;
@@ -230,29 +243,31 @@ class CartController extends Controller
         $basket = session()->get('basket');
         // manipulate product
         /*check ordered product existence*/
-        if(isset($basket[$id]) && is_array($basket[$id])){
+        if (isset($basket[$id]) && is_array($basket[$id])) {
             /*set $product pointer from $basket array to manipulate it directly*/
             $ordered_product = &$basket[$id];
             /*check quantity of ordered product if its right manipulate it!*/
-            if(($type=='remove' && $ordered_product['quantity'] > 1) || ($type=="add" && $ordered_product['quantity'] < $product->entity)){
+            if (($type == 'remove' && $ordered_product['quantity'] > 1) || ($type == "add" && $ordered_product['quantity'] < $product->entity)) {
                 /*manipulate quantity*/
                 $ordered_product['quantity'] = $manipulator($type, $ordered_product['quantity']);
                 /*change prices*/
                 $ordered_product['price'] = $ordered_product['quantity'] * $product->final_price;
+                $ordered_product['raw_price'] = $ordered_product['quantity'] * $product->price;
                 $ordered_product['total_discount'] = ($product->price_type == 0 && $product->discount_percent > 0) ? (($product->price - $product->discount_price) * $ordered_product['quantity']) : 0;
+                /*change weight*/
+                $ordered_product['weight'] = $ordered_product['quantity'] * $product->weight;
                 /*check if request also has attribute*/
-                if (!is_null($attribute) && isset($ordered_product['attribute'][$attribute])){
+                if (!is_null($attribute) && isset($ordered_product['attribute'][$attribute])) {
                     $ordered_product_attribute = &$ordered_product['attribute'][$attribute];
                     /*check if product attribute quantity has the right amount*/
-                    if(($type=='remove' && $ordered_product_attribute['quantity']>1) || ($type=='add'&&$ordered_product_attribute['quantity'] >=1)){
-                        $ordered_product_attribute['quantity']=$manipulator($type, $ordered_product['attribute'][$attribute]['quantity']);
+                    if (($type == 'remove' && $ordered_product_attribute['quantity'] > 1) || ($type == 'add' && $ordered_product_attribute['quantity'] >= 1)) {
+                        $ordered_product_attribute['quantity'] = $manipulator($type, $ordered_product['attribute'][$attribute]['quantity']);
                     } else {
                         unset($basket[$id]['attribute'][$attribute]);
                     }
                 }
-            }
-            /*check quantity of ordered product if its less than one, remove whole product*/
-            elseif($type=='remove' && $ordered_product['quantity']<=1){
+            } /*check quantity of ordered product if its less than one, remove whole product*/
+            elseif ($type == 'remove' && $ordered_product['quantity'] <= 1) {
                 unset($basket[$id]);
             }
         }
@@ -265,7 +280,7 @@ class CartController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id) : void
+    public function destroy(int $id): void
     {
         $basket = session()->get('basket');
         if (isset($basket[$id])) {

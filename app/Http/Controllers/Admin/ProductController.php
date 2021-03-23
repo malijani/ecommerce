@@ -109,6 +109,7 @@ class ProductController extends Controller
             'origin' => ['required', 'numeric'],
             'deliver' => ['required', 'numeric'],
             'warranty' => ['required', 'numeric'],
+            'weight'=>['required', 'numeric'],
             'price_type' => ['required', 'numeric'],
             'price' => ['required', 'numeric'],
             'discount_percent' => ['required', 'numeric', 'between:0,100'],
@@ -239,7 +240,6 @@ class ProductController extends Controller
      */
     public function update(Request $request, int $id): RedirectResponse
     {
-
         $product = Product::withoutTrashed()->findOrFail($id);
         $request->validate([
             /*FILES*/
@@ -263,6 +263,7 @@ class ProductController extends Controller
             'origin' => ['required', 'numeric'],
             'deliver' => ['required', 'numeric'],
             'warranty' => ['required', 'numeric'],
+            'weight'=>['required', 'numeric'],
             'price_type' => ['required', 'numeric'],
             'price' => ['required', 'numeric'],
             'discount_percent' => ['required', 'numeric', 'between:0,100'],

@@ -38,7 +38,7 @@ class LoginController extends Controller
         if(Auth::user()->isAdmin()){
             return '/admin';
         } else {
-            return '/home';
+            return '/cart';
         }
     }
     /**

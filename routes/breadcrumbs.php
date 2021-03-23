@@ -14,6 +14,12 @@ Breadcrumbs::for('cart', function($trail){
     $trail->push('سبد خرید', route('cart.index'));
 });
 
+// Home > Address
+Breadcrumbs::for('address', function($trail){
+    $trail->parent('home');
+    $trail->push('تعیین آدرس', route('address.index'));
+});
+
 // Home > Blog
 Breadcrumbs::for('blog', function ($trail) {
     $trail->parent('home');

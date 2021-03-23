@@ -80,7 +80,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'fa',
 
     /*
     |--------------------------------------------------------------------------
@@ -168,7 +168,9 @@ return [
         Hekmatinasser\Verta\VertaServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         UniSharp\LaravelFilemanager\LaravelFilemanagerServiceProvider::class,
-//        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+        Shetabit\Payment\Provider\PaymentServiceProvider::class,
+        Anetwork\Validation\PersianValidationServiceProvider::class,
+
 
         /*
          * Application Service Providers...
@@ -233,8 +235,7 @@ return [
         /*INSTALLED PACKAGES*/
         'Verta' => Hekmatinasser\Verta\Verta::class,
         'Image' => Intervention\Image\Facades\Image::class,
-
-
+        'Payment' => Shetabit\Payment\Facade\Payment::class,
     ],
 
 ];

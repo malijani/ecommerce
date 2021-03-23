@@ -10,8 +10,7 @@
                    role="button"
                 class="btn btn-outline-info mx-1"
                 >
-                    <i class="fa fa-shopping-cart"></i>
-                    سبد خرید
+                    <i class="fa fa-shopping-cart fa-2x"></i>
                     @if(session()->get('basket'))
                         <span class="badge badge-danger rounded-circle">{{ count(session()->get('basket')) }}</span>
                     @else
@@ -25,7 +24,7 @@
                 @if (\Illuminate\Support\Facades\Route::has('login'))
                     <div class="top-right links">
                         @auth
-                            <form action="{{ route('logout') }}" method="post" class="form-inline">
+                            <form action="{{ route('logout') }}" method="post" class="form-inline w-100">
                                 @csrf
                                 <button class="btn btn-outline-dark mx-1" role="button" type="submit" >
                                     <i class="fa fa-sign-out"></i>
@@ -33,13 +32,13 @@
                                 </button>
                             </form>
                         @else
-                            <a href="{{ route('login') }}" class="btn btn-outline-primary mx-1" role="button">
+                            <a href="{{ route('login') }}" class="btn btn-outline-primary mx-1 my-1 w-75" role="button">
                                 <i class="fa fa-sign-in"></i>
                                 ورود
                             </a>
 
                             @if (\Illuminate\Support\Facades\Route::has('register'))
-                                <a href="{{ route('register') }}" class="btn btn-outline-primary mx-1" role="button">
+                                <a href="{{ route('register') }}" class="btn btn-outline-primary mx-1 my-1 w-75" role="button">
                                     <i class="fa fa-user-plus"></i>
                                     عضویت
                                 </a>
@@ -69,7 +68,7 @@
 
             {{--LOGO SECTION--}}
             <div class="col-2 d-none d-lg-block text-left">
-                <img class="img-fluid" src="https://via.placeholder.com/50">
+                <img class="img-fluid" src="{{asset('front-v1/img/logo.png')}}">
             </div>
         </div>
 
@@ -78,7 +77,7 @@
                 <div class="row">
                     {{--USER ADDRESS SHOW--}}
                     <div class="col-lg-3 font-14">
-                        <div class="d-flex justify-content-start align-items-center">
+                    {{--    <div class="d-flex justify-content-start align-items-center">
                             <div class="col-1">
                                 <i class="fa fa-location-arrow"></i>
                             </div>
@@ -87,7 +86,7 @@
                                 <br>
                                 <span> تهران ، اسکندری شمالی > </span>
                             </div>
-                        </div>
+                        </div>--}}
                     </div>
 
 {{--                    TODO : CREATE MEGA MENU--}}

@@ -5,20 +5,20 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Verify Your Email Address') }}</div>
+                <div class="card-header p-5 text-center font-20">تایید حقیقی بودن ایمیل</div>
 
-                <div class="card-body">
+                <div class="card-body font-18">
                     @if (session('resent'))
                         <div class="alert alert-success" role="alert">
-                            {{ __('A fresh verification link has been sent to your email address.') }}
+                            یه لینک به ایمیل شما ارسال شده.
                         </div>
                     @endif
 
-                    {{ __('Before proceeding, please check your email for a verification link.') }}
-                    {{ __('If you did not receive the email') }},
+                    قبل از هرگونه اقدامی جهت سفارش محصول لطفاً ایمیل خود را تایید کنید تا برای پشتیبانی ارتباط بهتری با شما داشته باشیم!
+                    اگر ایمیل تایید را دریافت نکردید،
                     <form class="d-inline" method="POST" action="{{ route('verification.resend') }}">
                         @csrf
-                        <button type="submit" class="btn btn-link p-0 m-0 align-baseline">{{ __('click here to request another') }}</button>.
+                        <button type="submit" class="btn btn-link p-0 m-0 align-baseline font-18">اینجا کلیک کنید تا دوباره ارسال بشه</button>.
                     </form>
                 </div>
             </div>

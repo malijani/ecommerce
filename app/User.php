@@ -3,13 +3,15 @@
 namespace App;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Passport\HasApiTokens;
 
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable, SoftDeletes, HasApiTokens;
 
@@ -39,6 +41,18 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    public function addresses() : HasMany
+    {
+        return $this->hasMany(UserAddress::class)->orderByDesc('id');
+    }
+
+    public function getDefaultAddressAttribute()
+    {
+        return $this->addresses()->where('status', true)->get()->first() ?? $this->addresses()->get()->first();
+    }
+
 
 
     /**

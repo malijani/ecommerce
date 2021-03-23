@@ -32,7 +32,7 @@ class Product extends Model
         'origin', 'deliver', 'warranty',
         'price_type', 'price', 'discount_percent', 'price_self_buy',
         'entity', 'keywords', 'description', 'visit', 'sort',
-        'status', 'before', 'after', 'color',
+        'status', 'before', 'after', 'color', 'weight'
     ];
 
     protected $hidden=['user_id', 'price_self_buy'];

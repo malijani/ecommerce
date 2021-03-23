@@ -18,6 +18,16 @@ html, body{
     background: rgb(247, 247, 247);
 }
 
+::placeholder{ /* Chrome, Firefox, Safari, Opera*/
+    color: #bdbdbd !important;
+    opacity: 1; /*Firefox*/
+}
+
+::-ms-input-placeholder{
+    color: #bdbdbd !important;
+}
+
+
 .bg-whitesmoke{
     background-color: #F5F5F5 !important;
 }

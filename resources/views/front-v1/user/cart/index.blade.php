@@ -159,17 +159,34 @@
                 <div class="table-responsive">
                     <table class="table table-hover">
                         <tbody>
+                        <tr>
+                            <th scope="row">تعداد کالا</th>
+                            <td>{{ $total['count'] }} عدد</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">وزن مرسوله</th>
+                            <td>{{ $total['weight'] }} گرم</td>
+                        </tr>
                         <tr class="">
-                            <th scope="row">جمع قیمت</th>
-                            <td>{{ number_format($total['price']) }} تومن</td>
+                            <th scope="row">جمع قیمت(بدون تخفیف)</th>
+                            <td>{{ number_format($total['raw_price']) }} تومن</td>
                         </tr>
                         <tr class="text-success">
                             <th scope="row">جمع تخفیف</th>
                             <td>{{ number_format($total['discount']) }} تومن</td>
                         </tr>
+                        <tr class="font-weight-bolder">
+                            <th scope="row">قیمت نهایی</th>
+                            <td>{{ number_format($total['final_price']) }} تومن</td>
+                        </tr>
                         <tr class="">
                             <td colspan="2">
-                                <button type="button" class="btn btn-outline-primary w-100">پرداخت</button>
+                                <a href="{{ route('address.index') }}"
+                                   type="button"
+                                   class="btn btn-outline-success w-100 font-weight-bolder"
+                                >
+                                    ثبت سفارش
+                                </a>
                             </td>
                         </tr>
                         </tbody>

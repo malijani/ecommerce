@@ -4,16 +4,22 @@ use \Illuminate\Support\Facades\Route;
 use \Illuminate\Support\Facades\Auth;
 use \Unisharp\LaravelFilemanager\Lfm;
 
-Auth::routes();
+Auth::routes(['verify'=>true]);
 
 // GUEST SECTION
 Route::redirect('home', '/');
-Route::group(['prefix'=>'/'], function(){
+Route::group(['prefix'=>'/', 'middleware'=>['web']], function(){
     Route::get('', 'HomeController@home')->name('home');
     Route::resource('blog', 'Visitor\BlogController')->only(['index', 'show']);
     Route::resource('category', 'Visitor\CategoryController')->only(['index','show']);
     Route::resource('product', 'Visitor\ProductController')->only(['index', 'show']);
     Route::resource('cart', 'User\CartController')->only(['index', 'store', 'destroy', 'update']);
+});
+
+// USER SECTION
+Route::group(['prefix'=>'user', 'middleware'=>['web', 'auth', 'auth.normal', 'verified']], function(){
+    Route::resource('address', 'User\AddressController')->only(['index', 'destroy', 'store', 'update']);
+    Route::post('province/cities', 'User\ProvinceController@cities')->name('province.cities');
 });
 
 

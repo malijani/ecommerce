@@ -118,6 +118,29 @@
                             </div>
                         </div>{{--./PRICE_SELF_BUY--}}
 
+                        <div class="col-md-12">{{--weight : input number -> gram--}}
+                            <div class="form-group row">
+                                <label for="weight" class="col-form-label col-md-2 text-center">
+                                    <i class="fa fa-asterisk text-danger"></i>
+                                   وزن محصول (گرم)
+                                </label>
+                                <div class="col-md-10">
+                                    <input id="weight"
+                                           name="weight"
+                                           type="number"
+                                           class="form-control @error('weight') is-invalid @enderror"
+                                           minlength="2"
+                                           maxlength="100"
+                                           placeholder=" وزن محموله نهایی محصول جهت ارسال "
+                                           title="مقدار دهی الزامی"
+                                           value="{{ old('weight') }}"
+                                           autocomplete="off"
+                                    >
+                                    @include('partials.form_error',['input'=>'weight'] )
+                                </div>
+                            </div>
+                        </div>{{--./weight--}}
+
                         <div
                             class="col-md-6">{{--PRICE_TYPE : select -> 0 discount price, 1 definitive price, 2 ask price --}}
                             <div class="form-group row">
