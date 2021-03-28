@@ -181,12 +181,12 @@ class ProductController extends Controller
      * Display the specified resource.
      *
      * @param int $id
-     * @return Response
+     * @return RedirectResponse
      */
-    public function show(int $id): Response
+    public function show(int $id): RedirectResponse
     {
-        // TODO : IMPLEMENT SHOW METHOD PRODUCT
-        return response('show/' . $id);
+        $product = Product::withoutTrashed()->findOrFail($id);
+        return response()->redirectToRoute('product.show', $product->title_en);
     }
 
     /**
@@ -241,6 +241,7 @@ class ProductController extends Controller
     public function update(Request $request, int $id): RedirectResponse
     {
         $product = Product::withoutTrashed()->findOrFail($id);
+
         $request->validate([
             /*FILES*/
             'file.title' => ['required', 'array', 'min:1'],
@@ -253,6 +254,12 @@ class ProductController extends Controller
             'attribute.value'=>['sometimes', 'required', 'array', 'max:6'],
             'attribute.id.*'=>['sometimes', 'required', 'exists:attributes,id'],
             'attribute.value.*'=>['sometimes', 'required', 'min:2', 'max:70'],
+
+            /*DETAILS*/
+            'detail.title'=>['required', 'array', 'min:1'],
+            'detail.detail'=>['required', 'array', 'min:1'],
+            'detail.title.*'=>['required', 'min:2', 'string', 'max:50'],
+            'detail.detail.*'=>['required', 'min:2','string', 'max:100'],
 
             'brand_id' => ['required', 'numeric'],
             'category_id' => ['required', 'numeric'],
@@ -393,7 +400,32 @@ class ProductController extends Controller
                     [$id_val=> ['attr_value'=>$attr_values[$id_key]]]
                 );
             }
+        } elseif($product->attrs->count()){
+            $product->attrs()->detach();
         }
+
+
+
+        /*UPDATE DETAILS*/
+        $saved_details = $product->details->pluck('detail', 'title')->toArray();
+        $input_details = array_combine($request->input('detail.title'), $request->input('detail.detail'));
+
+        $different_details = array_merge(array_diff($saved_details, $input_details), array_diff_key($saved_details, $input_details));
+        if(!is_null($different_details)){
+            foreach($different_details as $diff_detail_key=>$diff_detail_val){
+                // FIND UPDATED TITLES AND DELETE THEM
+                $product->details()->where('title', $diff_detail_key)->where('detail', $diff_detail_val)->delete();
+            }
+        }
+
+        $product_details=[];
+        foreach($input_details as $key=>$val){
+            array_push($product_details, ['title'=>$key, 'detail'=>$val]);
+        }
+        foreach($product_details as $product_detail){
+            $product->details()->updateOrCreate($product_detail);
+        }
+
 
         $product->update(array_merge(
             $request->except('title_en'),
@@ -417,6 +449,10 @@ class ProductController extends Controller
         /*DELETE PRODUCT ATTRIBUTES*/
         if($product->attrs->count()){
             $product->attrs->detach();
+        }
+
+        if($product->details->count()){
+            $product->details()->delete();
         }
 
         $product->delete();

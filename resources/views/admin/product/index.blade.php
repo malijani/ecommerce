@@ -48,7 +48,11 @@
                         @foreach($products as $product)
                             <tr class="text-center" id="data{{ $product->id }}">
                                 <td class="align-middle">{{ $product->id }}</td>
-                                <td class="align-middle">{{ $product->title }}<br>{{ $product->title_en }}</td>
+                                <td class="align-middle">
+                                    <a href="{{ route('products.show', $product->id) }}">
+                                        {{ $product->title }}<br>{{ $product->title_en }}
+                                    </a>
+                                </td>
                                 <td class="align-middle">{{ $product->entity}}</td>
                                 <td class="align-middle">{{ $product->origin_text }}</td>
                                 <td class="align-middle">{{ $product->deliver_text }}</td>

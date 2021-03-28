@@ -78,6 +78,10 @@ class Product extends Model
         return $this->belongsTo(Product::class, 'after')->where('status', 1)->select('id', 'title', 'title_en');
     }
 
+    public function details() : HasMany
+    {
+        return $this->hasMany(ProductDetail::class, 'product_id')->orderBy('id');
+    }
 
     public function getShowPriceAttribute() : string
     {

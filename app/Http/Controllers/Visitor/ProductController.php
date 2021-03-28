@@ -44,6 +44,7 @@ class ProductController extends Controller
             ->with('bef', 'af', 'category', 'user', 'brand', 'files', 'attrs')
             ->active()
             ->firstOrFail();
+        $product->increment('visit');
         /*SET PAGE TITLE*/
         $title = $product->title;
 

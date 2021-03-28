@@ -84,89 +84,92 @@
 
                 <div class="col-12">{{--ORDER SECTION--}}
                     @if($product->status != 2 && $product->price_type != 2 &&  $product->entity > 0)
-                    <form action="{{ route('cart.store') }}" method="POST">
-                        @csrf
-                        <input type="hidden" name="order[product_id]" value="{{ $product->id }}">
-                        {{--CUSTOMIZE ORDER WITH ATTRIBUTES--}}
-                        @if(count($attributes))
-                            <div class="form-group row">
-                                @foreach($attributes as $attr_id=>$attr_values)
-                                    <div class="col-md-12">
-                                        <label for="order-attribute-{{ $attr_id }}"
-                                               class="col-form-label col-md-2 text-right">{{ key($attr_values)}}
-                                            :</label>
-                                        <div class="col-md-6 mt-1">
-
-                                            <select name="order[attribute][{{ $attr_id }}]"
-                                                    id="order-attribute-{{$attr_id}}"
-                                                    class="form-control"
-                                            >
-                                                @foreach($attr_values as $attr_value)
-                                                    @foreach($attr_value as $attribute)
-                                                        <option value="{{ $attribute  }}"> {{ $attribute }} </option>
+                        <form action="{{ route('cart.store') }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="order[product_id]" value="{{ $product->id }}">
+                            {{--CUSTOMIZE ORDER WITH ATTRIBUTES--}}
+                            @if(count($attributes))
+                                <div class="form-group row">
+                                    @foreach($attributes as $attr_id=>$attr_values)
+                                        <div class="col-md-12">
+                                            <label for="order-attribute-{{ $attr_id }}"
+                                                   class="col-form-label col-md-2 text-right">{{ key($attr_values)}}
+                                                :</label>
+                                            <div class="col-md-6 mt-1">
+                                                <select name="order[attribute][{{ $attr_id }}]"
+                                                        id="order-attribute-{{$attr_id}}"
+                                                        class="form-control"
+                                                >
+                                                    @foreach($attr_values as $attr_value)
+                                                        @if(is_array($attr_value))
+                                                            @foreach($attr_value as $attribute)
+                                                                <option
+                                                                    value="{{ $attribute  }}"> {{ $attribute }} </option>
+                                                            @endforeach
+                                                        @else
+                                                            <option value="{{ $attr_value }}">{{ $attr_value }}</option>
+                                                        @endif
                                                     @endforeach
-                                                @endforeach
-                                            </select>
-                                            @include('partials.form_error',['input'=>'order.attribute.'.$attr_id])
+                                                </select>
+                                                @include('partials.form_error',['input'=>'order.attribute.'.$attr_id])
+                                            </div>
                                         </div>
-                                    </div>
-                                @endforeach
-                            </div>
-                        @endif
+                                    @endforeach
+                                </div>
+                            @endif
 
-                        {{--SHOW DYNAMIC ENTITY--}}
-                        <div class="form-group row">
-                            <label for="order-count"
-                                   class="text-dark col-form-label col-md-12 text-center">موجودی:
-                                <span id="entity" class="font-weight-bolder">
+                            {{--SHOW DYNAMIC ENTITY--}}
+                            <div class="form-group row">
+                                <label for="order-count"
+                                       class="text-dark col-form-label col-md-12 text-center">موجودی:
+                                    <span id="entity" class="font-weight-bolder">
                                     {{ $product->entity -1 }}
                                 </span>
-                                عدد</label>
-                        </div>
+                                    عدد</label>
+                            </div>
 
-                        {{--SET AMOUNT OF PRODUCT ORDER--}}
-                        <div class="form-group row justify-content-center">
-                            <div class="col-8">
-                                <button type="button"
-                                        role="link"
-                                        class="btn btn-sm btn-outline-success form-control m-1"
-                                        id="add-product-count"
-                                >
-                                    <i class="fa fa-plus"></i>
-                                </button>
+                            {{--SET AMOUNT OF PRODUCT ORDER--}}
+                            <div class="form-group row justify-content-center">
+                                <div class="col-8">
+                                    <button type="button"
+                                            role="link"
+                                            class="btn btn-sm btn-outline-success form-control m-1"
+                                            id="add-product-count"
+                                    >
+                                        <i class="fa fa-plus"></i>
+                                    </button>
 
-                                <input
-                                    class="text-center form-control font-weight-bolder"
-                                    name="order[count]"
-                                    type="number"
-                                    id="order-count"
-                                    value="{{ old("order.count") ?? 1 }}"
-                                    min="1"
-                                    max="{{ $product->entity}}"
-                                >
+                                    <input
+                                        class="text-center form-control font-weight-bolder"
+                                        name="order[count]"
+                                        type="number"
+                                        id="order-count"
+                                        value="{{ old("order.count") ?? 1 }}"
+                                        min="1"
+                                        max="{{ $product->entity}}"
+                                    >
 
-                                <button type="button"
-                                        class="btn btn-sm btn-outline-danger form-control m-1"
-                                        id="sub-product-count"
-                                >
-                                    <i class="fa fa-minus"></i>
-                                </button>
+                                    <button type="button"
+                                            class="btn btn-sm btn-outline-danger form-control m-1"
+                                            id="sub-product-count"
+                                    >
+                                        <i class="fa fa-minus"></i>
+                                    </button>
+
+                                </div>
 
                             </div>
 
-                        </div>
 
+                            <button
+                                type="submit"
+                                class="btn btn-primary form-control"
+                            >
+                                <i class="fa fa-plus-square px-2"></i>
+                                افزودن به سبد خرید
+                            </button>
 
-
-                        <button
-                            type="submit"
-                            class="btn btn-primary form-control"
-                        >
-                            <i class="fa fa-plus-square px-2"></i>
-                            افزودن به سبد خرید
-                        </button>
-
-                    </form>
+                        </form>
                     @else
                         <div class="alert alert-danger rounded text-center">
                             <i class="fa fa-times-circle-o fa-2x"></i>
@@ -177,6 +180,62 @@
 
                 </div>{{--./ORDER SECTION--}}
             </div>{{--./PRODUCT MAIN CONTENT--}}
+        </div>
+
+
+        <div class="row bg-white p-3 my-2">
+            <div class="col-xs-12 ">
+                <nav>
+                    <div class="nav nav-tabs nav-fill font-weight-bolder" id="nav-tab" role="tablist">
+                        {{--DESCRIPTION--}}
+                        <a class="nav-item nav-link " id="nav-description-tab" data-toggle="tab" href="#nav-description"
+                           role="tab" aria-controls="nav-description" aria-selected="true">توضیحات</a>
+                        {{--DETAILS--}}
+                        <a class="nav-item nav-link active " id="nav-details-tab" data-toggle="tab" href="#nav-details"
+                           role="tab" aria-controls="nav-details" aria-selected="false">مشخصات</a>
+                        {{--COMMENTS--}}
+                        <a class="nav-item nav-link" id="nav-comments-tab" data-toggle="tab" href="#nav-comments"
+                           role="tab" aria-controls="nav-comments" aria-selected="false">نظرات</a>
+                    </div>
+                </nav>
+                <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
+                    {{--DESCRIPTION--}}
+                    <div class="tab-pane fade" id="nav-description" role="tabpanel"
+                         aria-labelledby="nav-description-tab">
+                        <div class="p-5">
+                            {!! $product->long_text !!}
+                        </div>
+
+                    </div>
+                    {{--DETAILS--}}
+                    <div class="tab-pane fade  show active" id="nav-details" role="tabpanel"
+                         aria-labelledby="nav-details-tab">
+                        @foreach($product->details as $detail)
+                            <div class="row mt-2 p-2 border-bottom font-weight-bold font-16">
+
+                                <div class="col-3 text-md-center border-left">
+                                    {{ $detail->title }}
+                                </div>
+                                <div class="col-9 pr-5 text-md-right">
+                                    {{ $detail->detail }}
+                                </div>
+
+                            </div>
+                        @endforeach
+                    </div>
+                    {{--COMMENTS--}}
+                    <div class="tab-pane fade" id="nav-comments" role="tabpanel" aria-labelledby="nav-comments-tab">
+                        Et et consectetur ipsum labore excepteur est proident excepteur ad velit occaecat qui minim
+                        occaecat veniam. Fugiat veniam incididunt anim aliqua enim pariatur veniam sunt est aute sit
+                        dolor anim. Velit non irure adipisicing aliqua ullamco irure incididunt irure non esse
+                        consectetur nostrud minim non minim occaecat. Amet duis do nisi duis veniam non est eiusmod
+                        tempor incididunt tempor dolor ipsum in qui sit. Exercitation mollit sit culpa nisi culpa non
+                        adipisicing reprehenderit do dolore. Duis reprehenderit occaecat anim ullamco ad duis occaecat
+                        ex.
+                    </div>
+                </div>
+
+            </div>
         </div>
 
 
@@ -205,11 +264,14 @@
 
                 </div>
             </div>
-        @endif
+        @endif {{--./similar products--}}
 
 
-    </div>{{--container--}}
+    </div>{{--./product show container--}}
 
+
+    </div>
+    </div>
 
 
 
@@ -270,7 +332,7 @@
                     $(this).val({{ $product->entity}});
                     entity.text("0");
                 } else {
-                    entity.text({{$product->entity - 1 }} - $(this).val());
+                    entity.text({{$product->entity - 1 }} -$(this).val());
                 }
 
             });
@@ -289,28 +351,28 @@
                 nav: false,
                 navElement: 'div',
                 dots: false,
-                rewind:true,
-                responsiveClass:true,
-                responsive:{
+                rewind: true,
+                responsiveClass: true,
+                responsive: {
                     0: {
-                        items:2,
-                        slideBy:1,
+                        items: 2,
+                        slideBy: 1,
                     },
-                    576:{
-                        items:2,
-                        slideBy:1,
+                    576: {
+                        items: 2,
+                        slideBy: 1,
                     },
-                    768:{
-                        items:3,
-                        slideBy:2,
+                    768: {
+                        items: 3,
+                        slideBy: 2,
                     },
-                    999:{
-                        items:5,
-                        slideBy:2,
+                    999: {
+                        items: 5,
+                        slideBy: 2,
                     },
-                    1400:{
-                        items:7,
-                        slideBy:3,
+                    1400: {
+                        items: 7,
+                        slideBy: 3,
                     }
                 }
             });

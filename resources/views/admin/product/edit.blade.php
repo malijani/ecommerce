@@ -624,6 +624,162 @@
                         </div>{{--./PICTURES--}}
 
 
+                        {{--product details--}}
+                        <div class="col-md-12">{{--Details : OneToMany relation(title, detail)--}}
+                            <div class="col-12">{{--HR--}}
+                                <hr class="w-50">
+                            </div>{{--./HR--}}
+
+                            <div class="row justify-content-center">{{--HEADER & DESCRIPTION--}}
+                                <div class="col-lg-8">
+                                    <div class="text-center">
+                                        <h3 class="font-weight-light">جزئیات محصول</h3>
+                                    </div>
+                                    <div class="callout callout-info text-info text-center">
+                                        <span
+                                            class="">* ویژگی های خاص یک محصول در این قسمت ثبت می‌شود...</span><br>
+                                        <span class="">* هر محصول دارای چندین مشخصه است.</span><br>
+                                    </div>
+                                </div>
+                            </div>{{--./HEADER & DESCRIPTION--}}
+
+                            <div class="col-12">{{--detail FIELDS--}}
+                                <div id="row-detail">
+                                    @if(!is_null($product->details) && is_null(old('detail'))){{--GENERATE OLD detail FIELDS--}}
+                                    @foreach($product->details as $detail)
+                                        {{--GENERATE details--}}
+                                        <div class="detail-{{$loop->index}}">
+                                            <div
+                                                class="form-group row align-items-center align-middle">{{--MAIN FIELDS ROW--}}
+
+                                                <div class="col-md-6">{{--detail>TITLE--}}
+                                                    <div class="form-group row">
+                                                        <label for="detail-title-id-{{$loop->index}}"
+                                                               class="col-form-label col-md-3 text-center">
+                                                            <i class="fa fa-asterisk text-danger"></i>
+                                                            عنوان مشخصه
+                                                        </label>
+                                                        <div class="col-md-9">
+                                                            <input id="detail-title-id-{{$loop->index}}"
+                                                                    name="detail[title][{{$loop->index}}]"
+                                                                    class="form-control d-block @error('detail.title.'.$loop->index) is-invalid @enderror"
+                                                                    title="این مشخصه در جدول مشخصات محصول نمایش داده می‌شود!"
+                                                                   type="text"
+                                                                   maxlength="50"
+                                                                   minlength="2"
+                                                                   value="{{ $detail->title }}"
+                                                            >
+                                                            @include('partials.form_error', ['input'=>'detail.title.'.$loop->index])
+                                                        </div>
+                                                    </div>
+                                                </div>{{--./detail>detail--}}
+
+                                                <div class="col-md-6">{{--detail>detail--}}
+                                                    <div class="form-group row">
+                                                        <label for="detail-detail-{{$loop->index}}"
+                                                               class="col-form-label col-md-3 text-center">
+                                                            <i class="fa fa-asterisk text-danger"></i>
+                                                            مشخصه
+                                                        </label>
+                                                        <div class="col-md-9">
+                                                            <input id="detail-detail-{{$loop->index}}"
+                                                                   name="detail[detail][{{$loop->index}}]"
+                                                                   type="text"
+                                                                   class="form-control @error('detail.detail.'.$loop->index) is-invalid @enderror"
+                                                                   title="مقدار دهی الزامی"
+                                                                   minlength="2"
+                                                                   maxlength="100"
+                                                                   value="{{ $detail->detail }}"
+                                                                   required
+                                                            >
+                                                            @include('partials.form_error', ['input'=>'detail.detail.'.$loop->index])
+                                                        </div>
+                                                    </div>
+                                                </div>{{--./detail>detail--}}
+
+                                            </div>{{--./MAIN FIELDS ROW--}}
+                                        </div>{{--./detail-0--}}
+                                    @endforeach
+                                    @endif{{--END DETAIL FIELDS GENERATION--}}
+                                    {{--!!DYNAMIC FIELDS GOES HERE!!--}}
+                                    {{--########################OLDS##############################--}}
+                                    @if(!is_null(old('detail'))){{--GENERATE OLD DETAIL FIELDS--}}
+                                    @for($i=0;$i<count(old('detail.title')); $i++)
+                                            <div class="detail-{{$i}}">
+                                                <div
+                                                    class="form-group row align-items-center align-middle">{{--MAIN FIELDS ROW--}}
+
+                                                    <div class="col-md-6">{{--detail>TITLE--}}
+                                                        <div class="form-group row">
+                                                            <label for="detail-title-id-{{$i}}"
+                                                                   class="col-form-label col-md-3 text-center">
+                                                                <i class="fa fa-asterisk text-danger"></i>
+                                                                عنوان مشخصه
+                                                            </label>
+                                                            <div class="col-md-9">
+                                                                <input id="detail-title-id-{{$i}}"
+                                                                       name="detail[title][{{$i}}]"
+                                                                       class="form-control d-block @error('detail.title.'.$i) is-invalid @enderror"
+                                                                       title="این مشخصه در جدول مشخصات محصول نمایش داده می‌شود!"
+                                                                       type="text"
+                                                                       maxlength="50"
+                                                                       minlength="2"
+                                                                       value="{{ old('detail.title.'.$i) }}"
+                                                                >
+                                                                @include('partials.form_error', ['input'=>'detail.title.'.$i])
+                                                            </div>
+                                                        </div>
+                                                    </div>{{--./detail>detail--}}
+
+                                                    <div class="col-md-6">{{--detail>detail--}}
+                                                        <div class="form-group row">
+                                                            <label for="detail-detail-{{$i}}"
+                                                                   class="col-form-label col-md-3 text-center">
+                                                                <i class="fa fa-asterisk text-danger"></i>
+                                                                مشخصه
+                                                            </label>
+                                                            <div class="col-md-9">
+                                                                <input id="detail-detail-{{$i}}"
+                                                                       name="detail[detail][{{$i}}]"
+                                                                       type="text"
+                                                                       class="form-control @error('detail.detail.'.$i) is-invalid @enderror"
+                                                                       title="مقدار دهی الزامی"
+                                                                       minlength="2"
+                                                                       maxlength="100"
+                                                                       value="{{ old('detail.detail.'.$i) }}"
+                                                                       required
+                                                                >
+                                                                @include('partials.form_error', ['input'=>'detail.detail.'.$i])
+                                                            </div>
+                                                        </div>
+                                                    </div>{{--./detail>detail--}}
+
+                                                </div>{{--./MAIN FIELDS ROW--}}
+                                            </div>{{--./detail-0--}}
+                                        @endfor
+
+                                    @endif{{--END DETAIL FIELDS GENERATION--}}
+
+                                </div>
+                            </div>{{--./ATTRIBUTE FIELDS--}}
+
+                            <div class="col-12">{{--ADD/REMOVE BUTTONS--}}
+                                <div class="text-center">
+                                    <button type="button" id="add-detail-field" class="btn btn-success btn-sm">
+                                        <i class="fa fa-plus"></i>
+                                    </button>
+                                    <button type="button" id="del-detail-field" class=" btn btn-danger btn-sm">
+                                        <i class="fa fa-minus"></i>
+                                    </button>
+                                </div>
+                            </div>{{--./ADD+REMOVE BUTTONS--}}
+
+                            <div class="col-12">{{--HR--}}
+                                <hr class="w-50">
+                            </div>{{--./HR--}}
+                        </div>{{--./details--}}
+                        {{--./product details--}}
+
                         <div class="col-md-12">{{--Attributes : many to many relation (attribute, value)--}}
                             <div class="col-12">{{--HR--}}
                                 <hr class="w-50">
@@ -638,7 +794,8 @@
                                         <span
                                             class="">* محصولات با قیمت یکسان اما خصوصیات متفاوتی مانند طعم، رنگ و...</span><br>
                                         <span class="">* هر محصول می‌تواند داری یک یا چند ویژگی باشد.</span><br>
-                                        <span class="">* این ویژگی ها در تغییر قیمت محصول نقشی ندارند.</span>
+                                        <span class="">* این ویژگی ها در تغییر قیمت محصول نقشی ندارند.</span><br>
+                                        <span class="">* از هر ویژگی میبایست دو مقدار وجود داشته باشد.</span>
                                     </div>
                                 </div>
                             </div>{{--./HEADER & DESCRIPTION--}}
@@ -1017,6 +1174,7 @@
                     } else {
                         input.val('');
                         status.show();
+                        status.text('لطفاً یک تصویر پیشفرض برای محصول انتخاب نمایید!');
                     }
 
 
@@ -1256,7 +1414,7 @@
             if (attribute_wrapper.children().length > 0) {
                 let attribute_wrapper_last_child = attribute_wrapper.children().last();
                 let attribute_wrapper_last_child_classes = attribute_wrapper_last_child.attr('class').split(' ');
-                attribute_field_count = attribute_wrapper_last_child_classes['0'].substr(-1, wrapper_last_child_classes['0'].length);
+                attribute_field_count = attribute_wrapper_last_child_classes['0'].substr(-1, attribute_wrapper_last_child_classes['0'].length);
             }
 
             add_attribute_button.on('click', function (e) {
@@ -1332,6 +1490,95 @@
                 }
             });
 
+
+
+
+
+
+
+        /*DETAIL HANDLING */
+            let detail_wrapper = $("#row-detail");
+            let add_detail_field_button = $("#add-detail-field");
+            let del_detail_field_button = $("#del-detail-field");
+            let max_detail_field_count = 20;
+            let detail_field_count = 0;
+            if (detail_wrapper.children().length > 0) {
+                let detail_wrapper_last_child = detail_wrapper.children().last();
+                let detail_wrapper_last_child_classes = detail_wrapper_last_child.attr('class').split(' ');
+                detail_field_count = detail_wrapper_last_child_classes['0'].substr(-1, detail_wrapper_last_child_classes['0'].length);
+            }
+
+            add_detail_field_button.on('click', function(e){
+                e.preventDefault();
+                if(detail_field_count < max_detail_field_count){
+                    ++detail_field_count;
+                    detail_wrapper.append(
+                        '<div class="detail-'+detail_field_count+'">'+
+                        '   <div'+
+                        '      class="form-group row align-items-center align-middle">'+
+                        '      <div class="col-md-6">'+
+                        '         <div class="form-group row">'+
+                        '            <label for="detail-title-id-'+detail_field_count+'"'+
+                        '               class="col-form-label col-md-3 text-center">'+
+                        '            <i class="fa fa-asterisk text-danger"></i>'+
+                        '            عنوان مشخصه'+
+                        '            </label>'+
+                        '            <div class="col-md-9">'+
+                        '               <input id="detail-title-id-'+detail_field_count+'"'+
+                        '                  name="detail[title]['+detail_field_count+']"'+
+                        '                  class="select2 form-control d-block"'+
+                        '                  title="این مشخصه در جدول مشخصات محصول نمایش داده می‌شود!"'+
+                        '                  type="text"'+
+                        '                  maxlength="50"'+
+                        '                  minlength="2"'+
+                        '                  >'+
+                        '            </div>'+
+                        '         </div>'+
+                        '      </div>'+
+                        '      <div class="col-md-6">'+
+                        '         <div class="form-group row">'+
+                        '            <label for="detail-detail-'+detail_field_count+'"'+
+                        '               class="col-form-label col-md-3 text-center">'+
+                        '            <i class="fa fa-asterisk text-danger"></i>'+
+                        '            مشخصه'+
+                        '            </label>'+
+                        '            <div class="col-md-9">'+
+                        '               <input id="detail-detail-'+detail_field_count+'"'+
+                        '                  name="detail[detail]['+detail_field_count+']"'+
+                        '                  type="text"'+
+                        '                  class="form-control"'+
+                        '                  title="مقدار دهی الزامی"'+
+                        '                  minlength="2"'+
+                        '                  maxlength="100"'+
+                        '                  required'+
+                        '                  >'+
+                        '            </div>'+
+                        '         </div>'+
+                        '      </div>'+
+                        '   </div>'+
+                        '</div>'
+                    );
+                } else {
+                    swal({
+                        text: "برای هر محصول حداکثر 20 مشخصه در نظر گرفته شده است.",
+                        icon: 'error',
+                        button: "اوکی",
+                    });
+                }
+            });
+
+            del_detail_field_button.on('click', function(){
+                if (detail_field_count > 0) {
+                    --detail_field_count;
+                    detail_wrapper.children().last().remove();
+                }else {
+                    swal({
+                        text: "برای هر محصول حداقل یک مشخصه در نظر گرفته شده است.",
+                        icon: 'error',
+                        button: "اوکی",
+                    });
+                }
+            });
 
         });
     </script>

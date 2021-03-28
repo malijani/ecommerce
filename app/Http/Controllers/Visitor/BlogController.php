@@ -64,6 +64,9 @@ class BlogController extends Controller
             ->active()
             ->where('title_en' , $slug)
             ->firstOrFail();
+
+        $article->increment('visit');
+
         $title = $article->title;
 
         return view('front-v1.blog.show', [
