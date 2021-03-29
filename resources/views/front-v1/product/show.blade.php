@@ -189,12 +189,12 @@
                 <nav>
                     <div class="nav nav-tabs nav-fill font-weight-bolder" id="nav-tab" role="tablist">
                         {{--DESCRIPTION--}}
-                        <a class="nav-item nav-link " id="nav-description-tab" data-toggle="tab" href="#nav-description"
+                        <a class="nav-item nav-link active" id="nav-description-tab" data-toggle="tab" href="#nav-description"
                            role="tab" aria-controls="nav-description" aria-selected="true">
                             توضیحات
                         </a>
                         {{--DETAILS--}}
-                        <a class="nav-item nav-link active " id="nav-details-tab" data-toggle="tab" href="#nav-details"
+                        <a class="nav-item nav-link" id="nav-details-tab" data-toggle="tab" href="#nav-details"
                            role="tab" aria-controls="nav-details" aria-selected="false">
                             مشخصات
                         </a>
@@ -207,7 +207,7 @@
                 </nav>
                 <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
                     {{--DESCRIPTION--}}
-                    <div class="tab-pane fade" id="nav-description" role="tabpanel"
+                    <div class="tab-pane fade show active" id="nav-description" role="tabpanel"
                          aria-labelledby="nav-description-tab">
                         <div class="p-5">
                             {!! $product->long_text !!}
@@ -215,7 +215,7 @@
 
                     </div>
                     {{--DETAILS--}}
-                    <div class="tab-pane fade  show active" id="nav-details" role="tabpanel"
+                    <div class="tab-pane fade" id="nav-details" role="tabpanel"
                          aria-labelledby="nav-details-tab">
                         @foreach($product->details as $detail)
                             <div class="row mt-2 p-2 border-bottom font-weight-bold font-16">

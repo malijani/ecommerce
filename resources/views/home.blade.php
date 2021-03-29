@@ -4,9 +4,17 @@
 @section('content')
 
 {{--        {{ \Diglactic\Breadcrumbs\Breadcrumbs::render('home') }}--}}
+{{--TODO : MEGA MENU--}}
+{{--TODO : WEBSITE BANNER GOES HERE--}}
 {{--TODO : ADD CAROUSEL HERE!--}}
-    <div class="container-fluid my-3">
-        <div class="row px-5">
+{{--TODO : MINIMAL FAQ GOES HERE--}}
+{{--TODO : CATEGORIES GOES HERE--}}
+{{--TODO : SUGGESTS GOES HERE--}}
+{{--TODO : BRANDS PAGE DIRECTION--}} {{--TODO : SHOW MAIN COMPANY --}}
+{{--TODO : NEW PRODUCTS, MOST ORDERED--}}
+{{--TODO : WAY OF PRODUCT SELLING--}}
+    <div class="container my-3">
+        <div class="row">
             @include('front-v1.partials.categories', ['categories'=>$categories])
         </div>
 

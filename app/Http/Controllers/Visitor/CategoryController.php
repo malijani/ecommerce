@@ -16,9 +16,15 @@ class CategoryController extends Controller
      *
      * @return Response
      */
-    public function index() : Response
+    public function index(): Response
     {
-        return response()->view('front-v1.category.index');
+        $categories = Category::withoutTrashed()
+            ->with('user', 'children')
+            ->paginate(100);
+
+        return response()->view('front-v1.category.index',[
+            'categories'=>$categories,
+        ]);
     }
 
     /**
@@ -48,7 +54,7 @@ class CategoryController extends Controller
      * @param string $slug
      * @return  Response
      */
-    public function show(string $slug) : Response
+    public function show(string $slug): Response
     {
         $category = Category::withoutTrashed()
             ->with('user', 'children')
@@ -64,11 +70,11 @@ class CategoryController extends Controller
 
         $title = $category->title;
 
-        return  response()->view('front-v1.category.show', [
-            'title'=>$title,
-            'category'=>$category,
-            'products'=>$products,
-            'sub_categories'=>$sub_categories,
+        return response()->view('front-v1.category.show', [
+            'title' => $title,
+            'category' => $category,
+            'products' => $products,
+            'sub_categories' => $sub_categories,
         ]);
     }
 
