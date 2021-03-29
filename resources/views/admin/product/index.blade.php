@@ -84,7 +84,7 @@
 
                                     @if($product->files->count())
                                         {{--CAROUSEL--}}
-                                        <div id="carouselExampleControls{{$product->id}}" class="carousel slide" data-ride="carousel">
+                                        <div id="carouselControls{{$product->id}}" class="carousel slide" data-ride="carousel">
                                             <div class="carousel-inner">
                                                 @foreach($product->files as $pic)
                                                     {{--                                            {{$pic->link . ' => ' .$pic->title}}<br>--}}
@@ -98,15 +98,15 @@
                                                     </div>
                                                 @endforeach
                                             </div>
-                                            <a class="carousel-control-prev" href="#carouselExampleControls{{$product->id}}"
+                                            <a class="carousel-control-prev" href="#carouselControls{{$product->id}}"
                                                role="button" data-slide="prev">
                                                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                                <span class="sr-only">Previous</span>
+                                                <span class="sr-only">قبل</span>
                                             </a>
-                                            <a class="carousel-control-next" href="#carouselExampleControls{{$product->id}}"
+                                            <a class="carousel-control-next" href="#carouselControls{{$product->id}}"
                                                role="button" data-slide="next">
                                                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                                <span class="sr-only">Next</span>
+                                                <span class="sr-only">بعد</span>
                                             </a>
                                         </div>
                                         {{--./CAROUSEL--}}
@@ -197,8 +197,8 @@
 
         function del(id) {
             swal({
-                title: "آیا از حذف مقاله مطمعنید؟",
-                text: "با حذف مقاله، قادر به بازگردانی آن نخواهید بود!",
+                title: "آیا از حذف محصول مطمعنید؟",
+                text: "با حذف محصول، قادر به بازگردانی آن نخواهید بود!",
                 icon: "warning",
                 buttons: ['نه! حذفش نکن.', 'آره، حذفش کن.'],
                 dangerMode: true,
@@ -218,7 +218,7 @@
                                 $('#data' + id).remove();
                                 swal({
                                     title: result,
-                                    text: "مقاله با موفقیت حذف شد :)",
+                                    text: "محصول با موفقیت حذف شد :)",
                                     icon: "success",
                                     button: "حله!",
                                 });
@@ -232,13 +232,13 @@
                             }
                         });
                         swal({
-                            text: "مقاله با موفقیت حذف شد :)",
+                            text: "محصول با موفقیت حذف شد :)",
                             icon: "success",
                             button: "حله!",
                         });
                     } else {
                         swal({
-                            text: "مقاله حذف نشد!",
+                            text: "محصول حذف نشد!",
                             icon: 'info',
                             button: 'فهمیدم!',
                         });

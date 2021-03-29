@@ -7,6 +7,7 @@ use App\Brand;
 use App\Category;
 use App\Http\Controllers\Controller;
 use App\Product;
+use App\ProductDetail;
 use App\ProductFile;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -100,6 +101,12 @@ class ProductController extends Controller
             'attribute.id.*'=>['sometimes', 'required', 'exists:attributes,id'],
             'attribute.value.*'=>['sometimes', 'required', 'min:2', 'max:70'],
 
+            /*DETAILS*/
+            'detail.title'=>['required', 'array', 'min:1'],
+            'detail.detail'=>['required', 'array', 'min:1'],
+            'detail.title.*'=>['required', 'min:2', 'string', 'max:50'],
+            'detail.detail.*'=>['required', 'min:2','string', 'max:100'],
+
             'brand_id' => ['required', 'numeric'],
             'category_id' => ['required', 'numeric'],
             'title' => ['required', 'min:2', 'max:100', 'unique:products,title'],
@@ -126,14 +133,26 @@ class ProductController extends Controller
 
         $show_default = $request->input('show_default'); // selected image to show as default
 
-
-
-
         $product = Product::query()->create(array_merge(
             $request->except('title_en', 'show_default'),
             ['title_en' => Str::slug($request->input('title_en'))],
             ['user_id' => Auth::id()]
         ));
+
+
+        /*SAVE DETAILS*/
+        $input_details = array_combine($request->input('detail.title'), $request->input('detail.detail'));
+
+        $product_details=[];
+        foreach($input_details as $key=>$val){
+            array_push($product_details, ['title'=>$key, 'detail'=>$val]);
+        }
+        foreach($product_details as $product_detail){
+            $product->details()->save(
+                new ProductDetail($product_detail)
+            );
+        }
+
 
         /*SAVE ATTRIBUTES*/
         if($request->has('attribute.id')){
@@ -287,6 +306,7 @@ class ProductController extends Controller
             'changed_files' => ['nullable', 'max:12'],
             'option' => ['nullable', 'array', 'max:5'],
         ]);
+
 
         $changed_titles = !is_null($request->input('changed_titles')) ? explode(',', $request->input('changed_titles')) : [];
         $changed_files = !is_null($request->input('changed_files')) ? explode(',', $request->input('changed_files')) : [];

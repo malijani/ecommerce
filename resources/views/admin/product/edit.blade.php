@@ -761,7 +761,7 @@
                                     @endif{{--END DETAIL FIELDS GENERATION--}}
 
                                 </div>
-                            </div>{{--./ATTRIBUTE FIELDS--}}
+                            </div>{{--./DETAIL FIELDS--}}
 
                             <div class="col-12">{{--ADD/REMOVE BUTTONS--}}
                                 <div class="text-center">
@@ -1496,7 +1496,7 @@
 
 
 
-        /*DETAIL HANDLING */
+            /*DETAIL HANDLING */
             let detail_wrapper = $("#row-detail");
             let add_detail_field_button = $("#add-detail-field");
             let del_detail_field_button = $("#del-detail-field");

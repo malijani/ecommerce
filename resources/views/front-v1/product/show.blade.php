@@ -57,8 +57,9 @@
                                 style="color: #bbb;">فروخته شده</span></a>
                     </p>
                 </div>
-                <div class="price w-50">
+                <div class="price w-50 pr-5">
                     <p class="border p-2 rounded text-center">
+
                         @if($product->price_type=="0" && $product->discount_percent != "0")
                             <span class="font-weight-bolder">{{$product->show_discount_price}} تومن</span><br>
                             <span class="discount font-weight-bold">{{ $product->show_price}} تومن</span>
@@ -189,13 +190,19 @@
                     <div class="nav nav-tabs nav-fill font-weight-bolder" id="nav-tab" role="tablist">
                         {{--DESCRIPTION--}}
                         <a class="nav-item nav-link " id="nav-description-tab" data-toggle="tab" href="#nav-description"
-                           role="tab" aria-controls="nav-description" aria-selected="true">توضیحات</a>
+                           role="tab" aria-controls="nav-description" aria-selected="true">
+                            توضیحات
+                        </a>
                         {{--DETAILS--}}
                         <a class="nav-item nav-link active " id="nav-details-tab" data-toggle="tab" href="#nav-details"
-                           role="tab" aria-controls="nav-details" aria-selected="false">مشخصات</a>
+                           role="tab" aria-controls="nav-details" aria-selected="false">
+                            مشخصات
+                        </a>
                         {{--COMMENTS--}}
                         <a class="nav-item nav-link" id="nav-comments-tab" data-toggle="tab" href="#nav-comments"
-                           role="tab" aria-controls="nav-comments" aria-selected="false">نظرات</a>
+                           role="tab" aria-controls="nav-comments" aria-selected="false">
+                            نظرات
+                        </a>
                     </div>
                 </nav>
                 <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
