@@ -68,6 +68,9 @@ body {
     direction:ltr;
 }
 
+.big-checkbox {
+    height:40px;
+}
 
 ul {
     padding-inline-start: 0px;

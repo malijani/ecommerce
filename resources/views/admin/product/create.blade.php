@@ -1241,7 +1241,7 @@
             // select picture
             @if(!is_null(old('show_default')))
             let selector = $(".img-" +{{old('show_default')}});
-            console.log({{old('show_default')}})
+            //console.log({{old('show_default')}})
             selector.mouseover();
             selector.click();
             @endif
