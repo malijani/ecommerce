@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Banner;
+use App\Brand;
 use App\Category;
 use App\Product;
 use Illuminate\Http\Request;
@@ -40,6 +41,12 @@ class HomeController extends Controller
             ->children()
             ->get();
 
+        $brands = Brand::withoutTrashed()
+            ->where('status', 1)
+            ->orderBy('sort')
+            ->orderByDesc('id')
+            ->take(4)
+            ->get();
         $products = Product::withoutTrashed()
             ->where('status', 1)
             ->where('entity', '>', 0)
@@ -51,6 +58,7 @@ class HomeController extends Controller
             'categories'=>$categories,
             'products'=>$products,
             'banner'=>$banner,
+            'brands'=>$brands,
 
         ]);
     }

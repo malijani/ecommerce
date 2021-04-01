@@ -110,6 +110,11 @@
                             <i class="fa fa-list"></i>
                              دسته بندی ها
                         </a>
+
+                        <a class="mx-2" href="{{ route('brand.index') }}">
+                            <i class="fa fa-barcode"></i>
+                            برند ها
+                        </a>
                     </div>
                     <div class="col-lg-3 text-left">
                     </div>

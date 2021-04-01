@@ -19,9 +19,8 @@
         </div>
     </div>
 </div>
+
 @yield('content')
-
-
 
 @include('front-v1.partials.footer')
 

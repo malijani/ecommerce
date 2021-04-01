@@ -16,8 +16,8 @@
     <div class="container my-3">
         {{--SHOW BANNER--}}
         @if(isset($banner))
-            <div class="row">
-                <div class="col-12 my-3">
+            <div class="row my-3">
+                <div class="col-12">
                     <img src="{{asset($banner->pic)}}"
                          alt="{{ $banner->pic_alt }}"
                          class="banner img rounded align-middle w-100"
@@ -26,10 +26,33 @@
                 </div>
             </div>
         @endif
-        <div class="row">
+        {{--SHOW BRANDS--}}
+        <div class="row mt-3 bg-white rounded p-3 ">
+            <div class="col-12 p-3 d-flex justify-content-between align-items-center">
+                <h3 class="font-14">
+                    <a class="text-dark" href="#">برند ها</a>
+                </h3>
+                <a href="#">
+                    مشاهده همه
+                    <i class="fa fa-eye"></i>
+                </a>
+            </div>
+            @include('front-v1.partials.brands', ['brands'=>$brands])
+        </div>
+        {{--SHOW CATEGORIES--}}
+        <div class="row mt-3 bg-white rounded p-3 ">
+            <div class="col-12 p-3 d-flex justify-content-between align-items-center">
+                <h3 class="font-14">
+                    <a class="text-dark" href="#">دسته بندی ها</a>
+                </h3>
+                <a href="#">
+                    مشاهده همه
+                    <i class="fa fa-eye"></i>
+                </a>
+            </div>
             @include('front-v1.partials.categories', ['categories'=>$categories])
         </div>
-
+        {{--SHOW PRODUCTS--}}
         <div class="row mt-3 bg-white mb-5">
             <div class="col-12 p-3 d-flex justify-content-between align-items-center">
                 <h3 class="font-14">

@@ -6,11 +6,13 @@
   <component name="ChangeListManager">
     <list default="true" id="00f5ae84-d71d-47c5-aa01-f2581affa6d5" name="Default Changelist" comment="Minor changes of frontend + Product section in admin">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/BannerController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/BannerController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/HomeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/HomeController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/adminrc/dist/css/custom-style.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/adminrc/dist/css/custom-style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/partials/aside.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/partials/aside.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/product/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/product/create.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/front-v1/partials/categories.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/front-v1/partials/categories.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/front-v1/partials/nav.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/front-v1/partials/nav.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/home.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/home.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/breadcrumbs.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/breadcrumbs.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -171,7 +173,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/admin/banner" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/front-v1" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
     <property name="settings.editor.selected.configurable" value="editor.preferences.tabs" />
@@ -179,11 +181,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/resources/views/front-v1" />
       <recent name="$PROJECT_DIR$/resources/views/admin/banner" />
       <recent name="$PROJECT_DIR$/public/images/fallback" />
       <recent name="$PROJECT_DIR$/resources/views/admin" />
       <recent name="$PROJECT_DIR$/resources/lang" />
-      <recent name="$PROJECT_DIR$/resources/views/front-v1/user/address" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/resources/views/front-v1/partials" />
@@ -339,7 +341,9 @@
       <workItem from="1617003637265" duration="2664000" />
       <workItem from="1617019017251" duration="3676000" />
       <workItem from="1617077535827" duration="15305000" />
-      <workItem from="1617174601420" duration="2671000" />
+      <workItem from="1617174601420" duration="2700000" />
+      <workItem from="1617213445587" duration="962000" />
+      <workItem from="1617261668485" duration="4545000" />
     </task>
     <task id="LOCAL-00001" summary="Minor changes of frontend + Product section in admin">
       <created>1613451037291</created>

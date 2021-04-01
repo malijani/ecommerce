@@ -45,6 +45,17 @@ Breadcrumbs::for('categories.category', function ($trail, $category) {
     $trail->push($category->title, route('category.show', $category->id));
 });
 
+// Home > Brands
+Breadcrumbs::for('brands', function ($trail) {
+    $trail->parent('home');
+    $trail->push('برند ها', route('brand.index'));
+});
+
+// Home > Brands > [Brand]
+Breadcrumbs::for('brands.brand', function ($trail, $brand) {
+    $trail->parent('brands');
+    $trail->push($brand->title, route('brand.show', $brand->id));
+});
 
 // Home > Products
 Breadcrumbs::for('products', function ($trail) {
