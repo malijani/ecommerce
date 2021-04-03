@@ -6,6 +6,7 @@ use App\Banner;
 use App\Brand;
 use App\Category;
 use App\Product;
+use App\Slider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -29,6 +30,12 @@ class HomeController extends Controller
     public function home()
     {
         $banner = Banner::withoutTrashed()->where('status', '1')->first();
+        $sliders = Slider::withoutTrashed()
+            ->where('status', '1')
+            ->orderByDesc('status')
+            ->orderBy('sort')
+            ->orderByDesc('id')
+            ->get();
         // TODO : MAKE PRODUCT OR ARTICLES AS ENUM OR TINYINT SELECTION TYPE
         // get Products category by title_en : products :> it's important
         $categories = Category::withoutTrashed()
@@ -58,6 +65,7 @@ class HomeController extends Controller
             'categories'=>$categories,
             'products'=>$products,
             'banner'=>$banner,
+            'sliders'=>$sliders,
             'brands'=>$brands,
 
         ]);

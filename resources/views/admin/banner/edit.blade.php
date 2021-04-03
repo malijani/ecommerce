@@ -94,7 +94,7 @@
                         <div class="form-group row justify-content-center">
                             <div class="col-md-12 text-center">{{--IMG--}}
                                 <img src="{{asset($banner->pic)}}"
-                                     alt="نمایش بنر منتخب"
+                                     alt="{{ $banner->pic_alt }}"
                                      class="preview img rounded align-middle w-100"
                                      id="preview"
                                 >

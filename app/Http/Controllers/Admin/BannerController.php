@@ -36,7 +36,6 @@ class BannerController extends Controller
      */
     public function create()
     {
-        /*TODO : BANNER BRAND LINK*/
         $title = 'ثبت بنر جدید';
         return response()->view('admin.banner.create', [
             'title' => $title,

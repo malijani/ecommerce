@@ -175,12 +175,20 @@
                         </a>
                     </li>
 
-
                     <li class="nav-item">
                         <a href="{{ route('banners.index') }}" class="nav-link">
                             <i class="nav-icon fa fa-file-image-o"></i>
                             <p>
                                 بنر ها
+                            </p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="{{ route('sliders.index') }}" class="nav-link">
+                            <i class="nav-icon fa fa-sliders"></i>
+                            <p>
+                                اسلایدر ها
                             </p>
                         </a>
                     </li>

@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
-
+@section('page-styles')
+    <link rel="stylesheet" href="{{ asset('front-v1/slider-pro/css/slider-pro.css') }}">
+@endsection
 @section('content')
 
     {{--        {{ \Diglactic\Breadcrumbs\Breadcrumbs::render('home') }}--}}
@@ -25,6 +27,48 @@
                         >
                     </a>
                 </div>
+            </div>
+        @endif
+
+        {{--SHOW SLIDERS--}}
+        @if(isset($sliders))
+            <div class="row my-3">
+                {{--SLIDERS--}}
+                <div id="sliders" class="slider-pro">
+                    <div class="sp-slides">
+                        @foreach($sliders as $slider)
+
+                            <div class="sp-slide">
+                                <a href="{{ $slider->link }}">
+                                    <img class="sp-image" src="{{ asset($slider->pic) }}"
+                                         data-src="{{ asset($slider->pic) }}"
+                                         data-retina="{{ asset($slider->pic) }}"
+                                         alt="{{ $slider->pic_alt }}"
+                                    >
+                                </a>
+                                <p class="rounded sp-layer sp-black sp-padding"
+                                   data-horizontal="0" data-vertical="0"
+                                   data-show-transition="right" data-hide-transition="up" data-show-delay="400"
+                                   data-hide-delay="200">
+                                    {{ $slider->title }}
+                                </p>
+
+                            </div>
+
+                        @endforeach
+                            {{-- <div class="sp-thumbnails">
+                                 @foreach($sliders as $slider)
+                                     <div class="sp-thumbnail">
+                                         --}}{{--<div class="sp-thumbnail-title">Lorem ipsum</div>--}}{{--
+                                         <div class="sp-thumbnail-description">{{ $slider->title }}</div>
+                                     </div>
+                                 @endforeach
+                             </div>--}}
+
+                    </div>
+                </div>
+
+                {{--./SLIDERS--}}
             </div>
         @endif
         {{--SHOW BRANDS--}}
@@ -69,4 +113,29 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('page-scripts')
+    <script src="{{ asset('front-v1/slider-pro/js/jquery.sliderPro.min.js') }}"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#sliders').sliderPro({
+                width: '100%',
+                imageScaleMode: 'exact',
+                fade:true,
+                orientation: 'horizontal',
+                responsive: true,
+                autoHeight: true,
+                autoSlideSize: false,
+                arrows: true,
+                buttons: false,
+                waitForLayers: true,
+                autoplay: true,
+                autoplayDirection:'backwards',
+                autoScaleLayers: true,
+
+            });
+        });
+    </script>
 @endsection
