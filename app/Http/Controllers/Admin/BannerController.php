@@ -55,6 +55,7 @@ class BannerController extends Controller
         $request->validate([
             'pic' => ['required', 'mimes:jpg,jpeg,png,gif', 'max:10240'],
             'pic_alt' => ['required', 'string', 'min:2', 'max:70'],
+            'link' => ['required', 'string', 'min:15', 'max:70'],
             'status' => ['sometimes', 'string', 'max:2'],
         ]);
 
@@ -68,8 +69,10 @@ class BannerController extends Controller
             $status = 1;
             /*DEACTIVATE LAST ACTIVE BANNER*/
             $last_active_banner = Banner::query()->where('status', '1')->first();
-            $last_active_banner->status = 0;
-            $last_active_banner->save();
+            if(!is_null($last_active_banner)){
+                $last_active_banner->status = 0;
+                $last_active_banner->save();
+            }
         }
 
         /*SAVE OBJECT*/
@@ -148,6 +151,7 @@ class BannerController extends Controller
         $request->validate([
             'pic' => ['nullable', 'mimes:jpg,jpeg,png,gif', 'max:10240'],
             'pic_alt' => ['required', 'string', 'min:2', 'max:70'],
+            'link' => ['required', 'string', 'min:15', 'max:70'],
         ]);
 
         $pic = $banner->pic;

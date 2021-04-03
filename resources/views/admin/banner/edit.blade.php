@@ -63,6 +63,30 @@
                             </div>
                         </div>
                     </div>{{--./PIC--}}
+
+                    <div class="col-12">{{--LINK--}}
+                        <div class="form-group row">
+                            <label for="link"
+                                   class="col-form-label col-md-1 text-center">
+                                <i class="fa fa-asterisk text-danger"></i>
+                                لینک
+                            </label>
+                            <div class="col-md-11">
+                                <input id="link"
+                                       name="link"
+                                       type="text"
+                                       maxlength="70"
+                                       minlength="15"
+                                       class="form-control @error('link') is-invalid @enderror"
+                                       placeholder="لینک مرتبط با بنر"
+                                       value="{{ old('link') ?? $banner->link }}"
+                                       required
+                                >
+                                @include('partials.form_error', ['input'=>'link'])
+                            </div>
+                        </div>
+                    </div>{{--./LINK--}}
+
                 </div>{{--./MAIN FIELDS ROW--}}
 
                 <div class="form-row">

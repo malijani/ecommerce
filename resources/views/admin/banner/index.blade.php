@@ -50,11 +50,13 @@
                                 </td>
                                 {{--SHOW PIC--}}
                                 <td class="align-middle text-center w-25">
-                                    <span class="hide">{{ $banner->pic_alt }}</span>
-                                    <img src="{{ asset($banner->pic) }}"
-                                         alt="{{ $banner->pic_alt }}"
-                                         class="img w-100"
-                                    >
+                                    <a href="{{ $banner->link }}" title="مشاهده لینک بنر">
+                                        <span class="hide">{{ $banner->pic_alt }}</span>
+                                        <img src="{{ asset($banner->pic) }}"
+                                             alt="{{ $banner->pic_alt }}"
+                                             class="img w-100"
+                                        >
+                                    </a>
                                 </td>
 
                                 {{--SHOW PIC_ALT--}}

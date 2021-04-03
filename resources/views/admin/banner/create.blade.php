@@ -17,78 +17,106 @@
             <div class="card-body">
                 <!-- form start -->
                 <form class="form" action="{{ route('banners.store') }}" method="POST" enctype="multipart/form-data">
-                @csrf
+                    @csrf
 
-                <div
-                    class="form-group row ">{{--ROW OF FILE INPUT WITH TITLE AND SELECTION--}}
-                    <div class="col-md-6">{{--PIC_ALT--}}
-                        <div class="form-group row">
-                            <label for="pic_alt"
-                                   class="col-form-label col-md-3 text-center">
-                                <i class="fa fa-asterisk text-danger"></i>
-                                عنوان
-                            </label>
-                            <div class="col-md-9">
-                                <input id="pic_alt"
-                                       name="pic_alt"
-                                       type="text"
-                                       class="form-control @error('pic_alt') is-invalid @enderror"
-                                       title="مقدار دهی الزامی"
-                                       minlength="2"
-                                       maxlength="70"
-                                       value="{{ old('pic_alt') }}"
-                                       required
-                                >
-                                @include('partials.form_error', ['input'=>'pic_alt'])
+                    <div
+                        class="form-group row ">{{--ROW OF FILE INPUT WITH TITLE AND SELECTION--}}
+                        <div class="col-md-6">{{--PIC_ALT--}}
+                            <div class="form-group row">
+                                <label for="pic_alt"
+                                       class="col-form-label col-md-3 text-center">
+                                    <i class="fa fa-asterisk text-danger"></i>
+                                    عنوان
+                                </label>
+                                <div class="col-md-9">
+                                    <input id="pic_alt"
+                                           name="pic_alt"
+                                           type="text"
+                                           class="form-control @error('pic_alt') is-invalid @enderror"
+                                           title="مقدار دهی الزامی"
+                                           minlength="2"
+                                           maxlength="70"
+                                           value="{{ old('pic_alt') }}"
+                                           required
+                                    >
+                                    @include('partials.form_error', ['input'=>'pic_alt'])
+                                </div>
                             </div>
-                        </div>
-                    </div>{{--./PIC_ALT--}}
+                        </div>{{--./PIC_ALT--}}
 
-                    <div class="col-md-6">{{--./PIC--}}
-                        <div class="form-group row">
-                            <label for="pic"
-                                   class="col-form-label col-md-3 text-center">
-                                <i class="fa fa-asterisk text-danger"></i>
-                                تصویر
-                            </label>
-                            <div class="col-md-9">
-                                <input id="pic"
-                                       name="pic"
-                                       type="file"
-                                       class="form-control file-input @error('pic') is-invalid @enderror"
-                                       onchange="showImage(this);"
-                                       accept=".jpg,.jpeg,.png,.gif"
-                                       required
-                                >
-                                @include('partials.form_error', ['input'=>'pic'])
+                        <div class="col-md-6">{{--./PIC--}}
+                            <div class="form-group row">
+                                <label for="pic"
+                                       class="col-form-label col-md-3 text-center">
+                                    <i class="fa fa-asterisk text-danger"></i>
+                                    تصویر
+                                </label>
+                                <div class="col-md-9">
+                                    <input id="pic"
+                                           name="pic"
+                                           type="file"
+                                           class="form-control file-input @error('pic') is-invalid @enderror"
+                                           onchange="showImage(this);"
+                                           accept=".jpg,.jpeg,.png,.gif"
+                                           required
+                                    >
+                                    @include('partials.form_error', ['input'=>'pic'])
+                                </div>
                             </div>
-                        </div>
-                    </div>{{--./PIC--}}
-                </div>{{--./MAIN FIELDS ROW--}}
+                        </div>{{--./PIC--}}
 
-                <div class="form-row">
-                    <div class="col-md-12">{{--PREVIEW PIC + DEFAULT SELECTOR--}}
-                        <div class="form-group row">
-                            <div class="col-md-12 text-center">{{--IMG--}}
-                                <img src="{{asset('images/fallback/banner.png')}}"
-                                     alt="نمایش بنر منتخب"
-                                     class="preview img rounded align-middle image-checkable"
-                                     id="preview"
-                                     name="status"
-                                >
-                            </div>{{--./IMG--}}
-                        </div>
-                    </div>{{--./PREVIEW PIC + DEFAULT SELECTOR--}}
-                </div>
 
-                <div class="form-group row my-5 text-center">
+                        <div class="col-12">{{--LINK--}}
+                            <div class="form-group row">
+                                <label for="link"
+                                       class="col-form-label col-md-1 text-center">
+                                    <i class="fa fa-asterisk text-danger"></i>
+                                    لینک
+                                </label>
+                                <div class="col-md-11">
+                                    <input id="link"
+                                           name="link"
+                                           type="text"
+                                           maxlength="70"
+                                           minlength="15"
+                                           class="form-control @error('link') is-invalid @enderror"
+                                           placeholder="لینک مرتبط با بنر"
+                                           value="{{ old('link') }}"
+                                           required
+                                    >
+                                    @include('partials.form_error', ['input'=>'link'])
+                                </div>
+                            </div>
+                        </div>{{--./LINK--}}
 
-                    <button type="submit" class="btn btn-outline-primary form-control">
-                        ذخیره
-                    </button>
+                    </div>{{--./MAIN FIELDS ROW--}}
 
-                </div>
-            </form>
+
+
+
+                    <div class="form-row">
+                        <div class="col-md-12">{{--PREVIEW PIC + DEFAULT SELECTOR--}}
+                            <div class="form-group row">
+                                <div class="col-md-12 text-center">{{--IMG--}}
+                                    <img src="{{asset('images/fallback/banner.png')}}"
+                                         alt="نمایش بنر منتخب"
+                                         class="preview img rounded align-middle image-checkable"
+                                         id="preview"
+                                         name="status"
+                                    >
+                                </div>{{--./IMG--}}
+                            </div>
+                        </div>{{--./PREVIEW PIC + DEFAULT SELECTOR--}}
+                    </div>
+
+                    <div class="form-group row my-5 text-center">
+
+                        <button type="submit" class="btn btn-outline-primary form-control">
+                            ذخیره
+                        </button>
+
+                    </div>
+                </form>
                 {{--./FORM END--}}
             </div>
         </div>
@@ -101,15 +129,15 @@
     <script src="{{ asset('adminrc/plugins/img-checkbox/jquery.imgcheckbox.js') }}"></script>
 
     <script type="text/javascript">
-        $(document).ready(function(){
+        $(document).ready(function () {
             $("#preview").imgCheckbox({
                 preselect: true,
                 graySelected: false,
-                scaleSelected:true,
+                scaleSelected: true,
                 checkMarkSize: "60px",
                 checkMarkPosition: 'top-left',
                 checkMarkImage: "{{ asset('images/asset/checked.png') }}",
-                fadeCheckMark:true,
+                fadeCheckMark: true,
                 addToForm: true,
             });
 

@@ -5,7 +5,6 @@
 
     {{--        {{ \Diglactic\Breadcrumbs\Breadcrumbs::render('home') }}--}}
     {{--TODO : MEGA MENU--}}
-    {{--TODO : WEBSITE BANNER GOES HERE--}}
     {{--TODO : ADD CAROUSEL HERE!--}}
     {{--TODO : MINIMAL FAQ GOES HERE--}}
     {{--TODO : CATEGORIES GOES HERE--}}
@@ -18,11 +17,13 @@
         @if(isset($banner))
             <div class="row my-3">
                 <div class="col-12">
-                    <img src="{{asset($banner->pic)}}"
-                         alt="{{ $banner->pic_alt }}"
-                         class="banner img rounded align-middle w-100"
-                         id="banner"
-                    >
+                    <a href="{{$banner->link}}" title="{{ $banner->pic_alt }}">
+                        <img src="{{asset($banner->pic)}}"
+                             alt="{{ $banner->pic_alt }}"
+                             class="banner img rounded align-middle w-100"
+                             id="banner"
+                        >
+                    </a>
                 </div>
             </div>
         @endif
