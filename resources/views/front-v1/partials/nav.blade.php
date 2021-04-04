@@ -68,7 +68,7 @@
 
             {{--LOGO SECTION--}}
             <div class="col-2 d-none d-lg-block text-left">
-                <img class="img-fluid rounded " src="{{asset($logo->pic??'images/fallback/logo.png')}}" alt="{{$logo->pic_alt??config('app.name')}}">
+                <img class="img-fluid w-25 rounded " src="{{asset($logo->pic??'images/fallback/logo.png')}}" alt="{{$logo->pic_alt??config('app.name')}}">
             </div>
         </div>
 
