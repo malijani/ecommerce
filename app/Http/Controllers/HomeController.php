@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Banner;
 use App\Brand;
 use App\Category;
+use App\Logo;
 use App\Product;
 use App\Slider;
 use Illuminate\Http\Request;
@@ -67,7 +68,6 @@ class HomeController extends Controller
             'banner'=>$banner,
             'sliders'=>$sliders,
             'brands'=>$brands,
-
         ]);
     }
 }

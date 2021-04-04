@@ -51,7 +51,7 @@
 
             {{--LOGO SECTION : MOBILE--}}
             <div class="col-3 col-md-8 d-block d-lg-none text-left">
-                <img class="img-fluid" src="{{asset('front-v1/img/logo.png')}}">
+                <img class="img-fluid rounded" src="{{ asset($logo->pic??'images/fallback/logo.png') }}" alt="{{ $logo->pic_alt ?? config('app.name') }}">
             </div>
 
             {{--SEARCH SECTION : TODO : LIVEWIRE SEARCHING--}}
@@ -68,7 +68,7 @@
 
             {{--LOGO SECTION--}}
             <div class="col-2 d-none d-lg-block text-left">
-                <img class="img-fluid" src="{{asset('front-v1/img/logo.png')}}">
+                <img class="img-fluid rounded " src="{{asset($logo->pic??'images/fallback/logo.png')}}" alt="{{$logo->pic_alt??config('app.name')}}">
             </div>
         </div>
 

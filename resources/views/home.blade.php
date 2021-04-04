@@ -33,29 +33,29 @@
         {{--SHOW SLIDERS--}}
         @if(isset($sliders))
             <div class="row my-3">
-                {{--SLIDERS--}}
-                <div id="sliders" class="slider-pro">
-                    <div class="sp-slides">
-                        @foreach($sliders as $slider)
+                <div class="col-12">
+                    {{--SLIDERS--}}
+                    <div id="sliders" class="slider-pro">
+                        <div class="sp-slides">
+                            @foreach($sliders as $slider)
+                                <div class="sp-slide">
+                                    <a href="{{ $slider->link }}">
+                                        <img class="sp-image rounded" src="{{ asset($slider->pic) }}"
+                                             data-src="{{ asset($slider->pic) }}"
+                                             data-retina="{{ asset($slider->pic) }}"
+                                             alt="{{ $slider->pic_alt }}"
+                                        >
+                                    </a>
+                                    <p class="rounded sp-layer sp-black sp-padding"
+                                       data-horizontal="0" data-vertical="0"
+                                       data-show-transition="right" data-hide-transition="up" data-show-delay="400"
+                                       data-hide-delay="200">
+                                        {{ $slider->title }}
+                                    </p>
 
-                            <div class="sp-slide">
-                                <a href="{{ $slider->link }}">
-                                    <img class="sp-image" src="{{ asset($slider->pic) }}"
-                                         data-src="{{ asset($slider->pic) }}"
-                                         data-retina="{{ asset($slider->pic) }}"
-                                         alt="{{ $slider->pic_alt }}"
-                                    >
-                                </a>
-                                <p class="rounded sp-layer sp-black sp-padding"
-                                   data-horizontal="0" data-vertical="0"
-                                   data-show-transition="right" data-hide-transition="up" data-show-delay="400"
-                                   data-hide-delay="200">
-                                    {{ $slider->title }}
-                                </p>
+                                </div>
 
-                            </div>
-
-                        @endforeach
+                            @endforeach
                             {{-- <div class="sp-thumbnails">
                                  @foreach($sliders as $slider)
                                      <div class="sp-thumbnail">
@@ -65,9 +65,9 @@
                                  @endforeach
                              </div>--}}
 
+                        </div>
                     </div>
                 </div>
-
                 {{--./SLIDERS--}}
             </div>
         @endif
@@ -123,7 +123,7 @@
             $('#sliders').sliderPro({
                 width: '100%',
                 imageScaleMode: 'exact',
-                fade:true,
+                fade: true,
                 orientation: 'horizontal',
                 responsive: true,
                 autoHeight: true,
@@ -132,8 +132,8 @@
                 buttons: false,
                 waitForLayers: true,
                 autoplay: true,
-                autoplayDirection:'backwards',
-                autoScaleLayers: true,
+                autoplayDirection: 'backwards',
+                autoScaleLayers: false,
 
             });
         });

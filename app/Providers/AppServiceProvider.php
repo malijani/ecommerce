@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Logo;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\View;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -25,6 +27,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        $logo = Logo::withoutTrashed()->where('status', '1')->first();
+        View::share('logo', $logo);
     }
 }

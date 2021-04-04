@@ -176,6 +176,15 @@
                     </li>
 
                     <li class="nav-item">
+                        <a href="{{ route('logos.index') }}" class="nav-link">
+                            <i class="nav-icon fa fa-cc"></i>
+                            <p>
+                                لوگو ها
+                            </p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
                         <a href="{{ route('banners.index') }}" class="nav-link">
                             <i class="nav-icon fa fa-file-image-o"></i>
                             <p>

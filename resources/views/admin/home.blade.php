@@ -1,5 +1,5 @@
-@extends('layouts.app_admin');
+@extends('layouts.app_admin')
 
 @section('content')
-    
+
 @endsection

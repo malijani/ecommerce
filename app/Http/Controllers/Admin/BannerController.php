@@ -179,10 +179,10 @@ class BannerController extends Controller
 
         if (!is_null($last_active_banner)) {
             if ($last_active_banner->id != $id) {
-                Banner::withoutTrashed()->findOrFail($id)->delete();
                 return response()->redirectToRoute('banners.index')->with('success', 'بنر با موفقیت حذف شد');
             }
         }
+        Banner::withoutTrashed()->findOrFail($id)->delete();
         return response()->redirectToRoute('banners.index')->with('error', 'بنر انتخابی نباید بنر پیشفرض باشد!');
 
     }
