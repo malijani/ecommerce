@@ -49,13 +49,13 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="#" class="nav-link">
+                                <a href="{{ route('users.index') }}" class="nav-link">
                                     <i class="fa fa-circle-o nav-icon"></i>
                                     <p>لیست کاربران</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="#" class="nav-link">
+                                <a href="{{ route('users.create') }}" class="nav-link">
                                     <i class="fa fa-circle-o nav-icon"></i>
                                     <p>افزودن کاربر</p>
                                 </a>

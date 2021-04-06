@@ -5,7 +5,7 @@
 @endsection
 
 @section('nav-buttons')
-    <a href="{{ route('sliders.create') }}" role="button" class="btn btn-lg btn-outline-primary">
+    <a href="{{ route('users.create') }}" role="button" class="btn btn-lg btn-outline-primary">
         <i class="fa fa-plus-square"></i>
     </a>
 @endsection
@@ -16,95 +16,113 @@
         <!-- DETAILS box -->
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">لیست اسلایدر ها</h3>
+                <h3 class="card-title">لیست کاربران</h3>
             </div>
             <div class="card-body">
                 <div class="table-responsive" id="table-content">
 
-                    <table class="table table-striped table-bordered table-hover" id="datatable-attributes">
+                    <table class="table table-striped table-bordered table-hover" id="datatable-users">
                         <thead>
                         <tr class="text-center">
-                            <td>شماره</td>
+                            <td>#</td>
+                            <td>نمایه</td>
+                            <td>نام</td>
+                            <td>ارتباط</td>
+                            <td>سطح دسترسی</td>
+                            <td>تایید اطلاعات تماس</td>
                             <td>وضعیت</td>
-                            <td>تصویر</td>
-                            <td>متن جایگزین</td>
-                            <td>عنوان</td>
+                            <td>تاریخ ثبت</td>
                             <td>عملیات</td>
                         </tr>
                         </thead>
 
                         <tbody>
 
-                        @foreach($sliders as $slider)
-                            <tr class="text-center" id="data-{{$slider->id}}">
-                                {{--SHOW ID--}}
-                                <td class="align-middle">{{ $slider->id }}</td>
-                                {{--SHOW STATUS--}}
+                        @foreach($users as $user)
+                            <tr class="text-center" id="data-{{$user->id}}">
+                                {{--ID--}}
+                                <td class="align-middle">{{ $user->id }}</td>
+                                {{--PROFILE PIC--}}
                                 <td class="align-middle">
-                                    @if($slider->status === 1)
-                                        <i class="fa fa-2x fa-check-square-o text-success"></i>
-                                    @elseif($slider->status===0)
-                                        <i class="fa fa-2x fa-minus-square-o text-danger"></i>
+                                    <img src="{{ asset($user->pic ?? 'images/fallback/user.png') }}"
+                                         alt="{{ $user->pic_alt ?? 'نمایه کاربر' }}"
+                                         width="100vw"
+                                         height="100vh"
+                                         class="img img-bordered-sm rounded-circle"
+                                    >
+                                    <span class="hide">{{ $user->id }}</span>
+                                </td>
+
+                                {{--NAME , FAMILY--}}
+                                <td class="align-middle">{{ $user->full_name }}</td>
+                                {{--MOBILE, EMAIL--}}
+                                <td class="align-middle">{{$user->mobile}} <br> {{ $user->email }}</td>
+                                {{--LEVEL--}}
+                                <td class="align-middle">
+                                    @if($user->isAdmin())
+                                        <span class="badge badge-primary">ادمین</span>
+                                    @elseif($user->isNormal())
+                                        <span class="badge badge-success">کاربر عادی</span>
                                     @else
-                                        نامشخص
+                                        <span class="badge badge-warning">کاربر نامشخص</span>
                                     @endif
                                 </td>
-                                {{--SHOW PIC--}}
-                                <td class="align-middle text-center w-25">
-                                    <a href="{{ $slider->link }}" title="مشاهده لینک اسلایدر">
-                                        <span class="hide">{{ $slider->pic_alt }}</span>
-                                        <img src="{{ asset($slider->pic) }}"
-                                             alt="{{ $slider->pic_alt }}"
-                                             class="img w-100"
-                                        >
-                                    </a>
+                                {{--VERIFIED--}}
+                                <td class="align-middle">
+                                    @if(!is_null($user->email_verified_at))
+                                        <span class="badge badge-success">
+                                            <i class="fa fa-check-square-o"></i>
+                                        </span>
+                                    @else
+                                        <span class="badge badge-danger">
+                                            <i class="fa fa-minus-square-o"></i>
+                                        </span>
+                                    @endif
                                 </td>
-
-                                {{--SHOW PIC_ALT--}}
-                                <td class="align-middle text-center">
-                                    {{ $slider->pic_alt }}
+                                {{--STATUS--}}
+                                <td class="align-middle">
+                                    @if($user->status==0)
+                                        <span class="badge badge-danger p-2"><i class="fa fa-times"></i></span>
+                                        <span class="hide">{{ $user->status }}</span>
+                                    @elseif($user->status==1)
+                                        <span class="badge badge-success p-2"><i class="fa fa-check"></i></span>
+                                        <span class="hide">{{ $user->status }}</span>
+                                    @endif
                                 </td>
+                                {{--CREATED_AT--}}
+                                <td class="align-middle">{{ $user->created_at }}</td>
+                                {{--OPERATION--}}
+                                <td class="align-middle">
 
-                                <td class="align-middle text-center">
-                                    {{ $slider->title }}
-                                </td>
-                                {{--OPERATIONS--}}
-                                <td class="align-middle text-center">
-
-                                    <input class="status big-checkbox mb-1 w-100 text-green"
-                                           type="checkbox"
-                                           @if($slider->status ===1) checked @endif
-                                           id="status-{{$slider->id}}"
-                                           title="تعیین بعنوان پیشفرض"
-                                           data-url="{{ route('sliders.update', $slider->id) }}"
-                                           readonly
-                                    >
-                                    <a href="{{ route('sliders.edit', $slider->id) }}"
+                                    <a href="{{ route('users.edit', $user->id) }}"
                                        class="btn btn-info"
                                     >
                                         <i class="fa fa-edit"></i>
                                     </a>
 
                                     <button class="destroy-button btn btn-danger"
-                                            id="del-{{$slider->id}}"
-                                            title="حذف اسلایدر"
-                                            data-url="{{route('sliders.destroy', $slider->id)}}"
+                                            id="del-{{$user->id}}"
+                                            title="حذف کاربر"
+                                            data-url="{{route('users.destroy', $user->id)}}"
                                     >
                                         <i class="fa fa-trash-o text-white"></i>
                                     </button>
-                                </td>
 
+                                </td>
                             </tr>
                         @endforeach
                         </tbody>
 
                         <tfoot>
                         <tr class="text-center">
-                            <td>شماره</td>
+                            <td>#</td>
+                            <td>نمایه</td>
+                            <td>نام</td>
+                            <td>ارتباط</td>
+                            <td>سطح دسترسی</td>
+                            <td>تایید اطلاعات تماس</td>
                             <td>وضعیت</td>
-                            <td>تصویر</td>
-                            <td>متن جایگزین</td>
-                            <td>عنوان</td>
+                            <td>تاریخ ثبت</td>
                             <td>عملیات</td>
                         </tr>
                         </tfoot>
@@ -127,41 +145,13 @@
 
         $(document).ready(function () {
 
-            /*SET DEFAULT IMAGE ON FLY*/
-            let status = $('.status');
-            status.on('click', function () {
-                let update_address = $(this).attr('data-url');
-                $.ajax({
-                    url: update_address,
-                    type: 'POST',
-                    data: {
-                        '_token': '{{ csrf_token() }}',
-                        '_method': 'PATCH',
-                        'status': 'on',
-                        'ajax': '1',
-                    },
-                    success: function (result) {
-                        location.reload();
-                    },
-                    error: function () {
-                        swal({
-                            text: "خطای غیر منتظره ای رخ داده، لطفا با توسعه دهنده در میان بگذارید.",
-                            icon: 'error',
-                            button: "فهمیدم.",
-                        });
-                    }
-                });
-
-
-            });
-
             let destroy_button = $('.destroy-button');
             destroy_button.on('click', function () {
                 let delete_address = $(this).attr('data-url');
 
                 swal({
-                    title: "آیا از حذف اسلایدر مطمعنید؟",
-                    text: "با حذف اسلایدر، قادر به بازگردانی آن نخواهید بود!",
+                    title: "آیا از حذف کاربر مطمعنید؟",
+                    text: "با حذف کاربر، قادر به بازگردانی آن نخواهید بود!",
                     icon: "warning",
                     buttons: ['نه! حذفش نکن.', 'آره، حذفش کن.'],
                     dangerMode: true,
@@ -191,8 +181,7 @@
                     });
             });
 
-            /*EDIT BY CLICK ON TITLE*/
-            $('#datatable-attributes').DataTable({
+            $('#datatable-users').DataTable({
                 "responsive": true,
                 "language": {
                     'search': ' جست و جو : ',
@@ -207,7 +196,7 @@
                         "previous": "قبلی"
                     }
                 },
-                'pageLength': 50,
+                'pageLength': 10,
                 'order': [],
                 "info": true,
                 "paging": true,

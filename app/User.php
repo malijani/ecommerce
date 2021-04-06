@@ -20,7 +20,11 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'family', 'mobile', 'email', 'password', 'level', 'status'
+        'name', 'family',
+        'mobile', 'email',
+        'password',
+        'level', 'status',
+        'email_verified_at'
     ];
 
     /**
@@ -83,4 +87,5 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->name . ' ' . $this->family;
     }
+
 }

@@ -29,7 +29,7 @@ Route::group(['prefix'=>'user', 'middleware'=>['web', 'auth', 'auth.normal', 've
 Route::group(['prefix'=>'admin', 'middleware'=>['web', 'auth', 'auth.admin']], function(){
 
     Route::get('', 'Admin\AdminController@index')->name('admin.home');
-
+    Route::resource('users', 'Admin\UserController');
     Route::resource('categories', 'Admin\CategoryController');
     Route::resource('brands', 'Admin\BrandController');
     Route::resource('articles', 'Admin\ArticleController');
