@@ -15,288 +15,253 @@
             </div>
             <!-- /.card-header -->
             <!-- form start -->
-            <form role="form"
-                  action="{{ route('brands.update', ['brand'=>$brand->id]) }}"
-                  method="POST"
-                  enctype="multipart/form-data">
+            <form role="form" action="{{ route('users.update', $user->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
-                @method('PUT')
+                {{ method_field('PUT') }}
 
                 <div class="card-body">
-                    <div class="form-group row">
+                    <div class="row">
+                        {{--NAME--}}
                         <div class="col-md-6">
-                            <label for="title">
-                                <i class="fa fa-star text-danger"></i>
-                                عنوان برند
-                            </label>
-                            <input name="title"
-                                   type="text"
-                                   class="form-control @error('title') is-invalid @enderror"
-                                   id="title"
-                                   minlength="3"
-                                   maxlength="70"
-                                   placeholder=" عنوان برند به فارسی : سامسونگ"
-                                   title="مقدار دهی الزامی"
-                                   value="{{ $brand->title }}"
-                                   required
-                            >
-                            @error('title')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
-                        </div>
-                        <div class="col-md-6">
-                            <label for="title_en">
-                                <i class="fa fa-star text-danger"></i>
-                                عنوان برند (لینک) انگلیسی
-                            </label>
-                            <input
-                                name="title_en"
-                                type="text"
-                                   class="form-control @error('title_en') is-invalid @enderror"
-                                   id="title_en"
-                                   placeholder="عنوان به انگلیسی : samsung"
-                                   minlength="3"
-                                   maxlength="70"
-                                   title="مقدار دهی الزامی"
-                                   value="{{ $brand->title_en }}"
-                                   required
-                            >
-                            @error('title_en')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <div class="col-md-12">
-                            <label for="status">وضعیت برند</label>
-                            <select
-                                name="status"
-                                id="status"
-                                title="با انتخاب فعال، برند قابل استفاده و نمایش خواهد بود"
-                                class="form-control @error('status') is-invalid @enderror"
-                            >
-                                <option {{ $brand->status ==1 ? 'selected' : '' }} value="1"> فعال</option>
-                                <option {{ $brand->status ==0 ? 'selected' : '' }} value="0">غیر فعال</option>
-                            </select>
-                            @error('status')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
-                        </div>
-
-                    </div>
-
-                    @if(isset($brand->pic))
-                        <div class="form-row text-center rounded">
-                            <div class="col-md-12">
-                                <input type="hidden" name="delete_pic" id="delete_pic">
-                                <img id="image-checkable"
-                                     src="{{ asset($brand->pic) }}"
-                                     class="img-fluid align-middle"
-                                     alt="{{ $brand->pic_alt ?? $brand->title_en }}"
-                                     width="200vw"
-                                     height="200vh"
-                                     title="برای حذف تصویر کلیک کنید."
-                                >
-                            </div>
-                        </div>
-                    @endif
-                    <div class="form-group row">
-                        <div class="col-md-4">
-                            <label for="pic">
-                                تصویر برند
-                            </label>
-
-                            <div class="input-group">
-                                <div class="custom-file">
-                                    <input
-                                        type="file"
-                                        name="pic"
-                                        class="custom-file-input form-control @error('pic') is-invalid @enderror"
+                            <div class="form-group row">
+                                <label for="name"
+                                       class="col-md-2 col-form-label text-center">
+                                    نام
+                                </label>
+                                <div class="col-md-8">
+                                    <input id="name"
+                                           type="text"
+                                           class="form-control @error('name') is-invalid @enderror"
+                                           name="name" value="{{ old('name') ?? $user->name }}"
+                                           required
+                                           autocomplete="name"
+                                           autofocus
+                                           placeholder="نام کاربر"
                                     >
-                                    <label class="custom-file-label" for="pic">
-                                        انتخاب تصویر
-                                    </label>
+                                    @include('partials.form_error', ['input'=>'name'])
                                 </div>
                             </div>
-                            <small id="picHelp" class="form-text text-muted">لطفاً تصاویر با طول و عرض یکسان را وارد نمایید، با آپلود تصویر جدید تصویر قبلی به صورت خودکار حذف خواهد شد.</small>
+                        </div>
+                        {{--FAMILY--}}
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label for="family"
+                                       class="col-md-2 col-form-label text-center">
+                                    نام خانوادگی
+                                </label>
 
-                            @error('pic')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
+                                <div class="col-md-8">
+                                    <input id="family" type="text"
+                                           class="form-control @error('family') is-invalid @enderror"
+                                           name="family"
+                                           value="{{ old('family') ?? $user->family }}"
+                                           required
+                                           autocomplete="family"
+                                           placeholder="نام خانوادگی کاربر"
+
+                                    >
+                                    @include('partials.form_error', ['input'=>'family'])
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-md-5">
-                            <label for="pic_alt">متن جانشین تصویر </label>
-                            <input
-                                name="pic_alt"
-                                type="text"
-                                class="form-control @error('pic_alt') is-invalid @enderror"
-                                minlength="3"
-                                maxlength="70"
-                                placeholder="تصویر برند"
-                                title="این متن در صورت لود نشدن تصویر نمایش داده خواهد شد"
-                                value="{{ $brand->pic_alt }}"
-                            >
-                            @error('pic_alt')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
+                        {{--MOBILE--}}
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label for="mobile"
+                                       class="col-md-2 col-form-label text-center"
+                                >
+                                    تلفن همراه
+                                </label>
+
+                                <div class="col-md-8">
+                                    <input id="mobile"
+                                           type="text"
+                                           class="ltr form-control @error('mobile') is-invalid @enderror"
+                                           name="mobile"
+                                           value="{{ old('mobile') ?? $user->mobile }}"
+                                           minlength="11"
+                                           maxlength="11"
+                                           required
+                                           autocomplete="mobile"
+                                           placeholder="09103234432"
+                                    >
+
+                                    @include('partials.form_error', ['input'=>'mobile'])
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-md-3">
-                            <label for="color">
-                                رنگ برند
-                            </label>
-                            <input
-                                name="color"
-                                type="text"
-                                class="form-control @error('color') is-invalid @enderror"
-                                minlength="3"
-                                maxlength="10"
-                                placeholder="#000000"
-                                title=" تعیین رنگ بندی برند"
-                                dir="ltr"
-                                value="{{ $brand->color }}"
-                            >
-                            @error('color')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
+                        {{--EMAIL--}}
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label for="email"
+                                       class="col-md-2 col-form-label text-center"
+                                >
+                                    آدرس ایمیل
+                                </label>
+
+                                <div class="col-md-8">
+                                    <input id="email"
+                                           type="email"
+                                           class="ltr form-control @error('email') is-invalid @enderror"
+                                           name="email"
+                                           value="{{ old('email') ?? $user->email }}"
+                                           required
+                                           autocomplete="email"
+                                           placeholder="user@info.com"
+                                    >
+
+                                    @include('partials.form_error', ['input'=>'email'])
+                                </div>
+                            </div>
+                        </div>
+                        {{--PASSWORD--}}
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label for="password"
+                                       class="col-md-2 col-form-label text-center"
+                                >
+                                    رمز عبور
+                                </label>
+
+                                <div class="col-md-8">
+                                    <input id="password"
+                                           type="password"
+                                           class="ltr form-control @error('password') is-invalid @enderror"
+                                           name="password"
+                                           required
+                                           autocomplete="new-password"
+                                           placeholder="************"
+                                           value="{{ $user->password }}"
+                                    >
+
+                                    @include('partials.form_error', ['input'=>'password'])
+                                </div>
+                            </div>
+                        </div>
+                        {{--CONFIRM PASSWORD--}}
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label for="password-confirm"
+                                       class="col-md-2 col-form-label text-center"
+                                >
+                                    تایید رمز عبور
+                                </label>
+
+                                <div class="col-md-8">
+                                    <input id="password-confirm"
+                                           type="password"
+                                           class="ltr form-control"
+                                           name="password_confirmation"
+                                           required
+                                           autocomplete="new-password"
+                                           placeholder="*********"
+                                           value="{{ $user->password }}"
+                                    >
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="row px-4 py-4">
+                                {{--LEVEL--}}
+                                <div class="col-4">
+                                    <div class="form-group row">
+                                        <label for="level"
+                                               class="col-md-4 col-form-label text-center"
+                                        >
+                                            سطح دسترسی
+                                        </label>
+                                        <div class="col-md-8">
+                                            <select name="level"
+                                                    class="form-control"
+                                                    id="level"
+                                            >
+                                                <option value="0" @if(old('level') ?? $user->level == 0) selected @endif>کاربر عادی
+                                                </option>
+                                                <option value="121" @if(old('level') ?? $user->level == 121) selected @endif>ادمین
+                                                </option>
+                                            </select>
+
+                                            @include('partials.form_error', ['input'=>'level'])
+                                        </div>
+                                    </div>
+                                </div>
+                                {{--STATUS--}}
+                                <div class="col-4">
+                                    <div class="form-group row justify-content-center">
+                                        <label for="status"
+                                               class="col-md-4 col-form-label text-center"
+                                        >
+                                            وضعیت
+                                        </label>
+                                        <div class="col-md-8">
+                                            <select name="status"
+                                                    class="form-control"
+                                                    id="status"
+                                            >
+                                                <option value="0" @if(old('status') ?? $user->status == 0) selected @endif> غیر فعال
+                                                </option>
+                                                <option value="1" @if(old('status') ?? $user->status == 1) selected @endif>فعال</option>
+                                            </select>
+
+                                            @include('partials.form_error', ['input'=>'email'])
+                                        </div>
+                                    </div>
+                                </div>
+                                {{--CONFIRM--}}
+                                <div class="col-4">
+                                    <div class="form-group row justify-content-center">
+                                        <label for="verified"
+                                               class="col-md-4 col-form-label text-center"
+                                        >
+                                            تایید اطلاعات تماس
+                                        </label>
+                                        <div class="col-md-8">
+                                            <select name="verified"
+                                                    class="form-control"
+                                                    id="verified"
+                                            >
+                                                <option value="0" @if(old('verified') == 0 || is_null($user->email_verified_at)) selected @endif>عدم تایید
+                                                </option>
+                                                <option value="1" @if(old('verified') == 1 || isset($user->email_verified_at)) selected @endif>تایید
+                                                </option>
+                                            </select>
+
+                                            @include('partials.form_error', ['input'=>'verified'])
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-
-                    <div class="form-group">
-                        <label for="keywords">
-                            (سئو)کلمات کلیدی
-                        </label>
-                        <input
-                            type="text"
-                            name="keywords"
-                            class="form-control @error('keywords') is-invalid @enderror"
-                            minlength="3"
-                            maxlength="70"
-                            placeholder="سامسونگ، برند سامسونگ، محصولات سامسونگ"
-                            title="برای سئو بهتر این موارد تعیین شوند"
-                            value="{{ $brand->keywords }}"
-                        >
-                        @error('keywords')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
-                    </div>
-
-                    <div class="form-group">
-                        <label for="description">
-                            توضیحات کلمات کلیدی(سئو)
-                        </label>
-                        <input
-                            name="description"
-                            type="text"
-                            class="form-control @error('description') is-invalid @enderror"
-                            placeholder="در مورد سامسونگ، اطلاعات شرکت سامسونگ، اجناس تولیدی شرکت سامسونگ"
-                            minlength="10"
-                            maxlength="255"
-                            title="توضیحات کلمات کلیدی را به صورت جمله های مرتبط پر جست و جو وارد کنید"
-                            value="{{ $brand->description }}"
-                        >
-                        @error('description')
-                        <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-
-
-                    <div class="form-group row">
-                        <div class="col-md-12">
-                            <label for="text">
-                                توضیحات دسته بندی
-                            </label>
-                            <textarea name="text"
-                                      id="text"
-                                      rows="10"
-                                      class="form-control @error('text') is-invalid @enderror"
-                                      placeholder="توضیحات اجمالی در رابطه با برند..."
-                                      dir="rtl"
-                            >{{ $brand->text }}</textarea>
-                            @error('text')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
-                        </div>
-                    </div>
-
-                    <button type="submit" class="btn btn-block btn-outline-success">ثبت</button>
 
                 </div>
+
+
+                <div class="row my-4">
+                    <div class="col-12 px-3">
+                        <button type="submit" class="btn btn-block btn-outline-success">ثبت</button>
+                    </div>
+                </div>
             </form>
+
         </div>
+        <!-- /.card -->
     </div>
-    <!-- /.card -->
+
 @endsection
 
 @section('page-scripts')
 
     <script type="text/javascript" src="{{ asset('adminrc/plugins/ckeditor-full/ckeditor.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('adminrc/plugins/img-checkbox/jquery.imgcheckbox.js') }}"></script>
     <script type="text/javascript">
-
-        $("#image-checkable").imgCheckbox({
-            "styles": {
-                "span.imgCheckbox.imgChked img": {
-                    // It's important to note that overriding the "filter" property will remove grayscaling
-                    "filter": "blur(5px)",
-
-                    // This is just css: remember compatibility
-                    "-webkit-filter": "blur(5px)",
-
-                    // Let's change the amount of scaling from the default of "0.8"
-                    "transform": "scale(0.9)"
-                }
-
-            },
-            checkMarkSize:"100px",
-            checkMarkPosition:'center',
-            checkMarkImage:"{{ asset('images/asset/delete.png') }}",
-            addToForm:false,
-            onclick: function(el){
-                var isChecked = el.hasClass("imgChked");
-                var input = $("#delete_pic");
-                    // imgEl = el.children()[0];  // the img element
-                if(isChecked===true){
-                    input.val('on');
-                } else {
-                    input.val('');
-                }
-                // console.log(isChecked);
-                // console.log(imgEl.name + " is now " + (isChecked? "checked": "not-checked") + "!");
-            }
-        });
-
-        $(".custom-file-input").on("change", function() {
-            var fileName = $(this).val().split("\\").pop();
-            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
-        });
-
-
         CKEDITOR.replace('text', {
             height: 400,
             baseFloatZIndex: 10005,
             contentsLangDirection: 'rtl',
-            contentsLanguage:'fa',
-            {{--exportPdf_tokenUrl: "{{ \Illuminate\Support\Str::random(15) }}",--}}
-            font_names :  'Vazir;'+
+            contentsLanguage: 'fa',
+            exportPdf_tokenUrl: "{{ \Illuminate\Support\Str::random(15) }}",
+            font_names: 'Vazir;' +
                 'Arial/Arial, Helvetica, sans-serif;' +
                 'Comic Sans MS/Comic Sans MS, cursive;' +
                 'Courier New/Courier New, Courier, monospace;' +
@@ -308,8 +273,14 @@
                 'Verdana/Verdana, Geneva, sans-serif',
             font_defaultLabel: 'Vazir',
             forcePasteAsPlainText: false,
-            forceEnterMode : true,
-            editorplaceholder: 'توضیحات اجمالی در رابطه با برند...',
+            forceEnterMode: true,
+            editorplaceholder: 'شرکت کره ای سامسونگ از قدیمی ترین شرکت های عرصه تکنولوژی است...',
+        });
+
+
+        $(".custom-file-input").on("change", function () {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
         });
     </script>
 @endsection

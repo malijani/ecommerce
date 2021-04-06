@@ -93,7 +93,7 @@
                     <div class="col-lg-6 d-flex justify-content-center align-items-center">
                         <a class="mx-2" href="{{ route('home') }}">
                             <i class="fa fa-home"></i>
-                            خانه
+                            {{ config('app.name') ?? 'خانه' }}
                         </a>
 
                         <a class="mx-2" href="{{ route('product.index') }}">

@@ -242,12 +242,12 @@
                     </div>
                 </div>
 
+            </form>
+        </div>{{--./CARD--}}
 
-        </div>
-        </form>
-    </div>
-    </div>
-    <!-- /.card -->
+    </div>{{--./COL--}}
+
+
 @endsection
 
 @section('page-scripts')

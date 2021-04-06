@@ -22,12 +22,11 @@ class UserController extends Controller
         $title = 'مدیریت کاربران وبسایت';
 
         $users = User::withoutTrashed()
-
             ->orderByDesc('level')
-            ->orderByDesc('email_verified_at')
             ->orderByDesc('status')
+            ->orderByDesc('email_verified_at')
             ->orderByDesc('id')
-            ->get();
+            ->paginate(100);
 
         return response()->view('admin.user.index', [
             'title' => $title,
@@ -41,7 +40,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create() : Response
+    public function create(): Response
     {
         $title = 'افزودن کاربر جدید';
         return response()->view('admin.user.create', [
@@ -55,23 +54,23 @@ class UserController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return RedirectResponse
      */
-    public function store(Request $request) : RedirectResponse
+    public function store(Request $request): RedirectResponse
     {
         $request->validate([
             'name' => ['required', 'string', 'max:50'],
-            'family'=>['required', 'string', 'max:50'],
-            'mobile'=>['required', 'iran_mobile', 'unique:users,mobile'],
+            'family' => ['required', 'string', 'max:50'],
+            'mobile' => ['required', 'iran_mobile', 'unique:users,mobile'],
             'email' => ['required', 'string', 'email', 'max:70', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'level'=>['required', 'numeric','in:0,121'],
-            'status'=>['required', 'numeric', 'in:0,1'],
-            'verified'=>['required', 'numeric', 'in:0,1'],
+            'level' => ['required', 'numeric', 'in:0,121'],
+            'status' => ['required', 'numeric', 'in:0,1'],
+            'verified' => ['required', 'numeric', 'in:0,1'],
         ]);
 
         User::query()->create(array_merge(
             $request->except('password', 'verified'),
             ['password' => Hash::make($request->input('password'))],
-            ['email_verified_at' => ($request->input('verified') == 1) ? Carbon::now()->toDateTimeString() : null ]
+            ['email_verified_at' => ($request->input('verified') == 1) ? Carbon::now()->toDateTimeString() : null]
         ));
 
         return response()->redirectToRoute('users.index')->with('success', 'کاربر جدید با موفقیت افزوده شد!');
@@ -85,7 +84,13 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = User::withoutTrashed()->findOrFail($id);
+        $title = ' مشخصات کاربر ' . $user->full_name;
+
+        return response()->view('admin.user.show', [
+            'user' => $user,
+            'title' => $title
+        ]);
     }
 
     /**
@@ -96,7 +101,12 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::withoutTrashed()->findOrFail($id);
+        $title = 'ویرایش کاربر ' . $user->full_name;
+        return response()->view('admin.user.edit', [
+            'user' => $user,
+            'title' => $title,
+        ]);
     }
 
     /**
@@ -106,30 +116,40 @@ class UserController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id): RedirectResponse
     {
         $user = User::withoutTrashed()->findOrFail($id);
 
         $request->validate([
             'name' => ['required', 'string', 'max:50'],
-            'family'=>['required', 'string', 'max:50'],
-            'mobile'=>['required', 'iran_mobile', 'unique:users,mobile,'.$user->id],
-            'email' => ['required', 'string', 'email', 'max:70', 'unique:users,'.$user->id],
+            'family' => ['required', 'string', 'max:50'],
+            'mobile' => ['required', 'iran_mobile', 'unique:users,mobile,' . $user->id],
+            'email' => ['required', 'string', 'email', 'max:70', 'unique:users,email,' . $user->id],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'level'=>['required', 'numeric','in:0,121'],
-            'status'=>['required', 'numeric', 'in:0,1'],
-            'verified'=>['required', 'numeric', 'in:0,1'],
+            'level' => ['required', 'numeric', 'in:0,121'],
+            'status' => ['required', 'numeric', 'in:0,1'],
+            'verified' => ['required', 'numeric', 'in:0,1'],
         ]);
+
+        $user->update(array_merge(
+            $request->except('password', 'verified'),
+            ['password' => ($user->password == $request->input('password')) ? $user->password : Hash::make($request->input('password'))],
+            ['email_verified_at' => ($request->input('verified') == 1) ? Carbon::now()->toDateTimeString() : null]
+        ));
+
+        return response()->redirectToRoute('users.index')->with('success', 'کاربر ' . $user->full_name . ' با موفقیت بروزرسانی شد');
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return RedirectResponse
      */
-    public function destroy($id)
+    public function destroy($id): RedirectResponse
     {
-        //
+        $user = User::withoutTrashed()->findOrFail($id);
+        $user->delete();
+        return response()->redirectToRoute('users.index')->with('warning', 'کاربر ' . $user->full_name . ' با موفقیت حذف شد!');
     }
 }
