@@ -1,42 +1,46 @@
-
-@font-face{
-    font-family:'iransans';
-    src:url('../fonts/iransans/IRANSansWeb(FaNum).ttf') format('truetype');
-    src:url('../fonts/iransans/IRANSansWeb(FaNum).eot?#iefix') format('embedded-opentype'),
+@font-face {
+    font-family: 'iransans';
+    src: url('../fonts/iransans/IRANSansWeb(FaNum).ttf') format('truetype');
+    src: url('../fonts/iransans/IRANSansWeb(FaNum).eot?#iefix') format('embedded-opentype'),
     url('../fonts/iransans/IRANSansWeb(FaNum).eot');
-    src:url('../fonts/iransans/IRANSansWeb(FaNum).woff2') format('woff2');
-    src:url('../fonts/iransans/IRANSansWeb(FaNum).woff') format('woff');
+    src: url('../fonts/iransans/IRANSansWeb(FaNum).woff2') format('woff2');
+    src: url('../fonts/iransans/IRANSansWeb(FaNum).woff') format('woff');
 }
 
 
-
-html, body{
+html, body {
     direction: rtl;
     text-align: right;
     font-size: 14px;
-    font-family: 'iransans'!important;
+    font-family: 'iransans' !important;
     background: rgb(247, 247, 247);
 }
 
-::placeholder{ /* Chrome, Firefox, Safari, Opera*/
+::placeholder { /* Chrome, Firefox, Safari, Opera*/
     color: #bdbdbd !important;
     opacity: 1; /*Firefox*/
 }
 
-::-ms-input-placeholder{
+::-ms-input-placeholder {
     color: #bdbdbd !important;
 }
 
 
-.bg-whitesmoke{
+/*SHOPPING CART*/
+.bg-lightgreen {
+    background-color: #a5d6a7;
+}
+/**************/
+
+.bg-whitesmoke {
     background-color: #F5F5F5 !important;
 }
 
-.cursor-pointer{
+.cursor-pointer {
     cursor: pointer;
 }
 
-.img-cart{
+.img-cart {
     max-height: 200px !important;
 }
 
@@ -54,40 +58,42 @@ html, body{
 }
 
 
-.img-size-swiper{
+.img-size-swiper {
     max-height: 180px;
     min-height: 180px;
     overflow-y: hidden;
 }
-.product-thumbnails{
+
+.product-thumbnails {
     max-height: 500px;
     overflow-y: scroll;
 }
+
 .product-thumbnails::-webkit-scrollbar {
     display: none;
 }
 
-.product-image{
+.product-image {
     max-height: 500px;
 }
 
 
-a:hover{
+a:hover {
     text-decoration: none;
 }
 
-.list-unstyled li{
+.list-unstyled li {
     padding: 5px 0px 5px 0px;
 }
 
 
-.border-bottom-footer{
+.border-bottom-footer {
     margin-top: 4rem;
     padding-top: 4rem;
     border-top: 0.1rem solid rgba(0, 0, 0, 0.2);
 }
 
-.footer{
+.footer {
     margin-top: 2rem;
     background-color: rgb(240, 240, 240);
     color: rgb(0, 0, 0);
@@ -102,66 +108,67 @@ a:hover{
     right: 0;
     bottom: 0;
     left: 0;
-    max-width: 100%;
     text-align: center;
     color: #fff;
-    z-index: 1020;
+    z-index: 2;
 }
 
-.font-10{
+.font-10 {
     font-size: 10px !important;
 }
-.font-12{
+
+.font-12 {
     font-size: 12px !important;
 }
 
-.font-14{
+.font-14 {
     font-size: 14px !important;
 }
 
-.font-16{
+.font-16 {
     font-size: 16px !important;
 }
 
-.font-18{
+.font-18 {
     font-size: 18px !important;
 }
 
-.font-20{
+.font-20 {
     font-size: 20px !important;
 }
 
-.font-22{
+.font-22 {
     font-size: 22px !important;
 }
 
-.font-24{
+.font-24 {
     font-size: 24px !important;
 }
 
-.rounded-7{
+.rounded-7 {
     border-radius: 7px;
 }
 
-.ltr{
+.ltr {
     direction: ltr !important;
 }
 
-h1,h2,h3,h4,h5,h6{
+h1, h2, h3, h4, h5, h6 {
     line-height: 1.5;
     color: #455A64;
 }
 
-.left-top-0{
+.left-top-0 {
     left: 0;
     top: 0;
 }
-.left-top-15{
-    left:0;
-    top:15px;
+
+.left-top-15 {
+    left: 0;
+    top: 15px;
 }
 
-.discount-label{
+.discount-label {
     background-color: rgb(232, 16, 74);
     border-width: 1px;
     border-style: solid;
@@ -175,7 +182,7 @@ h1,h2,h3,h4,h5,h6{
     border-radius: 5px;
 }
 
-.add_card{
+.add_card {
     color: rgb(66, 176, 41);
     width: 24px;
     height: 24px;
@@ -194,11 +201,10 @@ h1,h2,h3,h4,h5,h6{
     margin: 0px;
 }
 
-.discount{
+.discount {
     opacity: 0.7;
     text-decoration: line-through;
 }
-
 
 
 /*******************************
@@ -219,7 +225,7 @@ h1,h2,h3,h4,h5,h6{
     transform: translate3d(0%, 0, 0);
 }
 
-.modal-back-color{
+.modal-back-color {
     background-color: #f7f7f7 !important;
 }
 
@@ -235,7 +241,7 @@ h1,h2,h3,h4,h5,h6{
 }
 
 /*Left*/
-.modal.left.fade .modal-dialog{
+.modal.left.fade .modal-dialog {
     left: -320px;
     -webkit-transition: opacity 0.3s linear, left 0.3s ease-out;
     -moz-transition: opacity 0.3s linear, left 0.3s ease-out;
@@ -243,7 +249,7 @@ h1,h2,h3,h4,h5,h6{
     transition: opacity 0.3s linear, left 0.3s ease-out;
 }
 
-.modal.left.fade.in .modal-dialog{
+.modal.left.fade.in .modal-dialog {
     left: 0;
 }
 
@@ -271,6 +277,6 @@ h1,h2,h3,h4,h5,h6{
     background-color: #FAFAFA;
 }
 
-#modalrightmenu{
+#modalrightmenu {
     padding-right: 0px !important;
 }

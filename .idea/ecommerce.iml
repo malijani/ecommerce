@@ -136,6 +136,7 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/shetabit/multipay" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/shetabit/payment" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/anetwork/validation" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/lavary/laravel-menu" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

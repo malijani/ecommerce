@@ -220,10 +220,10 @@
                         @foreach($product->details as $detail)
                             <div class="row mt-2 p-2 border-bottom font-weight-bold font-16">
 
-                                <div class="col-3 text-md-center border-left">
+                                <div class="col-4 text-md-center border-left">
                                     {{ $detail->title }}
                                 </div>
-                                <div class="col-9 pr-5 text-md-right">
+                                <div class="col-8 pr-5 text-md-right my-auto">
                                     {{ $detail->detail }}
                                 </div>
 

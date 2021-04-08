@@ -14,7 +14,7 @@
                 @foreach($basket as $key=>$value)
                     <div class="row d-flex align-items-center text-center mb-4 ml-1 mr-1  p-3 rounded bg-whitesmoke" id="product-{{$key}}">
                         {{--SHOW IMAGE--}}
-                        <div class="col-3">
+                        <div class="col-md-3">
                             <a href="{{ route('product.show', $value['title_en'])  }}">
                                 <img src="{{ asset($value['pic']) }}"
                                      alt="{{ $value['title']  }}"
@@ -23,13 +23,13 @@
                             </a>
                         </div>
                         {{--SHOW TITLE--}}
-                        <div class="col-2">
+                        <div class="col-md-2">
                             <a href="{{ route('product.show', $value['title_en'])  }}" class="text-dark">
                                 <p class="font-weight-bolder">{{$value['title']}}</p>
                             </a>
                         </div>
                         {{--SHOW QUANTITY--}}
-                        <div class="col-2">
+                        <div class="col-md-2">
                             @if(count($value['attribute']))
                                 <button type="button"
                                         class="text-dark bg-white btn my-0 font-weight-bolder">
@@ -67,7 +67,7 @@
                             @endif
                         </div>
                         {{--SHOW PRICE--}}
-                        <div class="col-3">
+                        <div class="col-md-3">
                             <b>{{ number_format($value['price']) }} تومن</b>
                             @if($value['total_discount'] > 0)
                                 <br>
@@ -75,7 +75,7 @@
                                     گرفتی</em>
                             @endif
                         </div>
-                        <div class="col-1">
+                        <div class="col-md-1">
                             <button type="button"
                                     class="btn btn-light"
                                     onclick="del({{$key}});"

@@ -39,7 +39,7 @@ return [
     |
     */
 
-    'debug' => (bool) env('APP_DEBUG', false),
+    'debug' => (bool)env('APP_DEBUG', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -170,7 +170,7 @@ return [
         UniSharp\LaravelFilemanager\LaravelFilemanagerServiceProvider::class,
         Shetabit\Payment\Provider\PaymentServiceProvider::class,
         Anetwork\Validation\PersianValidationServiceProvider::class,
-
+        Lavary\Menu\ServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -236,6 +236,7 @@ return [
         'Verta' => Hekmatinasser\Verta\Verta::class,
         'Image' => Intervention\Image\Facades\Image::class,
         'Payment' => Shetabit\Payment\Facade\Payment::class,
+        'Menu' => Lavary\Menu\Facade::class,
     ],
 
 ];
