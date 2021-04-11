@@ -15,6 +15,21 @@ html, body {
     font-family: 'iransans' !important;
     background: rgb(247, 247, 247);
 }
+/*######*/
+/*NAVBAR*/
+/*######*/
+nav>li>a{
+    color: #0a0a0a;
+}
+@media only screen and (max-width: 600px) {
+    .dropdown-menu{
+        max-height:300px;
+        overflow-y: scroll;
+    }
+}
+
+
+/*######*/
 
 ::placeholder { /* Chrome, Firefox, Safari, Opera*/
     color: #bdbdbd !important;
@@ -77,6 +92,10 @@ html, body {
     max-height: 500px;
 }
 
+
+.w-95{
+    width:95%!important
+}
 
 a:hover {
     text-decoration: none;

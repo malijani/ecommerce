@@ -97,7 +97,7 @@
                                         aria-expanded="true"
                                         aria-controls="collapseExample"
                                 >
-                                    <i class="fa fa-caret-square-o-up fa-2x"></i>
+                                    <i class="far fa-caret-circle-up fa-2x text-dark"></i>
                                 </button>
 
                                 <div class="d-flex">
@@ -263,9 +263,9 @@
             @if(is_array($value['attribute']) && count($value['attribute']))
             $("#product-attr-{{$key}}").on('show.bs.collapse hide.bs.collapse', function (e) {
                 if (e.type === 'show') {
-                $("#product-attr-button-{{$key}}").html('<i class="fa fa-caret-square-o-up fa-2x"></i>');
+                $("#product-attr-button-{{$key}}").html('<i class="far fa-caret-circle-up fa-2x text-dark"></i>');
                 } else {
-                    $("#product-attr-button-{{$key}}").html('<i class="fa fa-caret-square-o-down fa-2x"></i>');
+                    $("#product-attr-button-{{$key}}").html('<i class="far fa-caret-circle-down fa-2x text-dark"></i>');
                 }
             });
             @endif

@@ -7,6 +7,30 @@ Breadcrumbs::for('home', function ($trail) {
     $trail->push(config('app.name' ?? 'فروشگاه'), route('home'));
 });
 
+// Home > Dashboard
+Breadcrumbs::for('dashboard', function($trail){
+    $trail->parent('home');
+    $trail->push('داشبورد', route('dashboard.index'));
+});
+
+
+// Home > Dashboard > Orders
+Breadcrumbs::for('dashboard.orders', function($trail){
+    $trail->parent('dashboard');
+    $trail->push('سفارش های کاربر', route('dashboard.orders.index'));
+});
+
+// Home > Dashboard > Addresses
+Breadcrumbs::for('dashboard.addresses', function($trail){
+    $trail->parent('dashboard');
+    $trail->push('آدرس های کاربر', route('dashboard.addresses.index'));
+});
+
+// Home > Dashboard > Account
+Breadcrumbs::for('dashboard.profile', function($trail){
+    $trail->parent('dashboard');
+    $trail->push('حساب کاربری', route('dashboard.profile.index'));
+});
 
 // Home > Cart
 Breadcrumbs::for('cart', function($trail){

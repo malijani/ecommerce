@@ -5,21 +5,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="00f5ae84-d71d-47c5-aa01-f2581affa6d5" name="Default Changelist" comment="Minor changes of frontend + Product section in admin">
-      <change beforePath="$PROJECT_DIR$/.idea/ecommerce.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ecommerce.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Kernel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Kernel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Providers/AppServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Providers/AppServiceProvider.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/app.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/User/AddressController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/User/AddressController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/User/CartController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/User/CartController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/User/DashboardController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/User/Dashboard/DashboardController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Middleware/AuthNormal.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Middleware/AuthNormal.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Middleware/GenerateMenus.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Middleware/GenerateMenus.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/laravel-menu/settings.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/laravel-menu/settings.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/front-v1/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/front-v1/css/main.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/auth/register.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/auth/register.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/front-v1/partials/footer.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/front-v1/partials/footer.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/front-v1/partials/nav.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/front-v1/partials/nav.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/front-v1/partials/phone_nav.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/front-v1/partials/phone_nav.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/front-v1/partials/scripts.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/front-v1/partials/scripts.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/front-v1/partials/products.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/front-v1/partials/products.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/front-v1/partials/styles.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/front-v1/partials/styles.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/front-v1/product/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/front-v1/product/show.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/front-v1/user/address/index.blade.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/front-v1/user/cart/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/front-v1/user/cart/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/front-v1/user/cart/null.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/front-v1/user/cart/null.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/vendor/laravel-menu/bootstrap-navbar-items.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/vendor/laravel-menu/bootstrap-navbar-items.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/breadcrumbs.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/breadcrumbs.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -180,26 +185,26 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/public/images/fallback" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/front-v1/user/dashboard" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="editor.preferences.tabs" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/resources/views/front-v1/user/dashboard" />
+      <recent name="$PROJECT_DIR$/public/front-v1" />
       <recent name="$PROJECT_DIR$/public/images/fallback" />
       <recent name="$PROJECT_DIR$/resources/views/admin" />
       <recent name="$USER_HOME$/Bin" />
-      <recent name="$PROJECT_DIR$/resources/views/front-v1" />
-      <recent name="$PROJECT_DIR$/resources/views/admin/banner" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/Http/Controllers/User/Dashboard" />
       <recent name="$PROJECT_DIR$/resources/views/front-v1/partials" />
       <recent name="$PROJECT_DIR$/resources/views/partials" />
       <recent name="$PROJECT_DIR$/resources/views/front-v1" />
       <recent name="$PROJECT_DIR$/resources/sass/front-v1" />
-      <recent name="$PROJECT_DIR$/resources/views/admin" />
     </key>
   </component>
   <component name="RunAnythingCache">
@@ -363,7 +368,12 @@
       <workItem from="1617703239110" duration="7570000" />
       <workItem from="1617772091273" duration="6226000" />
       <workItem from="1617779807879" duration="16470000" />
-      <workItem from="1617866531988" duration="8588000" />
+      <workItem from="1617866531988" duration="8642000" />
+      <workItem from="1617936568331" duration="7270000" />
+      <workItem from="1617960441981" duration="4418000" />
+      <workItem from="1618023065209" duration="7614000" />
+      <workItem from="1618049083159" duration="12988000" />
+      <workItem from="1618121267361" duration="12760000" />
     </task>
     <task id="LOCAL-00001" summary="Minor changes of frontend + Product section in admin">
       <created>1613451037291</created>

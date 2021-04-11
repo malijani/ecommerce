@@ -37,8 +37,11 @@ class CartController extends Controller
             }
         }
 
+
+
         session()->put('total', $total);
-        $total = session()->get('total');
+        //$total = session()->get('total');
+
 
         return response()->view('front-v1.user.cart.index', [
             'title' => $title,
@@ -278,15 +281,31 @@ class CartController extends Controller
      * Remove the specified resource from storage.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return RedirectResponse
      */
-    public function destroy(int $id): void
+    public function destroy(int $id) : RedirectResponse
     {
         $basket = session()->get('basket');
-        if (isset($basket[$id])) {
+        $total = session()->get('total');
+        if (isset($basket[$id]) && isset($total)) {
+            /*REMOVE FROM TOTAL FOR BETTER INSURANCE OF GETTING RIGHT TOTAL*/
+            $total['raw_price'] -= (int)$basket[$id]['raw_price'];
+            $total['final_price'] -= (int)$basket[$id]['price'];
+            $total['discount'] -= (int)$basket[$id]['total_discount'];
+            $total['count'] -= (int)$basket[$id]['quantity'];
+            $total['weight'] -= (int)$basket[$id]['weight'];
+            /*CONTROL TOTAL IF THERE IS NO PRODUCT IN BASKET*/
+            if( is_null($total)||$total['count']==0) {
+                unset($total);
+            }
+            /*UNSET PRODUCT*/
             unset($basket[$id]);
+            /*UPDATE SESSIONS*/
             session()->put('basket', $basket);
+            session()->put('total', $total??[]);
+
         }
+        return response()->redirectToRoute('cart.index')->with('success', 'محصول مورد نظر با موفقیت از سبد خرید حذف شد.');
     }
 
 

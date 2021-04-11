@@ -1,7 +1,10 @@
 <?php
 
 namespace App\Http\Middleware;
+use App\Brand;
+use App\Category;
 use Closure;
+
 
 
 class GenerateMenus
@@ -16,22 +19,54 @@ class GenerateMenus
     public function handle($request, Closure $next)
     {
 
+
+
         \Menu::make('NavBar', function ($menu) {
-            $home = $menu->add(config('app.name')??'خانه' , [
+            /*HOME*/
+            $menu->add(config('app.name')??'خانه' , [
                 'route'=>'home',
                 'nickname'=>'home',
-            ])->active();
-            $home->divide();
+            ])->activate();
 
-            $product = $menu->add('محصولات', ['route'=>'product.index', 'nickname'=>'product']);
-            $product->add('زیر دسته محصول', 'gainer');
 
-            $blog = $menu->add('وبلاگ', ['route'=>'blog.index', 'nickname'=>'blog']);
-            $blog->add('زیر دسته وبلاگ' , 'blog');
+            /*PRODUCTS*/
+            $menu->add('محصولات', ['route'=>'product.index', 'nickname'=>'product'])
+                ->data(['header'=>'نمایش کامل محصولات']);
 
-            $brand = $menu->add('برند ها', ['route'=>'brand.index', 'nickname'=>'brand']);
-            $brand->add('زیردسته برند', 'brand');
+            $products = Category::withoutTrashed()
+                ->with('activeChildren')
+                ->where('title', 'محصولات')
+                ->first();
+
+            foreach($products->children as $product_category){
+                $menu->item('product')->add($product_category->title , route('category.show', $product_category->title_en));
+            }
+
+            /*BLOG*/
+            $menu->add('وبلاگ', ['route'=>'blog.index', 'nickname'=>'blog'])
+                ->data('header', 'نمایش کامل مقالات');
+            $articles = Category::withoutTrashed()
+                ->with('activeChildren')
+                ->where('title', 'مقالات')
+                ->first();
+
+            foreach ($articles->activeChildren as $article_category){
+                $menu->item('blog')->add($article_category->title, route('category.show', $article_category->title_en));
+            }
+
+            /*BRANDS*/
+            $menu->add('برند ها', ['route'=>'brand.index', 'nickname'=>'brand'])
+            ->data('header', 'نمایش کامل برند ها');
+            $brands = Brand::withoutTrashed()
+                ->get();
+            foreach ($brands as $brand){
+                $menu->item('brand')->add($brand->title, route('brand.show', $brand->title_en));
+            }
+
+
         });
+
+        //dd(\Menu::get('NavBar')->item('product'));
 
         return $next($request);
     }

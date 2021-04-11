@@ -1,3 +1,11 @@
+<footer style="height:500px;">
+<div class="row justify-content-center align-items-center mt-5 h-100" >
+    <div class="col-12 text-center">
+        <h1>در این بخش فوتر وبسایت قرار خواهد گرفت</h1>
+    </div>
+</div>
+</footer>
+{{--
 <footer class="footer font-14">
     <div class="container-fluid mb-5">
         <div class="row">
@@ -106,3 +114,4 @@
         </div>
     </div>
 </footer>
+--}}

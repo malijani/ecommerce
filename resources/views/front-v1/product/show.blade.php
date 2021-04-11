@@ -255,17 +255,17 @@
                 </div>
 
                 <div class="col-12 mt-2 mb-5">
-                    <div class="row align-items-center">
+                    <div class="row align-items-center justify-content-center">
                         <div class="oc-prev col-1 text-center cursor-pointer">
-                            <i class="fa fa-angle-right fa-4x"></i>
+                            <i class="far fa-angle-right fa-4x"></i>
                         </div>
-                        <div class="col-10">
+                        <div class="col-9">
                             <div class="owl-carousel">
                                 @include('front-v1.partials.products', ['products'=>$similar_products, 'carousel'=>true])
                             </div>
                         </div>
                         <div class="oc-next col-1 text-center cursor-pointer">
-                            <i class="fa fa-angle-left fa-4x"></i>
+                            <i class="far fa-angle-left fa-4x"></i>
                         </div>
                     </div>
 
@@ -276,9 +276,6 @@
 
     </div>{{--./product show container--}}
 
-
-    </div>
-    </div>
 
 
 

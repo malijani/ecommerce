@@ -18,7 +18,7 @@ class AuthNormal
     {
         if(Auth::check()){
             if(Auth::user()->isAdmin()){
-                return redirect(route('admin.home'));
+                return $next($request);
             } elseif(Auth::user()->isNormal()) {
                 return $next($request);
             } else {

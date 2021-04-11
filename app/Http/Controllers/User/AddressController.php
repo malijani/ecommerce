@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\ProvinceCity;
 use App\User;
 use App\UserAddress;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,16 +15,22 @@ class AddressController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
      */
     public function index()
     {
+
+        /*USER ADDRESS IS AFTER ORDERING PRODUCTS!*/
+        /*THE TOTAL SESSION SHOULD BE EXISTS*/
+        if(empty(session()->get('total'))){
+            return response()->redirectToRoute('cart.index')->with('error', 'شما هنوز محصولی جهت سفارش ثبت نکرده اید!');
+        }
+
         $title = 'انتخاب آدرس';
 
         $addresses = Auth::user()->addresses;
         $default_address = Auth::user()->defaultAddress;
-        $total = session()->get('total') ?? null;
         $provinces = ProvinceCity::withoutTrashed()->where('parent', 0)->get();
+        $total = session()->get('total');
         return response()->view('front-v1.user.address.index', [
             'title' => $title,
             'addresses' => $addresses,
@@ -106,7 +113,7 @@ class AddressController extends Controller
         $new_address->status = true;
         $new_address->save();
 
-        return response()->redirectToRoute('address.index')->with('success', 'آدرس جدید با موفقیت ذخیره شد');
+        return back()->with('success', 'آدرس جدید با موفقیت ذخیره شد');
     }
 
     /**
