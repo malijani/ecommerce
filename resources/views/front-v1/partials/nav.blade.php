@@ -108,7 +108,7 @@
                                    role="button"
                                    title=" داشبورد {{ \Illuminate\Support\Facades\Auth::user()->full_name }} "
                                 >
-                                    <i class="fal fa-desktop fa-2x align-middle"></i>
+                                    <i class="fal fa-user-alt fa-2x align-middle"></i>
                                     داشبورد
                                 </a>
                             </div>
@@ -187,7 +187,8 @@
                         @if($loop->first)
                             @continue;
                         @endif
-                        {{--GENERATE ITEMS WITH SUB ITEMS--}}
+
+                        {{--GENERATE PARENTS WITH SUB MENUS--}}
                         @if($menu->hasChildren())
                             <li class="nav-item dropdown yamm-fw mx-2">
 
@@ -228,10 +229,38 @@
                                     </div>
                                 </div>
                             </li>
-                        @else
-
-                        @endif
+                            @endif
                     @endforeach
+
+
+
+
+                    {{--USER DASHBOARD--}}
+                    @auth
+                    <li class="nav-item mx-2">
+
+                        <a class="nav-link btn p-2" href="{{route($NavBar->item('dashboard')->link->path['route'])}}"
+                        >
+                            <i class="far fa-user-alt "></i>
+                            {{ $NavBar->item('dashboard')->title }}
+
+                        </a>
+                    </li>
+                    @elseauth
+                        jsj
+                    @endauth
+
+                    {{--SHOPPING CART--}}
+                    <li class="nav-item mx-2">
+
+                        <a class="nav-link btn p-2" href="{{route($NavBar->item('cart')->link->path['route'])}}"
+                        >
+                            <i class="far fa-shopping-cart"></i>
+                            {{ $NavBar->item('cart')->title }}
+
+                        </a>
+                    </li>
+
                 </ul>
             </div>
         </div>

@@ -26,7 +26,6 @@
                            name="name" value="{{ old('name') ?? $user->name }}"
                            required
                            autocomplete="name"
-                           autofocus
                            placeholder="نام کاربر"
                     >
                     @include('partials.form_error', ['input'=>'name'])

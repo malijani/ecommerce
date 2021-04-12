@@ -15,15 +15,17 @@ html, body {
     font-family: 'iransans' !important;
     background: rgb(247, 247, 247);
 }
+
 /*######*/
 /*NAVBAR*/
 /*######*/
-nav>li>a{
+nav > li > a {
     color: #0a0a0a;
 }
+
 @media only screen and (max-width: 600px) {
-    .dropdown-menu{
-        max-height:300px;
+    .dropdown-menu {
+        max-height: 300px;
         overflow-y: scroll;
     }
 }
@@ -45,11 +47,33 @@ nav>li>a{
 .bg-lightgreen {
     background-color: #a5d6a7;
 }
+
 /**************/
+
+/*COLORS*/
+.text-lime-a100 {
+    color: #f4ff81;
+}
 
 .bg-whitesmoke {
     background-color: #F5F5F5 !important;
 }
+
+.bg-grey-300 {
+    background-color: #e0e0e0;
+}
+
+.bg-lightgreen-50 {
+    background-color: #f1f8e9;
+}
+
+.bg-awesome {
+    background: rgb(0,0,0);
+    background: radial-gradient(circle, rgba(0,0,0,1) 0%, rgba(22,49,82,1) 100%);
+}
+
+/*######*/
+
 
 .cursor-pointer {
     cursor: pointer;
@@ -93,8 +117,8 @@ nav>li>a{
 }
 
 
-.w-95{
-    width:95%!important
+.w-95 {
+    width: 95% !important
 }
 
 a:hover {
