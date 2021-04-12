@@ -2,7 +2,7 @@
     <a href="{{ route('product.show', $product->title_en) }}">
         <div class="@if(!$carousel) col-12 col-md-3 col-lg-2 @endif text-center py-3">
             <div class="d-flex align-items-center justify-content-center img-size-swiper rounded">
-                <img class="img card-img-top"
+                <img class="img img-fluid card-img-top"
                      src="{{ asset($product->files()->defaultFile()->link ?? 'images/fallback/article.png') }}"
                      alt="{{$product->files()->defaultFile()->title}}"
                 >

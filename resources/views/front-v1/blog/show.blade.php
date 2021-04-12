@@ -7,15 +7,18 @@
 
     <div class="container my-3 rounded">
         <div class="row bg-white">
-            <div class="col-12 py-4 text-center">
-                <h1 class="font-24">{{$article->title}}</h1>
+            <div class="col-12 ">
+                <div class="py-4 text-center">
+                    <h1 class="font-24">{{$article->title}}</h1>
+                </div>
             </div>
 
-            <div class="col-12">
-                <div class="parallax-window img-size-swiper rounded">
-                    <img class="img img-fluid card-img-top main-img"
+            <div class="col-12 mb-5">
+                <div class="parallax-window rounded">
+                    <img class="img img-fluid main-img w-100"
                          src="{{ asset($article->pic ?? 'images/fallback/article.png') }}"
                          alt="{{$article->pic_alt ?? $article->title_en}}"
+                         width="100vh"
                     >
                 </div>
             </div>
@@ -39,14 +42,14 @@
                 mainImg.hide();
                 parallaxWindow.parallax({
                     imageSrc: image,
-                    // naturalWidth: '100vw',
-                    // naturalHeight: '100vh',
+                    naturalWidth: '100%',
+                    //naturalHeight: '100vh',
                     zIndex: '0',
                     bleed: '0',
-                    speed: '0.01',
+                    speed: '0.1',
                     iosFix: true,
                     androidFix: true,
-                    // position: 'center center',
+                    //position: 'center center',
                 });
 
                 /*
@@ -54,12 +57,12 @@
                 * it will be created after parallax window initialization
                 */
                 let parallaxMirror = $('.parallax-mirror');
-                parallaxMirror.addClass("rounded img-size-swiper")
+                parallaxMirror.addClass("rounded")
                 /*
                 * parallax slider is image of parallax in mirror container
                 */
                 let parallaxSlider = $('.parallax-slider');
-                parallaxSlider.addClass("img img-fluid card-img-top")
+                parallaxSlider.addClass("img img-fluid card-img-top rounded w-100")
             } else {
                 mainImg.show();
             }

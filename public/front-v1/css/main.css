@@ -98,8 +98,8 @@ nav > li > a {
 
 
 .img-size-swiper {
-    max-height: 180px;
-    min-height: 180px;
+    max-height: 200px;
+    min-height: 200px;
     overflow-y: hidden;
 }
 

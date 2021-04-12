@@ -6,13 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="00f5ae84-d71d-47c5-aa01-f2581affa6d5" name="Default Changelist" comment="Minor changes of frontend + Product section in admin">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Middleware/GenerateMenus.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Middleware/GenerateMenus.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Peyk.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2021_03_23_163700_create_peyks_table.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/public/front-v1/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/front-v1/css/main.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/front-v1/partials/footer.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/front-v1/partials/footer.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/front-v1/partials/nav.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/front-v1/partials/nav.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/front-v1/user/dashboard/profile.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/front-v1/user/dashboard/profile.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/front-v1/blog/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/front-v1/blog/show.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/front-v1/partials/products.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/front-v1/partials/products.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -362,7 +358,7 @@
       <workItem from="1618023065209" duration="7614000" />
       <workItem from="1618049083159" duration="12988000" />
       <workItem from="1618121267361" duration="13280000" />
-      <workItem from="1618214004036" duration="8944000" />
+      <workItem from="1618214004036" duration="10357000" />
     </task>
     <task id="LOCAL-00001" summary="Minor changes of frontend + Product section in admin">
       <created>1613451037291</created>
