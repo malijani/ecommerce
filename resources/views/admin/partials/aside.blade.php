@@ -173,7 +173,7 @@
                         <a href="{{ route('top-navs.index') }}" class="nav-link">
                             <i class="nav-icon fa fa-navicon"></i>
                             <p>
-                                ناوبری ایستای وبسایت
+                                ناوبری ایستا
                             </p>
                         </a>
                     </li>
@@ -204,6 +204,16 @@
                             </p>
                         </a>
                     </li>
+
+                    <li class="nav-item">
+                        <a href="{{ route('footer-images.index') }}" class="nav-link">
+                            <i class="nav-icon fa fa-image"></i>
+                            <p>
+                                تصویر فوتر وبسایت
+                            </p>
+                        </a>
+                    </li>
+
 
                     <li class="nav-item">
                         <a href="{{ route('admin.fm-frame') }}" class="nav-link">
