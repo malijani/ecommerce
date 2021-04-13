@@ -37,6 +37,7 @@ Route::group(['prefix' => 'user', 'middleware' => ['web', 'auth', 'auth.normal',
 Route::group(['prefix' => 'admin', 'middleware' => ['web', 'auth', 'auth.admin']], function () {
 
     Route::get('', 'Admin\AdminController@index')->name('admin.home');
+
     Route::resource('users', 'Admin\UserController');
     Route::resource('categories', 'Admin\CategoryController');
     Route::resource('brands', 'Admin\BrandController');
@@ -46,6 +47,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web', 'auth', 'auth.admin']
     Route::resource('banners', 'Admin\BannerController')->except(['show']);
     Route::resource('sliders', 'Admin\SliderController')->except('show');
     Route::resource('logos', 'Admin\LogoController')->except(['show']);
+    Route::resource('top-navs', 'Admin\TopNavController')->except(['show']);
+
     // FILE MANAGER
     Route::view('files', 'admin.file-manager.index')->name('admin.fm-frame');
     Route::group(['prefix' => 'file-manager'], function () {

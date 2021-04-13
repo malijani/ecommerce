@@ -39,7 +39,7 @@
         <section class="content">
             <div class="container-fluid">
                 @include('partials.flashes')
-                <div class="row justify-content-center">
+                <div class="row">
                     @yield('content')
                 </div>
             </div>

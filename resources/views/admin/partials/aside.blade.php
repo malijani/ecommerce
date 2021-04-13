@@ -170,6 +170,15 @@
                     </li>
 
                     <li class="nav-item">
+                        <a href="{{ route('top-navs.index') }}" class="nav-link">
+                            <i class="nav-icon fa fa-navicon"></i>
+                            <p>
+                                ناوبری ایستای وبسایت
+                            </p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
                         <a href="{{ route('logos.index') }}" class="nav-link">
                             <i class="nav-icon fa fa-cc"></i>
                             <p>
@@ -204,6 +213,7 @@
                             </p>
                         </a>
                     </li>
+
                     {{--                    <li class="nav-item has-treeview">--}}
                     {{--                        <a href="#" class="nav-link">--}}
                     {{--                            <i class="nav-icon fa fa-trash"></i>--}}

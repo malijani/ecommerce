@@ -2,40 +2,39 @@
 
 
 <div class="container-fluid">
-    <div class="bg-dark text-white  text-right rounded pt-3 pb-5">
-        {{--TODO : DYNAMIC TOP NAVBAR--}}
-        <div class="container">
-            {{--DISPLAY > MD--}}
-            <div class="row d-sm-block d-none justify-content-center ">
 
-                <div class="col-md-2 mx-auto mt-2">
-                    <a href="#" class=" font-12 text-white font-weight-bolder">برند ها</a>
-                </div>
-                <div class="col-md-2 mx-auto mt-2">
-                    <a href="#" class=" font-12 text-white font-weight-bolder">مشاوره</a>
-                </div>
-                <div class="col-md-2 mx-auto mt-2">
-                    <a href="#" class=" font-12 text-white font-weight-bolder">پرسش های متداول</a>
-                </div>
-                <div class="col-md-2 mx-auto mt-2">
-                    <a href="#" class=" font-12 text-white font-weight-bolder">درباره جیم لند</a>
-                </div>
-                <div class="col-md-2 mx-auto mt-2">
-                    <a href="#" class="font-12 text-white font-weight-bolder">قوانین و مقررات</a>
-                </div>
-                <div class="col-md-2 mx-auto mt-2">
-                    <a href="#" class="font-12 text-white font-weight-bolder">تماس با ما</a>
-                </div>
+    {{--DISPLAY > MD--}}
+    <div class="container d-none d-md-block bg-dark text-white rounded-bottom py-3">
+        <div class="">
+        <div class="row  justify-content-center align-items-center text-center">
+
+                @foreach($top_navs_medium as $top_nav_medium)
+                    <div class="col mx-auto mt-2">
+                        <a href="{{ $top_nav_medium->link }}"
+                           target="_blank"
+                           class=" font-12 text-white font-weight-bolder">
+                            {{ $top_nav_medium->title }}
+                        </a>
+                    </div>
+                @endforeach
             </div>
+        </div>
+    </div>
 
+    {{--DISPLAY < MD--}}
+    <div class="container d-block d-md-none bg-dark rounded-bottom p-2">
+        <div class="">
+            <div class="row  text-center align-items-center">
 
-            {{--DISPLAY < MD--}}
-            <div class="row d-block d-md-none text-center">
-                <div class="col-12">
-                    <a href="#" class="font-12 text-white font-weight-bolder ">
-                        جهت مشاوره با ما تماس بگیرید!
-                    </a>
-                </div>
+                @foreach($top_navs_small as $top_nav_small)
+                    <div class="col-12">
+                        <a href="{{ $top_nav_small->link }}"
+                           target="_blank"
+                           class="font-12 text-white font-weight-bolder">
+                            {{ $top_nav_small->title }}
+                        </a>
+                    </div>
+                @endforeach
             </div>
 
         </div>
@@ -229,7 +228,7 @@
                                     </div>
                                 </div>
                             </li>
-                            @endif
+                        @endif
                     @endforeach
 
 
@@ -237,15 +236,16 @@
 
                     {{--USER DASHBOARD--}}
                     @auth
-                    <li class="nav-item mx-2">
+                        <li class="nav-item mx-2">
 
-                        <a class="nav-link btn p-2" href="{{route($NavBar->item('dashboard')->link->path['route'])}}"
-                        >
-                            <i class="far fa-user-alt "></i>
-                            {{ $NavBar->item('dashboard')->title }}
+                            <a class="nav-link btn p-2"
+                               href="{{route($NavBar->item('dashboard')->link->path['route'])}}"
+                            >
+                                <i class="far fa-user-alt "></i>
+                                {{ $NavBar->item('dashboard')->title }}
 
-                        </a>
-                    </li>
+                            </a>
+                        </li>
                     @elseauth
                         jsj
                     @endauth
