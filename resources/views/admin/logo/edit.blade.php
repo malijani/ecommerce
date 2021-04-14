@@ -72,7 +72,7 @@
                             <div class="col-md-12 text-center">{{--IMG--}}
                                 <img src="{{asset($logo->pic)}}"
                                      alt="{{ $logo->pic_alt }}"
-                                     class="preview img rounded align-middle"
+                                     class="preview img rounded align-middle w-50"
                                      id="preview"
                                 >
                             </div>{{--./IMG--}}

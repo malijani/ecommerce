@@ -14,7 +14,9 @@ Route::group(['prefix' => '/', 'middleware' => ['web']], function () {
     Route::resource('category', 'Visitor\CategoryController')->only(['index', 'show']);
     Route::resource('product', 'Visitor\ProductController')->only(['index', 'show']);
     Route::resource('brand', 'Visitor\BrandController')->only(['index', 'show']);
+    Route::resource('faq', 'Visitor\FaqController')->only(['index']);
     Route::resource('cart', 'User\CartController')->only(['index', 'store', 'destroy', 'update']);
+
 
 });
 
@@ -44,6 +46,11 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web', 'auth', 'auth.admin']
     Route::resource('articles', 'Admin\ArticleController');
     Route::resource('products', 'Admin\ProductController');
     Route::resource('attributes', 'Admin\AttributeController')->only(['index', 'store', 'update']);
+
+    /*PAGES*/
+    Route::resource('faqs', 'Admin\FaqController')->except(['show']);
+    Route::resource('faq-page', 'Admin\FaqPageController')->only(['store', 'update']);
+
     /*WEBSITE CONTROL*/
     Route::resource('top-navs', 'Admin\TopNavController')->except(['show']);
     Route::resource('logos', 'Admin\LogoController')->except(['show']);

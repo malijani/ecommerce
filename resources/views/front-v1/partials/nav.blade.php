@@ -43,17 +43,17 @@
 
     <div class="bg-white text-dark rounded">
         <div class="container">
-            <div class="row mt-2">
+            <div class="row mt-2 align-items-center">
 
                 {{--SHOW LOGO--}}
                 {{--DISPLAY > MD--}}
                 <div class="d-none d-md-block col-md-2 text-center">
-                    <img class="img-fluid rounded " src="{{asset($logo->pic??'images/fallback/logo.png')}}"
+                    <img class="img-fluid rounded align-middle" src="{{asset($logo->pic??'images/fallback/logo.png')}}"
                          alt="{{$logo->pic_alt??config('app.name')}}">
                 </div>
                 {{--DISPLAY < MD--}}
                 <div class="d-sm-block d-md-none col-md-1 text-center py-3 border-bottom">
-                    <img class="img-fluid rounded" src="{{asset($logo->pic??'images/fallback/logo.png')}}"
+                    <img class="img-fluid rounded align-middle" src="{{asset($logo->pic??'images/fallback/logo.png')}}"
                          alt="{{$logo->pic_alt??config('app.name')}}">
                 </div>
                 {{--./SHOW LOGO--}}
@@ -231,8 +231,17 @@
                         @endif
                     @endforeach
 
+                    {{--FAQ--}}
+                    <li class="nav-item mx-2">
 
+                        <a class="nav-link btn p-2"
+                           href="{{route($NavBar->item('faq')->link->path['route'])}}"
+                        >
+                            <i class="far fa-question-square align-middle "></i>
+                            {{ $NavBar->item('faq')->title }}
 
+                        </a>
+                    </li>
 
                     {{--USER DASHBOARD--}}
                     @auth
@@ -246,8 +255,6 @@
 
                             </a>
                         </li>
-                    @elseauth
-                        jsj
                     @endauth
 
                     {{--SHOPPING CART--}}

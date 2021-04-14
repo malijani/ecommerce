@@ -6,12 +6,18 @@
   <component name="ChangeListManager">
     <list default="true" id="00f5ae84-d71d-47c5-aa01-f2581affa6d5" name="Default Changelist" comment="Minor changes of frontend + Product section in admin">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/FooterImage.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/FooterImage.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/FooterImageController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/FooterImageController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Providers/AppServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Providers/AppServiceProvider.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2021_04_13_183556_create_footer_images_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2021_04_13_183556_create_footer_images_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/LogoController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/LogoController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Middleware/GenerateMenus.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Middleware/GenerateMenus.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/logo/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/logo/create.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/logo/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/logo/edit.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/logo/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/logo/index.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/admin/partials/aside.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/partials/aside.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/front-v1/partials/footer.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/front-v1/partials/footer.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/top-nav/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/top-nav/create.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/top-nav/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/top-nav/edit.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/front-v1/partials/nav.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/front-v1/partials/nav.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/partials/breadcrumbs.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/partials/breadcrumbs.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/breadcrumbs.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/breadcrumbs.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -363,7 +369,8 @@
       <workItem from="1618049083159" duration="12988000" />
       <workItem from="1618121267361" duration="13280000" />
       <workItem from="1618214004036" duration="10385000" />
-      <workItem from="1618297249059" duration="16953000" />
+      <workItem from="1618297249059" duration="16994000" />
+      <workItem from="1618365967402" duration="17019000" />
     </task>
     <task id="LOCAL-00001" summary="Minor changes of frontend + Product section in admin">
       <created>1613451037291</created>

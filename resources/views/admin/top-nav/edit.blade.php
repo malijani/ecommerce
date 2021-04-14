@@ -82,7 +82,7 @@
                                     >
                                         <option value="" disabled >انتخاب کنید...</option>
                                         <option value="0" @if(old('status')==0 || $nav_item->status == 0) selected @endif>عدم نمایش</option>
-                                        <option value="1" @if(old('status')==1 || $nav_item->status == 1) selected @endif>نمایش<option>
+                                        <option value="1" @if(old('status')==1 || $nav_item->status == 1) selected @endif>نمایش</option>
                                     </select>
                                     @include('partials.form_error', ['input'=>'status'])
                                 </div>
@@ -103,7 +103,7 @@
                                     >
                                         <option value="" disabled>انتخاب کنید...</option>
                                         <option value="0" @if(old('screen')==0 || $nav_item->screen == 0) selected @endif>صفحه نمایش کوچک</option>
-                                        <option value="1" @if(old('screen')==1 || $nav_item->screen == 1) selected @endif>صفحه نمایش بزرگ<option>
+                                        <option value="1" @if(old('screen')==1 || $nav_item->screen == 1) selected @endif>صفحه نمایش بزرگ</option>
                                     </select>
                                     @include('partials.form_error', ['input'=>'screen'])
                                 </div>

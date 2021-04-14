@@ -53,7 +53,7 @@
                                         <span class="hide">{{ $logo->pic_alt }}</span>
                                         <img src="{{ asset($logo->pic) }}"
                                              alt="{{ $logo->pic_alt }}"
-                                             class="img"
+                                             class="img-fluid w-25"
                                         >
                                 </td>
 

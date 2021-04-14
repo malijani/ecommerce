@@ -23,9 +23,9 @@ class FooterImageController extends Controller
             ->orderByDesc('status')
             ->get();
 
-        return response()->view('admin.footer-image.index',[
-            'title'=>$title,
-            'footer_images'=>$footer_images,
+        return response()->view('admin.footer-image.index', [
+            'title' => $title,
+            'footer_images' => $footer_images,
         ]);
     }
 
@@ -34,21 +34,21 @@ class FooterImageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create() : Response
+    public function create(): Response
     {
         $title = 'ثبت تصویر فوتر جدید';
         return response()->view('admin.footer-image.create', [
-            'title'=>$title,
+            'title' => $title,
         ]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return RedirectResponse
      */
-    public function store(Request $request) : RedirectResponse
+    public function store(Request $request): RedirectResponse
     {
 
         $request->validate([
@@ -68,7 +68,7 @@ class FooterImageController extends Controller
             $status = 1;
             /*DEACTIVATE LAST ACTIVE FOOTER IMAGE*/
             $last_active_footer_image = FooterImage::query()->where('status', '1')->first();
-            if(!is_null($last_active_footer_image)){
+            if (!is_null($last_active_footer_image)) {
                 $last_active_footer_image->status = 0;
                 $last_active_footer_image->save();
             }
@@ -88,7 +88,7 @@ class FooterImageController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -99,7 +99,7 @@ class FooterImageController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -107,19 +107,19 @@ class FooterImageController extends Controller
         $footer_image = FooterImage::withoutTrashed()->findOrFail($id);
         $title = 'ویرایش تصویر فوتر شماره ' . $footer_image->id;
         return response()->view('admin.footer-image.edit', [
-           'footer_image'=>$footer_image,
-            'title'=>$title,
+            'footer_image' => $footer_image,
+            'title' => $title,
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return RedirectResponse
      */
-    public function update(Request $request, $id) : RedirectResponse
+    public function update(Request $request, $id): RedirectResponse
     {
         $footer_image = FooterImage::withoutTrashed()->findOrFail($id);
 
@@ -170,19 +170,25 @@ class FooterImageController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return RedirectResponse
      */
-    public function destroy($id) : RedirectResponse
+    public function destroy($id): RedirectResponse
     {
         $last_active_footer_image = FooterImage::withoutTrashed()->where('status', 1)->first();
+        $footer_image = FooterImage::withoutTrashed()->findOrFail($id);
 
         if (!is_null($last_active_footer_image)) {
             if ($last_active_footer_image->id != $id) {
+                $footer_image->delete();
                 return response()->redirectToRoute('footer-images.index')->with('success', 'تصویر فوتر با موفقیت حذف شد');
+            } else {
+                return response()->redirectToRoute('footer-images.index')->with('error', 'تصویر فوتر انتخابی نباید تصویر فوتر پیشفرض باشد!');
             }
+        } else {
+            $footer_image->delete();
+            return response()->redirectToRoute('footer-images.index')->with('success', 'تصویر فوتر با موفقیت حذف شد');
         }
-        FooterImage::withoutTrashed()->findOrFail($id)->delete();
-        return response()->redirectToRoute('footer-images.index')->with('error', 'تصویر فوتر انتخابی نباید تصویر فوتر پیشفرض باشد!');
+
     }
 }

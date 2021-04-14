@@ -170,6 +170,15 @@
                     </li>
 
                     <li class="nav-item">
+                        <a href="{{ route('faqs.index') }}" class="nav-link">
+                            <i class="nav-icon fa fa-question-circle-o"></i>
+                            <p>
+                                پرسشهای متداول
+                            </p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
                         <a href="{{ route('top-navs.index') }}" class="nav-link">
                             <i class="nav-icon fa fa-navicon"></i>
                             <p>

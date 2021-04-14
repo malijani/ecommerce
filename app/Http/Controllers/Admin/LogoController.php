@@ -37,17 +37,17 @@ class LogoController extends Controller
     {
         $title = 'افزودن لوگو';
         return response()->view('admin.logo.create', [
-           'title'=>$title,
+            'title' => $title,
         ]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return RedirectResponse
      */
-    public function store(Request $request) : RedirectResponse
+    public function store(Request $request): RedirectResponse
     {
         /*VALIDATE REQUEST*/
         $request->validate([
@@ -66,7 +66,7 @@ class LogoController extends Controller
             $status = 1;
             /*DEACTIVATE LAST ACTIVE OBJECT*/
             $last_active_logo = Logo::query()->where('status', '1')->first();
-            if(!is_null($last_active_logo)){
+            if (!is_null($last_active_logo)) {
                 $last_active_logo->status = 0;
                 $last_active_logo->save();
             }
@@ -87,7 +87,7 @@ class LogoController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -98,7 +98,7 @@ class LogoController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -114,11 +114,11 @@ class LogoController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return RedirectResponse
      */
-    public function update(Request $request, $id) : RedirectResponse
+    public function update(Request $request, $id): RedirectResponse
     {
         $logo = Logo::withoutTrashed()->findOrFail($id);
 
@@ -168,21 +168,24 @@ class LogoController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return RedirectResponse
      */
-    public function destroy($id) : RedirectResponse
+    public function destroy($id): RedirectResponse
     {
         $last_active_logo = Logo::withoutTrashed()->where('status', 1)->first();
-
+        $logo = Logo::withoutTrashed()->findOrFail($id);
         if (!is_null($last_active_logo)) {
-            if ($last_active_logo->id != $id) {
+            if ($last_active_logo->id != $logo->id) {
+                $logo->delete();
                 return response()->redirectToRoute('logos.index')->with('success', 'لوگو با موفقیت حذف شد');
+            } else {
+                return response()->redirectToRoute('logos.index')->with('error', 'لوگو انتخابی نباید لوگو پیشفرض باشد!');
             }
+        } else {
+            $logo->delete();
+            return response()->redirectToRoute('logos.index')->with('success', 'لوگو با موفقیت حذف شد');
         }
 
-        Logo::withoutTrashed()->findOrFail($id)->delete();
-
-        return response()->redirectToRoute('logos.index')->with('error', 'لوگو انتخابی نباید لوگو پیشفرض باشد!');
     }
 }

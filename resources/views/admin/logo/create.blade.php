@@ -75,7 +75,7 @@
                                 <div class="col-md-12 text-center">{{--IMG--}}
                                     <img src="{{asset('images/fallback/logo.png')}}"
                                          alt="نمایش لوگو منتخب"
-                                         class="preview img rounded align-middle image-checkable"
+                                         class="preview img rounded align-middle image-checkable w-50"
                                          id="preview"
                                          name="status"
                                     >

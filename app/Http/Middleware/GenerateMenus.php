@@ -63,10 +63,13 @@ class GenerateMenus
                 $menu->item('brand')->add($brand->title, route('brand.show', $brand->title_en));
             }
 
+            /*FAQ*/
+            $menu->add('پرسشهای متداول', ['route'=>'faq.index', 'nickname'=>'faq']);
             /*USER PROFILE*/
             $menu->add('داشبورد', ['route'=>'dashboard.index', 'nickname'=>'dashboard']);
             /*SHOPPING CART*/
             $menu->add('سبد خرید', ['route'=>'cart.index', 'nickname'=>'cart']);
+
 
         });
 

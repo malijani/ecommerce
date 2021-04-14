@@ -44,6 +44,14 @@ Breadcrumbs::for('address', function($trail){
     $trail->push('تعیین آدرس', route('address.index'));
 });
 
+
+// Home > Faq
+Breadcrumbs::for('faq', function($trail){
+    $trail->parent('home');
+    $trail->push('پرسشهای متداول', route('faq.index'));
+});
+
+
 // Home > Blog
 Breadcrumbs::for('blog', function ($trail) {
     $trail->parent('home');
