@@ -1,13 +1,22 @@
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
+
     <!-- Brand Logo -->
+
     <a href="{{ route('admin.home') }}" class="brand-link">
-        <img src="{{ asset($logo->pic ?? 'images/fallback/logo.png') }}"
-             alt="{{ $logo->pic_alt ?? config('app.name') }}"
-             class="brand-image img-circle elevation-3"
-             style="opacity: .8"
-        >
-        <span class="brand-text font-weight-light">پنل مدیریت</span>
+        <div class="row justify-content-center align-items-center">
+
+            <div class="col-6 text-center">
+                <span class="brand-text font-weight-light">پنل مدیریت</span>
+            </div>
+            <div class="col-6 text-center">
+                <img src="{{ asset($logo->pic ?? 'images/fallback/logo.png') }}"
+                     alt="{{ $logo->pic_alt ?? config('app.name') }}"
+                     class="elevation-3 img-fluid bg-white rounded align-middle w-75"
+                     style="opacity: .8"
+                >
+            </div>
+        </div>
     </a>
 
     <!-- Sidebar -->
@@ -37,8 +46,8 @@
                          with font-awesome or any other icon font library -->
 
 
-                    <li class="nav-item has-treeview">
-                        <a href="#" class="nav-link">
+                    <li class="nav-item has-treeview {{Request::routeIs('users.*') ? 'menu-open' : '' }}">
+                        <a href="#" class="nav-link {{Request::routeIs('users.*') ? 'active' : '' }}">
                             <i class="nav-icon fa fa-user"></i>
                             <p>
                                 کاربران
@@ -47,13 +56,17 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="{{ route('users.index') }}" class="nav-link">
+                                <a href="{{ route('users.index') }}"
+                                   class="nav-link {{Request::routeIs('users.index') ? 'active' : '' }}"
+                                >
                                     <i class="fa fa-circle-o nav-icon"></i>
                                     <p>لیست کاربران</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('users.create') }}" class="nav-link">
+                                <a href="{{ route('users.create') }}"
+                                   class="nav-link {{Request::routeIs('users.create') ? 'active' : '' }}"
+                                >
                                     <i class="fa fa-circle-o nav-icon"></i>
                                     <p>افزودن کاربر</p>
                                 </a>
@@ -62,8 +75,45 @@
                     </li>
 
 
-                    <li class="nav-item has-treeview">
-                        <a href="#" class="nav-link">
+                    {{--PAGES--}}
+                    <li
+                        class="nav-item has-treeview {{Request::routeIs('pages.*') ? 'menu-open' : '' }}"
+                    >
+                        <a href="#"
+                           class="nav-link {{Request::routeIs('pages.*') ? 'active' : '' }}"
+                        >
+                            <i class="nav-icon fa fa-file-code-o"></i>
+                            <p>
+                                صفحه ساز
+                                <i class="right fa fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ route('pages.index') }}"
+                                   class="nav-link {{Request::routeIs('pages.index') ? 'active' : '' }}"
+                                >
+                                    <i class="fa fa-circle-o nav-icon"></i>
+                                    <p>لیست صفحات</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('pages.create') }}"
+                                   class="nav-link {{Request::routeIs('pages.create') ? 'active' : '' }}"
+                                >
+                                    <i class="fa fa-circle-o nav-icon"></i>
+                                    <p>افزودن صفحه</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li
+                        class="nav-item has-treeview {{Request::routeIs('categories.*') ? 'menu-open' : '' }}"
+                    >
+                        <a href="#"
+                           class="nav-link {{Request::routeIs('categories.*') ? 'active' : '' }}"
+                        >
                             <i class="nav-icon fa fa-list-alt"></i>
                             <p>
                                 دسته بندی ها
@@ -72,13 +122,17 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="{{ route('categories.index') }}" class="nav-link">
+                                <a href="{{ route('categories.index') }}"
+                                   class="nav-link {{Request::routeIs('categories.index') ? 'active' : '' }}"
+                                >
                                     <i class="fa fa-circle-o nav-icon"></i>
                                     <p>لیست دسته بندی ها</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('categories.create') }}" class="nav-link">
+                                <a href="{{ route('categories.create') }}"
+                                   class="nav-link {{Request::routeIs('categories.create') ? 'active' : '' }}"
+                                >
                                     <i class="fa fa-circle-o nav-icon"></i>
                                     <p>افزودن دسته بندی</p>
                                 </a>
@@ -87,8 +141,12 @@
                     </li>
 
 
-                    <li class="nav-item has-treeview">
-                        <a href="#" class="nav-link">
+                    <li
+                        class="nav-item has-treeview {{Request::routeIs('brands.*') ? 'menu-open' : '' }}"
+                    >
+                        <a href="#"
+                           class="nav-link {{Request::routeIs('brands.*') ? 'active' : '' }}"
+                        >
                             <i class="nav-icon fa fa-list"></i>
                             <p>
                                 برند ها
@@ -97,13 +155,17 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="{{ route('brands.index') }}" class="nav-link">
+                                <a href="{{ route('brands.index') }}"
+                                   class="nav-link {{Request::routeIs('brands.index') ? 'active' : '' }}"
+                                >
                                     <i class="fa fa-circle-o nav-icon"></i>
                                     <p>لیست برند ها</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('brands.create') }}" class="nav-link">
+                                <a href="{{ route('brands.create') }}"
+                                   class="nav-link {{Request::routeIs('brands.create') ? 'active' : '' }}"
+                                >
                                     <i class="fa fa-circle-o nav-icon"></i>
                                     <p>افزودن برند</p>
                                 </a>
@@ -112,8 +174,12 @@
                     </li>
 
 
-                    <li class="nav-item has-treeview">
-                        <a href="#" class="nav-link">
+                    <li
+                        class="nav-item has-treeview {{Request::routeIs('articles.*') ? 'menu-open' : '' }}"
+                    >
+                        <a href="#"
+                           class="nav-link {{ Request::routeIs('articles.*') ? 'active' : '' }}"
+                        >
                             <i class="nav-icon fa fa-newspaper-o"></i>
                             <p>
                                 مقالات
@@ -122,13 +188,17 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="{{ route('articles.index') }}" class="nav-link">
+                                <a href="{{ route('articles.index') }}"
+                                   class="nav-link {{ Request::routeIs('articles.index') ? 'active' : '' }}"
+                                >
                                     <i class="fa fa-circle-o nav-icon"></i>
                                     <p>لیست مقالات</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('articles.create') }}" class="nav-link">
+                                <a href="{{ route('articles.create') }}"
+                                   class="nav-link {{ Request::routeIs('articles.create') ? 'active' : '' }}"
+                                >
                                     <i class="fa fa-circle-o nav-icon"></i>
                                     <p>افزودن مقاله</p>
                                 </a>
@@ -136,8 +206,12 @@
                         </ul>
                     </li>
 
-                    <li class="nav-item has-treeview">
-                        <a href="#" class="nav-link">
+                    <li
+                        class="nav-item has-treeview {{ Request::routeIs('products.*') ? 'menu-open' : '' }}"
+                    >
+                        <a href="#"
+                           class="nav-link {{ Request::routeIs('products.*') ? 'active' : '' }}"
+                        >
                             <i class="nav-icon fa fa-cubes"></i>
                             <p>
                                 محصولات
@@ -146,22 +220,29 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="{{ route('products.index') }}" class="nav-link">
+                                <a href="{{ route('products.index') }}"
+                                   class="nav-link {{ Request::routeIs('products.index') ? 'active' : '' }}"
+                                >
                                     <i class="fa fa-circle-o nav-icon"></i>
                                     <p>لیست محصولات</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('products.create') }}" class="nav-link">
+                                <a href="{{ route('products.create') }}"
+                                   class="nav-link {{ Request::routeIs('products.create') ? 'active' : '' }}"
+                                >
                                     <i class="fa fa-circle-o nav-icon"></i>
                                     <p>افزودن محصول</p>
                                 </a>
                             </li>
+
                         </ul>
                     </li>
 
                     <li class="nav-item">
-                        <a href="{{ route('attributes.index') }}" class="nav-link">
+                        <a href="{{ route('attributes.index') }}"
+                           class="nav-link {{ Request::routeIs('attributes.*') ? 'active' : '' }}"
+                        >
                             <i class="nav-icon fa fa-sitemap"></i>
                             <p>
                                 ویژگی های محصول
@@ -169,8 +250,13 @@
                         </a>
                     </li>
 
+
+
+                    {{--FAQ--}}
                     <li class="nav-item">
-                        <a href="{{ route('faqs.index') }}" class="nav-link">
+                        <a href="{{ route('faqs.index') }}"
+                           class="nav-link {{ Request::routeIs('faqs.*') ? 'active' : '' }}"
+                        >
                             <i class="nav-icon fa fa-question-circle-o"></i>
                             <p>
                                 پرسشهای متداول
@@ -179,7 +265,9 @@
                     </li>
 
                     <li class="nav-item">
-                        <a href="{{ route('top-navs.index') }}" class="nav-link">
+                        <a href="{{ route('top-navs.index') }}"
+                           class="nav-link {{ Request::routeIs('top-navs.*') ? 'active' : '' }}"
+                        >
                             <i class="nav-icon fa fa-navicon"></i>
                             <p>
                                 ناوبری ایستا
@@ -188,7 +276,9 @@
                     </li>
 
                     <li class="nav-item">
-                        <a href="{{ route('logos.index') }}" class="nav-link">
+                        <a href="{{ route('logos.index') }}"
+                           class="nav-link {{ Request::routeIs('logos.*') ? 'active' : '' }}"
+                        >
                             <i class="nav-icon fa fa-cc"></i>
                             <p>
                                 لوگو ها
@@ -197,7 +287,9 @@
                     </li>
 
                     <li class="nav-item">
-                        <a href="{{ route('banners.index') }}" class="nav-link">
+                        <a href="{{ route('banners.index') }}"
+                           class="nav-link {{ Request::routeIs('banners.*') ? 'active' : '' }}"
+                        >
                             <i class="nav-icon fa fa-file-image-o"></i>
                             <p>
                                 بنر ها
@@ -206,7 +298,9 @@
                     </li>
 
                     <li class="nav-item">
-                        <a href="{{ route('sliders.index') }}" class="nav-link">
+                        <a href="{{ route('sliders.index') }}"
+                           class="nav-link {{ Request::routeIs('sliders.*') ? 'active' : '' }}"
+                        >
                             <i class="nav-icon fa fa-sliders"></i>
                             <p>
                                 اسلایدر ها
@@ -215,7 +309,9 @@
                     </li>
 
                     <li class="nav-item">
-                        <a href="{{ route('footer-images.index') }}" class="nav-link">
+                        <a href="{{ route('footer-images.index') }}"
+                           class="nav-link {{ Request::routeIs('footer-images.*') ? 'active' : '' }}"
+                        >
                             <i class="nav-icon fa fa-image"></i>
                             <p>
                                 تصویر فوتر وبسایت
@@ -225,7 +321,9 @@
 
 
                     <li class="nav-item">
-                        <a href="{{ route('admin.fm-frame') }}" class="nav-link">
+                        <a href="{{ route('admin.fm-frame') }}"
+                           class="nav-link {{ Request::routeIs('admin.fm-frame') ? 'active' : '' }}"
+                        >
                             <i class="nav-icon fa fa-file-o"></i>
                             <p>
                                 مدیریت فایل
@@ -233,151 +331,6 @@
                         </a>
                     </li>
 
-                    {{--                    <li class="nav-item has-treeview">--}}
-                    {{--                        <a href="#" class="nav-link">--}}
-                    {{--                            <i class="nav-icon fa fa-trash"></i>--}}
-                    {{--                            <p>--}}
-                    {{--                                سطل زباله--}}
-                    {{--                                <i class="right fa fa-angle-left"></i>--}}
-                    {{--                            </p>--}}
-                    {{--                        </a>--}}
-                    {{--                        <ul class="nav nav-treeview">--}}
-                    {{--                            <li class="nav-item">--}}
-                    {{--                                <a href="{{ route('t-categories.index') }}" class="nav-link">--}}
-                    {{--                                    <i class="fa fa-circle-o nav-icon"></i>--}}
-                    {{--                                    <p>دسته بندی های حذف شده</p>--}}
-                    {{--                                </a>--}}
-                    {{--                            </li>--}}
-
-                    {{--                        </ul>--}}
-                    {{--                    </li>--}}
-
-                    {{--                    <li class="nav-item">--}}
-                    {{--                        <a href="pages/widgets.html" class="nav-link">--}}
-                    {{--                            <i class="nav-icon fa fa-th"></i>--}}
-                    {{--                            <p>--}}
-                    {{--                                ویجت‌ها--}}
-                    {{--                                <span class="right badge badge-danger">جدید</span>--}}
-                    {{--                            </p>--}}
-                    {{--                        </a>--}}
-                    {{--                    </li>--}}
-                    {{--                    <li class="nav-item has-treeview">--}}
-                    {{--                        <a href="#" class="nav-link">--}}
-                    {{--                            <i class="nav-icon fa fa-pie-chart"></i>--}}
-                    {{--                            <p>--}}
-                    {{--                                چارت‌ها--}}
-                    {{--                                <i class="right fa fa-angle-left"></i>--}}
-                    {{--                            </p>--}}
-                    {{--                        </a>--}}
-                    {{--                        <ul class="nav nav-treeview">--}}
-                    {{--                            <li class="nav-item">--}}
-                    {{--                                <a href="pages/charts/chartjs.html" class="nav-link">--}}
-                    {{--                                    <i class="fa fa-circle-o nav-icon"></i>--}}
-                    {{--                                    <p>نمودار ChartJS</p>--}}
-                    {{--                                </a>--}}
-                    {{--                            </li>--}}
-                    {{--                            <li class="nav-item">--}}
-                    {{--                                <a href="pages/charts/flot.html" class="nav-link">--}}
-                    {{--                                    <i class="fa fa-circle-o nav-icon"></i>--}}
-                    {{--                                    <p>نمودار Flot</p>--}}
-                    {{--                                </a>--}}
-                    {{--                            </li>--}}
-                    {{--                            <li class="nav-item">--}}
-                    {{--                                <a href="pages/charts/inline.html" class="nav-link">--}}
-                    {{--                                    <i class="fa fa-circle-o nav-icon"></i>--}}
-                    {{--                                    <p>نمودار Inline</p>--}}
-                    {{--                                </a>--}}
-                    {{--                            </li>--}}
-                    {{--                        </ul>--}}
-                    {{--                    </li>--}}
-                    {{--                    <li class="nav-item has-treeview">--}}
-                    {{--                        <a href="#" class="nav-link">--}}
-                    {{--                            <i class="nav-icon fa fa-tree"></i>--}}
-                    {{--                            <p>--}}
-                    {{--                                اشیای گرافیکی--}}
-                    {{--                                <i class="fa fa-angle-left right"></i>--}}
-                    {{--                            </p>--}}
-                    {{--                        </a>--}}
-                    {{--                        <ul class="nav nav-treeview">--}}
-                    {{--                            <li class="nav-item">--}}
-                    {{--                                <a href="pages/UI/general.html" class="nav-link">--}}
-                    {{--                                    <i class="fa fa-circle-o nav-icon"></i>--}}
-                    {{--                                    <p>عمومی</p>--}}
-                    {{--                                </a>--}}
-                    {{--                            </li>--}}
-                    {{--                            <li class="nav-item">--}}
-                    {{--                                <a href="pages/UI/icons.html" class="nav-link">--}}
-                    {{--                                    <i class="fa fa-circle-o nav-icon"></i>--}}
-                    {{--                                    <p>آیکون‌ها</p>--}}
-                    {{--                                </a>--}}
-                    {{--                            </li>--}}
-                    {{--                            <li class="nav-item">--}}
-                    {{--                                <a href="pages/UI/buttons.html" class="nav-link">--}}
-                    {{--                                    <i class="fa fa-circle-o nav-icon"></i>--}}
-                    {{--                                    <p>دکمه‌ها</p>--}}
-                    {{--                                </a>--}}
-                    {{--                            </li>--}}
-                    {{--                            <li class="nav-item">--}}
-                    {{--                                <a href="pages/UI/sliders.html" class="nav-link">--}}
-                    {{--                                    <i class="fa fa-circle-o nav-icon"></i>--}}
-                    {{--                                    <p>اسلایدر‌ها</p>--}}
-                    {{--                                </a>--}}
-                    {{--                            </li>--}}
-                    {{--                        </ul>--}}
-                    {{--                    </li>--}}
-                    {{--                    <li class="nav-item has-treeview">--}}
-                    {{--                        <a href="#" class="nav-link">--}}
-                    {{--                            <i class="nav-icon fa fa-edit"></i>--}}
-                    {{--                            <p>--}}
-                    {{--                                فرم‌ها--}}
-                    {{--                                <i class="fa fa-angle-left right"></i>--}}
-                    {{--                            </p>--}}
-                    {{--                        </a>--}}
-                    {{--                        <ul class="nav nav-treeview">--}}
-                    {{--                            <li class="nav-item">--}}
-                    {{--                                <a href="pages/forms/general.html" class="nav-link">--}}
-                    {{--                                    <i class="fa fa-circle-o nav-icon"></i>--}}
-                    {{--                                    <p>اجزا عمومی</p>--}}
-                    {{--                                </a>--}}
-                    {{--                            </li>--}}
-                    {{--                            <li class="nav-item">--}}
-                    {{--                                <a href="pages/forms/advanced.html" class="nav-link">--}}
-                    {{--                                    <i class="fa fa-circle-o nav-icon"></i>--}}
-                    {{--                                    <p>پیشرفته</p>--}}
-                    {{--                                </a>--}}
-                    {{--                            </li>--}}
-                    {{--                            <li class="nav-item">--}}
-                    {{--                                <a href="pages/forms/editors.html" class="nav-link">--}}
-                    {{--                                    <i class="fa fa-circle-o nav-icon"></i>--}}
-                    {{--                                    <p>ویشرایشگر</p>--}}
-                    {{--                                </a>--}}
-                    {{--                            </li>--}}
-                    {{--                        </ul>--}}
-                    {{--                    </li>--}}
-                    {{--                    <li class="nav-item has-treeview">--}}
-                    {{--                        <a href="#" class="nav-link">--}}
-                    {{--                            <i class="nav-icon fa fa-table"></i>--}}
-                    {{--                            <p>--}}
-                    {{--                                جداول--}}
-                    {{--                                <i class="fa fa-angle-left right"></i>--}}
-                    {{--                            </p>--}}
-                    {{--                        </a>--}}
-                    {{--                        <ul class="nav nav-treeview">--}}
-                    {{--                            <li class="nav-item">--}}
-                    {{--                                <a href="pages/tables/simple.html" class="nav-link">--}}
-                    {{--                                    <i class="fa fa-circle-o nav-icon"></i>--}}
-                    {{--                                    <p>جداول ساده</p>--}}
-                    {{--                                </a>--}}
-                    {{--                            </li>--}}
-                    {{--                            <li class="nav-item">--}}
-                    {{--                                <a href="pages/tables/data.html" class="nav-link">--}}
-                    {{--                                    <i class="fa fa-circle-o nav-icon"></i>--}}
-                    {{--                                    <p>جداول داده</p>--}}
-                    {{--                                </a>--}}
-                    {{--                            </li>--}}
-                    {{--                        </ul>--}}
-                    {{--                    </li>--}}
-                    {{--                    <li class="nav-header">مثال‌ها</li>--}}
                 </ul>
             </nav>
         </div>

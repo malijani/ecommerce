@@ -31,7 +31,6 @@ class FaqController extends Controller
         return response()->view('admin.faq.index', [
             'title' => $title,
             'faqs' => $faqs,
-
             'faq_page'=>$faq_page
         ]);
     }

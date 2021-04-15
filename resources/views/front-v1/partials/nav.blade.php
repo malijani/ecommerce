@@ -6,7 +6,7 @@
     {{--DISPLAY > MD--}}
     <div class="container d-none d-md-block bg-dark text-white rounded-bottom py-3">
         <div class="">
-        <div class="row  justify-content-center align-items-center text-center">
+            <div class="row  justify-content-center align-items-center text-center">
 
                 @foreach($top_navs_medium as $top_nav_medium)
                     <div class="col mx-auto mt-2">
@@ -95,17 +95,11 @@
                     @if (\Illuminate\Support\Facades\Route::has('login'))
 
                         @auth
-                            {{--<form action="{{ route('logout') }}" method="post" class="form-inline w-100">
-                                @csrf
-                                <button class="btn btn-outline-dark mx-1" role="button" type="submit">
-                                    <i class="fa fa-sign-out"></i>
-                                    خروج
-                                </button>
-                            </form>--}}
                             <div class="d-sm-block mb-3 d-md-inline mb-md-0">
                                 <a href="{{ route('dashboard.index') }}" class="mx-1 py-1 pl-3 text-dark rounded"
                                    role="button"
                                    title=" داشبورد {{ \Illuminate\Support\Facades\Auth::user()->full_name }} "
+                                   target="_blank"
                                 >
                                     <i class="fal fa-user-alt fa-2x align-middle"></i>
                                     داشبورد
@@ -129,6 +123,7 @@
                            title="سبد خرید"
                            role="button"
                            class="bg-lightgreen mx-1 py-2 px-2 text-dark rounded"
+                           target="_blank"
 
                         >
                             <i class="far fa-shopping-cart fa-2x align-middle"></i>
@@ -182,8 +177,12 @@
 
                     {{--GENERATE ITEMS--}}
                     @foreach($NavBar->all() as $menu)
-
+                        {{--SKIP ACTIVE : IT COMES FIRST--}}
                         @if($loop->first)
+                            @continue;
+                        @endif
+                        {{--SKIP PAGE : JUST DONT WANNA BE AS DROP DOWN MENU--}}
+                        @if($menu->nickname == "page")
                             @continue;
                         @endif
 
@@ -236,12 +235,28 @@
 
                         <a class="nav-link btn p-2"
                            href="{{route($NavBar->item('faq')->link->path['route'])}}"
+                           target="_blank"
                         >
-                            <i class="far fa-question-square align-middle "></i>
                             {{ $NavBar->item('faq')->title }}
 
                         </a>
                     </li>
+
+                    {{--SHOW MENU PAGES--}}
+                    @if($NavBar->item('page')->hasChildren())
+                        @foreach($NavBar->item('page')->children() as $page_child)
+                            <li class="nav-item mx-2">
+
+                                <a class="nav-link btn p-2"
+                                   href="{{$page_child->link->path['url']}}"
+                                   target="_blank"
+                                >
+                                    {{ $page_child->title }}
+
+                                </a>
+                            </li>
+                        @endforeach
+                    @endif
 
                     {{--USER DASHBOARD--}}
                     @auth
@@ -249,10 +264,18 @@
 
                             <a class="nav-link btn p-2"
                                href="{{route($NavBar->item('dashboard')->link->path['route'])}}"
+                               target="_blank"
                             >
-                                <i class="far fa-user-alt "></i>
                                 {{ $NavBar->item('dashboard')->title }}
 
+                            </a>
+                        </li>
+                    @else
+                        <li class="nav-item mx-2">
+                            <a class="nav-link btn p-2"
+                                href="{{ route('login') }}"
+                            >
+                                حساب کاربری
                             </a>
                         </li>
                     @endauth
@@ -260,9 +283,10 @@
                     {{--SHOPPING CART--}}
                     <li class="nav-item mx-2">
 
-                        <a class="nav-link btn p-2" href="{{route($NavBar->item('cart')->link->path['route'])}}"
+                        <a class="nav-link btn p-2"
+                           href="{{route($NavBar->item('cart')->link->path['route'])}}"
+                           target="_blank"
                         >
-                            <i class="far fa-shopping-cart"></i>
                             {{ $NavBar->item('cart')->title }}
 
                         </a>

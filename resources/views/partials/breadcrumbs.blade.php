@@ -8,7 +8,7 @@
 
                         @if (!is_null($breadcrumb->url) && !$loop->last)
                             <li class="breadcrumb-item">
-                                <a href="{{ $breadcrumb->url }}">{{ $breadcrumb->title }}</a>
+                                <a class="text-dark" href="{{ $breadcrumb->url }}">{{ $breadcrumb->title }}</a>
                                 <i class="far fa-chevron-left mx-1 align-middle"></i>
                             </li>
                         @else

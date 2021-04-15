@@ -15,9 +15,8 @@ Route::group(['prefix' => '/', 'middleware' => ['web']], function () {
     Route::resource('product', 'Visitor\ProductController')->only(['index', 'show']);
     Route::resource('brand', 'Visitor\BrandController')->only(['index', 'show']);
     Route::resource('faq', 'Visitor\FaqController')->only(['index']);
+    Route::resource('page', 'Visitor\PageController')->only(['index', 'show']);
     Route::resource('cart', 'User\CartController')->only(['index', 'store', 'destroy', 'update']);
-
-
 });
 
 // USER SECTION
@@ -50,6 +49,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web', 'auth', 'auth.admin']
     /*PAGES*/
     Route::resource('faqs', 'Admin\FaqController')->except(['show']);
     Route::resource('faq-page', 'Admin\FaqPageController')->only(['store', 'update']);
+    Route::resource('pages', 'Admin\PageController')->except(['show']);
 
     /*WEBSITE CONTROL*/
     Route::resource('top-navs', 'Admin\TopNavController')->except(['show']);

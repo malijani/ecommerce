@@ -51,6 +51,18 @@ Breadcrumbs::for('faq', function($trail){
     $trail->push('پرسشهای متداول', route('faq.index'));
 });
 
+// Home > Page
+Breadcrumbs::for('page', function ($trail) {
+    $trail->parent('home');
+    $trail->push('صفحات', route('page.index'));
+});
+
+// Home > Pge > [Content]
+Breadcrumbs::for('page.show', function ($trail, $page) {
+    $trail->parent('page');
+    $trail->push($page->menu_title, route('page.show', $page->title_en));
+});
+
 
 // Home > Blog
 Breadcrumbs::for('blog', function ($trail) {
