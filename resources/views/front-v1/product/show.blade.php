@@ -347,7 +347,7 @@
             owl.owlCarousel({
                 rtl: true,
                 margin: 20,
-                autoplay: true,
+                autoplay: false,
                 autoplayHoverPause: true,
                 autoplayTimeout: 3000,
                 animateIn: 'linear',
@@ -355,7 +355,7 @@
                 nav: false,
                 navElement: 'div',
                 dots: false,
-                rewind: true,
+                rewind: false,
                 responsiveClass: true,
                 responsive: {
                     0: {
