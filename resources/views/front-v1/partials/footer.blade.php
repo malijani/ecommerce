@@ -29,7 +29,7 @@
     {{--PROPOSALS--}}
     <div class="container-fluid">
         {{--BRIEF OF WEBSITE--}}
-        <div class="mt-5 bg-dark text-lime-a100 text-center p-3 font-weight-bolder rounded">
+        <div class="mt-5 bg-dark text-lime-a100 text-center p-3 font-weight-bolder rounded-top">
             <div class="row">
                 <div class="col-md-3 mt-0 mt-md-1">دارای مجوز وزارت صمت</div>
                 <div class="col-md-3 mt-3 mt-md-1">تماس بگیرید : 9103944579(+98)</div>
@@ -58,7 +58,7 @@
             </div>
         </div>
         {{--COPYRIGHT--}}
-        <div class="mt-0 bg-awesome text-center p-2  text-lime-a100 rounded">
+        <div class="mt-0 bg-awesome text-center p-2  text-lime-a100 rounded-bottom">
             <div class="row align-items-center">
                 <div class="col-12">
                     <span>
@@ -76,6 +76,7 @@
                 </div>
             </div>
         </div>
+        <div class="d-block d-md-none min-vh-25"></div>
 
     </div>
 

@@ -29,6 +29,7 @@
 @include('front-v1.partials.cart')
 
 
+@include('front-v1.partials.back_to_top')
 
 @include('front-v1.partials.scripts')
 @yield('page-scripts')

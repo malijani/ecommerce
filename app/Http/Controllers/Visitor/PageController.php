@@ -62,6 +62,8 @@ class PageController extends Controller
             ->where('title_en', $slug)
             ->firstOrFail();
 
+        $page->increment('visit');
+
         return response()->view('front-v1.page.show', [
             'title' => $page->title,
             'page' => $page

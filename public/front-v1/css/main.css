@@ -15,6 +15,17 @@ html, body {
     font-family: 'iransans' !important;
     background: rgb(247, 247, 247);
 }
+/*************/
+/*BACK TO TOP*/
+/*************/
+.back-to-top {
+    position: fixed;
+    bottom: 5rem;
+    right: 1rem;
+    z-index: 2;
+}
+
+/*************/
 
 /*######*/
 /*NAVBAR*/
@@ -65,6 +76,10 @@ nav > li > a {
 
 .bg-lightgreen-50 {
     background-color: #f1f8e9;
+}
+
+.bg-blue-grey-300 {
+    background-color : #90A4AE;
 }
 
 .bg-awesome {
@@ -144,15 +159,9 @@ a:hover {
     padding: 5rem 0px;
 }
 
-.add_new_ad_btn {
+.sticky-footer {
     position: fixed;
-    margin: 0 auto;
-    background-color: white;
-    right: 0;
     bottom: 0;
-    left: 0;
-    text-align: center;
-    color: #fff;
     z-index: 2;
 }
 

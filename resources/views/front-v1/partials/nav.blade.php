@@ -172,7 +172,7 @@
             </button>
 
             <div class="navbar-collapse collapse" id="navbar-collapse-1">
-                <ul class="navbar-nav">
+                <ul class="navbar-nav p-0">
 
 
                     {{--GENERATE ITEMS--}}
