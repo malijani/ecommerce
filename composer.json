@@ -21,6 +21,7 @@
         "laravel/tinker": "^2.5",
         "laravel/ui": "^2.4",
         "lavary/laravel-menu": "^1.8",
+        "livewire/livewire": "^2.4",
         "shetabit/payment": "^4.0",
         "unisharp/laravel-filemanager": "^2.2"
     },

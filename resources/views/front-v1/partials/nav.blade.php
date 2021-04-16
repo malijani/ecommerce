@@ -4,15 +4,15 @@
 <div class="container-fluid">
 
     {{--DISPLAY > MD--}}
-    <div class="container d-none d-md-block bg-dark text-white rounded-bottom py-3">
+    <div class="container-fluid d-none d-md-block bg-grey-300 rounded-bottom ">
         <div class="">
-            <div class="row  justify-content-center align-items-center text-center">
+            <div class="row mr-5">
 
                 @foreach($top_navs_medium as $top_nav_medium)
-                    <div class="col mx-auto mt-2">
+                    <div class="mr-4 py-2">
                         <a href="{{ $top_nav_medium->link }}"
                            target="_blank"
-                           class=" font-12 text-white font-weight-bolder">
+                           class="text-cyan-600-dark">
                             {{ $top_nav_medium->title }}
                         </a>
                     </div>
@@ -22,15 +22,15 @@
     </div>
 
     {{--DISPLAY < MD--}}
-    <div class="container d-block d-md-none bg-dark rounded-bottom p-2">
+    <div class="container-fluid d-block d-md-none rounded-bottom bg-grey-300">
         <div class="">
-            <div class="row  text-center align-items-center">
+            <div class="row">
 
                 @foreach($top_navs_small as $top_nav_small)
-                    <div class="col-12">
+                    <div class="py-2 col text-center">
                         <a href="{{ $top_nav_small->link }}"
                            target="_blank"
-                           class="font-12 text-white font-weight-bolder">
+                           class="text-cyan-600-dark">
                             {{ $top_nav_small->title }}
                         </a>
                     </div>
@@ -62,31 +62,15 @@
                 {{--SHOW SEARCH BAR--}}
                 {{--DISPLAY > MD--}}
                 <div class="d-none d-md-block col-md-4 col-lg-6 my-auto">
-                    <div class="input-group">
-                        <input type="text" class="form-control"
-                               placeholder="جست و جوی محصول، مقاله، دسته بندی، برند و ..."
-                               aria-label="Input group example" aria-describedby="btnGroupAddon">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text" id="btnGroupAddon">
-                                <i class="fa fa-search"></i>
-                            </div>
-                        </div>
-                    </div>
+                    <livewire:search />
                 </div>
                 {{--DISPLAY < MD--}}
                 <div class="d-sm-block d-md-none col-12 my-3">
-                    <div class="input-group">
-                        <input type="text" class="form-control"
-                               placeholder="جست و جوی محصول، مقاله، دسته بندی، برند و ..."
-                               aria-label="Input group example" aria-describedby="btnGroupAddon">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text" id="btnGroupAddon">
-                                <i class="fa fa-search"></i>
-                            </div>
-                        </div>
-                    </div>
+                    <livewire:search />
                 </div>
                 {{--./SHOW SEARCH BAR--}}
+
+
 
                 {{--SHOW LOGIN AND CART--}}
                 <div class=" col-md-6 col-lg-4 py-3 my-auto text-center">
