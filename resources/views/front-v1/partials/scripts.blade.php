@@ -6,7 +6,9 @@
 
 <script>
     $(document).ready(function () {
+        /*************/
         /*BACK TO TOP*/
+        /*************/
         $(window).scroll(function () {
             if ($(this).scrollTop() > 50) {
                 $('#back-to-top').fadeIn();
@@ -21,8 +23,13 @@
             }, 400);
             return false;
         });
+        /*############*/
+        /*BACK TO TOP*/
+        /*############*/
 
+        /********************/
         /*HIDE MOBILE FOOTER*/
+        /********************/
         $('#phone-nav').hide();
         $(window).scroll(function () {
             if ($(this).scrollTop() < 10) {
@@ -31,6 +38,9 @@
                 $('#phone-nav').fadeIn();
             }
         });
+        /*##################*/
+        /*HIDE MOBILE FOOTER*/
+        /*##################*/
 
 
     });

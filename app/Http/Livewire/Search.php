@@ -2,8 +2,12 @@
 
 namespace App\Http\Livewire;
 
+use App\Article;
+use App\Brand;
+use App\Category;
 use App\Product;
 use Livewire\Component;
+use Mews\Purifier\Facades\Purifier;
 
 class Search extends Component
 {
@@ -11,19 +15,25 @@ class Search extends Component
 
     public function render()
     {
+        $search = Purifier::clean($this->search);
         $data = [];
 
-        if ($this->search) {
+        if ($search) {
             $search = '%' . $this->search . '%';
 
-            $products = Product::withoutTrashed()
-                ->where('status', 1)
-                ->where('entity', '>', 0)
-                ->where('title', 'LIKE', $search)
-                ->get();
+            $products = Product::withoutTrashed()->search($search, 10);
+
+            $articles = Article::withoutTrashed()->search($search, 10);
+
+            $categories = Category::withoutTrashed()->search($search, 10);
+
+            $brands = Brand::withoutTrashed()->search($search, 10);
 
             $data = [
                 'products'=>$products,
+                'articles'=>$articles,
+                'brands'=>$brands,
+                'categories'=>$categories,
             ];
         }
 

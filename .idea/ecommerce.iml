@@ -138,6 +138,8 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/anetwork/validation" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/lavary/laravel-menu" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/livewire/livewire" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/ezyang/htmlpurifier" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/mews/purifier" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

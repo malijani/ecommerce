@@ -22,6 +22,7 @@
         "laravel/ui": "^2.4",
         "lavary/laravel-menu": "^1.8",
         "livewire/livewire": "^2.4",
+        "mews/purifier": "^3.3",
         "shetabit/payment": "^4.0",
         "unisharp/laravel-filemanager": "^2.2"
     },

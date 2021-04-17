@@ -60,6 +60,20 @@ class Article extends Model
         return $q->where('status', 1);
     }
 
+    public function scopeSearch($q, $search = null, $limit = 4)
+    {
+        return $q->where('status', 1)
+            ->where(function ($query) use ($search) {
+                $query->where('title', 'LIKE', $search)
+                    ->orWhere('title_en', 'LIKE', $search)
+                    ->orWhere('short_text', 'LIKE', $search)
+                    ->orWhere('keywords', 'LIKE', $search)
+                    ->orWhere('description', 'LIKE', $search);
+            })
+            ->take($limit)
+            ->get();
+    }
+
     /**
      * Relation between posts as previous article => ux , seo
      * @return mixed

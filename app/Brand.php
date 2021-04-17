@@ -22,6 +22,20 @@ class Brand extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function scopeSearch($q, $search, $limit=4)
+    {
+        return $q->where('status', 1)
+            ->where(function ($query) use ($search) {
+                $query->where('title', 'LIKE', $search)
+                    ->orWhere('title_en', 'LIKE', $search)
+                    ->orWhere('text', 'LIKE', $search)
+                    ->orWhere('keywords', 'LIKE', $search)
+                    ->orWhere('description', 'LIKE', $search);
+            })
+            ->take($limit)
+            ->get();
+    }
+
     /**
      * Return a limited text
      */

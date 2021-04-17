@@ -43,6 +43,15 @@ class Product extends Model
         return $q->where('status', 1);/*->where('entity', '>', 0);*/
     }
 
+    public function scopeSearch($q, $search, $limit = 4)
+    {
+        return $q->where('status', 1)
+        ->where('entity', '>', 0)
+        ->where('title', 'LIKE', $search)
+        ->take($limit)
+        ->get();
+    }
+
     public function user() : BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');

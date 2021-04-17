@@ -171,6 +171,7 @@ return [
         Shetabit\Payment\Provider\PaymentServiceProvider::class,
         Anetwork\Validation\PersianValidationServiceProvider::class,
         Lavary\Menu\ServiceProvider::class,
+        Mews\Purifier\PurifierServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -237,6 +238,8 @@ return [
         'Image' => Intervention\Image\Facades\Image::class,
         'Payment' => Shetabit\Payment\Facade\Payment::class,
         'Menu' => Lavary\Menu\Facade::class,
+        'Purifier' => Mews\Purifier\Facades\Purifier::class,
+
     ],
 
 ];

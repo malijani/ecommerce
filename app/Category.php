@@ -12,42 +12,42 @@ class Category extends Model
     use SoftDeletes;
 
     protected $fillable = [
-      'user_id', 'parent_id', 'title', 'title_en',
-      'text', 'pic', 'pic_alt', 'color', 'keywords',
-      'description', 'sort', 'status', 'menu',
+        'user_id', 'parent_id', 'title', 'title_en',
+        'text', 'pic', 'pic_alt', 'color', 'keywords',
+        'description', 'sort', 'status', 'menu',
     ];
     protected $hidden = [
-      'user_id',
+        'user_id',
     ];
 
-    public function user() : BelongsTo
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function parent() : BelongsTo
+    public function parent(): BelongsTo
     {
         return $this->belongsTo(Category::class, 'parent_id', 'id');
     }
 
-    public function children() : HasMany
+    public function children(): HasMany
     {
         return $this->hasMany(Category::class, 'parent_id', 'id');
     }
 
-    public function childrenRecursive() : HasMany
+    public function childrenRecursive(): HasMany
     {
         return $this->children()->with('childrenRecursive');
     }
 
-    public function activeChildren() : HasMany
+    public function activeChildren(): HasMany
     {
-        return $this->children()->where('status',1)->where('menu', 1);
+        return $this->children()->where('status', 1)->where('menu', 1);
     }
 
-    public function subActiveChildren() : HasMany
+    public function subActiveChildren(): HasMany
     {
-        return $this->childrenRecursive()->where('status',1);
+        return $this->childrenRecursive()->where('status', 1);
     }
 
     public function scopeActive($q)
@@ -55,12 +55,29 @@ class Category extends Model
         return $q->where('status', '1');
     }
 
-
-    public function childrenArray() : array
+    public function scopeSearch($q, $search = null, $limit = 4)
     {
-        $ids=[];
-        foreach($this->children as $children){
-            $ids[]= $children->id;
+        if (!empty($search)) {
+            return $q->where('status', 1)
+                ->where(function ($query) use ($search) {
+                    $query->where('title', 'LIKE', $search)
+                        ->orWhere('title_en', 'LIKE', $search)
+                        ->orWhere('text', 'LIKE', $search)
+                        ->orWhere('keywords', 'LIKE', $search)
+                        ->orWhere('description', 'LIKE', $search);
+                })
+                ->take($limit)
+                ->get();
+        } else {
+            return null;
+        }
+    }
+
+    public function childrenArray(): array
+    {
+        $ids = [];
+        foreach ($this->children as $children) {
+            $ids[] = $children->id;
             $ids = array_merge($ids, $this->childrenArray($children));
         }
         return $ids;

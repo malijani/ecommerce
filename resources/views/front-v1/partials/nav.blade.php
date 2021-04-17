@@ -41,13 +41,13 @@
     </div>
 
 
-    <div class="bg-white text-dark rounded">
+    <div class="pt-md-2 bg-white text-dark rounded">
         <div class="container">
             <div class="row mt-2 align-items-center">
 
                 {{--SHOW LOGO--}}
                 {{--DISPLAY > MD--}}
-                <div class="d-none d-md-block col-md-2 text-center">
+                <div class="d-none d-md-block col-md-4 text-center">
                     <img class="img-fluid rounded align-middle" src="{{asset($logo->pic??'images/fallback/logo.png')}}"
                          alt="{{$logo->pic_alt??config('app.name')}}">
                 </div>
@@ -61,7 +61,7 @@
 
                 {{--SHOW SEARCH BAR--}}
                 {{--DISPLAY > MD--}}
-                <div class="d-none d-md-block col-md-4 col-lg-6 my-auto">
+                <div class="d-none d-md-block col-md-8 my-auto">
                     <livewire:search />
                 </div>
                 {{--DISPLAY < MD--}}
@@ -73,7 +73,7 @@
 
 
                 {{--SHOW LOGIN AND CART--}}
-                <div class=" col-md-6 col-lg-4 py-3 my-auto text-center">
+                <div class="col-md-12 py-3 my-auto text-center mx-auto">
 
                     {{--USER INFO--}}
                     @if (\Illuminate\Support\Facades\Route::has('login'))
