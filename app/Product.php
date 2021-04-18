@@ -35,10 +35,10 @@ class Product extends Model
         'status', 'before', 'after', 'color', 'weight'
     ];
 
-    protected $hidden=['user_id', 'price_self_buy'];
+    protected $hidden = ['user_id', 'price_self_buy'];
 
 
-    public function scopeActive($q) : Builder
+    public function scopeActive($q): Builder
     {
         return $q->where('status', 1);/*->where('entity', '>', 0);*/
     }
@@ -46,28 +46,33 @@ class Product extends Model
     public function scopeSearch($q, $search, $limit = 4)
     {
         return $q->where('status', 1)
-        ->where('entity', '>', 0)
-        ->where('title', 'LIKE', $search)
-        ->take($limit)
-        ->get();
+            ->where('entity', '>', 0)
+            ->where('title', 'LIKE', $search)
+            ->take($limit)
+            ->get();
     }
 
-    public function user() : BelongsTo
+    public function comments()
+    {
+        return $this->morphMany(Comment::class, 'commentable');
+    }
+
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function category() : BelongsTo
+    public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class, 'category_id');
     }
 
-    public function brand() : BelongsTo
+    public function brand(): BelongsTo
     {
         return $this->belongsTo(Brand::class, 'brand_id');
     }
 
-    public function files() : HasMany
+    public function files(): HasMany
     {
         return $this->hasMany(ProductFile::class, 'product_id')->orderBy('created_at');
     }
@@ -77,35 +82,35 @@ class Product extends Model
         return $this->belongsToMany(Attribute::class)->withPivot('attr_value');
     }
 
-    public function bef() : BelongsTo
+    public function bef(): BelongsTo
     {
         return $this->belongsTo(Product::class, 'before')->where('status', 1)->select('id', 'title', 'title_en');
     }
 
-    public function af() : BelongsTo
+    public function af(): BelongsTo
     {
         return $this->belongsTo(Product::class, 'after')->where('status', 1)->select('id', 'title', 'title_en');
     }
 
-    public function details() : HasMany
+    public function details(): HasMany
     {
         return $this->hasMany(ProductDetail::class, 'product_id')->orderBy('id');
     }
 
-    public function getShowPriceAttribute() : string
+    public function getShowPriceAttribute(): string
     {
         return number_format($this->price);
     }
 
-    public function getShowDiscountPriceAttribute():string
+    public function getShowDiscountPriceAttribute(): string
     {
         return number_format($this->discount_price);
     }
 
     public function getDiscountPriceAttribute()
     {
-        if($this->price_type == "0" && $this->discount_percent != "0"){
-            return ($this->price - ($this->price * $this->discount_percent)/100) ;
+        if ($this->price_type == "0" && $this->discount_percent != "0") {
+            return ($this->price - ($this->price * $this->discount_percent) / 100);
         } else {
             return 'تخفیف به درستی تعیین نشده.';
         }
@@ -114,19 +119,19 @@ class Product extends Model
 
     public function getFinalPriceAttribute()
     {
-        if($this->price_type == 0){
-           return $this->discount_price;
-        } elseif($this->price_type == 1){
+        if ($this->price_type == 0) {
+            return $this->discount_price;
+        } elseif ($this->price_type == 1) {
             return $this->price;
         } else {
-          return 0;
+            return 0;
         }
     }
 
 
-    public function getPriceTypeTextAttribute() : string
+    public function getPriceTypeTextAttribute(): string
     {
-        switch ($this->getAttribute('price_type')){
+        switch ($this->getAttribute('price_type')) {
             case "0":
                 return "دارای تخفیف";
             case "1":
@@ -139,9 +144,9 @@ class Product extends Model
         }
     }
 
-    public function getOriginTextAttribute() : string
+    public function getOriginTextAttribute(): string
     {
-        switch ($this->getAttribute('origin')){
+        switch ($this->getAttribute('origin')) {
             case "1":
                 return "اورجینال";
             case "2":
@@ -156,7 +161,7 @@ class Product extends Model
 
     public function getDeliverTextAttribute(): string
     {
-        switch ($this->getAttribute('deliver')){
+        switch ($this->getAttribute('deliver')) {
             case "0":
                 return "فوری";
             case "1":
@@ -168,9 +173,9 @@ class Product extends Model
 
     }
 
-    public function getWarrantyTextAttribute() : string
+    public function getWarrantyTextAttribute(): string
     {
-        switch ($this->getAttribute('warranty')){
+        switch ($this->getAttribute('warranty')) {
             case "0":
                 return "بدون گارانتی";
             case "1":
@@ -180,22 +185,22 @@ class Product extends Model
         }
     }
 
-    public function getDescriptionLimitAttribute() : string
+    public function getDescriptionLimitAttribute(): string
     {
         return Str::words($this->getAttribute('description'), 50);
     }
 
-    public function getLongTextLimitedAttribute() :?string
+    public function getLongTextLimitedAttribute(): ?string
     {
         return (!is_null($this->getAttribute('long_text')) ? Str::words(strip_tags($this->getAttribute('long_text')), 10) : null);
     }
 
-    public function getShortTextLimitedAttribute() :?string
+    public function getShortTextLimitedAttribute(): ?string
     {
         return (!is_null($this->getAttribute('short_text')) ? Str::words(strip_tags($this->getAttribute('short_text')), 10) : null);
     }
 
-    public function getJalaliUpdatedAtAttribute() :?string
+    public function getJalaliUpdatedAtAttribute(): ?string
     {
         return Verta::instance($this->getAttribute('updated_at'));
     }

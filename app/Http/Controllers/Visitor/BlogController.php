@@ -65,13 +65,22 @@ class BlogController extends Controller
             ->where('title_en' , $slug)
             ->firstOrFail();
 
+        $comments = $article->comments()
+            ->where('status' ,1)
+            ->where('parent_id', 0)
+            ->orderByDesc('created_at')
+            ->orderByDesc('id')
+            ->get();
+        $title = $article->title;
+
         $article->increment('visit');
 
-        $title = $article->title;
+
 
         return view('front-v1.blog.show', [
            'title'=>$title,
             'article'=>$article,
+            'comments'=>$comments,
         ]);
     }
 
@@ -108,4 +117,6 @@ class BlogController extends Controller
     {
         //
     }
+
+
 }

@@ -8,7 +8,7 @@ Auth::routes(['verify' => true]);
 
 // GUEST SECTION
 Route::redirect('home', '/');
-Route::group(['prefix' => '/', 'middleware' => ['web']], function () {
+Route::group(['prefix' => '/', 'middleware' => ['web', 'XssSanitizer']], function () {
     Route::get('', 'HomeController@home')->name('home');
     Route::resource('blog', 'Visitor\BlogController')->only(['index', 'show']);
     Route::resource('category', 'Visitor\CategoryController')->only(['index', 'show']);
@@ -16,11 +16,12 @@ Route::group(['prefix' => '/', 'middleware' => ['web']], function () {
     Route::resource('brand', 'Visitor\BrandController')->only(['index', 'show']);
     Route::resource('faq', 'Visitor\FaqController')->only(['index']);
     Route::resource('page', 'Visitor\PageController')->only(['index', 'show']);
+    Route::post('comment/{model}/{id}', 'Visitor\CommentController@store')->name('comment.store');
     Route::resource('cart', 'User\CartController')->only(['index', 'store', 'destroy', 'update']);
 });
 
 // USER SECTION
-Route::group(['prefix' => 'user', 'middleware' => ['web', 'auth', 'auth.normal', 'verified']], function () {
+Route::group(['prefix' => 'user', 'middleware' => ['web', 'auth', 'auth.normal', 'verified', 'XssSanitizer']], function () {
     /*ADDRESSES*/
     Route::resource('address', 'User\AddressController')->only(['index', 'destroy', 'store', 'update']);
     Route::post('province/cities', 'User\ProvinceController@cities')->name('province.cities');
@@ -45,6 +46,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web', 'auth', 'auth.admin']
     Route::resource('articles', 'Admin\ArticleController');
     Route::resource('products', 'Admin\ProductController');
     Route::resource('attributes', 'Admin\AttributeController')->only(['index', 'store', 'update']);
+    Route::resource('comments', 'Admin\CommentController');
 
     /*PAGES*/
     Route::resource('faqs', 'Admin\FaqController')->except(['show']);

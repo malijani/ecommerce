@@ -1,6 +1,5 @@
 @extends('layouts.app')
 
-
 @section('content')
 
     {{ \Diglactic\Breadcrumbs\Breadcrumbs::render('blog.article', $article) }}
@@ -28,13 +27,31 @@
             </div>
 
         </div>{{--row--}}
+
+
+        {{--COMMENTS--}}
+        <div class="row bg-white mb-5 mt-3 py-3 rounded">
+                @include('front-v1.partials.comment_template', ['comments'=>$comments, 'model'=>'Article','model_id'=>$article->id])
+        </div>
+        {{--./COMMENTS--}}
     </div>{{--container--}}
+
+
+
+
 @endsection
 
 @section('page-scripts')
+    {{--PARALLAX--}}
     <script src="{{ asset('front-v1/parallax/parallax.min.js') }}"></script>
+    {{--CKEDITOR--}}
+    {{--<script src="{{ asset('front-v1/ckeditor/ckeditor.js') }}"></script>--}}
+
     <script>
         $(document).ready(function () {
+            /****START*******/
+            /*PARALLAX IMAGE*/
+            /****************/
             let mainImg = $('.main-img')
             let parallaxWindow = $('.parallax-window');
             let image = mainImg.attr('src');
@@ -66,7 +83,26 @@
             } else {
                 mainImg.show();
             }
+            /****************/
+            /*PARALLAX IMAGE*/
+            /*****END********/
+
+            /***START***/
+            /*COMMENTS*/
+            /**********/
+            $('.f-reply').hide();
+            $('.btn-reply').click(function (){
+                $('.f-reply').hide();
+                let service = $(this).attr('id');
+                let service_id = "#f-"+service;
+                $(service_id).show('slow');
+            })
+
+            /**********/
+            /*COMMENTS*/
+            /***END****/
         });
+
     </script>
 @endsection
 

@@ -69,5 +69,6 @@ class Kernel extends HttpKernel
         //CUSTOM MIDDLEWARES
         'auth.admin' => \App\Http\Middleware\AuthAdmin::class,
         'auth.normal' => \App\Http\Middleware\AuthNormal::class,
+        'XssSanitizer' => \App\Http\Middleware\XssSanitizer::class,
     ];
 }

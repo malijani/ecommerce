@@ -2,7 +2,7 @@
 
     {{--LICENSES--}}
     <div class="container">
-        <div class="row justify-content-center">
+        <div class="row justify-content-center rounded">
             <div class="col-12 text-center">
                 <a href="{{ $footer_image->link ?? '#' }}">
                 <img src="{{ asset($footer_image->pic ?? 'images/fallback/footer_licenses.png') }}"
@@ -18,8 +18,8 @@
     <div class="container-fluid">
         <div class="mt-5 bg-white p-3 rounded text-center">
             <div class="row">
-                <div class="col-md-3 pt-0 pt-md-1">جدید ترین محصولات</div>
-                <div class="col-md-3 pt-4 pt-md-1">جدید ترین نظرات</div>
+                <div class="col-md-3 pt-0 pt-md-1">محصولات پیشنهادی</div>
+                <div class="col-md-3 pt-4 pt-md-1">نظرات کاربران</div>
                 <div class="col-md-3 pt-4 pt-md-1">مجوز ها</div>
                 <div class="col-md-3 pt-4 pt-md-1">جدید ترین مقالات</div>
             </div>

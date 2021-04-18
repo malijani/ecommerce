@@ -3,10 +3,10 @@
     <div class="input-group">
         <input
             name="q"
-            id="query"
+            {{--id="query"--}}
             type="text"
             class="form-control"
-            wire:model.lazy="search"
+            wire:model.debounce.1s="search"
             placeholder="جست و جوی محصول، مقاله، برند و ..."
         >
         <div class="input-group-prepend">

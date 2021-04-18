@@ -15,11 +15,11 @@ class Search extends Component
 
     public function render()
     {
-        $search = Purifier::clean($this->search);
+        $search = $this->search;
         $data = [];
 
-        if ($search) {
-            $search = '%' . $this->search . '%';
+        if ($search && strlen($search) >= 4) {
+            $search = '%' . $search . '%';
 
             $products = Product::withoutTrashed()->search($search, 10);
 
