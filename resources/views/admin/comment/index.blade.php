@@ -67,6 +67,15 @@
                                     @if($comment->status === 1)
                                         <i class="fa fa-2x fa-check-square-o text-success"></i>
                                         <span class="hide">{{ $comment->status }}</span>
+
+                                        <input name="unverify"
+                                               id="unverify-{{$comment->id}}"
+                                               data-url="{{ route('comments.update', $comment->id) }}"
+                                               type="checkbox"
+                                               class="unverify form-control big-checkbox"
+                                               title="عدم تایید کامنت"
+                                        >
+
                                     @elseif($comment->status===0)
                                         <i class="fa fa-2x fa-minus-square-o text-danger"></i>
                                         <span class="hide">{{ $comment->status }}</span>
@@ -134,6 +143,7 @@
     <script type="text/javascript">
 
         $(document).ready(function () {
+            /**VERIFY**/
             let verify = $('.verify');
             verify.on('click', function () {
                 let verify_address = $(this).attr('data-url');
@@ -159,6 +169,39 @@
                 });
 
             });
+            /**END VERIFY**/
+
+
+            /**UNVERIFY**/
+            let unverify = $('.unverify');
+            unverify.on('click', function () {
+                let verify_address = $(this).attr('data-url');
+                $.ajax({
+                    url: verify_address,
+                    type: 'POST',
+                    data: {
+                        '_token': '{{ csrf_token() }}',
+                        '_method': 'PUT',
+                        'verify': 'off',
+                    },
+                    success: function () {
+                        location.reload();
+
+                    },
+                    error: function () {
+                        swal({
+                            text: "خطای غیر منتظره ای رخ داده، لطفا با توسعه دهنده در میان بگذارید.",
+                            icon: 'error',
+                            button: "فهمیدم.",
+                        });
+                    }
+                });
+
+            });
+            /**END UNVERIFY**/
+
+
+
 
             let destroy_button = $('.destroy-button');
             destroy_button.on('click', function () {

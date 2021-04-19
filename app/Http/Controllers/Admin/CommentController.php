@@ -82,9 +82,14 @@ class CommentController extends Controller
         $comment = Comment::withoutTrashed()->findOrFail($id);
 
         $request->validate([
-            'verify' => 'required|string|in:on',
+            'verify' => 'required|string|max:3|in:on,off',
         ]);
-        $comment->status = 1;
+        $verify = $request->input('verify');
+        if ($verify == 'on') {
+            $comment->status = 1;
+        } else {
+            $comment->status = 0;
+        }
         $comment->save();
 
         return response()->redirectToRoute('comments.index')->with('success', 'کامنت شماره ' . $comment->id . ' تایید شد!');

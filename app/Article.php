@@ -6,10 +6,11 @@ use Hekmatinasser\Verta\Verta;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
+use Nagy\LaravelRating\Traits\Rate\Rateable;
 
 class Article extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, Rateable;
 
     protected $fillable = [
         'user_id', 'category_id', 'title', 'title_en',

@@ -189,7 +189,8 @@
                 <nav>
                     <div class="nav nav-tabs nav-fill font-weight-bolder" id="nav-tab" role="tablist">
                         {{--DESCRIPTION--}}
-                        <a class="nav-item nav-link active" id="nav-description-tab" data-toggle="tab" href="#nav-description"
+                        <a class="nav-item nav-link active" id="nav-description-tab" data-toggle="tab"
+                           href="#nav-description"
                            role="tab" aria-controls="nav-description" aria-selected="true">
                             توضیحات
                         </a>
@@ -197,11 +198,6 @@
                         <a class="nav-item nav-link" id="nav-details-tab" data-toggle="tab" href="#nav-details"
                            role="tab" aria-controls="nav-details" aria-selected="false">
                             مشخصات
-                        </a>
-                        {{--COMMENTS--}}
-                        <a class="nav-item nav-link" id="nav-comments-tab" data-toggle="tab" href="#nav-comments"
-                           role="tab" aria-controls="nav-comments" aria-selected="false">
-                            نظرات
                         </a>
                     </div>
                 </nav>
@@ -230,19 +226,17 @@
                             </div>
                         @endforeach
                     </div>
-                    {{--COMMENTS--}}
-                    <div class="tab-pane fade" id="nav-comments" role="tabpanel" aria-labelledby="nav-comments-tab">
-                        {{--COMMENTS--}}
-                        <div class="row bg-white mb-5 mt-3 py-3 rounded">
-                            @include('front-v1.partials.comment_template', ['comments'=>$comments, 'model'=>'Product','model_id'=>$product->id])
-                        </div>
-                        {{--./COMMENTS--}}
-                    </div>
+
                 </div>
 
             </div>
         </div>
 
+        {{--COMMENTS--}}
+        <div class="row bg-white mb-5 mt-3 py-3 rounded">
+            @include('front-v1.partials.comment_template', ['comments'=>$comments, 'model'=>'Product','model_id'=>$product->id])
+        </div>
+        {{--./COMMENTS--}}
 
         @if(count($similar_products))
             <div class="row mt-5 bg-white mb-5">
@@ -391,10 +385,10 @@
             /*COMMENTS*/
             /**********/
             $('.f-reply').hide();
-            $('.btn-reply').click(function (){
+            $('.btn-reply').click(function () {
                 $('.f-reply').hide();
                 let service = $(this).attr('id');
-                let service_id = "#f-"+service;
+                let service_id = "#f-" + service;
                 $(service_id).show('slow');
             })
 

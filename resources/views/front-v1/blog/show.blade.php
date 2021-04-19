@@ -28,10 +28,14 @@
 
         </div>{{--row--}}
 
-
+        {{--RATING--}}
+        <div class="row bg-white py-3 mt-3 rounded">
+            @include('front-v1.partials.rating', ['user_rate'=>$user_rate])
+        </div>
+        {{--./RATING--}}
         {{--COMMENTS--}}
         <div class="row bg-white mb-5 mt-3 py-3 rounded">
-                @include('front-v1.partials.comment_template', ['comments'=>$comments, 'model'=>'Article','model_id'=>$article->id])
+            @include('front-v1.partials.comment_template', ['comments'=>$comments, 'model'=>'Article','model_id'=>$article->id])
         </div>
         {{--./COMMENTS--}}
     </div>{{--container--}}
@@ -44,11 +48,46 @@
 @section('page-scripts')
     {{--PARALLAX--}}
     <script src="{{ asset('front-v1/parallax/parallax.min.js') }}"></script>
-    {{--CKEDITOR--}}
-    {{--<script src="{{ asset('front-v1/ckeditor/ckeditor.js') }}"></script>--}}
-
+    {{--SWAL--}}
+    <script type="text/javascript" src="{{ asset('adminrc/plugins/sweetalert/sweetalert.min.js') }}"></script>
     <script>
         $(document).ready(function () {
+            /****RATING**/
+            let rating = $('input[name="rating"]');
+            rating.on('click', function () {
+                let rate = $(this).val();
+                let rating_address = "{{ route('blog.update', $article->id) }}";
+                $.ajax({
+                    url: rating_address,
+                    type: 'POST',
+                    data: {
+                        '_token': '{{ csrf_token() }}',
+                        '_method': 'PUT',
+                        'rate': rate,
+                    },
+                    success: function (result) {
+                        /*location.reload();*/
+                        if (result == 'user_anonymous') {
+                            window.location.href = '{{ route('login') }}';
+                        }
+                        if (result == 'article_404') {
+                            window.location.href = '{{ route('home') }}';
+                        }
+
+                    },
+                    error: function () {
+                        swal({
+                            text: "خطای غیر منتظره ای رخ داده، لطفاً بعداً امتحان کنید.",
+                            icon: 'error',
+                            button: "فهمیدم.",
+                        });
+                    }
+                });
+
+            });
+            /**./RATING**/
+
+
             /****START*******/
             /*PARALLAX IMAGE*/
             /****************/
@@ -91,10 +130,10 @@
             /*COMMENTS*/
             /**********/
             $('.f-reply').hide();
-            $('.btn-reply').click(function (){
+            $('.btn-reply').click(function () {
                 $('.f-reply').hide();
                 let service = $(this).attr('id');
-                let service_id = "#f-"+service;
+                let service_id = "#f-" + service;
                 $(service_id).show('slow');
             })
 

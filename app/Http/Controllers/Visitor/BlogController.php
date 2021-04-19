@@ -6,6 +6,7 @@ use App\Article;
 use App\Comment;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BlogController extends Controller
 {
@@ -75,12 +76,20 @@ class BlogController extends Controller
 
         $title = $article->title;
 
+
+        $user_rate = null ;
+        $user = Auth::user();
+        if(!is_null($user) && $user->isRated($article)){
+            $user_rate = $user->getRatingValue($article);
+        }
+
         $article->increment('visit');
 
         return view('front-v1.blog.show', [
             'title' => $title,
             'article' => $article,
             'comments' => $comments,
+            'user_rate' => $user_rate,
         ]);
     }
 
@@ -104,7 +113,24 @@ class BlogController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $article = Article::withoutTrashed()->find($id);
+        if(is_null(Auth::id())){
+            return response()->json('user_anonymous');
+        } else {
+            $user = Auth::user();
+        }
+        if(is_null($article)){
+            return response()->json('article_404');
+        }
+
+        $request->validate([
+            'rate'=>'required|numeric|min:1|max:5',
+        ]);
+
+        $user->rate($article, $request->input('rate'));
+
+        return response()->json('رای شما با موفقیت ثبت شد!');
+
     }
 
     /**

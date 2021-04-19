@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
+use Nagy\LaravelRating\Traits\Rate\Rateable;
 
 
 /**
@@ -22,7 +23,7 @@ use Illuminate\Support\Str;
  */
 class Product extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, Rateable;
 
     protected $table = 'products';
 
