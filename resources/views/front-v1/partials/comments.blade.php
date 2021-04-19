@@ -1,16 +1,23 @@
-<div class="card mt-2 mb-3 bg-white border-left-0 border-top-0 px-3">
-    <div class="card-header bg-white p-0 border-0">
+<div
+    class="card mt-2 mb-3
+        @if(isset($comment->user) && $comment->user->isAdmin()) bg-lightgrey @else bg-white @endif
+        border px-3"
+>
+    <div class="card-header mt-2 p-2 border-0 bg-light">
         <div class="row align-items-center mt-2">
             <div class="col-4 col-md-1">
                 <img class="rounded-circle img-fluid" src="{{ asset('images/fallback/user.png') }}" alt="">
             </div>
             <div class="col-8 col-md-11">
                 <h5>{{ $comment->user->full_name ?? 'کاربر مهمان' }}</h5>
+                @if(isset($comment->user) && $comment->user->isAdmin())
+                    <span class="badge badge-primary">ادمین</span>
+                @endif
             </div>
         </div>
     </div>
 
-    <div class="card-body">
+    <div class="card-body mt-1">
         <div class="row align-items-start">
             <div class="col-12">
                 <div class="card-text">
@@ -20,7 +27,7 @@
         </div>
     </div>
 
-    <div class="card-footer mb-2">
+    <div class="card-footer border-top-0 mb-2 bg-light">
         <div class="row">
             {{--REPLY BUTTON--}}
             <div class="col-12">
@@ -63,7 +70,7 @@
             </div>
         </div>
     </div>
-    @foreach($comment->children as $child_comment)
+    @foreach($comment->childrenRecursive as $child_comment)
         @include('front-v1.partials.comments', ['comment'=>$child_comment])
     @endforeach
 </div>

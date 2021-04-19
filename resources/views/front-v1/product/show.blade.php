@@ -232,13 +232,11 @@
                     </div>
                     {{--COMMENTS--}}
                     <div class="tab-pane fade" id="nav-comments" role="tabpanel" aria-labelledby="nav-comments-tab">
-                        Et et consectetur ipsum labore excepteur est proident excepteur ad velit occaecat qui minim
-                        occaecat veniam. Fugiat veniam incididunt anim aliqua enim pariatur veniam sunt est aute sit
-                        dolor anim. Velit non irure adipisicing aliqua ullamco irure incididunt irure non esse
-                        consectetur nostrud minim non minim occaecat. Amet duis do nisi duis veniam non est eiusmod
-                        tempor incididunt tempor dolor ipsum in qui sit. Exercitation mollit sit culpa nisi culpa non
-                        adipisicing reprehenderit do dolore. Duis reprehenderit occaecat anim ullamco ad duis occaecat
-                        ex.
+                        {{--COMMENTS--}}
+                        <div class="row bg-white mb-5 mt-3 py-3 rounded">
+                            @include('front-v1.partials.comment_template', ['comments'=>$comments, 'model'=>'Product','model_id'=>$product->id])
+                        </div>
+                        {{--./COMMENTS--}}
                     </div>
                 </div>
 
@@ -388,6 +386,21 @@
                 owl.trigger('prev.owl.carousel');
             });
 
+
+            /***START***/
+            /*COMMENTS*/
+            /**********/
+            $('.f-reply').hide();
+            $('.btn-reply').click(function (){
+                $('.f-reply').hide();
+                let service = $(this).attr('id');
+                let service_id = "#f-"+service;
+                $(service_id).show('slow');
+            })
+
+            /**********/
+            /*COMMENTS*/
+            /***END****/
 
         });
     </script>

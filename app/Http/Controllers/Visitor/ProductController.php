@@ -45,13 +45,21 @@ class ProductController extends Controller
             ->active()
             ->firstOrFail();
         $product->increment('visit');
+
+        $comments = $product->comments()
+            ->with('childrenRecursive')
+            ->where('parent_id', 0)
+            ->active()
+            ->sort()
+            ->get();
+
         /*SET PAGE TITLE*/
         $title = $product->title;
 
 
-        $basket = session()->get('basket')??null;
+        $basket = session()->get('basket') ?? null;
         /*do not over ordering product if its already in the users basket*/
-        if(isset($basket) && isset($basket[$product->id])) {
+        if (isset($basket) && isset($basket[$product->id])) {
             $product->entity = $product->entity - $basket[$product->id]['quantity'];
         }
 
@@ -82,8 +90,8 @@ class ProductController extends Controller
                  *     ]
                  * ]
                 */
-                if(array_key_exists($product_attr->id, $attributes)){
-                    $attributes[$product_attr->id] = array_merge_recursive($attributes[$product_attr->id],  [$product_attr->title=> $product_attr->pivot->attr_value]);
+                if (array_key_exists($product_attr->id, $attributes)) {
+                    $attributes[$product_attr->id] = array_merge_recursive($attributes[$product_attr->id], [$product_attr->title => $product_attr->pivot->attr_value]);
                 } else {
                     $attributes[$product_attr->id] = [$product_attr->title => $product_attr->pivot->attr_value];
                 }
@@ -94,8 +102,9 @@ class ProductController extends Controller
         return response()->view('front-v1.product.show', [
             'title' => $title,
             'product' => $product,
-            'attributes'=>$attributes,
-            'similar_products'=>$similar_products,
+            'attributes' => $attributes,
+            'similar_products' => $similar_products,
+            'comments' => $comments
         ]);
     }
 

@@ -34,6 +34,11 @@ class Article extends Model
         return $this->morphMany(Comment::class, 'commentable');
     }
 
+    public function getLink()
+    {
+        return route('blog.show', $this->title_en);
+    }
+
     public function getDescriptionLimitAttribute()
     {
         return Str::words($this->description, 50);

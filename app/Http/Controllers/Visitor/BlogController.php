@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Visitor;
 
 use App\Article;
+use App\Comment;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -25,8 +26,8 @@ class BlogController extends Controller
             ->paginate(12);
 
         return view('front-v1.blog.index', [
-            'title'=>$title,
-            'articles'=>$articles,
+            'title' => $title,
+            'articles' => $articles,
         ]);
     }
 
@@ -43,7 +44,7 @@ class BlogController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -62,32 +63,31 @@ class BlogController extends Controller
         $article = Article::withoutTrashed()
             ->with('user', 'category', 'before', 'after')
             ->active()
-            ->where('title_en' , $slug)
+            ->where('title_en', $slug)
             ->firstOrFail();
 
         $comments = $article->comments()
-            ->where('status' ,1)
+            ->with('childrenRecursive')
             ->where('parent_id', 0)
-            ->orderByDesc('created_at')
-            ->orderByDesc('id')
+            ->active()
+            ->sort()
             ->get();
+
         $title = $article->title;
 
         $article->increment('visit');
 
-
-
         return view('front-v1.blog.show', [
-           'title'=>$title,
-            'article'=>$article,
-            'comments'=>$comments,
+            'title' => $title,
+            'article' => $article,
+            'comments' => $comments,
         ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -98,8 +98,8 @@ class BlogController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -110,7 +110,7 @@ class BlogController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

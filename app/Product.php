@@ -57,6 +57,11 @@ class Product extends Model
         return $this->morphMany(Comment::class, 'commentable');
     }
 
+    public function getLink()
+    {
+        return route('product.show', $this->title_en);
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');

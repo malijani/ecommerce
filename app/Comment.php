@@ -24,18 +24,30 @@ class Comment extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
+    public function scopeActive($q)
+    {
+        return $q->where('status', 1);
+    }
+
+    public function scopeSort($q)
+    {
+        return $q
+            ->orderBy('status')
+            ->orderByDesc('created_at')
+            ->orderByDesc('id');
+    }
+
     public function children()
     {
-        return $this->hasMany(Comment::class, 'parent_id', 'id')->orderByDesc('created_at');
+        return $this->hasMany(Comment::class, 'parent_id', 'id')->sort();
     }
 
     public function childrenRecursive()
     {
-        return $this->children()->with('childrenRecursive');
+        return $this->children()
+            ->with('childrenRecursive')
+            ->active()
+            ->sort();
     }
 
-    public function activeChildren()
-    {
-        return $this->children()->where('status', 1);
-    }
 }

@@ -75,6 +75,19 @@
                     </li>
 
 
+
+                    <li class="nav-item">
+                        <a href="{{ route('comments.index') }}"
+                           class="nav-link {{ Request::routeIs('comments.*') ? 'active' : '' }}"
+                        >
+                            <i class="nav-icon fa fa-comment"></i>
+                            <p>
+                                نظرات
+                            </p>
+                        </a>
+                    </li>
+
+
                     {{--PAGES--}}
                     <li
                         class="nav-item has-treeview {{Request::routeIs('pages.*') ? 'menu-open' : '' }}"

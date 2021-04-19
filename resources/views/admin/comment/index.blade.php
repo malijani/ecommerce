@@ -4,200 +4,81 @@
     <link rel="stylesheet" href="{{ asset('adminrc/plugins/datatables/dataTables.bootstrap4.css')}}">
 @endsection
 
-@section('nav-buttons')
-    <a href="{{ route('faqs.create') }}" role="button" class="btn btn-lg btn-outline-primary">
-        <i class="fa fa-plus-square"></i>
-    </a>
-@endsection
-
 @section('content')
 
-    <div class="col-md-12">
-        <div class="card">
-            <div class="card-header">
-                <h3 class="card-title">
-                    مشخصات صفحه پرسشهای متداول
-                </h3>
-            </div>
-
-            <div class="card-body">
-                @if(isset($faq_page))
-                    <form action="{{ route('faq-page.update', $faq_page->id) }}" method="POST">
-                        @csrf
-                        @method("PATCH")
-                        {{--TITLE: 100--}}
-                        <div class="form-group row">
-                            <label for="title" class="col-sm-2 col-form-label">عنوان صفحه</label>
-                            <div class="col-sm-10">
-                                <input type="text"
-                                       class="form-control @error('title') is-invalid @enderror"
-                                       id="title"
-                                       name="title"
-                                       maxlength="100"
-                                       minlength="5"
-                                       value="{{ old('title') ?? $faq_page->title }}"
-                                       required
-                                >
-                            </div>
-                        </div>
-
-                        {{--KEYWORDS : 70--}}
-                        <div class="form-group row">
-                            <label for="keywords" class="col-sm-2 col-form-label">کلمات کلیدی</label>
-                            <div class="col-sm-10">
-                                <input type="text"
-                                       class="form-control @error('keywords') is-invalid @enderror"
-                                       id="keywords"
-                                       name="keywords"
-                                       maxlength="70"
-                                       minlength="5"
-                                       value="{{ old('keywords') ?? $faq_page->keywords }}"
-                                       required
-                                >
-                            </div>
-                        </div>
-                        {{--DESCRIPTION : 255--}}
-                        <div class="form-group row">
-                            <label for="description" class="col-sm-2 col-form-label">توضیحات کلمات کلیدی</label>
-                            <div class="col-sm-10">
-                                <input type="text"
-                                       class="form-control @error('description') is-invalid @enderror"
-                                       id="description"
-                                       name="description"
-                                       maxlength="255"
-                                       minlength="5"
-                                       value="{{ old('description') ?? $faq_page->description }}"
-                                       required
-                                >
-                            </div>
-                        </div>
-                        {{--SUBMIT--}}
-                        <div class="form-group row">
-                            <div class="col-sm-12">
-                                <button type="submit" class="form-control btn btn-outline-success">بروز رسانی</button>
-                            </div>
-                        </div>
-
-                    </form>
-                @else
-                    <form action="{{ route('faq-page.store') }}" method="POST">
-                        @csrf
-                        {{--TITLE: 100--}}
-                        <div class="form-group row">
-                            <label for="title" class="col-sm-2 col-form-label">عنوان صفحه</label>
-                            <div class="col-sm-10">
-                                <input type="text"
-                                       class="form-control @error('title') is-invalid @enderror"
-                                       id="title"
-                                       name="title"
-                                       maxlength="100"
-                                       minlength="5"
-                                       value="{{ old('title') }}"
-                                       required
-                                >
-                            </div>
-                        </div>
-
-                        {{--KEYWORDS : 70--}}
-                        <div class="form-group row">
-                            <label for="keywords" class="col-sm-2 col-form-label">کلمات کلیدی</label>
-                            <div class="col-sm-10">
-                                <input type="text"
-                                       class="form-control @error('keywords') is-invalid @enderror"
-                                       id="keywords"
-                                       name="keywords"
-                                       maxlength="70"
-                                       minlength="5"
-                                       value="{{ old('keywords') }}"
-                                       required
-                                >
-                            </div>
-                        </div>
-                        {{--DESCRIPTION : 255--}}
-                        <div class="form-group row">
-                            <label for="description" class="col-sm-2 col-form-label">توضیحات کلمات کلیدی</label>
-                            <div class="col-sm-10">
-                                <input type="text"
-                                       class="form-control @error('description') is-invalid @enderror"
-                                       id="description"
-                                       name="description"
-                                       maxlength="255"
-                                       minlength="5"
-                                       value="{{ old('description') }}"
-                                       required
-                                >
-                            </div>
-                        </div>
-                        {{--SUBMIT--}}
-                        <div class="form-group row">
-                            <div class="col-sm-12">
-                                <button type="submit" class="form-control btn btn-outline-success">ثبت</button>
-                            </div>
-                        </div>
-                    </form>
-                @endif
-            </div>
-        </div>
-    </div>
     <div class="col-md-12">
         <!-- DETAILS box -->
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">لیست پرسشهای متداول</h3>
+                <h3 class="card-title">مدیریت نظرات کاربران وبسایت</h3>
             </div>
             <div class="card-body">
                 <div class="table-responsive" id="table-content">
 
-                    <table class="table table-striped table-bordered table-hover" id="datatable-faqs">
+                    <table class="table table-striped table-bordered table-hover" id="datatable-comments">
                         <thead>
                         <tr class="text-center">
                             <td>شماره</td>
-                            <td>اولویت</td>
-                            <td>پرسش</td>
-                            <td>پاسخ</td>
+                            <td>کاربر</td>
+                            <td>مرتبط با</td>
+                            <td>محتوا</td>
+                            <td>در جواب</td>
                             <td>وضعیت</td>
-                            <td>نحوه مشاهده</td>
                             <td>عملیات</td>
                         </tr>
                         </thead>
 
                         <tbody>
+                        @foreach($comments as $comment)
 
-                        @foreach($faqs as $faq)
-
-                            <tr class="text-center" id="data-{{$faq->id}}">
+                            <tr class="text-center" id="data-{{$comment->id}}">
                                 {{--SHOW ID--}}
-                                <td class="align-middle">{{ $faq->id }}</td>
-                                {{--SHOW SORT--}}
-                                <td class="align-middle">{{ $faq->sort }}</td>
-                                {{--SHOW QUESTION--}}
+                                <td class="align-middle">{{ $comment->id }}</td>
+                                {{--SHOW USER--}}
                                 <td class="align-middle text-center">
-                                    {{ $faq->question }}
-                                </td>
-                                {{--SHOW ANSWER--}}
-                                <td class="align-middle text-center">
-                                    {{ strip_tags($faq->answer_short) }}
-                                </td>
-                                {{--SHOW STATUS--}}
-                                <td class="align-middle">
-                                    @if($faq->status === 1)
-                                        <i class="fa fa-2x fa-check-square-o text-success"></i>
-                                        <span class="hide">{{ $faq->status }}</span>
-                                    @elseif($faq->status===0)
-                                        <i class="fa fa-2x fa-minus-square-o text-danger"></i>
-                                        <span class="hide">{{ $faq->status }}</span>
+                                    @if(!is_null($comment->user))
+                                        <span>{{ $comment->user->full_name }}</span>
                                     @else
-                                        نامشخص
+                                        <span>مهمان</span>
                                     @endif
                                 </td>
-                                {{--SHOW COLLAPSING--}}
+                                {{--SHOW COMMENTABLE CONTENT--}}
                                 <td class="align-middle text-center">
-                                    @if($faq->collapse == 1 )
-                                        <i class="fa fa-expand fa-2x"></i>
-                                        <span class="hide">{{ $faq->collapse }}</span>
-                                    @elseif($faq->collapse == 0)
-                                        <i class="fa fa-compress fa-2x"></i>
-                                        <span class="hide">{{ $faq->collapse }}</span>
+                                    <a href="{{ $comment->commentable->getLink() }}">
+                                        {{ $comment->commentable->title }}
+                                    </a>
+                                </td>
+                                {{--SHOW CONTENT--}}
+                                <td class="align-middle text-center">
+                                    {{ $comment->content }}
+                                </td>
+                                {{--SHOW PARENT--}}
+                                <td class="align-middle text-center">
+                                    @if($comment->parent_id != 0)
+                                        {{ \App\Comment::withoutTrashed()->find($comment->parent_id)->content }}
+                                    @else
+                                        -
+                                    @endif
+                                </td>
+
+
+                                {{--SHOW STATUS--}}
+                                <td class="align-middle">
+                                    @if($comment->status === 1)
+                                        <i class="fa fa-2x fa-check-square-o text-success"></i>
+                                        <span class="hide">{{ $comment->status }}</span>
+                                    @elseif($comment->status===0)
+                                        <i class="fa fa-2x fa-minus-square-o text-danger"></i>
+                                        <span class="hide">{{ $comment->status }}</span>
+
+                                        <input name="verify"
+                                               id="verify-{{$comment->id}}"
+                                               data-url="{{ route('comments.update', $comment->id) }}"
+                                               type="checkbox"
+                                               class="verify form-control big-checkbox"
+                                               title="تایید کامنت"
+                                        >
+
                                     @else
                                         نامشخص
                                     @endif
@@ -205,16 +86,16 @@
 
                                 {{--OPERATIONS--}}
                                 <td class="align-middle text-center">
-                                    <a href="{{ route('faqs.edit', $faq->id) }}"
+                                    <a href="{{ route('comments.edit', $comment->id) }}"
                                        class="btn btn-info"
                                     >
                                         <i class="fa fa-edit"></i>
                                     </a>
 
                                     <button class="destroy-button btn btn-danger"
-                                            id="del-{{$faq->id}}"
-                                            title="حذف پرسش متداول"
-                                            data-url="{{ route('faqs.destroy', $faq->id) }}"
+                                            id="del-{{$comment->id}}"
+                                            title="حذف نظر کاربر"
+                                            data-url="{{ route('comments.destroy', $comment->id) }}"
                                     >
                                         <i class="fa fa-trash-o text-white"></i>
                                     </button>
@@ -227,11 +108,11 @@
                         <tfoot>
                         <tr class="text-center">
                             <td>شماره</td>
-                            <td>اولویت</td>
-                            <td>پرسش</td>
-                            <td>پاسخ</td>
+                            <td>کاربر</td>
+                            <td>مرتبط با</td>
+                            <td>محتوا</td>
+                            <td>در جواب</td>
                             <td>وضعیت</td>
-                            <td>نحوه مشاهده</td>
                             <td>عملیات</td>
                         </tr>
                         </tfoot>
@@ -253,14 +134,39 @@
     <script type="text/javascript">
 
         $(document).ready(function () {
+            let verify = $('.verify');
+            verify.on('click', function () {
+                let verify_address = $(this).attr('data-url');
+                $.ajax({
+                    url: verify_address,
+                    type: 'POST',
+                    data: {
+                        '_token': '{{ csrf_token() }}',
+                        '_method': 'PUT',
+                        'verify': 'on',
+                    },
+                    success: function () {
+                        location.reload();
+
+                    },
+                    error: function () {
+                        swal({
+                            text: "خطای غیر منتظره ای رخ داده، لطفا با توسعه دهنده در میان بگذارید.",
+                            icon: 'error',
+                            button: "فهمیدم.",
+                        });
+                    }
+                });
+
+            });
 
             let destroy_button = $('.destroy-button');
             destroy_button.on('click', function () {
                 let delete_address = $(this).attr('data-url');
 
                 swal({
-                    title: "آیا از حذف پرسش متداول مطمعنید؟",
-                    text: "با حذف پرسش متداول، قادر به بازگردانی آن نخواهید بود!",
+                    title: "آیا از حذف نظر مطمعنید؟",
+                    text: "با حذف نظر، قادر به بازگردانی آن نخواهید بود!",
                     icon: "warning",
                     buttons: ['نه! حذفش نکن.', 'آره، حذفش کن.'],
                     dangerMode: true,
@@ -290,7 +196,7 @@
             });
 
             /*EDIT BY CLICK ON TITLE*/
-            $('#datatable-faqs').DataTable({
+            $('#datatable-comments').DataTable({
                 "responsive": true,
                 "language": {
                     'search': ' جست و جو : ',

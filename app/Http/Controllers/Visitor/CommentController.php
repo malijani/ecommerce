@@ -78,10 +78,13 @@ class CommentController extends Controller
         $comment->commentable_id = $id;
         $comment->content = $request->input('content');
         $comment->parent_id = $parent_id;
-        $message = 'نظر شما با موفقیت ثبت شد و پس از تایید مدیریت نمایش داده خواهد شد';
-        if(Auth::user()->isAdmin()) {
+        /*CHECK COMMENTER ACCESS CONTROL LEVEL*/
+        if(!is_null(Auth::id()) && Auth::user()->isAdmin()) {
             $comment->status = 1;
             $message = 'پاسخ شما ثبت شد';
+        } else {
+            $comment->status = 0;
+            $message = 'نظر شما با موفقیت ثبت شد و پس از تایید مدیریت نمایش داده خواهد شد';
         }
         $comment->save();
 

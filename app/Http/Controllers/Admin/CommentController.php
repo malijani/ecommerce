@@ -17,9 +17,8 @@ class CommentController extends Controller
     {
         $title = 'مدیریت نظرات وبسایت';
         $comments = Comment::withoutTrashed()
-            ->orderBy('status')
-            ->orderByDesc('created_at')
-            ->orderBy('id')
+            ->with('children')
+            ->sort()
             ->get();
 
         return response()->view('admin.comment.index', [
@@ -80,7 +79,15 @@ class CommentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $comment = Comment::withoutTrashed()->findOrFail($id);
+
+        $request->validate([
+            'verify' => 'required|string|in:on',
+        ]);
+        $comment->status = 1;
+        $comment->save();
+
+        return response()->redirectToRoute('comments.index')->with('success', 'کامنت شماره ' . $comment->id . ' تایید شد!');
     }
 
     /**
@@ -91,6 +98,15 @@ class CommentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $comment = Comment::withoutTrashed()->with('children')->findOrFail($id);
+        if ($comment->parent_id == 0) {
+            // MAKE DEPTH 1 CHILDREN AS PARENT
+            foreach ($comment->children()->get() as $comment_child) {
+                $comment_child->parent_id = 0;
+                $comment_child->save();
+            }
+        }
+        $comment->delete();
+        return response()->redirectToRoute('comments.index')->with('warning', 'کامنت ' . $comment->id . ' حذف شد');
     }
 }
