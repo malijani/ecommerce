@@ -12,7 +12,7 @@ Route::group(['prefix' => '/', 'middleware' => ['web', 'XssSanitizer']], functio
     Route::get('', 'HomeController@home')->name('home');
     Route::resource('blog', 'Visitor\BlogController')->only(['index', 'show', 'update']);
     Route::resource('category', 'Visitor\CategoryController')->only(['index', 'show']);
-    Route::resource('product', 'Visitor\ProductController')->only(['index', 'show', 'update']);
+    Route::resource('product', 'Visitor\ProductController')->only(['index', 'show']);
     Route::resource('brand', 'Visitor\BrandController')->only(['index', 'show']);
     Route::resource('faq', 'Visitor\FaqController')->only(['index']);
     Route::resource('page', 'Visitor\PageController')->only(['index', 'show']);
@@ -25,6 +25,8 @@ Route::group(['prefix' => 'user', 'middleware' => ['web', 'auth', 'auth.normal',
     /*ADDRESSES*/
     Route::resource('address', 'User\AddressController')->only(['index', 'destroy', 'store', 'update']);
     Route::post('province/cities', 'User\ProvinceController@cities')->name('province.cities');
+    /*RATE*/
+    Route::resource('rating', 'User\RatingController')->only(['store']);
     /*DASHBOARD*/
     Route::resource('dashboard', 'User\Dashboard\DashboardController')->only(['index']);
     Route::group( ['prefix' => 'dashboard', 'as' => 'dashboard.'], function () {

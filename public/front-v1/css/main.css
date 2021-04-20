@@ -67,14 +67,14 @@ nav > li > a {
 .starrating > label:before {
     content: "\f005"; /* Star */
     margin: 2px;
-    font-size: 8em;
+    font-size: 4em;
     font-family: 'FontAwesome';
     display: inline-block;
 }
 
 .starrating > label
 {
-    color: #222222; /* Start color when not clicked */
+    color: lightgrey; /* Start color when not clicked */
 }
 
 .starrating > input:checked ~ label
@@ -85,6 +85,26 @@ nav > li > a {
 
 
 /**./STAR RATING**/
+/*RATING AVERAGE*/
+.rating-average, .back-stars, .front-stars {
+    display: flex;
+}
+.rating-average {
+    align-items: center;
+    font-size: 3em;
+    justify-content: center;
+}
+.back-stars {
+    color: lightgrey;
+    position: relative;
+}
+.front-stars {
+    color: #ffca08;
+    overflow: hidden;
+    position: absolute;
+}
+
+/*./RATING AVERAGE*/
 /*********/
 
 
@@ -130,9 +150,14 @@ nav > li > a {
     color: #007c91 !important;
 }
 
+.text-yellow{
+    color: #ffca08 !important;
+}
+
 .bg-grey-50 {
     background-color: #FAFAFA !important;
 }
+
 .bg-whitesmoke {
     background-color: #F5F5F5 !important;
 }

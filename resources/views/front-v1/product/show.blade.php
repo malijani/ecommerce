@@ -232,11 +232,20 @@
             </div>
         </div>
 
+        {{--RATING--}}
+        <div class="row bg-white py-3 mt-3 rounded">
+            @include('front-v1.partials.rating', ['user_rate'=>getUserRating($product), 'model'=>$product])
+        </div>
+        {{--./RATING--}}
         {{--COMMENTS--}}
         <div class="row bg-white mb-5 mt-3 py-3 rounded">
-            @include('front-v1.partials.comment_template', ['comments'=>$comments, 'model'=>'Product','model_id'=>$product->id])
+            @include('front-v1.partials.comment_template', ['comments'=>$comments,'model'=>$product])
+            {{--'model'=>'Article','model_id'=>$article->id--}}
         </div>
         {{--./COMMENTS--}}
+
+
+
 
         @if(count($similar_products))
             <div class="row mt-5 bg-white mb-5">
@@ -276,6 +285,11 @@
 @section('page-scripts')
     <script src="{{ asset('front-v1/zoom/jquery.zoom.min.js') }}"></script>
     <script src="{{ asset('front-v1/owl-carousel/owl.carousel.min.js') }}"></script>
+    {{--INCLUDE RATING SCRIPT FROM ITS PARTIAL--}}
+    @stack('rating-script')
+    {{--INCLUDE COMMENT SCRIPT FROM ITS PARTIAL--}}
+    @stack('comment-script')
+    {{--PAGE SCRIPT--}}
     <script>
         $(document).ready(function () {
 

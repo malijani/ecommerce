@@ -1,5 +1,11 @@
 <div class="col-12 text-center border-bottom py-2">
-    <h3>نظرات</h3>
+
+    <span class="fa-stack fa-lg" title="تعداد نظرات">
+        <i class="fal fa-comment-alt fa-stack-2x align-middle"></i>
+        <span class="fa-stack-1x text-center align-middle">{{ $model->comments->count() }}</span>
+    </span>
+    <h3 class="d-inline">نظرات</h3>
+
 </div>
 
 <div class="col-12 my-3">
@@ -21,7 +27,8 @@
         @endauth
 
         <div class="col-12">
-            <form action="{{ route('comment.store', ['model'=>$model , 'id'=>$model_id]) }}" method="POST">
+            <form action="{{ route('comment.store', ['model'=>class_basename($model) , 'id'=>$model->id]) }}"
+                  method="POST">
                 @csrf
                 <input type="hidden" name="parent_id" value="0">
                 <div class="form-group row">
@@ -39,7 +46,7 @@
                 </div>
                 <div class="form-group">
                     <button type="submit" class="form-control btn btn-outline-success">
-                        <i class="far fa-comment-alt"></i>
+                        <i class="far fa-comment"></i>
                         ثبت دیدگاه
                     </button>
                 </div>

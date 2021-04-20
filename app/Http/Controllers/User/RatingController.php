@@ -1,14 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Visitor;
+namespace App\Http\Controllers\User;
 
-use App\Article;
-use App\Comment;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class BlogController extends Controller
+class RatingController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,19 +15,7 @@ class BlogController extends Controller
      */
     public function index()
     {
-        $title = 'وبلاگ';
-        $articles = Article::withoutTrashed()
-            ->with('user', 'category', 'before', 'after')
-            ->active()
-            ->orderBy('created_at', 'DESC')
-            ->orderBy('id', 'DESC')
-            ->orderBy('sort', 'ASC')
-            ->paginate(12);
-
-        return view('front-v1.blog.index', [
-            'title' => $title,
-            'articles' => $articles,
-        ]);
+        //
     }
 
     /**
@@ -46,43 +32,38 @@ class BlogController extends Controller
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
     {
-        //
+
+        $request->validate([
+            'rate' => 'required|numeric|min:1|max:5',
+            'rateable' => 'required|string|size:7|in:Article,Product',
+            'rateable_id' => 'required|numeric|min:1',
+        ]);
+        $rateable = app('App\\' . $request->input('rateable'))::withoutTrashed()
+            ->find($request->input('rateable_id'));
+
+        if (is_null($rateable)) {
+            return response()->json('rateable_404');
+        }
+
+        Auth::user()->rate($rateable, $request->input('rate'));
+
+        return response()->json('رای شما با موفقیت ثبت شد!');
+
     }
 
     /**
      * Display the specified resource.
      *
-     * @param string slug
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($slug)
+    public function show($id)
     {
-        $article = Article::withoutTrashed()
-            ->with('user', 'category', 'before', 'after')
-            ->active()
-            ->where('title_en', $slug)
-            ->firstOrFail();
-
-        $comments = $article->comments()
-            ->with('childrenRecursive')
-            ->where('parent_id', 0)
-            ->active()
-            ->sort()
-            ->get();
-
-        $title = $article->title;
-
-        $article->increment('visit');
-
-        return view('front-v1.blog.show', [
-            'title' => $title,
-            'article' => $article,
-            'comments' => $comments,
-        ]);
+        //
     }
 
     /**
@@ -105,7 +86,7 @@ class BlogController extends Controller
      */
     public function update(Request $request, $id)
     {
-       //
+        //
     }
 
     /**
@@ -118,6 +99,4 @@ class BlogController extends Controller
     {
         //
     }
-
-
 }
