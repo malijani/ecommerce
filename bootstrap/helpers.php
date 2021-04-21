@@ -34,6 +34,7 @@ function imageUploader(Request $request, $field, $dir, $wsize = null, $hsize = n
         if ($watermark) {
             $handler->insert(env('WATERMARK_PATH', 'images/watermark/watermark-80.png' ?? $watermark_path), 'bottom-right', 5, 5);
         }
+
         $handler->encode('png');
         $handler->save($pic);
         return $pic;
@@ -46,15 +47,34 @@ function imageUploader(Request $request, $field, $dir, $wsize = null, $hsize = n
 /**
  * Get the value of user rate to a model
  * @param object $model
- * @return int $rate
-*/
-function getUserRating(object $model) : int
+ * @return int
+ */
+function getUserRating(object $model): int
 {
     $user = Auth::user();
-    if(!is_null($user) && $user->isRated($model)){
+    if (!is_null($user) && $user->isRated($model)) {
         $rate = $user->getRatingValue($model);
     } else {
         $rate = 0;
     }
     return $rate;
+}
+
+/**
+ * Return a specific unique string based on model and column
+ * @param object $model
+ * @param string $column
+ * @param int $length
+ * @return string
+ */
+function generateUniqueString(object $model, string $column, int $length = 11): string
+{
+    $model = new $model;
+    $uuid = '#'.Str::random($length);
+
+    while ($model->where($column, '=', $uuid)->count() > 0) {
+        $uuid = '#'.Str::random($length);
+    }
+
+    return $uuid;
 }

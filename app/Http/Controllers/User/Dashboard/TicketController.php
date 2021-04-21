@@ -3,11 +3,9 @@
 namespace App\Http\Controllers\User\Dashboard;
 
 use App\Http\Controllers\Controller;
-use App\ProvinceCity;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class DashboardController extends Controller
+class TicketController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,12 +14,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $title = 'داشبورد حساب کاربری شما | '. config('app.name');
-
-        return response()->view('front-v1.user.dashboard.index', [
-            'title'=>$title,
-        ]);
-
+        //
     }
 
     /**

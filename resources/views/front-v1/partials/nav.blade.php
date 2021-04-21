@@ -85,8 +85,9 @@
                                    title=" داشبورد {{ \Illuminate\Support\Facades\Auth::user()->full_name }} "
                                    target="_blank"
                                 >
-                                    <i class="fal fa-user-alt fa-2x align-middle"></i>
-                                    داشبورد
+                                    <i class="fal fa-desktop-alt fa-2x align-middle"></i>
+
+                                    <span class="mr-2">{{ \Illuminate\Support\Facades\Auth::user()->full_name }}</span>
                                 </a>
                             </div>
                         @else

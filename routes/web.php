@@ -33,6 +33,7 @@ Route::group(['prefix' => 'user', 'middleware' => ['web', 'auth', 'auth.normal',
         Route::resource('orders', 'User\Dashboard\OrderController')->only(['index']);
         Route::resource('addresses', 'User\Dashboard\AddressController')->only(['index']);
         Route::resource('profile', 'User\Dashboard\UserController')->only(['index', 'update']);
+        Route::resource('ticket', 'User\Dashboard\TicketController');
     });
 });
 
@@ -49,6 +50,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web', 'auth', 'auth.admin']
     Route::resource('products', 'Admin\ProductController');
     Route::resource('attributes', 'Admin\AttributeController')->only(['index', 'store', 'update']);
     Route::resource('comments', 'Admin\CommentController');
+
+    /*TICKETS*/
+    Route::resource('ticket-categories', 'Admin\Ticket\CategoryController')->except(['show', 'create', 'edit']);
+    Route::resource('tickets', 'Admin\Ticket\TicketController');
 
     /*PAGES*/
     Route::resource('faqs', 'Admin\FaqController')->except(['show']);

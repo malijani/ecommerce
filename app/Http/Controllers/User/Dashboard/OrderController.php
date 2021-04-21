@@ -17,7 +17,6 @@ class OrderController extends Controller
         $title = 'سفارش های ثبت شده توسط شما';
         return response()->view('front-v1.user.dashboard.orders', [
            'title'=>$title,
-           'orders_button'=>true,
         ]);
     }
 

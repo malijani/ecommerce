@@ -23,7 +23,6 @@ class UserController extends Controller
         $user = Auth::user();
         return response()->view('front-v1.user.dashboard.profile', [
             'title' => $title,
-            'profile_button' => true,
             'user' => $user,
         ]);
     }

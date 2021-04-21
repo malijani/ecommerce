@@ -76,6 +76,35 @@
 
 
 
+                    <li class="nav-item has-treeview {{(Request::routeIs('tickets.*') || Request::routeIs('ticket-categories.*')) ? 'menu-open' : '' }}">
+                        <a href="#" class="nav-link {{(Request::routeIs('tickets.*') || Request::routeIs('ticket-categories.*'))? 'active' : '' }}">
+                            <i class="nav-icon fa fa-ticket"></i>
+                            <p>
+                                تیکت ها
+                                <i class="right fa fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ route('tickets.index') }}"
+                                   class="nav-link {{Request::routeIs('tickets.*') ? 'active' : '' }}"
+                                >
+                                    <i class="fa fa-circle-o nav-icon"></i>
+                                    <p>لیست تیکت ها</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('ticket-categories.index') }}"
+                                   class="nav-link {{Request::routeIs('ticket-categories.*') ? 'active' : '' }}"
+                                >
+                                    <i class="fa fa-circle-o nav-icon"></i>
+                                    <p>دسته بندی تیکت ها</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+
                     <li class="nav-item">
                         <a href="{{ route('comments.index') }}"
                            class="nav-link {{ Request::routeIs('comments.*') ? 'active' : '' }}"

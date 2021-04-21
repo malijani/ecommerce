@@ -23,7 +23,6 @@ class AddressController extends Controller
 
         return response()->view('front-v1.user.dashboard.addresses', [
             'title'=>$title,
-            'addresses_button'=>true,
             'addresses'=>$addresses,
             'default_address'=>$default_address,
             'provinces'=>$provinces,

@@ -47,7 +47,7 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
 
-    public function addresses() : HasMany
+    public function addresses(): HasMany
     {
         return $this->hasMany(UserAddress::class)->orderByDesc('id');
     }
@@ -58,24 +58,24 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
 
-
     /**
      * Check if user is admin // ADMIN LEVEL == 121
      * @return bool
      */
     public function isAdmin()
     {
-        if(!is_null($this->level) && $this->level == 121){
+        if (!is_null($this->level) && $this->level == 121) {
             return true;
         }
         return false;
     }
+
     /**
      * Check if user is normal // NORMAL LEVEL == 0
      */
     public function isNormal()
     {
-        if(!is_null($this->level) && $this->level == 0){
+        if (!is_null($this->level) && $this->level == 0) {
             return true;
         }
         return false;
@@ -86,7 +86,26 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function getFullNameAttribute()
     {
-        return $this->name . ' ' . $this->family;
+        if (isset($this->name, $this->family)) {
+            return $this->name . ' ' . $this->family;
+        } elseif (isset($this->name)) {
+            return $this->name;
+        } elseif (isset($this->family)) {
+            return $this->family;
+        } elseif (isset($this->email)) {
+            return $this->email;
+        } else {
+            return $this->mobile;
+        }
+    }
+
+    public function getContactInformationAttribute()
+    {
+        if(isset($this->mobile)){
+            return $this->mobile;
+        } else {
+            return $this->email;
+        }
     }
 
 }

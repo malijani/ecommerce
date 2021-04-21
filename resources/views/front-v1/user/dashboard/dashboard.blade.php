@@ -12,16 +12,25 @@
                     {{--dashboard--}}
                     <div class="user-control text-center">
                         <a href="{{ route('dashboard.index') }}"
-                           class="btn @if(isset($dashboard_button)) btn-secondary text-white @else btn-outline-secondary @endif w-95 my-2 font-weight-bolder"
+                           class="btn {{ Request::routeIs('dashboard.index') ? 'btn-secondary text-white' : 'btn-outline-secondary' }} w-95 my-2 font-weight-bolder"
                         >
                             <i class="fal fa-desktop fa-2x align-middle px-2"></i>
                             داشبورد
                         </a>
                     </div>
+                    {{--tickets--}}
+                    <div class="user-control text-center">
+                        <a href="{{ route('dashboard.ticket.index') }}"
+                           class="btn {{ Request::routeIs('dashboard.ticket.*') ? 'btn-secondary text-white' : 'btn-outline-secondary' }} w-95 my-2 font-weight-bolder"
+                        >
+                            <i class="fal fa-ticket-alt fa-2x align-middle px-2"></i>
+                            پشتیبانی
+                        </a>
+                    </div>
                     {{--orders--}}
                     <div class="user-control text-center">
                         <a href="{{ route('dashboard.orders.index') }}"
-                           class="btn @if(isset($orders_button)) btn-secondary text-white @else btn-outline-secondary @endif w-95 my-2 font-weight-bolder"
+                           class="btn {{ Request::routeIs('dashboard.orders.*') ? 'btn-secondary text-white' : 'btn-outline-secondary' }} w-95 my-2 font-weight-bolder"
                         >
                             <i class="fal fa-list-alt fa-2x align-middle px-2"></i>
                             سفارش ها
@@ -31,7 +40,7 @@
                     <div class="user-control text-center">
                         <a href="{{ route('dashboard.addresses.index') }}"
                            id="show-address"
-                           class="btn @if(isset($addresses_button)) btn-secondary text-white @else btn-outline-secondary @endif w-95 my-2 font-weight-bolder"
+                           class="btn {{ Request::routeIs('dashboard.addresses.*') ? 'btn-secondary text-white' : 'btn-outline-secondary' }} w-95 my-2 font-weight-bolder"
                         >
                             <i class="fal fa-location-arrow fa-2x align-middle px-2"></i>
                             آدرس ها
@@ -42,24 +51,24 @@
                     {{--user details--}}
                     <div class="user-control text-center">
                         <a href="{{ route('dashboard.profile.index') }}"
-                           class="btn @if(isset($profile_button)) btn-secondary text-white @else btn-outline-secondary @endif w-95 my-2 font-weight-bolder"
+                           class="btn {{ Request::routeIs('dashboard.profile.*') ? 'btn-secondary text-white' : 'btn-outline-secondary' }} w-95 my-2 font-weight-bolder"
                         >
                             <i class="fal fa-user-cog fa-2x align-middle px-2"></i>
                             حساب کاربری
                         </a>
                     </div>
                     @if(\Illuminate\Support\Facades\Route::has('logout'))
-                    {{--logout--}}
-                    <div class="user-control text-center">
-                        <a href="#"
-                           id="logout"
-                           data-url="{{ route('logout') }}"
-                           class="btn @if('') btn-secondary text-white @else btn-outline-secondary @endif w-95 my-2 font-weight-bolder"
-                        >
-                            <i class="fal fa-sign-out fa-2x align-middle px-2"></i>
-                            خروج از سیستم
-                        </a>
-                    </div>
+                        {{--logout--}}
+                        <div class="user-control text-center">
+                            <a href="#"
+                               id="logout"
+                               data-url="{{ route('logout') }}"
+                               class="btn btn-outline-secondary w-95 my-2 font-weight-bolder"
+                            >
+                                <i class="fal fa-sign-out fa-2x align-middle px-2"></i>
+                                خروج از سیستم
+                            </a>
+                        </div>
                     @endif
                 </div>
             </div>{{--./USER NAVIGATION BUTTONS--}}
@@ -77,8 +86,8 @@
 @section('page-scripts')
     <script type="text/javascript" src="{{ asset('front-v1/sweetalert/sweetalert.min.js') }}"></script>
     <script>
-        $(document).ready(function(){
-            $("#logout").on('click', function(){
+        $(document).ready(function () {
+            $("#logout").on('click', function () {
                 let logout_url = $(this).attr('data-url');
                 swal({
                     title: "قصد خروج از حساب کاربری خود را دارید؟",

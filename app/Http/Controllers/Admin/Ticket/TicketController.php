@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\User\Dashboard;
+namespace App\Http\Controllers\Admin\Ticket;
 
 use App\Http\Controllers\Controller;
-use App\ProvinceCity;
+use App\Ticket;
+use App\TicketCategory;
+use App\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class DashboardController extends Controller
+class TicketController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,12 +17,17 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $title = 'داشبورد حساب کاربری شما | '. config('app.name');
+        $title = 'مدیریت تیکت های کاربران ';
+        $tickets = Ticket::withoutTrashed()
+            ->orderBy('status')
+            ->orderByDesc('priority')
+            ->orderByDesc('created_at')
+            ->get();
 
-        return response()->view('front-v1.user.dashboard.index', [
-            'title'=>$title,
+        return response()->view('admin.ticket.index', [
+            'title' => $title,
+            'tickets' => $tickets
         ]);
-
     }
 
     /**
@@ -31,13 +37,20 @@ class DashboardController extends Controller
      */
     public function create()
     {
-        //
+        $title = 'تعریف تیکت جدید برای نمایش به کاربر';
+        $categories = TicketCategory::query()->where('status', 1)->get();
+        $users = User::withoutTrashed()->where('status', 1)->whereNotNull('email_verified_at')->get();
+        return response()->view('admin.ticket.create', [
+            'title' => $title,
+            'categories' => $categories,
+            'users' => $users,
+        ]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -48,7 +61,7 @@ class DashboardController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -59,7 +72,7 @@ class DashboardController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -70,8 +83,8 @@ class DashboardController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -82,7 +95,7 @@ class DashboardController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

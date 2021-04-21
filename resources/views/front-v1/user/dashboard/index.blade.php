@@ -5,7 +5,7 @@
 @endsection
 
 @section('dashboard-content')
-    <h4>داشبورد شما در {{ config('app.name') }}</h4>
+    <h4>داشبورد {{ \Illuminate\Support\Facades\Auth::user()->full_name }} در {{ config('app.name') }}</h4>
     <div class="border p-4 m-4 rounded text-center font-weight-bolder font-16">
         با کلیک روی گزینه های داشبورد، حساب {{ config('app.name') }} خود را مدیریت کنید.
     </div>
