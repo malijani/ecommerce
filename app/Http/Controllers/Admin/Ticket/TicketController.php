@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Admin\Ticket;
 
 use App\Http\Controllers\Controller;
+use App\Mailers\AppMailer;
 use App\Ticket;
 use App\TicketCategory;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TicketController extends Controller
 {
@@ -53,9 +55,43 @@ class TicketController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, AppMailer $mailer)
     {
-        //
+        $request->validate([
+            'user_id' => 'required|numeric|exists:users,id',
+            'category_id' => 'required|numeric|exists:ticket_categories,id',
+            'title' => 'required|string|min:5|max:100',
+            'message' => 'required|string|min:5|max:6000',
+            'file' => 'nullable|mimetypes:video/*,audio/*,image/*,application/*,text/*|max:2048',
+            'priority' => 'required|numeric|in:0,1,2',
+            'status' => 'required|numeric|in:0,1,2'
+        ]);
+        $admin_id = Auth::id();
+
+        $uuid = generateUniqueString(app('App\\Ticket'), 'uuid', 12);
+        $dir = app('App\\Ticket')->path . $uuid;
+        $file = fileUploader($request, 'file', $dir);
+
+        $ticket = new Ticket(array_merge(
+            $request->except('file'),
+            ['file' => $file],
+            ['admin_id' => $admin_id],
+            ['uuid' => $uuid]
+        ));
+
+        $ticket->save();
+
+        $mailer->sendTicketInformation(Auth::user(), $ticket);
+
+        return response()->redirectToRoute('tickets.index')->with('success', 'یک تیکت با آیدی #' . $ticket->uuid . ' ایجاد شد');
+    }
+
+    public function download($file, $path)
+    {
+        $file = Storage::disk('private')->path('/') . $path . '/' . $file;
+        if (file_exists($file)) {
+            return response()->download($file);
+        }
     }
 
     /**

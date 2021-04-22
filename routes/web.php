@@ -53,7 +53,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web', 'auth', 'auth.admin']
 
     /*TICKETS*/
     Route::resource('ticket-categories', 'Admin\Ticket\CategoryController')->except(['show', 'create', 'edit']);
+    Route::resource('ticket-files', 'Admin\Ticket\FileController')->only('show');
     Route::resource('tickets', 'Admin\Ticket\TicketController');
+
 
     /*PAGES*/
     Route::resource('faqs', 'Admin\FaqController')->except(['show']);

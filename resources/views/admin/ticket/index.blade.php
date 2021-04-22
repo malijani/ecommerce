@@ -56,7 +56,14 @@
                                 </td>
                                 {{--SHOW CONTENT--}}
                                 <td class="align-middle text-center">
-                                    {{ $ticket->message }}
+                                    {!! $ticket->limited_message !!}
+                                    @if(!is_null($ticket->file))
+                                        <hr>
+                                        <a href="{{ route('ticket-files.show', $ticket->id) }}"
+                                        >
+                                            دانلود فایل
+                                        </a>
+                                    @endif
                                 </td>
                                 {{--SHOW CATEGORY--}}
                                 <td class="align-middle text-center">

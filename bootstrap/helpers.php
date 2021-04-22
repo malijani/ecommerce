@@ -7,8 +7,9 @@ use Intervention\Image\ImageManager;
 
 /**
  * Image uploader
- * @param Request
- * @param string
+ * @param Request $request
+ * @param string $field
+ * @param string $dir
  * @return mixed
  */
 function imageUploader(Request $request, $field, $dir, $wsize = null, $hsize = null, $watermark = false, $watermark_path = ''): ?string
@@ -43,6 +44,21 @@ function imageUploader(Request $request, $field, $dir, $wsize = null, $hsize = n
     }
 }
 
+function fileUploader(Request $request, $field, $dir)
+{
+    if ($request->hasFile($field)) {
+        $file = $request->file('file');
+        $name = Str::random(10) . '.' . $file->extension() ?? $file->getClientOriginalExtension();
+        try {
+            return \Illuminate\Support\Facades\Storage::disk('private')->putFileAs($dir, $file, $name);
+        } catch (Exception $e) {
+            return null;
+        }
+    } else {
+        return null;
+    }
+}
+
 
 /**
  * Get the value of user rate to a model
@@ -69,12 +85,9 @@ function getUserRating(object $model): int
  */
 function generateUniqueString(object $model, string $column, int $length = 11): string
 {
-    $model = new $model;
-    $uuid = '#'.Str::random($length);
-
+    $uuid = Str::random($length);
     while ($model->where($column, '=', $uuid)->count() > 0) {
-        $uuid = '#'.Str::random($length);
+        $uuid = Str::random($length);
     }
-
     return $uuid;
 }

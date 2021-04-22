@@ -18,129 +18,210 @@
                 </div>
             </div>
             <!-- /.card-header -->
+
             <div class="card-body">
                 <!-- form start -->
-                <form class="form" action="{{ route('faqs.store') }}" method="POST">
+                <form class="form" action="{{ route('tickets.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
 
                     <div class="row">
-                        <div class="col-md-12">{{--QUESTION--}}
+                        {{--USERS--}}
+                        <div class="col-md-12">
                             <div class="form-group row">
-                                <label for="question"
-                                       class="col-form-label col-md-2 text-center">
+                                <label for="user_id" class="col-form-label col-2 text-center">
                                     <i class="fa fa-asterisk text-danger"></i>
-                                    پرسش
+                                    تیکت برای کاربر
                                 </label>
                                 <div class="col-md-10">
-                                    <input id="question"
-                                           name="question"
+                                    <select
+                                        name="user_id"
+                                        id="user_id"
+                                        class="select2 form-control @error('user_id') is-invalid @enderror"
+                                        required
+                                    >
+                                        @if(is_null(old('user_id')))
+                                            <option value="" selected>لطفاً کاربر هدف تیکت را معین کنید.</option>
+                                        @endif
+
+                                        @foreach($users as $user)
+                                            <option value="{{ $user->id }}"
+                                                    @if(old('user_id') === $user->id) selected @endif
+                                            >
+                                                {{ $user->full_name }} | {{ $user->contact_information }}
+                                            </option>
+                                        @endforeach
+
+                                    </select>
+                                    @include('partials.form_error', ['input'=>'user_id'])
+                                </div>
+                            </div>
+                        </div>
+                        {{--./USERS--}}
+
+
+                        {{--CATEGORIES--}}
+                        <div class="col-md-12">
+                            <div class="form-group row">
+                                <label for="category_id" class="col-form-label col-2 text-center">
+                                    <i class="fa fa-asterisk text-danger"></i>
+                                    دسته بندی تیکت
+                                </label>
+                                <div class="col-md-10">
+                                    <select
+                                        name="category_id"
+                                        id="category_id"
+                                        class="select2 form-control @error('category_id') is-invalid @enderror"
+                                        required
+                                    >
+                                        @if(is_null(old('category_id')))
+                                            <option value="" selected>لطفاً دسته بندی تیکت را انتخاب کنید.</option>
+                                        @endif
+
+                                        @foreach($categories as $category)
+                                            <option value="{{ $category->id }}"
+                                                    @if(old('category_id') === $category->id) selected @endif
+                                            >
+                                                {{ $category->title }}
+                                            </option>
+                                        @endforeach
+
+                                    </select>
+                                    @include('partials.form_error', ['input'=>'category_id'])
+                                </div>
+                            </div>
+                        </div>
+                        {{--./CATEGORIES--}}
+
+                        {{--TITLE--}}
+                        <div class="col-md-12">
+                            <div class="form-group row">
+                                <label for="title"
+                                       class="col-form-label col-md-2 text-center">
+                                    <i class="fa fa-asterisk text-danger"></i>
+                                    عنوان تیکت
+                                </label>
+                                <div class="col-md-10">
+                                    <input id="title"
+                                           name="title"
                                            type="text"
-                                           maxlength="70"
+                                           maxlength="100"
                                            minlength="5"
-                                           class="form-control @error('question') is-invalid @enderror"
-                                           placeholder="سوال پر تکرار: زمینه فعالیت وبسایت ، نحوه ارسال و ..."
-                                           value="{{ old('question') }}"
+                                           class="form-control @error('title') is-invalid @enderror"
+                                           placeholder="بسته شما به سمت مقصد ارسال شد"
+                                           value="{{ old('title') }}"
                                            required
                                     >
-                                    @include('partials.form_error', ['input'=>'question'])
+                                    @include('partials.form_error', ['input'=>'title'])
                                 </div>
                             </div>
-                        </div>{{--./QUESTION--}}
+                        </div>
+                        {{--./TITLE--}}
 
-                        <div class="col-md-12">{{--ANSWER--}}
+                        {{--MESSAGE--}}
+                        <div class="col-md-12">
                             <div class="form-group row">
-                                <label for="answer"
+                                <label for="message"
                                        class="col-form-label col-md-2 text-center">
                                     <i class="fa fa-asterisk text-danger"></i>
-                                    پاسخ
+                                    پیام
                                 </label>
                                 <div class="col-md-10">
-                                    <textarea id="answer"
-                                              name="answer"
-                                              class="form-control @error('answer') is-invalid @enderror"
-                                              placeholder="پاسخ به پرسش مطرح شده"
+                                    <textarea id="message"
+                                              name="message"
+                                              class="form-control @error('message') is-invalid @enderror"
+                                              placeholder="با تشکر از انتخاب ما، بسته شما به سمت مقصد ارسال شد با کد رهگیری : ..."
                                               required
                                               rows="20"
-                                    >{{ old('answer') }}</textarea>
-                                    @include('partials.form_error', ['input'=>'answer'])
+                                    >{{ old('message') }}</textarea>
+                                    @include('partials.form_error', ['input'=>'message'])
                                 </div>
                             </div>
-                        </div>{{--./ANSWER--}}
+                        </div>
+                        {{--./MESSAGE--}}
 
-
-                        <div class="col-md-4">{{--STATUS--}}
+                        {{--FILE--}}
+                        <div class="col-12">
                             <div class="form-group row">
-                                <label for="status" class="col-form-label col-md-4 text-center">
+                                <label for="pic"
+                                       class="col-form-label col-md-2 text-center">
+                                    فایل
+                                </label>
+                                <div class="col-md-10">
+                                    <input id="file"
+                                           name="file"
+                                           type="file"
+                                           class="form-control @error('file') is-invalid @enderror"
+                                           accept="video/*,audio/*,image/*,application/*,text/*"
+                                    >
+                                    @include('partials.form_error', ['input'=>'file'])
+                                </div>
+                            </div>
+                        </div>
+                        {{--./FILE--}}
+
+
+                        {{--PRIORITY--}}
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label for="priority" class="col-form-label col-md-6 text-center">
+                                    <i class=" fa fa-asterisk text-danger"></i>
+                                    اولویت
+                                </label>
+                                <div class="col-md-6">
+                                    <select name="priority"
+                                            id="priority"
+                                            class="form-control @error('priority') is-invalid @enderror"
+                                            required
+                                    >
+                                        @if(is_null(old('priority')))
+                                            <option value="" selected>انتخاب کنید...</option>
+                                        @endif
+                                        <option value="0" @if(old('priority')==='0') selected @endif>پایین</option>
+                                        <option value="1" @if(old('priority')==='1') selected @endif>متوسط</option>
+                                        <option value="2" @if(old('priority')==='2') selected @endif>مهم</option>
+                                    </select>
+                                    @include('partials.form_error', ['input'=>'priority'])
+                                </div>
+                            </div>
+                        </div>
+                        {{--./PRIORITY--}}
+
+                        {{--STATUS--}}
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label for="status" class="col-form-label col-md-6 text-center">
                                     <i class=" fa fa-asterisk text-danger"></i>
                                     وضعیت
                                 </label>
-                                <div class="col-md-8">
+                                <div class="col-md-6">
                                     <select name="status"
                                             id="status"
                                             class="form-control @error('status') is-invalid @enderror"
                                             required
                                     >
-                                        <option value="" disabled>انتخاب کنید...</option>
-                                        <option value="0" @if(old('status')==0) selected @endif>عدم نمایش</option>
-                                        <option value="1" @if(old('status')==1) selected @endif>نمایش</option>
+                                        @if(is_null(old('status')))
+                                            <option value="" selected>انتخاب کنید...</option>
+                                        @endif
+                                        <option value="0" @if(old('status')==='0') selected @endif>باز</option>
+                                        <option value="1" @if(old('status')==='1') selected @endif>پاسخ داده شده</option>
+                                        <option value="2" @if(old('status')==='2') selected @endif>بسته شده</option>
                                     </select>
                                     @include('partials.form_error', ['input'=>'status'])
                                 </div>
                             </div>
-                        </div>{{--STATUS--}}
-
-                        <div class="col-md-4">{{--COLLAPSE--}}
-                            <div class="form-group row">
-                                <label for="collapse" class="col-form-label col-md-4 text-center">
-                                    <i class=" fa fa-asterisk text-danger"></i>
-                                    نحوه نمایش
-                                </label>
-                                <div class="col-md-8">
-                                    <select name="collapse"
-                                            id="collapse"
-                                            class="form-control @error('collapse') is-invalid @enderror"
-                                            required
-                                    >
-                                        <option value="" disabled>انتخاب کنید...</option>
-                                        <option value="0" @if(old('collapse')==0) selected @endif>جمع شده</option>
-                                        <option value="1" @if(old('collapse')==1) selected @endif>باز شده</option>
-                                    </select>
-                                    @include('partials.form_error', ['input'=>'screen'])
-                                </div>
-                            </div>
-                        </div>{{--./COLLAPSE--}}
+                        </div>
+                        {{--./STATUS--}}
 
 
-                        <div class="col-md-4">{{--SORT--}}
-                            <div class="form-group row">
-                                <label for="sort" class="col-form-label col-md-4 text-center">
-                                    <i class=" fa fa-asterisk text-danger"></i>
-                                    اولویت
-                                </label>
-                                <div class="col-md-8">
-                                    <input name="sort"
-                                           id="sort"
-                                           type="number"
-                                           min="0"
-                                           max="255"
-                                           class="form-control @error('sort') is-invalid @enderror"
-                                           required
-                                           placeholder="ترتیب نمایش به کاربر : 1-255"
-                                           value="{{ old('sort') }}"
-                                    >
-                                    @include('partials.form_error', ['input'=>'sort'])
-                                </div>
-                            </div>
-                        </div>{{--./SORT--}}
-
-
-                        <div class="col-12">{{--SUBMIT BUTTON--}}
+                        {{--SUBMIT BUTTON--}}
+                        <div class="col-12">
                             <div class="form-group row my-5 text-center">
                                 <button type="submit" class="btn btn-outline-primary form-control">
-                                    ذخیره
+                                    ثبت تیکت برای کاربر مورد نظر
                                 </button>
                             </div>
-                        </div>{{--./SUBMIT BUTTON--}}
+                        </div>
+                        {{--./SUBMIT BUTTON--}}
                     </div>
 
 
@@ -194,7 +275,7 @@
                 font_defaultLabel: 'Vazir',
                 forcePasteAsPlainText: false,
                 forceEnterMode: true,
-                editorplaceholder: 'پاسخ به پرسش مطرح شده',
+                editorplaceholder: 'با تشکر از انتخاب ما، بسته شما به سمت مقصد ارسال شد با کد رهگیری : ...',
             });
         });
     </script>
