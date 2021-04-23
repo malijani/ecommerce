@@ -12,6 +12,10 @@
             {{ $ticket->title }}
             </span>
         </div>
+        <div class="col-12 mr-5 mt-3">
+            <span class="text-muted">دسته بندی : </span>
+            <span class="font-16 font-weight-bolder">{{ $ticket->category->title }}</span>
+        </div>
 
         <div class="col-12 mt-3 mr-5">
             <span class="text-muted">وضعیت کلی تیکت : </span>
@@ -87,6 +91,14 @@
     <div class="row mt-3">
         <div class="col-12 border rounded p-4 ">
             {!! $ticket->message !!}
+            @if(!is_null($ticket->file))
+                <hr>
+                <a href="{{ route('ticket-files.show', $ticket->id) }}"
+                >
+                    دانلود فایل
+                </a>
+
+            @endif
         </div>
     </div>
 

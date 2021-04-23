@@ -57,7 +57,7 @@ class Ticket extends Model
     {
         switch ($this->priority) {
             case 0 :
-                $priority = "بدون اهمیت";
+                $priority = "اهمیت پایین";
                 break;
             case 1:
                 $priority = "مهم";

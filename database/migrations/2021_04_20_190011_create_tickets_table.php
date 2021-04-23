@@ -20,7 +20,7 @@ class CreateTicketsTable extends Migration
             $table->index('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('CASCADE');
 
-            $table->unsignedBigInteger('admin_id');
+            $table->unsignedBigInteger('admin_id')->nullable();
             $table->index('admin_id');
             $table->foreign('admin_id')->references('id')->on('users')->onDelete('CASCADE');
 
