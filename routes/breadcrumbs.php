@@ -25,6 +25,12 @@ Breadcrumbs::for('dashboard.tickets.show', function ($trail, $ticket) {
     $trail->push($ticket->uuid, route('dashboard.tickets.show', $ticket->uuid));
 });
 
+// Home > Dashboard > Tickets > Create
+Breadcrumbs::for('dashboard.tickets.create', function ($trail) {
+    $trail->parent('dashboard.tickets');
+    $trail->push('ایجاد تیکت جدید', route('dashboard.tickets.create'));
+});
+
 
 // Home > Dashboard > Orders
 Breadcrumbs::for('dashboard.orders', function($trail){

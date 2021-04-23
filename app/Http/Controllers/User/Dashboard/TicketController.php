@@ -26,14 +26,9 @@ class TicketController extends Controller
             ->orderByDesc('id')
             ->paginate(10);
 
-        $categories = TicketCategory::query()
-            ->where('status', 1)
-            ->get();
-
         return response()->view('front-v1.user.dashboard.ticket.index', [
             'title' => $title,
             'tickets' => $tickets,
-            'categories' => $categories
         ]);
     }
 
@@ -44,7 +39,14 @@ class TicketController extends Controller
      */
     public function create()
     {
-        //
+        $title = 'ثبت تیکت جدید';
+        $categories = TicketCategory::query()
+            ->where('status', 1)
+            ->get();
+
+        return response()->view('front-v1.user.dashboard.ticket.create', [
+           'title'=> $title,
+           'categories'=>$categories,        ]);
     }
 
     /**
@@ -55,18 +57,23 @@ class TicketController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
     }
 
     /**
      * Display the specified resource.
      *
-     * @param int $id
+     * @param string $uuid
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($uuid)
     {
-        //
+        $ticket = Ticket::query()->where('uuid', $uuid)->firstOrFail();
+        $title = 'تیکت ' . $ticket->title;
+        return response()->view('front-v1.user.dashboard.ticket.show', [
+            'title'=>$title,
+            'ticket'=>$ticket,
+        ]);
     }
 
     /**
