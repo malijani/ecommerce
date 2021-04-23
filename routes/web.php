@@ -33,7 +33,7 @@ Route::group(['prefix' => 'user', 'middleware' => ['web', 'auth', 'auth.normal',
         Route::resource('orders', 'User\Dashboard\OrderController')->only(['index']);
         Route::resource('addresses', 'User\Dashboard\AddressController')->only(['index']);
         Route::resource('profile', 'User\Dashboard\UserController')->only(['index', 'update']);
-        Route::resource('ticket', 'User\Dashboard\TicketController');
+        Route::resource('tickets', 'User\Dashboard\TicketController');
     });
 });
 

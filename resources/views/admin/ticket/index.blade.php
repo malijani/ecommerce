@@ -76,25 +76,25 @@
                                 {{--SHOW PRIORITY--}}
                                 <td class="align-middle">
                                     @if($ticket->priority == 0)
-                                        <span class="badge badge-info">اهمیت پایین</span>
+                                        <span class="badge badge-info">{{ $ticket->priority_text }}</span>
                                     @elseif($ticket->priority == 1)
-                                        <span class="badge badge-warning">اهمیت متوسط</span>
+                                        <span class="badge badge-warning">{{ $ticket->priority_text }}</span>
                                     @elseif($ticket->priority == 2)
-                                        <span class="badge badge-danger">اهمیت بالا</span>
+                                        <span class="badge badge-danger">{{ $ticket->priority_text }}</span>
                                     @else
-                                        نامشخص
+                                        <span class="badge badge-light">نامشخص</span>
                                     @endif
                                 </td>
                                 {{--SHOW STATUS--}}
                                 <td class="align-middle">
                                     @if($ticket->status === 0)
-                                        <span class="badge badge-danger">باز</span>
+                                        <span class="badge badge-danger">{{ $ticket->status_text }}</span>
                                     @elseif($ticket->status === 1)
-                                        <span class="badge badge-warning">پاسخ داده شده</span>
+                                        <span class="badge badge-warning">{{ $ticket->status_text }}</span>
                                     @elseif($ticket->status === 2)
-                                        <span class="badge badge-success">بسته شده</span>
+                                        <span class="badge badge-success">{{ $ticket->status_text }}</span>
                                     @else
-                                        نامشخص
+                                        <span class="badge badge-light">نامشخص</span>
                                     @endif
                                 </td>
 

@@ -76,4 +76,9 @@ class Ticket extends Model
     {
         return Str::words($this->message, 10);
     }
+
+    public function getLimitedTitleAttribute()
+    {
+        return Str::words($this->title, 10);
+    }
 }

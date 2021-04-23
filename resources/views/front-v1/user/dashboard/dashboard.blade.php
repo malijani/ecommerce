@@ -20,8 +20,8 @@
                     </div>
                     {{--tickets--}}
                     <div class="user-control text-center">
-                        <a href="{{ route('dashboard.ticket.index') }}"
-                           class="btn {{ Request::routeIs('dashboard.ticket.*') ? 'btn-secondary text-white' : 'btn-outline-secondary' }} w-95 my-2 font-weight-bolder"
+                        <a href="{{ route('dashboard.tickets.index') }}"
+                           class="btn {{ Request::routeIs('dashboard.tickets.*') ? 'btn-secondary text-white' : 'btn-outline-secondary' }} w-95 my-2 font-weight-bolder"
                         >
                             <i class="fal fa-ticket-alt fa-2x align-middle px-2"></i>
                             پشتیبانی

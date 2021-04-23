@@ -30,9 +30,10 @@ class CreateTicketsTable extends Migration
 
             $table->string('uuid', 12); // Generate a 12 character in controller
             $table->string('title', 100);
-            $table->text('message');
 
+            $table->text('message');
             $table->string('file', 50)->nullable();
+
             $table->unsignedTinyInteger('priority'); // 0 : not important, 1 : important, 2 very important
             $table->unsignedTinyInteger('status'); // 0 : open , 1 : answered, 2 : closed
 

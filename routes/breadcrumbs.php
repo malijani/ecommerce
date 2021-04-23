@@ -13,6 +13,18 @@ Breadcrumbs::for('dashboard', function($trail){
     $trail->push('داشبورد', route('dashboard.index'));
 });
 
+// Home > Dashboard > Tickets
+Breadcrumbs::for('dashboard.tickets', function($trail){
+    $trail->parent('dashboard');
+    $trail->push('تیکت ها', route('dashboard.tickets.index'));
+});
+
+// Home > Dashboard > Tickets > [Ticket]
+Breadcrumbs::for('dashboard.tickets.show', function ($trail, $ticket) {
+    $trail->parent('dashboard.tickets');
+    $trail->push($ticket->uuid, route('dashboard.tickets.show', $ticket->uuid));
+});
+
 
 // Home > Dashboard > Orders
 Breadcrumbs::for('dashboard.orders', function($trail){

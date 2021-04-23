@@ -49,9 +49,9 @@
         </div>
     </div>
     <div class="footer">
-        <a href="{{ route('dashboard.ticket.show', $ticket->uuid) }}">
+        <a href="{{ route('dashboard.tickets.show', $ticket->uuid) }}">
             برای مشاهده تیکت کلیک کنید :
-            {{'#'.$ticket->uuid}}
+            <span dir="ltr">{{'#'.$ticket->uuid}}</span>
         </a>
     </div>
 
