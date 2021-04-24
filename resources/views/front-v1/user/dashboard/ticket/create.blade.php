@@ -6,7 +6,7 @@
 @section('dashboard-content')
     <h4>ثبت تیکت جدید</h4>
 
-    <div class="row bg-whitesmoke rounded">
+    <div class="row bg-light-gray rounded">
         <div class="col-12 p-4">
             <form action="{{ route('dashboard.tickets.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf

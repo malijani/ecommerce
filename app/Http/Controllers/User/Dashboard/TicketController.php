@@ -63,7 +63,7 @@ class TicketController extends Controller
             'category_id' => 'required|numeric|exists:ticket_categories,id',
             'title' => 'required|string|min:5|max:100',
             'message' => 'required|string|min:5|max:6000',
-            'file' => 'nullable|mimes:png,jpg,jpeg,gif|max:2048',
+            'file' => 'nullable|mimes:png,jpg,jpeg,gif,zip|max:2048',
             'priority' => 'required|numeric|in:0,1,2',
         ], [
             'category_id' => [
@@ -84,7 +84,7 @@ class TicketController extends Controller
                 'max' => 'حداکثر ۶۰۰۰ کاراکتر برای پیام تیکت در نظر گرفته شده است',
             ],
             'file' => [
-                'mimes' => 'فایل های png , jpeg, jpg, gif مجاز به ثبت می‌باشند.',
+                'mimes' => 'فایل های png , jpeg, jpg, gif, zip مجاز به ثبت می‌باشند.',
                 'max' => 'حداکثر اندازه فایل باید ۲ مگابایت باشد.',
             ],
             'priority' => [

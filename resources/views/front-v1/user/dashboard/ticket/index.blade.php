@@ -18,19 +18,28 @@
 
     @if($tickets->isEmpty())
         <div class="row">
-            <div class="col-12 text-center">
-                <p>تیکتی برای شما ثبت نشده است! برای ارتباط با پشتیبانی و یا مشاوره همین الان یکی ثبت کن!</p>
-            </div>
+        <div class="col-md-12 mb-2 mb-md-0 text-center">
+            <p
+               class="w-100 font-16 border p-4 font-weight-bolder rounded"
+            >
+                <i class="fal fa-info-circle fa-2x align-middle"></i>
+                تیکتی برای شما ثبت نشده. برای ارتباط با پشتیبانی و یا مشاوره همین الان یکی ثبت کن!
+            </p>
         </div>
+        </div>
+
+
     @else
-        <div class="row mt-3 d-none d-md-flex align-items-center p-4 border font-16">
-            <div class="col-md-2 text-center">
+        <div class="row mt-3 d-none d-md-flex align-items-center py-1 font-16">
+            <div class="col-md-3 text-center">
                 کد
             </div>
             <div class="col-md-5 text-center">
                 عنوان
+                <hr class="w-25">
+                دسته بندی
             </div>
-            <div class="col-md-2 text-center">
+            <div class="col-md-1 text-center">
                 وضعیت
             </div>
             <div class="col-md-3 text-center">
@@ -48,10 +57,12 @@
                         {{ '#'.$ticket->uuid }}
                     </a>
                 </div>
-                <div class="col-md-4 text-center font-weight-bold my-1">
+                <div class="col-md-5 text-center font-weight-bold my-1">
                     {{ $ticket->limited_title}}
+                    <hr class="w-25">
+                    {{ $ticket->category->title }}
                 </div>
-                <div class="col-md-2 text-center my-1">
+                <div class="col-md-1 text-center my-1">
                     @if($ticket->status === 0)
                         <span class="badge badge-success">{{ $ticket->status_text }}</span>
                     @elseif($ticket->status === 1)

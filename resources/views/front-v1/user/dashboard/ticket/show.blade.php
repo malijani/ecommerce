@@ -6,7 +6,7 @@
 @section('dashboard-content')
     <h4>تیکت <span dir="ltr">{{ '#'.$ticket->uuid }}</span></h4>
     {{--TITLE ROW--}}
-    <div class="row my-3 bg-whitesmoke p-4 rounded">
+    <div class="row my-3 p-4 border border-info rounded">
         <div class="col-12 text-center my-1">
             <span class="font-16 font-weight-bolder">
             {{ $ticket->title }}
@@ -42,8 +42,8 @@
         </div>
     </div>
 
-    {{--COMMENt ROW--}}
-    <div class="row bg-grey-50 p-4 rounded">
+    {{--COMMENT FORM ROW--}}
+    <div class="row bg-light-gray p-4 rounded">
         <div class="col-12 text-center">
             <form action="{{ route('dashboard.tickets.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
@@ -89,16 +89,55 @@
 
     {{--CONTENT ROW--}}
     <div class="row mt-3">
-        <div class="col-12 border rounded p-4 ">
-            {!! $ticket->message !!}
-            @if(!is_null($ticket->file))
-                <hr>
-                <a href="{{ route('ticket-files.show', $ticket->id) }}"
-                >
-                    دانلود فایل
-                </a>
+        <div class="col-12 border rounded p-4 @if($ticket->user->isAdmin()) bg-grey-50 @endif">
+            <div class="row align-items-center m-0 p-0">
+                <div class="col-3 col-md-1">
+                    <img src="{{ asset('images/fallback/user.png') }}"
+                         alt="{{ $ticket->user->full_name }}"
+                         class="rounded-circle img-fluid img-bordered-sm"
+                    >
+                </div>
+                <div class="col-3">
+                    {{ $ticket->user->full_name }}
+                    @if($ticket->user->isAdmin())
+                        <span class="badge badge-primary">ادمین</span>
+                    @endif
+                </div>
 
-            @endif
+                @if( $ticket->user->isAdmin())
+                    <div class="col-5 text-left">
+                        {{ $ticket->user->contact_information }}
+                    </div>
+                @endif
+
+            </div>
+            <hr>
+            <div class="row px-4 py-2">
+                <div class="col-12">
+                    {!! $ticket->message !!}
+                </div>
+            </div>
+
+            <div class="row align-items-center px-3 py-1">
+
+                @if(!is_null($ticket->file))
+                    <div class="col-4">
+                        <a href="{{ route('ticket-files.show', $ticket->id) }}"
+                           class="btn btn-light"
+                        >
+                            <i class="fa fa-download fa-2x align-middle"></i>
+                            دانلود فایل
+                        </a>
+                    </div>
+                @endif
+                <div class="col text-left">
+                    <span class="text-muted">
+                        ثبت شده در :
+                    {{ $ticket->created_at }}
+                    </span>
+                </div>
+
+            </div>
         </div>
     </div>
 

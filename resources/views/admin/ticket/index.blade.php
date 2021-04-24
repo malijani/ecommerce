@@ -43,7 +43,11 @@
                                 {{--SHOW ID--}}
                                 <td class="align-middle">{{ $ticket->id }}</td>
                                 {{--SHOW CODE--}}
-                                <td class="align-middle">{{ $ticket->uuid }}</td>
+                                <td class="align-middle">
+                                    <a href="{{ route('tickets.show', $ticket->id) }}">
+                                        {{ $ticket->uuid }}
+                                    </a>
+                                </td>
                                 {{--SHOW USER--}}
                                 <td class="align-middle text-center">
                                     <span>{{ $ticket->user->full_name}}</span>

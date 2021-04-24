@@ -60,14 +60,14 @@
                     @if(\Illuminate\Support\Facades\Route::has('logout'))
                         {{--logout--}}
                         <div class="user-control text-center">
-                            <a href="#"
+                            <button
                                id="logout"
                                data-url="{{ route('logout') }}"
                                class="btn btn-outline-secondary w-95 my-2 font-weight-bolder"
                             >
                                 <i class="fal fa-sign-out fa-2x align-middle px-2"></i>
                                 خروج از سیستم
-                            </a>
+                            </button>
                         </div>
                     @endif
                 </div>

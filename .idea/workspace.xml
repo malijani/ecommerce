@@ -6,11 +6,17 @@
   <component name="ChangeListManager">
     <list default="true" id="00f5ae84-d71d-47c5-aa01-f2581affa6d5" name="Default Changelist" comment="Minor changes of frontend + Product section in admin">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/Ticket/TicketController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/Ticket/TicketController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/User/Dashboard/TicketController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/User/Dashboard/TicketController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Ticket.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Ticket.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2021_04_20_190011_create_tickets_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2021_04_20_190011_create_tickets_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/front-v1/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/front-v1/css/main.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/ticket/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/ticket/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/front-v1/partials/address.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/front-v1/partials/address.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/front-v1/user/dashboard/dashboard.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/front-v1/user/dashboard/dashboard.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/front-v1/user/dashboard/ticket/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/front-v1/user/dashboard/ticket/create.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/front-v1/user/dashboard/ticket/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/front-v1/user/dashboard/ticket/index.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/front-v1/user/dashboard/ticket/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/front-v1/user/dashboard/ticket/show.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -385,7 +391,9 @@
       <workItem from="1619056063223" duration="24446000" />
       <workItem from="1619140827516" duration="8167000" />
       <workItem from="1619163356979" duration="4417000" />
-      <workItem from="1619177901284" duration="4226000" />
+      <workItem from="1619177901284" duration="4283000" />
+      <workItem from="1619246729318" duration="4529000" />
+      <workItem from="1619264595425" duration="2376000" />
     </task>
     <task id="LOCAL-00001" summary="Minor changes of frontend + Product section in admin">
       <created>1613451037291</created>

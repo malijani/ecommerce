@@ -265,6 +265,7 @@
 
 
 @section('page-scripts')
+    @parent
     <script>
         function setDefault(id) {
             $.ajax({

@@ -52,6 +52,16 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(UserAddress::class)->orderByDesc('id');
     }
 
+    public function ticketComments()
+    {
+        return $this->hasMany(TicketComment::class, 'user_id');
+    }
+
+    public function tickets()
+    {
+        return $this->hasMany(Ticket::class, 'user_id');
+    }
+
     public function getDefaultAddressAttribute()
     {
         return $this->addresses()->where('status', true)->get()->first() ?? $this->addresses()->get()->first();
@@ -101,7 +111,9 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function getContactInformationAttribute()
     {
-        if(isset($this->mobile)){
+        if (isset($this->mobile) && isset($this->email)) {
+            return $this->mobile . ' ' . $this->email;
+        } elseif (isset($this->mobile)) {
             return $this->mobile;
         } else {
             return $this->email;
