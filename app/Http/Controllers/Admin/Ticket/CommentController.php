@@ -62,6 +62,8 @@ class CommentController extends Controller
         ));
 
         $comment->save();
+        $ticket->status = 1;
+        $ticket->save();
 
         $mailer->sendTicketInformation(Auth::user(), $ticket);
 

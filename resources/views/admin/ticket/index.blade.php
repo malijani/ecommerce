@@ -100,6 +100,12 @@
                                     @else
                                         <span class="badge badge-light">نامشخص</span>
                                     @endif
+                                        <br>
+                                        <input type="radio"
+                                               name="toggle_status"
+                                               data-url="{{ route('tickets.update', $ticket->id) }}"
+                                               class="toggle_status big-checkbox form-control"
+                                        >
                                 </td>
 
                                 {{--OPERATIONS--}}
@@ -154,46 +160,17 @@
     <script type="text/javascript">
 
         $(document).ready(function () {
-            /**VERIFY**/
-            let verify = $('.verify');
-            verify.on('click', function () {
-                let verify_address = $(this).attr('data-url');
+            /**TOGGLE STATUS**/
+            let toggle_status = $('.toggle_status');
+            toggle_status.on('click', function () {
+                let update_address = $(this).attr('data-url');
                 $.ajax({
-                    url: verify_address,
+                    url: update_address,
                     type: 'POST',
                     data: {
                         '_token': '{{ csrf_token() }}',
                         '_method': 'PUT',
-                        'verify': 'on',
-                    },
-                    success: function () {
-                        location.reload();
-
-                    },
-                    error: function () {
-                        swal({
-                            text: "خطای غیر منتظره ای رخ داده، لطفا با توسعه دهنده در میان بگذارید.",
-                            icon: 'error',
-                            button: "فهمیدم.",
-                        });
-                    }
-                });
-
-            });
-            /**END VERIFY**/
-
-
-            /**UNVERIFY**/
-            let unverify = $('.unverify');
-            unverify.on('click', function () {
-                let verify_address = $(this).attr('data-url');
-                $.ajax({
-                    url: verify_address,
-                    type: 'POST',
-                    data: {
-                        '_token': '{{ csrf_token() }}',
-                        '_method': 'PUT',
-                        'verify': 'off',
+                        'request_type' : 'ajax'
                     },
                     success: function () {
                         location.reload();

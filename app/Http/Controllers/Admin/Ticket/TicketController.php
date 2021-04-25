@@ -130,7 +130,23 @@ class TicketController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $ticket = Ticket::query()->findOrFail($id);
+        $request->validate([
+           'request_type' => 'required|string|in:ajax'
+        ]);
+
+        if($request->input('request_type') === 'ajax'){
+            if(in_array($ticket->status, [0, 1])){
+                $ticket->status = 2;
+            } else {
+                $ticket->status = 0;
+            }
+            $ticket->save();
+        }
+
+        return back()->with('وضعیت تیکت '. $ticket->uuid . ' به ' . $ticket->status_text . ' تغییر یافت.');
+
+
     }
 
     /**

@@ -75,6 +75,8 @@ class CommentController extends Controller
         ));
 
         $comment->save();
+        $ticket->status = 0;
+        $ticket->save();
 
         return response()->redirectToRoute('dashboard.tickets.show', $ticket->uuid)->with('success', 'پاسخ شما ثبت شد.');
     }
