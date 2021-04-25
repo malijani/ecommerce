@@ -29,12 +29,11 @@ Route::group(['prefix' => 'user', 'middleware' => ['web', 'auth', 'auth.normal',
     Route::resource('rating', 'User\RatingController')->only(['store']);
     /*DASHBOARD*/
     Route::resource('dashboard', 'User\Dashboard\DashboardController')->only(['index']);
-    Route::group( ['prefix' => 'dashboard', 'as' => 'dashboard.'], function () {
+    Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function () {
         Route::resource('orders', 'User\Dashboard\OrderController')->only(['index']);
         Route::resource('addresses', 'User\Dashboard\AddressController')->only(['index']);
         Route::resource('profile', 'User\Dashboard\UserController')->only(['index', 'update']);
         Route::resource('tickets', 'User\Dashboard\TicketController');
-        Route::resource('ticket-files', 'User\Ticket\FileController')->only('show');
         Route::resource('ticket-comments', 'User\Dashboard\CommentController');
     });
 });
@@ -55,7 +54,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web', 'auth', 'auth.admin']
 
     /*TICKETS*/
     Route::resource('ticket-categories', 'Admin\Ticket\CategoryController')->except(['show', 'create', 'edit']);
-    Route::resource('ticket-files', 'Admin\Ticket\FileController')->only('show');
     Route::resource('tickets', 'Admin\Ticket\TicketController');
     Route::resource('ticket-comments', 'Admin\Ticket\CommentController');
 
@@ -78,6 +76,11 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web', 'auth', 'auth.admin']
         Lfm::routes();
     });
 
+
+});
+
+Route::group(['prefix' => 'files', 'as' => 'files.', 'middleware' => ['web', 'auth']], function () {
+    Route::get('ticket/{id}/{type}', 'File\TicketFileController@show')->name('ticket-files');
 });
 
 

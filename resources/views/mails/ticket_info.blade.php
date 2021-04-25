@@ -33,13 +33,13 @@
 
 <div dir="rtl" class="container">
     <div class="header">
-        <h1>جیم لند</h1>
+        <h1>{{ config('app.name') }}</h1>
     </div>
     <div class="content">
         <div class="text">
             <p>
                 کاربر گرامی {{ ucfirst($user->full_name) }}
-                از شما بابت ارتباط با تیم پشتیبانی متشکریم. یک تیکت برای شما باز شده که جزئیات آن به صورت زیر می‌ باشد:
+                از شما بابت ارتباط با تیم پشتیبانی متشکریم. لطفاً به تیکت زیر سر بزنید :
             </p>
         </div>
         <div class="description">

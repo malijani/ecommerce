@@ -87,7 +87,7 @@
                                 >
                                     <i class="fal fa-desktop-alt fa-2x align-middle"></i>
 
-                                    <span class="mr-2">{{ \Illuminate\Support\Facades\Auth::user()->full_name }}</span>
+                                    <span class="mr-2" dir="ltr">{{ \Illuminate\Support\Facades\Auth::user()->full_name }}</span>
                                 </a>
                             </div>
                         @else

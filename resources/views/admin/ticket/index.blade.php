@@ -63,7 +63,7 @@
                                     {!! $ticket->limited_message !!}
                                     @if(!is_null($ticket->file))
                                         <hr>
-                                        <a href="{{ route('ticket-files.show', $ticket->id) }}"
+                                        <a href="{{ route('files.ticket-files', [$ticket->uuid, 'ticket']) }}"
                                         >
                                             دانلود فایل
                                         </a>

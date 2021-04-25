@@ -48,10 +48,10 @@
 
                     <li class="nav-item has-treeview {{Request::routeIs('users.*') ? 'menu-open' : '' }}">
                         <a href="#" class="nav-link {{Request::routeIs('users.*') ? 'active' : '' }}">
-                            <i class="nav-icon fa fa-user"></i>
+                            <i class="nav-icon fal fa-user"></i>
                             <p>
                                 کاربران
-                                <i class="right fa fa-angle-left"></i>
+                                <i class="right fal fa-angle-left"></i>
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
@@ -59,7 +59,7 @@
                                 <a href="{{ route('users.index') }}"
                                    class="nav-link {{Request::routeIs('users.index') ? 'active' : '' }}"
                                 >
-                                    <i class="fa fa-circle-o nav-icon"></i>
+                                    <i class="fal fa-circle nav-icon"></i>
                                     <p>لیست کاربران</p>
                                 </a>
                             </li>
@@ -67,7 +67,7 @@
                                 <a href="{{ route('users.create') }}"
                                    class="nav-link {{Request::routeIs('users.create') ? 'active' : '' }}"
                                 >
-                                    <i class="fa fa-circle-o nav-icon"></i>
+                                    <i class="fal fa-circle nav-icon"></i>
                                     <p>افزودن کاربر</p>
                                 </a>
                             </li>
@@ -78,7 +78,7 @@
 
                     <li class="nav-item has-treeview {{(Request::routeIs('tickets.*') || Request::routeIs('ticket-categories.*')) ? 'menu-open' : '' }}">
                         <a href="#" class="nav-link {{(Request::routeIs('tickets.*') || Request::routeIs('ticket-categories.*'))? 'active' : '' }}">
-                            <i class="nav-icon fa fa-ticket"></i>
+                            <i class="nav-icon fal fa-ticket"></i>
                             <p>
                                 تیکت ها
                                 <i class="right fa fa-angle-left"></i>
@@ -89,7 +89,7 @@
                                 <a href="{{ route('tickets.index') }}"
                                    class="nav-link {{Request::routeIs('tickets.*') ? 'active' : '' }}"
                                 >
-                                    <i class="fa fa-circle-o nav-icon"></i>
+                                    <i class="fal fa-circle nav-icon"></i>
                                     <p>لیست تیکت ها</p>
                                 </a>
                             </li>
@@ -97,7 +97,7 @@
                                 <a href="{{ route('ticket-categories.index') }}"
                                    class="nav-link {{Request::routeIs('ticket-categories.*') ? 'active' : '' }}"
                                 >
-                                    <i class="fa fa-circle-o nav-icon"></i>
+                                    <i class="fal fa-circle nav-icon"></i>
                                     <p>دسته بندی تیکت ها</p>
                                 </a>
                             </li>
@@ -109,7 +109,7 @@
                         <a href="{{ route('comments.index') }}"
                            class="nav-link {{ Request::routeIs('comments.*') ? 'active' : '' }}"
                         >
-                            <i class="nav-icon fa fa-comment"></i>
+                            <i class="nav-icon fal fa-comment"></i>
                             <p>
                                 نظرات
                             </p>
@@ -124,7 +124,7 @@
                         <a href="#"
                            class="nav-link {{Request::routeIs('pages.*') ? 'active' : '' }}"
                         >
-                            <i class="nav-icon fa fa-file-code-o"></i>
+                            <i class="nav-icon fal fa-file-code"></i>
                             <p>
                                 صفحه ساز
                                 <i class="right fa fa-angle-left"></i>
@@ -135,7 +135,7 @@
                                 <a href="{{ route('pages.index') }}"
                                    class="nav-link {{Request::routeIs('pages.index') ? 'active' : '' }}"
                                 >
-                                    <i class="fa fa-circle-o nav-icon"></i>
+                                    <i class="fal fa-circle nav-icon"></i>
                                     <p>لیست صفحات</p>
                                 </a>
                             </li>
@@ -143,7 +143,7 @@
                                 <a href="{{ route('pages.create') }}"
                                    class="nav-link {{Request::routeIs('pages.create') ? 'active' : '' }}"
                                 >
-                                    <i class="fa fa-circle-o nav-icon"></i>
+                                    <i class="fal fa-circle nav-icon"></i>
                                     <p>افزودن صفحه</p>
                                 </a>
                             </li>
@@ -156,7 +156,7 @@
                         <a href="#"
                            class="nav-link {{Request::routeIs('categories.*') ? 'active' : '' }}"
                         >
-                            <i class="nav-icon fa fa-list-alt"></i>
+                            <i class="nav-icon fal fa-list-alt"></i>
                             <p>
                                 دسته بندی ها
                                 <i class="right fa fa-angle-left"></i>
@@ -167,7 +167,7 @@
                                 <a href="{{ route('categories.index') }}"
                                    class="nav-link {{Request::routeIs('categories.index') ? 'active' : '' }}"
                                 >
-                                    <i class="fa fa-circle-o nav-icon"></i>
+                                    <i class="fal fa-circle nav-icon"></i>
                                     <p>لیست دسته بندی ها</p>
                                 </a>
                             </li>
@@ -175,7 +175,7 @@
                                 <a href="{{ route('categories.create') }}"
                                    class="nav-link {{Request::routeIs('categories.create') ? 'active' : '' }}"
                                 >
-                                    <i class="fa fa-circle-o nav-icon"></i>
+                                    <i class="fal fa-circle nav-icon"></i>
                                     <p>افزودن دسته بندی</p>
                                 </a>
                             </li>
@@ -189,7 +189,7 @@
                         <a href="#"
                            class="nav-link {{Request::routeIs('brands.*') ? 'active' : '' }}"
                         >
-                            <i class="nav-icon fa fa-list"></i>
+                            <i class="nav-icon fal fa-list"></i>
                             <p>
                                 برند ها
                                 <i class="right fa fa-angle-left"></i>
@@ -200,7 +200,7 @@
                                 <a href="{{ route('brands.index') }}"
                                    class="nav-link {{Request::routeIs('brands.index') ? 'active' : '' }}"
                                 >
-                                    <i class="fa fa-circle-o nav-icon"></i>
+                                    <i class="fal fa-circle nav-icon"></i>
                                     <p>لیست برند ها</p>
                                 </a>
                             </li>
@@ -208,7 +208,7 @@
                                 <a href="{{ route('brands.create') }}"
                                    class="nav-link {{Request::routeIs('brands.create') ? 'active' : '' }}"
                                 >
-                                    <i class="fa fa-circle-o nav-icon"></i>
+                                    <i class="fal fa-circle nav-icon"></i>
                                     <p>افزودن برند</p>
                                 </a>
                             </li>
@@ -222,7 +222,7 @@
                         <a href="#"
                            class="nav-link {{ Request::routeIs('articles.*') ? 'active' : '' }}"
                         >
-                            <i class="nav-icon fa fa-newspaper-o"></i>
+                            <i class="nav-icon fal fa-newspaper"></i>
                             <p>
                                 مقالات
                                 <i class="right fa fa-angle-left"></i>
@@ -233,7 +233,7 @@
                                 <a href="{{ route('articles.index') }}"
                                    class="nav-link {{ Request::routeIs('articles.index') ? 'active' : '' }}"
                                 >
-                                    <i class="fa fa-circle-o nav-icon"></i>
+                                    <i class="fal fa-circle nav-icon"></i>
                                     <p>لیست مقالات</p>
                                 </a>
                             </li>
@@ -241,7 +241,7 @@
                                 <a href="{{ route('articles.create') }}"
                                    class="nav-link {{ Request::routeIs('articles.create') ? 'active' : '' }}"
                                 >
-                                    <i class="fa fa-circle-o nav-icon"></i>
+                                    <i class="fal fa-circle nav-icon"></i>
                                     <p>افزودن مقاله</p>
                                 </a>
                             </li>
@@ -254,7 +254,7 @@
                         <a href="#"
                            class="nav-link {{ Request::routeIs('products.*') ? 'active' : '' }}"
                         >
-                            <i class="nav-icon fa fa-cubes"></i>
+                            <i class="nav-icon fal fa-cubes"></i>
                             <p>
                                 محصولات
                                 <i class="right fa fa-angle-left"></i>
@@ -265,7 +265,7 @@
                                 <a href="{{ route('products.index') }}"
                                    class="nav-link {{ Request::routeIs('products.index') ? 'active' : '' }}"
                                 >
-                                    <i class="fa fa-circle-o nav-icon"></i>
+                                    <i class="fal fa-circle nav-icon"></i>
                                     <p>لیست محصولات</p>
                                 </a>
                             </li>
@@ -273,7 +273,7 @@
                                 <a href="{{ route('products.create') }}"
                                    class="nav-link {{ Request::routeIs('products.create') ? 'active' : '' }}"
                                 >
-                                    <i class="fa fa-circle-o nav-icon"></i>
+                                    <i class="fal fa-circle nav-icon"></i>
                                     <p>افزودن محصول</p>
                                 </a>
                             </li>
@@ -285,7 +285,7 @@
                         <a href="{{ route('attributes.index') }}"
                            class="nav-link {{ Request::routeIs('attributes.*') ? 'active' : '' }}"
                         >
-                            <i class="nav-icon fa fa-sitemap"></i>
+                            <i class="nav-icon fal fa-sitemap"></i>
                             <p>
                                 ویژگی های محصول
                             </p>
@@ -299,7 +299,7 @@
                         <a href="{{ route('faqs.index') }}"
                            class="nav-link {{ Request::routeIs('faqs.*') ? 'active' : '' }}"
                         >
-                            <i class="nav-icon fa fa-question-circle-o"></i>
+                            <i class="nav-icon fal fa-question-circle"></i>
                             <p>
                                 پرسشهای متداول
                             </p>
@@ -310,7 +310,7 @@
                         <a href="{{ route('top-navs.index') }}"
                            class="nav-link {{ Request::routeIs('top-navs.*') ? 'active' : '' }}"
                         >
-                            <i class="nav-icon fa fa-navicon"></i>
+                            <i class="nav-icon fal fa-bars"></i>
                             <p>
                                 ناوبری ایستا
                             </p>
@@ -321,7 +321,7 @@
                         <a href="{{ route('logos.index') }}"
                            class="nav-link {{ Request::routeIs('logos.*') ? 'active' : '' }}"
                         >
-                            <i class="nav-icon fa fa-cc"></i>
+                            <i class="nav-icon fab fa-creative-commons"></i>
                             <p>
                                 لوگو ها
                             </p>
@@ -332,7 +332,7 @@
                         <a href="{{ route('banners.index') }}"
                            class="nav-link {{ Request::routeIs('banners.*') ? 'active' : '' }}"
                         >
-                            <i class="nav-icon fa fa-file-image-o"></i>
+                            <i class="nav-icon fal fa-file-image"></i>
                             <p>
                                 بنر ها
                             </p>
@@ -343,7 +343,7 @@
                         <a href="{{ route('sliders.index') }}"
                            class="nav-link {{ Request::routeIs('sliders.*') ? 'active' : '' }}"
                         >
-                            <i class="nav-icon fa fa-sliders"></i>
+                            <i class="nav-icon fal fa-sliders-h"></i>
                             <p>
                                 اسلایدر ها
                             </p>
@@ -354,7 +354,7 @@
                         <a href="{{ route('footer-images.index') }}"
                            class="nav-link {{ Request::routeIs('footer-images.*') ? 'active' : '' }}"
                         >
-                            <i class="nav-icon fa fa-image"></i>
+                            <i class="nav-icon fal fa-image"></i>
                             <p>
                                 تصویر فوتر وبسایت
                             </p>
@@ -366,7 +366,7 @@
                         <a href="{{ route('admin.fm-frame') }}"
                            class="nav-link {{ Request::routeIs('admin.fm-frame') ? 'active' : '' }}"
                         >
-                            <i class="nav-icon fa fa-file-o"></i>
+                            <i class="nav-icon fal fa-file"></i>
                             <p>
                                 مدیریت فایل
                             </p>

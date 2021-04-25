@@ -20,8 +20,8 @@ class AppMailer
 
     public function sendTicketInformation($user, Ticket $ticket)
     {
-        $this->fromAddress = env('MAIL_FROM_ADDRESS');
-        $this->fromName = env('MAIL_FROM_NAME');
+        $this->fromAddress = config('mail.from.address');
+        $this->fromName = env('mail.from.name');
         $this->to = $user->email;
         $this->subject = "[آیدی تیکت: $ticket->uuid] $ticket->title";
         $this->view = 'mails.ticket_info';

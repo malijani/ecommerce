@@ -56,12 +56,13 @@
                 {{--COMMENT FORM ROW--}}
                 <div class="row bg-light-gray p-4 rounded">
                     <div class="col-12 text-center">
-                        <form action="{{ route('dashboard.tickets.store') }}" method="POST"
+                        <form action="{{ route('ticket-comments.store') }}" method="POST"
                               enctype="multipart/form-data">
                             @csrf
+                            <input type="hidden" value="{{ $ticket->id }}" name="ticket_id">
                             <div class="form-group row">
                                 <label for="message" class="col-form-label col-md-2 text-center">
-                                    <i class="fal fa-asterisk text-danger"></i>
+                                    <i class="fa fa-asterisk text-danger"></i>
                                     پاسخ
                                 </label>
                                 <div class="col-md-10">
@@ -101,56 +102,7 @@
 
                 {{--CONTENT ROW--}}
                 <div class="row mt-3">
-                    <div class="col-12 border rounded p-4 @if($ticket->user->isAdmin()) bg-grey-50 @endif">
-                        <div class="row align-items-center m-0 p-0">
-                            <div class="col-3 col-md-1">
-                                <img src="{{ asset('images/fallback/user.png') }}"
-                                     alt="{{ $ticket->user->full_name }}"
-                                     class="rounded-circle img-fluid img-bordered-sm"
-                                >
-                            </div>
-                            <div class="col-3">
-                                {{ $ticket->user->full_name }}
-                                @if($ticket->user->isAdmin())
-                                    <span class="badge badge-primary">ادمین</span>
-                                @endif
-                            </div>
-
-                            @if( $ticket->user->isAdmin())
-                                <div class="col-5 text-left">
-                                    {{ $ticket->user->contact_information }}
-                                </div>
-                            @endif
-
-                        </div>
-                        <hr>
-                        <div class="row px-4 py-2">
-                            <div class="col-12">
-                                {!! $ticket->message !!}
-                            </div>
-                        </div>
-
-                        <div class="row align-items-center px-3 py-1">
-
-                            @if(!is_null($ticket->file))
-                                <div class="col-4">
-                                    <a href="{{ route('ticket-files.show', $ticket->id) }}"
-                                       class="btn btn-light"
-                                    >
-                                        <i class="fa fa-download fa-2x align-middle"></i>
-                                        دانلود فایل
-                                    </a>
-                                </div>
-                            @endif
-                            <div class="col text-left">
-                    <span class="text-muted">
-                        ثبت شده در :
-                    {{ $ticket->created_at }}
-                    </span>
-                            </div>
-
-                        </div>
-                    </div>
+                    @include('partials.ticket_comments', ['ticket' => $ticket])
                 </div>
 
             </div>{{--CARD BODY--}}

@@ -54,19 +54,19 @@
                            class="btn {{ Request::routeIs('dashboard.profile.*') ? 'btn-secondary text-white' : 'btn-outline-secondary' }} w-95 my-2 font-weight-bolder"
                         >
                             <i class="fal fa-user-cog fa-2x align-middle px-2"></i>
-                            حساب کاربری
+                            پروفایل
                         </a>
                     </div>
                     @if(\Illuminate\Support\Facades\Route::has('logout'))
                         {{--logout--}}
                         <div class="user-control text-center">
                             <button
-                               id="logout"
-                               data-url="{{ route('logout') }}"
-                               class="btn btn-outline-secondary w-95 my-2 font-weight-bolder"
+                                id="logout"
+                                data-url="{{ route('logout') }}"
+                                class="btn btn-outline-secondary w-95 my-2 font-weight-bolder"
                             >
                                 <i class="fal fa-sign-out fa-2x align-middle px-2"></i>
-                                خروج از سیستم
+                                خروج
                             </button>
                         </div>
                     @endif
@@ -120,6 +120,7 @@
             });
         });
     </script>
+    @stack('scripts')
 @endsection
 
 

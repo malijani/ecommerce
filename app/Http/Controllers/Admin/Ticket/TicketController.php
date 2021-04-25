@@ -102,7 +102,7 @@ class TicketController extends Controller
      */
     public function show($id)
     {
-        $ticket = Ticket::query()->findOrFail($id);
+        $ticket = Ticket::query()->with('comments')->findOrFail($id);
         $title = 'مدیریت و پاسخگویی به تیکت '. $ticket->uuid;
         return response()->view('admin.ticket.show', [
             'title'=> $title,

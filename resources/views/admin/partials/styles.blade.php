@@ -1,6 +1,3 @@
-<!-- Font Awesome -->
-<link rel="stylesheet" href="{{ asset('adminrc/plugins/font-awesome/css/font-awesome.min.css') }}">
-
 <!-- Ionicons -->
 <link rel="stylesheet" href="{{ asset('adminrc/plugins/ionicons/css/ionicons.min.css') }}">
 
@@ -21,6 +18,8 @@
 <link rel="stylesheet" href="{{ asset('adminrc/dist/css/custom-style.css') }}">
 
 
+<!-- Font Awesome -->
 
-
+<link rel="stylesheet" href="{{ asset('adminrc/plugins/font-awesome-5/css/all.min.css') }}">
+<link rel="stylesheet" href="{{ asset('adminrc/plugins/font-awesome/css/font-awesome.min.css') }}">
 
