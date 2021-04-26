@@ -18,10 +18,39 @@
     <div class="container-fluid">
         <div class="mt-5 bg-white p-3 rounded text-center">
             <div class="row">
-                <div class="col-md-3 pt-0 pt-md-1">محصولات پیشنهادی</div>
-                <div class="col-md-3 pt-4 pt-md-1">نظرات کاربران</div>
+                <div class="col-md-3 pt-0 pt-md-1">
+                    محصولات پیشنهادی
+                    <div class="row">
+                    @foreach($footer_product_proposals as $product_propose)
+                        <div class="col-12">
+                        {{ $product_propose->title }}
+                        </div>
+                    @endforeach
+                    </div>
+                </div>
+
+                <div class="col-md-3 pt-4 pt-md-1">
+                    نظرات کاربران
+                    <div class="row">
+                        @foreach($footer_last_comments as $last_comment)
+                            <div class="col-12">
+                                {{ $last_comment->content }}
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+                <div class="col-md-3 pt-4 pt-md-1">
+                    جدید ترین مقالات
+                    <div class="row">
+                        @foreach($footer_last_articles as $last_article)
+                            <div class="col-12">
+                                {{ $last_article->title }}
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+                {{--TODO : ADD LICENSE CONTROLLER ADMIN--}}
                 <div class="col-md-3 pt-4 pt-md-1">مجوز ها</div>
-                <div class="col-md-3 pt-4 pt-md-1">جدید ترین مقالات</div>
             </div>
         </div>
     </div>
@@ -31,6 +60,7 @@
         {{--BRIEF OF WEBSITE--}}
         <div class="mt-5 bg-dark text-lime-a100 text-center p-3 font-weight-bolder rounded-top">
             <div class="row">
+                {{--TODO : MAKE FOOTER STATIC NAV CONTROLLER--}}
                 <div class="col-md-3 mt-0 mt-md-1">دارای مجوز وزارت صمت</div>
                 <div class="col-md-3 mt-3 mt-md-1">تماس بگیرید : 9103944579(+98)</div>
                 <div class="col-md-3 mt-3 mt-md-1">پردازش سفارشات ۷ روز هفته ۲۴ ساعت شبانه روز</div>
@@ -40,6 +70,7 @@
         {{--SERVICES AND SOCIAL MEDIAS--}}
         <div class="mt-0 bg-grey-300 text-center p-4 font-16">
             <div class="row">
+                {{--TODO : MAKE FOOTER DESCRIPTION TABS CONTROLLER--}}
                 <div class="col-md-3 mt-0 mt-md-1">
                     موضوع قابل نمایش
                 </div>

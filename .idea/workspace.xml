@@ -6,10 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="00f5ae84-d71d-47c5-aa01-f2581affa6d5" name="Default Changelist" comment="Minor changes of frontend + Product section in admin">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/Ticket/CommentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/Ticket/CommentController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/Ticket/TicketController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/Ticket/TicketController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/User/Dashboard/CommentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/User/Dashboard/CommentController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/ticket/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/ticket/index.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -177,7 +173,7 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$/public/adminrc/plugins" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
@@ -388,7 +384,8 @@
       <workItem from="1619246729318" duration="4529000" />
       <workItem from="1619264595425" duration="2414000" />
       <workItem from="1619315560492" duration="14591000" />
-      <workItem from="1619355402937" duration="2653000" />
+      <workItem from="1619355402937" duration="2765000" />
+      <workItem from="1619419670504" duration="1291000" />
     </task>
     <task id="LOCAL-00001" summary="Minor changes of frontend + Product section in admin">
       <created>1613451037291</created>
