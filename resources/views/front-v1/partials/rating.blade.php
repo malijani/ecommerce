@@ -1,21 +1,6 @@
 <div class="col-md-6 text-center" id="summary">
     <span class="align-middle"> رتبه : {{ (string)(((float)$model->ratingsAvg() * 100))/5  }}</span>
-    <div class="rating-average" title="میانگین رتبه : {{ (float)$model->ratingsAvg() }}">
-        <div class="back-stars">
-            <i class="fal fa-star" aria-hidden="true"></i>
-            <i class="fal fa-star" aria-hidden="true"></i>
-            <i class="fal fa-star" aria-hidden="true"></i>
-            <i class="fal fa-star" aria-hidden="true"></i>
-            <i class="fal fa-star" aria-hidden="true"></i>
-            <div class="front-stars" style="width: {{ (string)(((float)$model->ratingsAvg() * 100))/5 . '%' }}">
-                <i class="fal fa-star" aria-hidden="true"></i>
-                <i class="fal fa-star" aria-hidden="true"></i>
-                <i class="fal fa-star" aria-hidden="true"></i>
-                <i class="fal fa-star" aria-hidden="true"></i>
-                <i class="fal fa-star" aria-hidden="true"></i>
-            </div>
-        </div>
-    </div>
+    @include('front-v1.partials.rating_stars')
 </div>
 
 <div class="col-md-6 text-center mt-3">

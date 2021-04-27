@@ -5,6 +5,7 @@
 <head>
     <title>{{ $title ?? config('app.name') }}</title>
     @include('front-v1.partials.metas')
+    @yield('page-metas')
     @include('front-v1.partials.styles')
     @yield('page-styles')
 </head>
@@ -25,9 +26,6 @@
 @include('front-v1.partials.footer')
 
 @include('front-v1.partials.phone_nav')
-
-@include('front-v1.partials.cart')
-
 
 @include('front-v1.partials.back_to_top')
 

@@ -19,10 +19,16 @@ class Comment extends Model
         return $this->morphTo();
     }
 
+    public function product()
+    {
+        return $this->belongsTo(Product::class, 'commentable_id')->with('files');
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
 
     public function scopeActive($q)
     {

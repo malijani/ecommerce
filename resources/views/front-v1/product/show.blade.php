@@ -41,13 +41,7 @@
                 <h3>{{ $product->title }}</h3>
                 <div class="rating d-flex">
                     <p class="text-left mr-4">
-                        {{--TODO : IMPLEMENT RATING--}}
-                        <a href="#" class="mr-2">5.0</a>
-                        <a href="#"><span class="fa fa-star-o"></span></a>
-                        <a href="#"><span class="fa fa-star-o"></span></a>
-                        <a href="#"><span class="fa fa-star-o"></span></a>
-                        <a href="#"><span class="fa fa-star-o"></span></a>
-                        <a href="#"><span class="fa fa-star-o"></span></a>
+                        @include('front-v1.partials.rating_stars', ['model'=>$product])
                     </p>
                     <p class="text-left mr-4">
                         <a href="#" class="mr-2" style="color: #000;">100 <span style="color: #bbb;">رای</span></a>

@@ -2,6 +2,7 @@
     class="card mt-2 mb-3
         @if(isset($comment->user) && $comment->user->isAdmin()) bg-lightgrey @else bg-white @endif
         border px-3"
+    id="comment-{{ $comment->id }}"
 >
     <div class="col-12 mt-2 p-1  ">
         <div class="row align-items-center mt-2">

@@ -121,9 +121,9 @@
                             @endif
                             {{--SHOW TOTAL PRICE OF CART--}}
                             @if(session()->get('total'))
-                                <span class="">{{ number_format(session()->get('total')['final_price']) }} تومن</span>
+                                <span class="mr-2">تومن {{ number_format(session()->get('total')['final_price']) }}</span>
                             @else
-                                <span class="">0 تومن</span>
+                                <span class="mr-2">تومن 0</span>
                             @endif
                         </a>
                     </div>

@@ -5,11 +5,13 @@ namespace App\Providers;
 use App\Article;
 use App\Comment;
 use App\FooterImage;
+use App\License;
 use App\Logo;
 use App\Product;
 use App\TopNav;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
+use Nagy\LaravelRating\Models\Rating;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -56,7 +58,8 @@ class AppServiceProvider extends ServiceProvider
         View::share('footer_image', $footer_image);
 
         /*FOOTER PRODUCTS*/
-        $footer_product_proposals = Product::withoutTrashed()
+
+        $footer_product_proposals =  Product::withoutTrashed()
             ->where('status', 1)
             ->where('entity', '>', 0)
             ->where('visit', '>', 10)
@@ -64,15 +67,27 @@ class AppServiceProvider extends ServiceProvider
             ->where('origin', 1)
             ->orderByDesc('updated_at')
             ->limit(5)
-            ->get();
+            ->get()
+            ->filter(function($item){
+                return $item->ratingsAvg() > 4;
+            });
         View::share('footer_product_proposals', $footer_product_proposals);
 
         /*LAST COMMENTS*/
         $footer_last_comments = Comment::withoutTrashed()
+            ->where('commentable_type', 'App\\Product')
+            ->with('product:id,title,title_en')
             ->where('status', 1)
             ->limit(5)
             ->orderByDesc('updated_at')
-            ->get();
+            ->get()
+            ->filter(function($item){
+               if(isset($item->user)){
+                   return $item->user->isNormal();
+               } else {
+                   return $item;
+               }
+            });
         View::share('footer_last_comments', $footer_last_comments);
 
         /*LAST ARTICLES*/
@@ -83,6 +98,7 @@ class AppServiceProvider extends ServiceProvider
             ->get();
         View::share('footer_last_articles', $footer_last_articles);
 
+         /*$footer_licenses = License::query()->get();*/
 
     }
 }

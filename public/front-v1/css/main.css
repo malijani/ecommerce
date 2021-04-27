@@ -116,6 +116,20 @@ nav > li > a {
 }
 /**************/
 
+
+/**************/
+/***FOOTER IMAGES****/
+/*******************/
+.img-bordered-sm {
+    border: 2px solid #adb5bd;
+    padding: 2px;
+}
+.img-circle {
+    border-radius: 50%;
+}
+/*******************/
+
+
 /*********************/
 /*** SEARCH RESULT ***/
 /*********************/
@@ -261,7 +275,9 @@ a:hover {
     bottom: 0;
     z-index: 2;
 }
-
+.font-8 {
+    font-size : 8px !important;
+}
 .font-10 {
     font-size: 10px !important;
 }

@@ -1,5 +1,4 @@
-<div class="col-12 text-center border-bottom py-2">
-
+<div class="col-12 text-center border-bottom py-2" id="comments">
     <span class="fa-stack fa-lg" title="تعداد نظرات">
         <i class="fal fa-comment-alt fa-stack-2x align-middle"></i>
         <span class="fa-stack-1x text-center align-middle">{{ $model->comments->count() }}</span>

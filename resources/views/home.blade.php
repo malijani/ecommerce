@@ -5,16 +5,8 @@
 @endsection
 @section('content')
 
-    {{--        {{ \Diglactic\Breadcrumbs\Breadcrumbs::render('home') }}--}}
-    {{--TODO : MEGA MENU--}}
-    {{--TODO : ADD CAROUSEL HERE!--}}
-    {{--TODO : MINIMAL FAQ GOES HERE--}}
-    {{--TODO : CATEGORIES GOES HERE--}}
-    {{--TODO : SUGGESTS GOES HERE--}}
     {{--TODO : BRANDS PAGE DIRECTION--}} {{--TODO : SHOW MAIN COMPANY --}}
-    {{--TODO : NEW PRODUCTS, MOST ORDERED--}}
-    {{--TODO : WAY OF PRODUCT SELLING--}}
-    <div class="container my-3">
+    <div class="container-sm container my-3">
         {{--SHOW BANNER--}}
         @if(isset($banner))
             <div class="row my-3">
