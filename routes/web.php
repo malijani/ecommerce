@@ -57,6 +57,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web', 'auth', 'auth.admin']
     Route::resource('tickets', 'Admin\Ticket\TicketController');
     Route::resource('ticket-comments', 'Admin\Ticket\CommentController');
 
+    /*SOCIAL MEDIA*/
+    Route::resource('social-medias', 'Admin\SocialMediaController');
 
     /*PAGES*/
     Route::resource('faqs', 'Admin\FaqController')->except(['show']);

@@ -293,7 +293,17 @@
 
 
 
-
+                    {{--SOCIAL MEDIA--}}
+                    <li class="nav-item">
+                        <a href="{{ route('social-medias.index') }}"
+                           class="nav-link {{ Request::routeIs('social-medias.*') ? 'active' : '' }}"
+                        >
+                            <i class="nav-icon fal fa-chart-network"></i>
+                            <p>
+                                صفحات مجازی
+                            </p>
+                        </a>
+                    </li>
 
                     {{--FAQ--}}
                     <li class="nav-item">
