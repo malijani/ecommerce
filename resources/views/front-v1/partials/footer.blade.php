@@ -1,6 +1,6 @@
 <footer class="mt-5 mt-sm-3 p-4 p-sm-2 font-14">
 
-    {{--LICENSES--}}
+    {{--FOOTER IMAGE--}}
     <div class="container">
         <div class="row justify-content-center rounded">
             <div class="col-12 text-center">
@@ -18,7 +18,7 @@
     <div class="container-fluid">
         <div class="mt-5 bg-white p-3 rounded text-center">
             <div class="row">
-                <div class="col-md-3 pt-0 pt-md-1">
+                <div class="col-md mt-3 mt-md-0 pt-md-1">
                     <h4 class="font-16 font-weight-bolder">
                         محصولات پیشنهادی
                     </h4>
@@ -30,7 +30,7 @@
                                     <div class="row">
                                         <div class="col-4">
                                             <a href="{{ $product_proposal->getLink() }}">
-                                                <img src="{{ $product_proposal->files()->defaultFile()->link }}"
+                                                <img src="{{ asset($product_proposal->files()->defaultFile()->link) }}"
                                                      alt="{{ $product_proposal->files()->defaultFile()->title }}"
                                                      class="img img-fluid rounded"
                                                 >
@@ -41,7 +41,8 @@
                                                class="text-dark"
                                             >
                                                 <p class="font-16 font-weight-bolder">
-                                                    {{ $product_proposal->title }} | {{ str_replace('-', ' ', $product_proposal->title_en) }}
+                                                    {{ $product_proposal->title }}
+                                                    | {{ str_replace('-', ' ', $product_proposal->title_en) }}
                                                 </p>
                                                 <p class="font-16">
                                                     {{ number_format($product_proposal->discount_price) }} تومن
@@ -65,7 +66,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-3 pt-4 pt-md-1">
+                <div class="col-md mt-3 mt-md-0 pt-4 pt-md-1">
                     <h4 class="font-16 font-weight-bolder">
                         نقد کاربران
                     </h4>
@@ -116,7 +117,7 @@
                         @endif
                     </div>
                 </div>
-                <div class="col-md-3 pt-4 pt-md-1">
+                <div class="col-md mt-3 mt-md-0 pt-4 pt-md-1">
                     <h4 class="font-16 font-weight-bolder">
                         جدید ترین مقالات
                     </h4>
@@ -153,24 +154,32 @@
                         @endif
                     </div>
                 </div>
-                {{--TODO : ADD LICENSE CONTROLLER ADMIN--}}
-                <div class="col-md-3 pt-4 pt-md-1">
+                <div class="col-md mt-3 mt-md-0 pt-4 pt-md-1">
                     <h4 class="font-16 font-weight-bolder">
                         تاییدیه و مجوز ها
                     </h4>
                     <hr class="w-75">
                     <div class="row justify-content-center align-items-center">
-                      {{--  @if($footer_licenses->count()>0)
-                            @foreach($footer_licenses as $footer_license)
-                                {{ $footer_license->title }}
+                        @if($footer_licenses->count()>0)
+
+                            @foreach($footer_licenses->links as $footer_license_link)
+                                <div class="col-12 mt-3">
+                                    <a href="{{ $footer_license_link->link }}"
+                                       class="text-dark font-weight-bolder font-14"
+                                    >
+                                        {{ $footer_license_link->title }}
+                                    </a>
+                                </div>
+
                             @endforeach
+
                         @else
                             <div class="col-12">
                                 <p class="font-16 font-weight-bolder">
                                     مجوز یا تاییدیه ای جهت نمایش وجود ندارد!
                                 </p>
                             </div>
-                        @endif--}}
+                        @endif
                     </div>
                 </div>
             </div>
@@ -179,28 +188,63 @@
 
     {{--PROPOSALS--}}
     <div class="container-fluid">
-        {{--BRIEF OF WEBSITE--}}
-        <div class="mt-5 bg-dark text-lime-a100 text-center p-3 font-weight-bolder rounded-top">
-            <div class="row">
-                {{--TODO : MAKE FOOTER STATIC NAV CONTROLLER--}}
-                <div class="col-md-3 mt-0 mt-md-1">دارای مجوز وزارت صمت</div>
-                <div class="col-md-3 mt-3 mt-md-1">تماس بگیرید : 9103944579(+98)</div>
-                <div class="col-md-3 mt-3 mt-md-1">پردازش سفارشات ۷ روز هفته ۲۴ ساعت شبانه روز</div>
-                <div class="col-md-3 mt-3 mt-md-1">ارسال به سراسر کشور</div>
+        {{--FOOTER NAVBAR--}}
+        <div class="mt-5 bg-dark text-center p-3 font-weight-bolder rounded-top">
+            <div class="row align-items-center">
+                @if(isset($footer_static_navs->links) && $footer_static_navs->links->count() > 0)
+                @foreach($footer_static_navs->links as $footer_nav_link)
+                    <div class="col-12 col-md @if($loop->first) mt-0 @else mt-3 mt-md-0 @endif">
+                        <a href="{{ $footer_nav_link->link }}"
+                           class="text-lime-a100"
+                        >
+                            {{ $footer_nav_link->title }}
+                        </a>
+                    </div>
+                @endforeach
+                @else
+                    <div class="col-12">
+                        <p class="text-lime-a100 mt-3">
+                            تمامی حقوق مادی و معنوی این وبسایت متعلق به {{ config('app.name') }} می‌باشد و هرگونه سوء استفاده تحت پیگرد قانونی قرار میگیرد؛ {{ config('app.name') }} هیچ شعبه دیگری ندارد.
+                        </p>
+                    </div>
+                @endif
             </div>
         </div>
         {{--SERVICES AND SOCIAL MEDIAS--}}
         <div class="mt-0 bg-grey-300 text-center p-4 font-16">
-            <div class="row">
-                {{--TODO : MAKE FOOTER DESCRIPTION TABS CONTROLLER--}}
-                <div class="col-md-3 mt-0 mt-md-1">
-                    موضوع قابل نمایش
-                </div>
-                <div class="col-md-3 mt-3 mt-md-1">
-                    خدمات {{ config('app.name') }}
-                </div>
-                <div class="col-md-6 mt-3 mt-md-1">
-                    شبکه های اجتماعی
+            <div class="row mb-3">
+                @if($footer_items->count()>0)
+                    @foreach($footer_items as $footer_item)
+                        @if($footer_item->links->count() > 0)
+                            <div class="col-12 col-md @if($loop->first) mt-0 @else mt-3 @endif mt-md-1">
+                                <h5>
+                                    {{ $footer_item->title }}
+                                </h5>
+                                <hr class="w-50">
+                                <div class="row">
+
+                                    @foreach($footer_item->links as $footer_item_link)
+                                        <div class="col-12 mt-3">
+                                            <a href="{{ $footer_item_link->link }}"
+                                               class="text-dark"
+                                            >
+                                                {{ $footer_item_link->title }}
+                                            </a>
+                                        </div>
+                                    @endforeach
+
+                                </div>
+                            </div>
+                        @endif
+                    @endforeach
+                @endif
+
+                {{--SOCIAL MEDIA--}}
+                <div class="col-md-4 mt-3 mt-md-1" id="social_medias">
+                    <h5>
+                        شبکه های اجتماعی
+                    </h5>
+                    <hr class="w-50">
                     <div>
                         <i class="fa fa-instagram"></i>
                         <i class="fa fa-telegram"></i>

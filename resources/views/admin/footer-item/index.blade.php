@@ -70,7 +70,16 @@
         <!-- DETAILS box -->
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">لیست آیتم های فوتر</h3>
+                <div class="border border-info p-4 rounded">
+                    <p>مقادیر با عناوین انگلیسی زیر را حتماً ثبت کنید:</p>
+                    <ul class="pr-4">
+                        <li>licenses</li>
+                        <li>static-nav</li>
+                    </ul>
+                </div>
+
+                <h3 class="card-title mt-1">لیست آیتم های فوتر</h3>
+
             </div>
             <div class="card-body">
                 <div class="table-responsive" id="table-content">
@@ -182,12 +191,11 @@
     <script type="text/javascript">
 
 
-
         $(document).ready(function () {
 
 
             let destroy_button = $('.destroy-button');
-            destroy_button.on('click', function(){
+            destroy_button.on('click', function () {
                 let destroy_url = $(this).attr('data-url');
                 let id = $(this).attr('data-id');
                 swal({

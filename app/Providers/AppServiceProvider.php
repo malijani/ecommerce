@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Article;
 use App\Comment;
 use App\FooterImage;
+use App\FooterItem;
 use App\License;
 use App\Logo;
 use App\Product;
@@ -98,7 +99,20 @@ class AppServiceProvider extends ServiceProvider
             ->get();
         View::share('footer_last_articles', $footer_last_articles);
 
-         /*$footer_licenses = License::query()->get();*/
+        /*ITEMS OF OPTIONAL AND STATIC LINKS*/
+         $footer_licenses = FooterItem::query()->item('licenses');
+         View::share('footer_licenses', $footer_licenses);
+
+         $footer_static_navs = FooterItem::query()->item('static-nav');
+         View::share('footer_static_navs' , $footer_static_navs);
+
+         $footer_items = FooterItem::query()
+             ->where('status', 1)
+             ->get()
+             ->filter(function($item){
+                 return !in_array($item->title_en, ['licenses', 'static-nav']);
+             });
+         View::share('footer_items', $footer_items);
 
     }
 }

@@ -18,6 +18,6 @@ class FooterLink extends Model
 
     public function item()
     {
-        return $this->belongsToMany(FooterItem::class, 'item_id');
+        return $this->belongsTo(FooterItem::class, 'item_id');
     }
 }

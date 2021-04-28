@@ -20,4 +20,13 @@ class FooterItem extends Model
     {
         return $this->hasMany(FooterLink::class, 'item_id');
     }
+
+    public function scopeItem($q, $column)
+    {
+        return $q
+            ->with('links')
+            ->where('status', 1)
+            ->where('title_en', '=' , $column)
+            ->first();
+    }
 }
