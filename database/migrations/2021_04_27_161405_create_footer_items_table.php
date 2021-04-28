@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLicensesTable extends Migration
+class CreateFooterItemsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateLicensesTable extends Migration
      */
     public function up()
     {
-        Schema::create('licenses', function (Blueprint $table) {
+        Schema::create('footer_items', function (Blueprint $table) {
             $table->id();
 
             $table->unsignedBigInteger('user_id');
@@ -21,7 +21,7 @@ class CreateLicensesTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('CASCADE');
 
             $table->string('title', 70);
-            $table->string('link', 100);
+            $table->string('title_en', 70);
             $table->unsignedTinyInteger('status')->default(0);
 
             $table->timestamps();
@@ -35,6 +35,6 @@ class CreateLicensesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('licenses');
+        Schema::dropIfExists('footer_items');
     }
 }

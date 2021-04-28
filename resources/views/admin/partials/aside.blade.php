@@ -249,10 +249,10 @@
                     </li>
 
                     <li
-                        class="nav-item has-treeview {{ Request::routeIs('products.*') ? 'menu-open' : '' }}"
+                        class="nav-item has-treeview {{ (Request::routeIs('products.*')||Request::routeIs('attributes.*')) ? 'menu-open' : '' }}"
                     >
                         <a href="#"
-                           class="nav-link {{ Request::routeIs('products.*') ? 'active' : '' }}"
+                           class="nav-link {{ (Request::routeIs('products.*')||Request::routeIs('attributes.*')) ? 'active' : '' }}"
                         >
                             <i class="nav-icon fal fa-cubes"></i>
                             <p>
@@ -278,19 +278,20 @@
                                 </a>
                             </li>
 
+                            <li class="nav-item">
+                                <a href="{{ route('attributes.index') }}"
+                                   class="nav-link {{ Request::routeIs('attributes.*') ? 'active' : '' }}"
+                                >
+                                    <i class="nav-icon fal fa-sitemap"></i>
+                                    <p>
+                                        ویژگی های محصول
+                                    </p>
+                                </a>
+                            </li>
                         </ul>
                     </li>
 
-                    <li class="nav-item">
-                        <a href="{{ route('attributes.index') }}"
-                           class="nav-link {{ Request::routeIs('attributes.*') ? 'active' : '' }}"
-                        >
-                            <i class="nav-icon fal fa-sitemap"></i>
-                            <p>
-                                ویژگی های محصول
-                            </p>
-                        </a>
-                    </li>
+
 
 
 
@@ -350,17 +351,46 @@
                         </a>
                     </li>
 
-                    <li class="nav-item">
-                        <a href="{{ route('footer-images.index') }}"
-                           class="nav-link {{ Request::routeIs('footer-images.*') ? 'active' : '' }}"
+                    <li
+                        class="nav-item has-treeview {{ (Request::routeIs('footer-items.*')||Request::routeIs('footer-links.*') || Request::routeIs('footer-images.*')) ? 'menu-open' : '' }}"
+                    >
+                        <a href="#"
+                           class="nav-link {{ (Request::routeIs('footer-items.*')||Request::routeIs('footer-links.*') || Request::routeIs('footer-images.*')) ? 'active' : '' }}"
                         >
-                            <i class="nav-icon fal fa-image"></i>
+                            <i class="nav-icon fal fa-info"></i>
                             <p>
-                                تصویر فوتر وبسایت
+                                مدیریت فوتر
+                                <i class="right fa fa-angle-left"></i>
                             </p>
                         </a>
-                    </li>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ route('footer-images.index') }}"
+                                   class="nav-link {{ Request::routeIs('footer-images.*') ? 'active' : '' }}"
+                                >
+                                    <i class="fal fa-picture-o nav-icon"></i>
+                                    <p>تصاویر فوتر</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('footer-items.index') }}"
+                                   class="nav-link {{ Request::routeIs('footer-items.*') ? 'active' : '' }}"
+                                >
+                                    <i class="fal fa-circle nav-icon"></i>
+                                    <p>سردسته های فوتر</p>
+                                </a>
+                            </li>
 
+                            <li class="nav-item">
+                                <a href="{{ route('footer-links.index') }}"
+                                   class="nav-link {{ Request::routeIs('footer-links.*') ? 'active' : '' }}"
+                                >
+                                    <i class="fal fa-circle nav-icon"></i>
+                                    <p>لینک های فوتر</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
 
                     <li class="nav-item">
                         <a href="{{ route('admin.fm-frame') }}"

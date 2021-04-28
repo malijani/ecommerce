@@ -69,6 +69,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web', 'auth', 'auth.admin']
     Route::resource('banners', 'Admin\BannerController')->except(['show']);
     Route::resource('sliders', 'Admin\SliderController')->except('show');
     Route::resource('footer-images', 'Admin\FooterImageController')->except(['show']);
+    Route::resource('footer-items', 'Admin\FooterItemController')->except(['create', 'show', 'edit']);
+    Route::resource('footer-links', 'Admin\FooterLinkController');
 
     // FILE MANAGER
     Route::view('files', 'admin.file-manager.index')->name('admin.fm-frame');
