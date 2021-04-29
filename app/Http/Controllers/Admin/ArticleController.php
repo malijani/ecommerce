@@ -102,7 +102,7 @@ class ArticleController extends Controller
      */
     public function show($id)
     {
-        // TODO : IMPLEMENT SHOW FOR ARTICLES
+        //
     }
 
     /**

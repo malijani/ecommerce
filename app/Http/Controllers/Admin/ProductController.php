@@ -85,10 +85,7 @@ class ProductController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        /*TODO : LOGIC OF SAVING POST WITH ATTRIBUTES*/
-
-
-        $request->validate([
+         $request->validate([
             /*FILES*/
             'file.title' => ['required', 'array', 'min:1','max:6'],
             'file.file' => ['required', 'array', 'min:1', 'max:6'],

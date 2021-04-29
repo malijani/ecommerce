@@ -9,6 +9,7 @@ use App\FooterItem;
 use App\License;
 use App\Logo;
 use App\Product;
+use App\SocialMedia;
 use App\TopNav;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
@@ -113,6 +114,12 @@ class AppServiceProvider extends ServiceProvider
                  return !in_array($item->title_en, ['licenses', 'static-nav']);
              });
          View::share('footer_items', $footer_items);
+
+        /*SOCIAL MEDIA*/
+        $social_medias = SocialMedia::query()
+            ->where('status', 1)
+            ->get();
+        View::share('social_medias', $social_medias);
 
     }
 }

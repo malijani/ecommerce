@@ -192,19 +192,20 @@
         <div class="mt-5 bg-dark text-center p-3 font-weight-bolder rounded-top">
             <div class="row align-items-center">
                 @if(isset($footer_static_navs->links) && $footer_static_navs->links->count() > 0)
-                @foreach($footer_static_navs->links as $footer_nav_link)
-                    <div class="col-12 col-md @if($loop->first) mt-0 @else mt-3 mt-md-0 @endif">
-                        <a href="{{ $footer_nav_link->link }}"
-                           class="text-lime-a100"
-                        >
-                            {{ $footer_nav_link->title }}
-                        </a>
-                    </div>
-                @endforeach
+                    @foreach($footer_static_navs->links as $footer_nav_link)
+                        <div class="col-12 col-md @if($loop->first) mt-0 @else mt-3 mt-md-0 @endif">
+                            <a href="{{ $footer_nav_link->link }}"
+                               class="text-lime-a100"
+                            >
+                                {{ $footer_nav_link->title }}
+                            </a>
+                        </div>
+                    @endforeach
                 @else
                     <div class="col-12">
                         <p class="text-lime-a100 mt-3">
-                            تمامی حقوق مادی و معنوی این وبسایت متعلق به {{ config('app.name') }} می‌باشد و هرگونه سوء استفاده تحت پیگرد قانونی قرار میگیرد؛ {{ config('app.name') }} هیچ شعبه دیگری ندارد.
+                            تمامی حقوق مادی و معنوی این وبسایت متعلق به {{ config('app.name') }} می‌باشد و هرگونه سوء
+                            استفاده تحت پیگرد قانونی قرار میگیرد؛ {{ config('app.name') }} هیچ شعبه دیگری ندارد.
                         </p>
                     </div>
                 @endif
@@ -246,10 +247,17 @@
                     </h5>
                     <hr class="w-50">
                     <div>
-                        <i class="fa fa-instagram"></i>
-                        <i class="fa fa-telegram"></i>
-                        <i class="fa fa-facebook"></i>
-                        <i class="fa fa-linkedin"></i>
+                        @if(isset($social_medias) && $social_medias->count() > 1)
+                            @foreach($social_medias as $social_media)
+                                <a target="_blank"
+                                   href="{{ $social_media->link }}"
+                                   title="{{ $social_media->title }}"
+                                   class="text-dark mx-1"
+                                >
+                                    <i class="fab fa-{{ $social_media->icon }} fa-2x align-middle"></i>
+                                </a>
+                            @endforeach
+                        @endif
                     </div>
                 </div>
             </div>

@@ -43,10 +43,8 @@
                                 <td class="align-middle">{{ $social_media->id }}</td>
                                 {{--SHOW ICON--}}
                                 <td class="align-middle">
-                                    <i class="fal fa-{{ $social_media->icon }}"></i>
+                                    <i class="fab fa-2x fa-{{ $social_media->icon }}"></i>
                                 </td>
-                                {{--SHOW ITEM--}}
-                                <td class="align-middle">{{ $social_media->item->title }}</td>
                                 {{--SHOW TITLE--}}
                                 <td class="align-middle text-center">
                                     {{ $social_media->title }}
@@ -59,12 +57,12 @@
                                 <td class="align-middle">
                                     <img src="{{ asset($social_media->side_image) }}"
                                          alt="تصویر کوچک شبکه اجتماعی"
-                                         class="img img-fluid img-circle img-bordered-sm"
+                                         class="img img-fluid rounded w-25 h-auto"
                                     >
                                     <hr>
                                     <img src="{{ asset($social_media->banner_image) }}"
                                          alt="تصویر بزرگ شبکه اجتماعی"
-                                         class="img img-fluid rounded"
+                                         class="img img-fluid rounded w-25 h-auto"
                                     >
                                 </td>
                                 {{--SHOW STATUS--}}
