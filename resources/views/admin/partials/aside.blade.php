@@ -362,10 +362,10 @@
                     </li>
 
                     <li
-                        class="nav-item has-treeview {{ (Request::routeIs('footer-items.*')||Request::routeIs('footer-links.*') || Request::routeIs('footer-images.*')) ? 'menu-open' : '' }}"
+                        class="nav-item has-treeview {{ (Request::routeIs('footer-items.*')||Request::routeIs('footer-links.*') || Request::routeIs('footer-images.*') || Request::routeIs('footer-texts.*') || Request::routeIs('footer-licenses.*')) ? 'menu-open' : '' }}"
                     >
                         <a href="#"
-                           class="nav-link {{ (Request::routeIs('footer-items.*')||Request::routeIs('footer-links.*') || Request::routeIs('footer-images.*')) ? 'active' : '' }}"
+                           class="nav-link {{ (Request::routeIs('footer-items.*')||Request::routeIs('footer-links.*') || Request::routeIs('footer-images.*') || Request::routeIs('footer-texts.*') || Request::routeIs('footer-licenses.*')) ? 'active' : '' }}"
                         >
                             <i class="nav-icon fal fa-info"></i>
                             <p>
@@ -397,6 +397,27 @@
                                 >
                                     <i class="fal fa-circle nav-icon"></i>
                                     <p>لینک های فوتر</p>
+                                </a>
+                            </li>
+
+
+
+                            <li class="nav-item">
+                                <a href="{{ route('footer-texts.index') }}"
+                                   class="nav-link {{ Request::routeIs('footer-texts.*') ? 'active' : '' }}"
+                                >
+                                    <i class="fal fa-circle nav-icon"></i>
+                                    <p>متن های فوتر</p>
+                                </a>
+                            </li>
+
+
+                            <li class="nav-item">
+                                <a href="{{ route('footer-licenses.index') }}"
+                                   class="nav-link {{ Request::routeIs('footer-licenses.*') ? 'active' : '' }}"
+                                >
+                                    <i class="fal fa-circle nav-icon"></i>
+                                    <p>مجوز های فوتر</p>
                                 </a>
                             </li>
                         </ul>

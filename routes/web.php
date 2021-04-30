@@ -70,9 +70,13 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web', 'auth', 'auth.admin']
     Route::resource('logos', 'Admin\LogoController')->except(['show']);
     Route::resource('banners', 'Admin\BannerController')->except(['show']);
     Route::resource('sliders', 'Admin\SliderController')->except('show');
+
+    /*FOOTER CONTROL*/
     Route::resource('footer-images', 'Admin\FooterImageController')->except(['show']);
     Route::resource('footer-items', 'Admin\FooterItemController')->except(['create', 'show', 'edit']);
     Route::resource('footer-links', 'Admin\FooterLinkController');
+    Route::resource('footer-texts', 'Admin\FooterTextController');
+    Route::resource('footer-licenses', 'Admin\FooterLicenseController');
 
     // FILE MANAGER
     Route::view('files', 'admin.file-manager.index')->name('admin.fm-frame');

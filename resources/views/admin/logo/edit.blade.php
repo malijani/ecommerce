@@ -16,7 +16,7 @@
             <!-- /.card-header -->
             <div class="card-body">
                 <!-- form start -->
-                <form class="form" action="{{ route('logos.update', $logo->id) }}" method="POST" enctype="multipart/form-data">
+                <form class="form" action="{{ route('logos.update', $website_logo->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     {{ method_field('PUT') }}
 
@@ -37,7 +37,7 @@
                                        title="مقدار دهی الزامی"
                                        minlength="2"
                                        maxlength="70"
-                                       value="{{ old('pic_alt') ?? $logo->pic_alt }}"
+                                       value="{{ old('pic_alt') ?? $website_logo->pic_alt }}"
                                        required
                                 >
                                 @include('partials.form_error', ['input'=>'pic_alt'])
@@ -70,8 +70,8 @@
                     <div class="col-md-12">{{--PREVIEW PIC ONLY--}}
                         <div class="form-group row justify-content-center">
                             <div class="col-md-12 text-center">{{--IMG--}}
-                                <img src="{{asset($logo->pic)}}"
-                                     alt="{{ $logo->pic_alt }}"
+                                <img src="{{asset($website_logo->pic)}}"
+                                     alt="{{ $website_logo->pic_alt }}"
                                      class="preview img rounded align-middle w-50"
                                      id="preview"
                                 >

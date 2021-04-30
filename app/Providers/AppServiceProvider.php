@@ -6,6 +6,8 @@ use App\Article;
 use App\Comment;
 use App\FooterImage;
 use App\FooterItem;
+use App\FooterLicense;
+use App\FooterText;
 use App\License;
 use App\Logo;
 use App\Product;
@@ -121,5 +123,13 @@ class AppServiceProvider extends ServiceProvider
             ->get();
         View::share('social_medias', $social_medias);
 
+
+        /*FOOTER TEXT*/
+        $footer_text_intro = FooterText::query()->where('status', 1)->first();
+        View::share('footer_text_intro', $footer_text_intro);
+
+        /*FOOTER LICENSE IMAGES*/
+        $footer_license_images = FooterLicense::query()->where('status', 1)->get();
+        View::share('footer_license_images', $footer_license_images);
     }
 }

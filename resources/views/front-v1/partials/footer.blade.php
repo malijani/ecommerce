@@ -213,7 +213,7 @@
         </div>
         {{--SERVICES AND SOCIAL MEDIAS--}}
         <div class="mt-0 bg-grey-300 text-center p-4 font-16">
-            <div class="row mb-3">
+            <div class="row">
                 @if($footer_items->count()>0)
                     @foreach($footer_items as $footer_item)
                         @if($footer_item->links->count() > 0)
@@ -241,7 +241,7 @@
                 @endif
 
                 {{--SOCIAL MEDIA--}}
-                <div class="col-md-4 mt-3 mt-md-1" id="social_medias">
+                <div class="col-md-4 mt-5 mt-md-1" id="social_medias">
                     <h5>
                         شبکه های اجتماعی
                     </h5>
@@ -262,6 +262,35 @@
                 </div>
             </div>
         </div>
+        {{--TEXT AND LICENSE IMAGES--}}
+        @if(isset($footer_text_intro) || isset($footer_license_images))
+            <div class="mt-0 p-3 mb-0 bg-grey-50">
+                <div class="row align-items-center">
+                    @if(isset($footer_license_images))
+                        <div class="col text-center">
+                            <div class="row">
+                                @foreach($footer_license_images as $footer_license_image)
+                                    <div class="col-md-12 col p-md-3">
+                                        <a href="{{ $footer_license_image->link }}"
+                                           title="{{ $footer_license_image->title }}"
+                                        >
+                                            <img src="{{ asset($footer_license_image->image) }}"
+                                                 alt="{{ $footer_license_image->title }}">
+                                        </a>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endif
+                    @if(isset($footer_text_intro))
+                        <div class="@if(isset($footer_license_images)) col-md-6 offset-md-2 @else col-md-8 mx-auto @endif text-center text-md-right p-3 mt-3 mt-md-0">
+                            <h4 class="mb-2">{{ $footer_text_intro->title }}</h4>
+                            {!! $footer_text_intro->content !!}
+                        </div>
+                    @endif
+                </div>
+            </div>
+        @endif
         {{--COPYRIGHT--}}
         <div class="mt-0 bg-awesome text-center p-2  text-lime-a100 rounded-bottom">
             <div class="row align-items-center">

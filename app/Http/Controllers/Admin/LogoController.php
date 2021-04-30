@@ -106,7 +106,7 @@ class LogoController extends Controller
         $logo = Logo::withoutTrashed()->findOrFail($id);
         $title = "بروز رسانی لوگو شماره  " . $logo->id;
         return response()->view('admin.logo.edit', [
-            'logo' => $logo,
+            'website_logo' => $logo,
             'title' => $title,
         ]);
     }

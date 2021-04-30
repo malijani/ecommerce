@@ -5,7 +5,7 @@
 @endsection
 
 @section('nav-buttons')
-    <a href="{{ route('logos.create') }}" role="button" class="btn btn-lg btn-outline-primary">
+    <a href="{{ route('footer-texts.create') }}" role="button" class="btn btn-lg btn-outline-primary">
         <i class="fa fa-plus-square"></i>
     </a>
 @endsection
@@ -16,50 +16,46 @@
         <!-- DETAILS box -->
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">لیست لوگو ها</h3>
+                <h3 class="card-title">لیست متن های فوتر</h3>
             </div>
             <div class="card-body">
                 <div class="table-responsive" id="table-content">
 
-                    <table class="table table-striped table-bordered table-hover" id="datatable-attributes">
+                    <table class="table table-striped table-bordered table-hover" id="datatable-footer-texts">
                         <thead>
                         <tr class="text-center">
                             <td>شماره</td>
+                            <td>عنوان</td>
+                            <td>متن</td>
                             <td>وضعیت</td>
-                            <td>تصویر</td>
-                            <td>متن جایگزین</td>
                             <td>عملیات</td>
                         </tr>
                         </thead>
 
                         <tbody>
 
-                        @foreach($logos as $website_logo)
-                            <tr class="text-center" id="data-{{$website_logo->id}}">
+                        @foreach($footer_texts as $footer_text)
+                            <tr class="text-center" id="data-{{$footer_text->id}}">
                                 {{--SHOW ID--}}
-                                <td class="align-middle">{{ $website_logo->id }}</td>
+                                <td class="align-middle">{{ $footer_text->id }}</td>
+
+                                {{--SHOW TITLE--}}
+                                <td class="align-middle text-center">
+                                    {{ $footer_text->title }}
+                                </td>
+                                {{--SHOW CONTENT--}}
+                                <td class="align-middle text-center">
+                                    {{ $footer_text->limit_content }}
+                                </td>
                                 {{--SHOW STATUS--}}
                                 <td class="align-middle">
-                                    @if($website_logo->status === 1)
+                                    @if($footer_text->status === 1)
                                         <i class="fa fa-2x fa-check-square-o text-success"></i>
-                                    @elseif($website_logo->status===0)
+                                    @elseif($footer_text->status===0)
                                         <i class="fa fa-2x fa-minus-square-o text-danger"></i>
                                     @else
                                         نامشخص
                                     @endif
-                                </td>
-                                {{--SHOW PIC--}}
-                                <td class="align-middle text-center w-25">
-                                        <span class="hide">{{ $website_logo->pic_alt }}</span>
-                                        <img src="{{ asset($website_logo->pic) }}"
-                                             alt="{{ $website_logo->pic_alt }}"
-                                             class="img-fluid w-25"
-                                        >
-                                </td>
-
-                                {{--SHOW PIC_ALT--}}
-                                <td class="align-middle text-center">
-                                    {{ $website_logo->pic_alt }}
                                 </td>
 
                                 {{--OPERATIONS--}}
@@ -67,22 +63,22 @@
 
                                     <input class="status big-checkbox mb-1 w-100 text-green"
                                            type="radio"
-                                           @if($website_logo->status ===1) checked @endif
-                                           id="status-{{$website_logo->id}}"
+                                           @if($footer_text->status ===1) checked @endif
+                                           id="status-{{$footer_text->id}}"
                                            title="تعیین بعنوان پیشفرض"
-                                           data-url="{{ route('logos.update', $website_logo->id) }}"
+                                           data-url="{{ route('footer-texts.update', $footer_text->id) }}"
                                            readonly
                                     >
-                                    <a href="{{ route('logos.edit', $website_logo->id) }}"
+                                    <a href="{{ route('footer-texts.edit', $footer_text->id) }}"
                                        class="btn btn-info"
                                     >
                                         <i class="fa fa-edit"></i>
                                     </a>
 
                                     <button class="destroy-button btn btn-danger"
-                                            id="del-{{$website_logo->id}}"
+                                            id="del-{{$footer_text->id}}"
                                             title="حذف لوگو"
-                                            data-url="{{route('logos.destroy', $website_logo->id)}}"
+                                            data-url="{{route('footer-texts.destroy', $footer_text->id)}}"
                                     >
                                         <i class="fa fa-trash-o text-white"></i>
                                     </button>
@@ -96,9 +92,9 @@
 
                         <tr class="text-center">
                             <td>شماره</td>
+                            <td>عنوان</td>
+                            <td>متن</td>
                             <td>وضعیت</td>
-                            <td>تصویر</td>
-                            <td>متن جایگزین</td>
                             <td>عملیات</td>
                         </tr>
 
@@ -122,7 +118,7 @@
 
         $(document).ready(function () {
 
-            /*SET DEFAULT IMAGE ON FLY*/
+            /*SET DEFAULT FOOTER TEXT ON FLY*/
             let status = $('.status');
             status.on('click', function () {
                 status.not(this).prop('checked', false);
@@ -156,8 +152,8 @@
                 let delete_address = $(this).attr('data-url');
 
                 swal({
-                    title: "آیا از حذف لوگو مطمعنید؟",
-                    text: "با حذف لوگو، قادر به بازگردانی آن نخواهید بود!",
+                    title: "آیا از حذف متن فوتر مطمعنید؟",
+                    text: "با حذف متن فوتر، قادر به بازگردانی آن نخواهید بود!",
                     icon: "warning",
                     buttons: ['نه! حذفش نکن.', 'آره، حذفش کن.'],
                     dangerMode: true,
@@ -188,7 +184,7 @@
             });
 
             /*EDIT BY CLICK ON TITLE*/
-            $('#datatable-attributes').DataTable({
+            $('#datatable-footer-texts').DataTable({
                 "responsive": true,
                 "language": {
                     'search': ' جست و جو : ',
