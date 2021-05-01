@@ -361,6 +361,18 @@
                         </a>
                     </li>
 
+                    <li class="nav-item">
+                        <a href="{{ route('image-menus.index') }}"
+                           class="nav-link {{ Request::routeIs('image-menus.*') ? 'active' : '' }}"
+                        >
+                            <i class="nav-icon fal fa-grip-lines"></i>
+                            <p>
+                                منو های تصویری
+                            </p>
+                        </a>
+                    </li>
+
+
                     <li
                         class="nav-item has-treeview {{ (Request::routeIs('footer-items.*')||Request::routeIs('footer-links.*') || Request::routeIs('footer-images.*') || Request::routeIs('footer-texts.*') || Request::routeIs('footer-licenses.*')) ? 'menu-open' : '' }}"
                     >

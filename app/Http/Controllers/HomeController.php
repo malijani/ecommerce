@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Banner;
 use App\Brand;
 use App\Category;
+use App\ImageMenu;
 use App\Logo;
 use App\Product;
 use App\Slider;
+use Faker\Provider\Image;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -37,7 +39,6 @@ class HomeController extends Controller
             ->orderBy('sort')
             ->orderByDesc('id')
             ->get();
-        // TODO : MAKE PRODUCT OR ARTICLES AS ENUM OR TINYINT SELECTION TYPE
         // get Products category by title_en : products :> it's important
         $categories = Category::withoutTrashed()
             ->where('title_en', 'products')
@@ -62,12 +63,40 @@ class HomeController extends Controller
             ->orderBy('sort', 'ASC')
             ->get();
 
+        $main_image_menus = ImageMenu::query()
+            ->where('type', 1)
+            ->where('status', 1)
+            ->orderBy('id')
+            ->get();
+
+        $big_image_menus = ImageMenu::query()
+            ->where('type', 2)
+            ->where('status', 1)
+            ->orderBy('id')
+            ->get();
+
+        $page_image_menus = ImageMenu::query()
+            ->where('type', 3)
+            ->where('status', 1)
+            ->orderBy('id')
+            ->get();
+
+        $footer_image_menus = ImageMenu::query()
+            ->where('type', 4)
+            ->where('status', 1)
+            ->orderBy('id')
+            ->get();
+
         return view('home', [
             'categories'=>$categories,
             'products'=>$products,
             'banner'=>$banner,
             'sliders'=>$sliders,
             'brands'=>$brands,
+            'main_image_menus' => $main_image_menus,
+            'big_image_menus' => $big_image_menus,
+            'page_image_menus' => $page_image_menus,
+            'footer_image_menus' => $footer_image_menus
         ]);
     }
 }

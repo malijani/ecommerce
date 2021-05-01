@@ -6,7 +6,7 @@
 @section('content')
 
     {{--TODO : BRANDS PAGE DIRECTION--}} {{--TODO : SHOW MAIN COMPANY --}}
-    <div class="container-sm container my-3">
+    <div class="container my-3">
         {{--SHOW BANNER--}}
         @if(isset($banner))
             <div class="row my-3">
@@ -24,13 +24,13 @@
 
         {{--SHOW SLIDERS--}}
         @if(isset($sliders))
-            <div class="row my-3">
+            <div class="row my-2">
                 <div class="col-12">
                     {{--SLIDERS--}}
                     <div id="sliders" class="slider-pro">
                         <div class="sp-slides">
                             @foreach($sliders as $slider)
-                                <div class="sp-slide">
+                                <div class="sp-slide rounded">
                                     <a href="{{ $slider->link }}">
                                         <img class="sp-image rounded" src="{{ asset($slider->pic) }}"
                                              data-src="{{ asset($slider->pic) }}"
@@ -63,6 +63,21 @@
                 {{--./SLIDERS--}}
             </div>
         @endif
+
+        {{--SHOW ABOUT IMAGE MENU--}}
+        @include('front-v1.partials.about_image_menu')
+        {{--./SHOW ABOUT IMAGE MENU--}}
+
+        {{--SHOW MAIN IMAGE MENU--}}
+        @include('front-v1.partials.main_image_menu', ['items'=>$main_image_menus])
+        {{--./SHOW MAIN IMAGE MENU--}}
+
+        {{--TODO : SHOW PRODUCTS ON OFF--}}
+
+        {{--SHOW BIG IMAGE MENU--}}
+        @include('front-v1.partials.big_image_menu', ['items'=>$big_image_menus])
+        {{--./SHOW BIG IMAGE MENU--}}
+
         {{--SHOW BRANDS--}}
         <div class="row mt-3 bg-white rounded p-3 ">
             <div class="col-12 p-3 d-flex justify-content-between align-items-center">
@@ -90,7 +105,7 @@
             @include('front-v1.partials.categories', ['categories'=>$categories])
         </div>
         {{--SHOW PRODUCTS--}}
-        <div class="row mt-3 bg-white mb-5">
+        <div class="row mt-3 bg-white mb-3">
             <div class="col-12 p-3 d-flex justify-content-between align-items-center">
                 <h3 class="font-14">
                     <a class="text-dark" href="#">محصولات</a>
@@ -104,6 +119,14 @@
                 @include('front-v1.partials.products', ['products'=>$products, 'carousel'=>false])
             </div>
         </div>
+
+        {{--SHOW IMAGE PAGE MENU--}}
+        @include('front-v1.partials.page_image_menu', ['items'=>$page_image_menus])
+        {{--./SHOW IMAGE PAGE MENU--}}
+
+        {{--SHOW FOOTER IMAGE MENU--}}
+        @include('front-v1.partials.big_image_menu', ['items'=>$footer_image_menus])
+        {{--./SHOW FOOTER IMAGE MENU--}}
     </div>
 @endsection
 

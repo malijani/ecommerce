@@ -8,6 +8,7 @@ use App\FooterImage;
 use App\FooterItem;
 use App\FooterLicense;
 use App\FooterText;
+use App\ImageMenu;
 use App\License;
 use App\Logo;
 use App\Product;
@@ -131,5 +132,13 @@ class AppServiceProvider extends ServiceProvider
         /*FOOTER LICENSE IMAGES*/
         $footer_license_images = FooterLicense::query()->where('status', 1)->get();
         View::share('footer_license_images', $footer_license_images);
+
+        /*ABOUT IMAGE MENUS*/
+        $about_image_menus = ImageMenu::query()
+            ->where('type', 0)
+            ->where('status', 1)
+            ->orderByDesc('id')
+            ->get();
+        View::share('about_image_menus', $about_image_menus);
     }
 }

@@ -69,7 +69,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web', 'auth', 'auth.admin']
     Route::resource('top-navs', 'Admin\TopNavController')->except(['show']);
     Route::resource('logos', 'Admin\LogoController')->except(['show']);
     Route::resource('banners', 'Admin\BannerController')->except(['show']);
-    Route::resource('sliders', 'Admin\SliderController')->except('show');
+    Route::resource('sliders', 'Admin\SliderController')->except(['show']);
+    Route::resource('image-menus', 'Admin\ImageMenuController')->except(['show']);
 
     /*FOOTER CONTROL*/
     Route::resource('footer-images', 'Admin\FooterImageController')->except(['show']);
