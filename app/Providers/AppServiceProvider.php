@@ -13,6 +13,7 @@ use App\License;
 use App\Logo;
 use App\Product;
 use App\SocialMedia;
+use App\SocialMediaButton;
 use App\TopNav;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
@@ -140,5 +141,9 @@ class AppServiceProvider extends ServiceProvider
             ->orderByDesc('id')
             ->get();
         View::share('about_image_menus', $about_image_menus);
+
+        /*FLOATING SOCIAL MEDIA BUTTON*/
+        $float_social_media_button = SocialMediaButton::query()->where('status', 1)->first();
+        View::share('float_social_media_button', $float_social_media_button);
     }
 }

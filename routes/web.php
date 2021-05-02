@@ -59,7 +59,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web', 'auth', 'auth.admin']
 
     /*SOCIAL MEDIA*/
     Route::resource('social-medias', 'Admin\SocialMediaController');
-
+    Route::resource('social-media-buttons', 'Admin\SocialMediaButtonController')->except(['show']);
+    
     /*PAGES*/
     Route::resource('faqs', 'Admin\FaqController')->except(['show']);
     Route::resource('faq-page', 'Admin\FaqPageController')->only(['store', 'update']);

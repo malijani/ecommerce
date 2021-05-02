@@ -294,16 +294,48 @@
 
 
                     {{--SOCIAL MEDIA--}}
-                    <li class="nav-item">
-                        <a href="{{ route('social-medias.index') }}"
-                           class="nav-link {{ Request::routeIs('social-medias.*') ? 'active' : '' }}"
+                    <li
+                        class="nav-item has-treeview {{ (Request::routeIs('social-medias.*')|| Request::routeIs('social-media-buttons.*')) ? 'menu-open' : '' }}"
+                    >
+                        <a href="#"
+                           class="nav-link {{ (Request::routeIs('social-medias.*')|| Request::routeIs('social-media-buttons.*')) ? 'active' : '' }}"
                         >
                             <i class="nav-icon fal fa-chart-network"></i>
                             <p>
                                 صفحات مجازی
+                                <i class="right fa fa-angle-left"></i>
                             </p>
                         </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ route('social-medias.index') }}"
+                                   class="nav-link {{Request::routeIs('social-medias.*') ? 'active' : '' }}"
+                                >
+                                    <i class="fal fa-circle nav-icon"></i>
+                                    <p>بنر های صفحات مجازی</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('social-media-buttons.index') }}"
+                                   class="nav-link {{Request::routeIs('social-media-buttons.*') ? 'active' : '' }}"
+                                >
+                                    <i class="fal fa-circle nav-icon"></i>
+                                    <p>دکمه های صفحات مجازی</p>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
+
+
+
+
+
+
+
+
+
+
+
 
                     {{--FAQ--}}
                     <li class="nav-item">
