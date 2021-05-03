@@ -105,7 +105,7 @@
             @include('front-v1.partials.categories', ['categories'=>$categories])
         </div>
         {{--SHOW PRODUCTS--}}
-        <div class="row mt-3 bg-white mb-3">
+        <div class="row mt-3 bg-white rounded p-3 mb-3">
             <div class="col-12 p-3 d-flex justify-content-between align-items-center">
                 <h3 class="font-14">
                     <a class="text-dark" href="#">محصولات</a>
@@ -116,7 +116,9 @@
                 </a>
             </div>
             <div class="col-12 mt-2 mb-5">
+                <div class="row wow fadeIn" style="visibility: visible; animation-name: fadeIn;">
                 @include('front-v1.partials.products', ['products'=>$products, 'carousel'=>false])
+                </div>
             </div>
         </div>
 

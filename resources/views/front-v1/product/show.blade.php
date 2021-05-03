@@ -245,21 +245,21 @@
             <div class="row mt-5 bg-white mb-5">
                 <div class="col-12 p-3 d-flex justify-content-between align-items-center">
                     <h3 class="font-14">
-                        <a class="text-dark" href="#">محصولات مشابه</a>
+                        <span class="text-dark" >محصولات مشابه</span>
                     </h3>
                 </div>
 
                 <div class="col-12 mt-2 mb-5">
                     <div class="row align-items-center justify-content-center">
-                        <div class="oc-prev col-1 text-center cursor-pointer">
+                        <div class="oc-prev col-2 text-center cursor-pointer">
                             <i class="far fa-angle-right fa-4x"></i>
                         </div>
-                        <div class="col-9">
+                        <div class="col-8">
                             <div class="owl-carousel">
                                 @include('front-v1.partials.products', ['products'=>$similar_products, 'carousel'=>true])
                             </div>
                         </div>
-                        <div class="oc-next col-1 text-center cursor-pointer">
+                        <div class="oc-next col-2 text-center cursor-pointer">
                             <i class="far fa-angle-left fa-4x"></i>
                         </div>
                     </div>
@@ -359,7 +359,7 @@
                 responsiveClass: true,
                 responsive: {
                     0: {
-                        items: 2,
+                        items: 1,
                         slideBy: 1,
                     },
                     576: {
@@ -367,15 +367,15 @@
                         slideBy: 1,
                     },
                     768: {
-                        items: 3,
+                        items: 2,
                         slideBy: 2,
                     },
                     999: {
-                        items: 5,
+                        items: 3,
                         slideBy: 2,
                     },
                     1400: {
-                        items: 7,
+                        items: 4,
                         slideBy: 3,
                     }
                 }
