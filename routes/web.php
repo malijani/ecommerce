@@ -18,6 +18,7 @@ Route::group(['prefix' => '/', 'middleware' => ['web', 'XssSanitizer']], functio
     Route::resource('page', 'Visitor\PageController')->only(['index', 'show']);
     Route::post('comment/{model}/{id}', 'Visitor\CommentController@store')->name('comment.store');
     Route::resource('cart', 'User\CartController')->only(['index', 'store', 'destroy', 'update']);
+    Route::post('apply-discount', 'User\CartController@applyDiscount')->name('cart.discount');
 });
 
 // USER SECTION

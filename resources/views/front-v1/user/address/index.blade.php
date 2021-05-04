@@ -1,4 +1,4 @@
-
+@extends('layouts.app')
 
 @section('content')
 
@@ -23,8 +23,17 @@
                             <td>{{ $total['count'] }}</td>
                         </tr>
                         <tr>
-                            <th scop="row">وزن مرسوله</th>
+                            <th scope="row">وزن مرسوله</th>
                             <td>{{ $total['weight'] }} گرم</td>
+                        </tr>
+                        <tr class="text-success">
+                            <th>
+                                تخفیف نهایی
+                                @if(isset($total['discount_code']))
+                                    ({{ $total['discount_code'] }})
+                                @endif
+                            </th>
+                            <td>{{ number_format($total['discount']) }} تومن</td>
                         </tr>
                         <tr class="font-weight-bolder">
                             <th scope="row">هزینه نهایی سفارش</th>

@@ -85,7 +85,7 @@
                                     id="del-{{$key}}"
                                     data-target="{{ route('cart.destroy', [$key] ) }}"
                             >
-                                <i class="fa fa-trash fa-2x text-danger"></i>
+                                <i class="fal fa-trash-alt fa-2x text-danger"></i>
                             </button>
                         </div>
                         {{--BREAK POINT COL--}}
@@ -157,39 +157,8 @@
                 @endforeach
             </div>{{--./PRODUCTS--}}
 
-            <div class="col-12 col-lg-4 py-4">{{--FINAL DESCRIPTION--}}
-                <div class="mt-3 p-3">
-                    <div class="row">
-                        <form action="" method="POST">
-                            @csrf
-                            <div class="col-12">
-                                <div class="form-group row justify-content-right align-items-center">
-                                    <label for="discount_code"
-                                           class="col-form-label col-3"
-                                    >
-                                        کد تخفیف
-                                    </label>
-                                    <div class="col-6">
-                                        <input type="text"
-                                               name="discount_code"
-                                               id="discount_code"
-                                               class="form-control"
-                                        >
-                                    </div>
-                                    <div class="col-1">
-                                        <button type="submit"
-                                                class="btn btn-outline-primary"
-                                        >
-                                            اعمال
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
 
-
+            <div class="col-12 col-lg-4 mt-3 py-3">
                 <h6>مجموع سبد</h6>
                 <div class="table-responsive">
                     <table class="table table-hover">
@@ -217,12 +186,35 @@
 
                         <tr class="">
                             <td colspan="2">
-                                <a href="{{ route('address.index') }}"
-                                   type="button"
-                                   class="btn btn-outline-success w-100 font-weight-bolder"
-                                >
-                                    ثبت سفارش
-                                </a>
+
+                                <form action="{{ route('cart.discount') }}" method="POST">
+                                    @csrf
+
+                                    <input type="text"
+                                           name="discount_code"
+                                           id="discount_code"
+                                           class="form-control @error('discount_code') is-invalid @enderror"
+                                           minlength="2"
+                                           maxlength="10"
+                                           value="{{old('discount_code')}}"
+                                           placeholder="کد تخفیف"
+                                           autocomplete="off"
+                                    >
+                                    @include('partials.form_error', ['input' => 'discount_code'])
+
+
+                                    <div class="col-12 text-center mt-2">
+                                        <button type="submit"
+                                                class="btn btn-outline-primary form-control font-weight-bold"
+                                        >
+                                            ثبت سفارش و اعمال تخفیف
+                                        </button>
+
+                                    </div>
+
+
+                                </form>
+
                             </td>
                         </tr>
                         </tbody>

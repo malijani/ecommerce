@@ -140,6 +140,7 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/ezyang/htmlpurifier" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/mews/purifier" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/nagy/laravel-rating" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/mohsenbostan/ghasedak-sms" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

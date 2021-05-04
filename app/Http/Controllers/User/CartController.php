@@ -2,13 +2,66 @@
 
 namespace App\Http\Controllers\User;
 
+use App\DiscountCode;
 use App\Http\Controllers\Controller;
 use App\Product;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class CartController extends Controller
 {
+
+    /**
+     * Compute the discount from discount code
+     *
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function applyDiscount(Request $request): RedirectResponse
+    {
+        $total = session()->get('total');
+        if (is_null($total) || count($total) == 0) {
+            return back()->with('error', 'مجموع سبد خرید برای اعمال کد تخفیف وجود ندارد!');
+        }
+        if (!is_null($total['discount_code'])) {
+            return redirect(route('address.index'))->with('warning', 'شما قبلاً یک کد تخفیف را اعمال نموده اید!');
+        }
+
+
+
+            $request->validate([
+                'discount_code' => 'nullable|string|min:2|max:10|exists:discount_codes,code'
+            ], [
+                'string' => 'نوع داده ای کد تخفیف اشتباه است، کاراکتر وارد کنید.',
+                'min' => 'حداقل طول کد تخفیف ۲ کاراکتر است',
+                'max' => 'حداکثر طول کد تخفیف ۱۰ کاراکتر است.',
+                'exists' => 'این کد تخفیف وجود ندارد!',
+            ]);
+        if ($request->has('discount_code') && !empty($request->input('discount_code'))) {
+
+            $discount_percent = DiscountCode::query()
+                ->where('code', $request->input('discount_code'))
+                ->first()
+                ->percent;
+
+            $discount_amount = ($total['final_price'] * $discount_percent) / 100;
+
+            // total : discount , final_price, discount_code
+            $total['final_price'] -= (int)$discount_amount;
+            $total['discount'] += (int)$discount_amount;
+            $total['discount_code'] = $request->input('discount_code');
+
+            session()->put('total', $total);
+
+            return redirect(route('address.index'))->with('success', 'کد تخفیف با موفقیت اعمال شد!');
+        } else {
+            return redirect(route('address.index'));
+        }
+
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -25,8 +78,9 @@ class CartController extends Controller
             ]);
         }
 
+
         /*append total order price and discount to basket*/
-        $total = ['raw_price' => 0, 'final_price' => 0, 'discount' => 0, 'count' => 0, 'weight' => 0];
+        $total = ['raw_price' => 0, 'final_price' => 0, 'discount' => 0, 'count' => 0, 'weight' => 0, 'discount_code' => null];
         if (count($basket)) {
             foreach ($basket as $order) {
                 $total['raw_price'] += (int)$order['raw_price'];
@@ -36,7 +90,6 @@ class CartController extends Controller
                 $total['weight'] += (int)$order['weight'];
             }
         }
-
 
 
         session()->put('total', $total);
@@ -283,7 +336,7 @@ class CartController extends Controller
      * @param int $id
      * @return RedirectResponse
      */
-    public function destroy(int $id) : RedirectResponse
+    public function destroy(int $id): RedirectResponse
     {
         $basket = session()->get('basket');
         $total = session()->get('total');
@@ -295,14 +348,14 @@ class CartController extends Controller
             $total['count'] -= (int)$basket[$id]['quantity'];
             $total['weight'] -= (int)$basket[$id]['weight'];
             /*CONTROL TOTAL IF THERE IS NO PRODUCT IN BASKET*/
-            if( is_null($total)||$total['count']==0) {
+            if (is_null($total) || $total['count'] == 0) {
                 unset($total);
             }
             /*UNSET PRODUCT*/
             unset($basket[$id]);
             /*UPDATE SESSIONS*/
             session()->put('basket', $basket);
-            session()->put('total', $total??[]);
+            session()->put('total', $total ?? []);
 
         }
         return response()->redirectToRoute('cart.index')->with('success', 'محصول مورد نظر با موفقیت از سبد خرید حذف شد.');

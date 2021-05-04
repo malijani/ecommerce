@@ -23,6 +23,7 @@
         "lavary/laravel-menu": "^1.8",
         "livewire/livewire": "^2.4",
         "mews/purifier": "^3.3",
+        "mohsenbostan/ghasedak-sms": "^1.2",
         "nagy/laravel-rating": "^2.0",
         "shetabit/payment": "^4.0",
         "unisharp/laravel-filemanager": "^2.2"
