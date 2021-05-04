@@ -12,7 +12,8 @@
             <div class="col-12  col-lg-8 py-4">{{--PRODUCTS--}}
                 <h4>سبد خرید</h4>
                 @foreach($basket as $key=>$value)
-                    <div class="row d-flex align-items-center text-center mb-4 ml-1 mr-1  p-3 rounded bg-whitesmoke" id="product-{{$key}}">
+                    <div class="row d-flex align-items-center text-center mb-4 ml-1 mr-1  p-3 rounded bg-whitesmoke"
+                         id="product-{{$key}}">
                         {{--SHOW IMAGE--}}
                         <div class="col-md-3">
                             <a href="{{ route('product.show', $value['title_en'])  }}">
@@ -23,7 +24,7 @@
                             </a>
                         </div>
                         {{--SHOW TITLE--}}
-                        <div class="col-md-2">
+                        <div class="col-md-2 my-3 my-md-0">
                             <a href="{{ route('product.show', $value['title_en'])  }}" class="text-dark">
                                 <p class="font-weight-bolder">{{$value['title']}}</p>
                             </a>
@@ -35,6 +36,7 @@
                                         class="text-dark bg-white btn my-0 font-weight-bolder">
                                     {{ $value['quantity'] }}
                                 </button>
+                                عدد
                             @else
                                 <div
                                     class="btn-group btn-group direction-ltr border rounded"
@@ -64,10 +66,11 @@
                                         +
                                     </button>
                                 </div>
+                                عدد
                             @endif
                         </div>
                         {{--SHOW PRICE--}}
-                        <div class="col-md-3">
+                        <div class="col-md-3 my-3 my-md-0">
                             <b>{{ number_format($value['price']) }} تومن</b>
                             @if($value['total_discount'] > 0)
                                 <br>
@@ -117,7 +120,7 @@
                                                                         data-target="{{route('cart.update', $key)}}"
                                                                         onclick="update(this, 'remove', {{$product_attr_key}});"
                                                                         id="remove-one-{{$key}}-{{$product_attr_key}}"
-                                                                   class="text-dark bg-white btn border-0 my-0"
+                                                                        class="text-dark bg-white btn border-0 my-0"
                                                                 >
                                                                     -
                                                                 </button>
@@ -155,6 +158,38 @@
             </div>{{--./PRODUCTS--}}
 
             <div class="col-12 col-lg-4 py-4">{{--FINAL DESCRIPTION--}}
+                <div class="mt-3 p-3">
+                    <div class="row">
+                        <form action="" method="POST">
+                            @csrf
+                            <div class="col-12">
+                                <div class="form-group row justify-content-right align-items-center">
+                                    <label for="discount_code"
+                                           class="col-form-label col-3"
+                                    >
+                                        کد تخفیف
+                                    </label>
+                                    <div class="col-6">
+                                        <input type="text"
+                                               name="discount_code"
+                                               id="discount_code"
+                                               class="form-control"
+                                        >
+                                    </div>
+                                    <div class="col-1">
+                                        <button type="submit"
+                                                class="btn btn-outline-primary"
+                                        >
+                                            اعمال
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+
                 <h6>مجموع سبد</h6>
                 <div class="table-responsive">
                     <table class="table table-hover">
@@ -179,6 +214,7 @@
                             <th scope="row">قیمت نهایی</th>
                             <td>{{ number_format($total['final_price']) }} تومن</td>
                         </tr>
+
                         <tr class="">
                             <td colspan="2">
                                 <a href="{{ route('address.index') }}"
@@ -194,6 +230,7 @@
                 </div>
 
             </div>{{--./FINAL DESCRIPTION--}}
+
 
         </div>{{--row--}}
     </div>{{--container--}}
@@ -233,14 +270,14 @@
                 });
         }
 
-        function update(element, type, attribute=null){
+        function update(element, type, attribute = null) {
             // type : how to manipulate on product? 'add' or 'remove'
             // attribute is optional : attribute of product :
             //         if you're looking for product id that is stored in basket
             //         "data-target" is generated for the product! /update/20
             let update_url = $(element).attr('data-target');
             $.ajax({
-                url:  update_url,
+                url: update_url,
                 type: 'POST',
                 data: {
                     '_token': "{{ csrf_token() }}",
@@ -248,10 +285,10 @@
                     'type': type,
                     'attribute': attribute,
                 },
-                success: function(){
+                success: function () {
                     location.reload();
                 },
-                error: function(){
+                error: function () {
                     location.reload();
                 }
             });
@@ -263,7 +300,7 @@
             @if(is_array($value['attribute']) && count($value['attribute']))
             $("#product-attr-{{$key}}").on('show.bs.collapse hide.bs.collapse', function (e) {
                 if (e.type === 'show') {
-                $("#product-attr-button-{{$key}}").html('<i class="far fa-caret-circle-up fa-2x text-dark"></i>');
+                    $("#product-attr-button-{{$key}}").html('<i class="far fa-caret-circle-up fa-2x text-dark"></i>');
                 } else {
                     $("#product-attr-button-{{$key}}").html('<i class="far fa-caret-circle-down fa-2x text-dark"></i>');
                 }

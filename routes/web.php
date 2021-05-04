@@ -51,7 +51,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web', 'auth', 'auth.admin']
     Route::resource('products', 'Admin\ProductController');
     Route::resource('attributes', 'Admin\AttributeController')->only(['index', 'store', 'update']);
     Route::resource('comments', 'Admin\CommentController');
-
     /*TICKETS*/
     Route::resource('ticket-categories', 'Admin\Ticket\CategoryController')->except(['show', 'create', 'edit']);
     Route::resource('tickets', 'Admin\Ticket\TicketController');
@@ -60,11 +59,14 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web', 'auth', 'auth.admin']
     /*SOCIAL MEDIA*/
     Route::resource('social-medias', 'Admin\SocialMediaController');
     Route::resource('social-media-buttons', 'Admin\SocialMediaButtonController')->except(['show']);
-    
+
     /*PAGES*/
     Route::resource('faqs', 'Admin\FaqController')->except(['show']);
     Route::resource('faq-page', 'Admin\FaqPageController')->only(['store', 'update']);
     Route::resource('pages', 'Admin\PageController')->except(['show']);
+
+    /*DISCOUNT*/
+    Route::resource('discount-codes', 'Admin\DiscountCodeController')->except(['show']);
 
     /*WEBSITE CONTROL*/
     Route::resource('top-navs', 'Admin\TopNavController')->except(['show']);
@@ -80,7 +82,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web', 'auth', 'auth.admin']
     Route::resource('footer-texts', 'Admin\FooterTextController');
     Route::resource('footer-licenses', 'Admin\FooterLicenseController');
 
-    // FILE MANAGER
+    /*FILE MANAGER*/
     Route::view('files', 'admin.file-manager.index')->name('admin.fm-frame');
     Route::group(['prefix' => 'file-manager'], function () {
         Lfm::routes();

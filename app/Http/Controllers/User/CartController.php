@@ -308,5 +308,4 @@ class CartController extends Controller
         return response()->redirectToRoute('cart.index')->with('success', 'محصول مورد نظر با موفقیت از سبد خرید حذف شد.');
     }
 
-
 }

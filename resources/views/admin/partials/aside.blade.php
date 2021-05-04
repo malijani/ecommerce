@@ -291,6 +291,17 @@
                         </ul>
                     </li>
 
+                    {{--DISCOUNT CODES--}}
+                    <li class="nav-item">
+                        <a href="{{ route('discount-codes.index') }}"
+                           class="nav-link {{ Request::routeIs('discount-codes.*') ? 'active' : '' }}"
+                        >
+                            <i class="nav-icon fal fa-percent"></i>
+                            <p>
+                                کد های تخفیف
+                            </p>
+                        </a>
+                    </li>
 
 
                     {{--SOCIAL MEDIA--}}
@@ -325,16 +336,6 @@
                             </li>
                         </ul>
                     </li>
-
-
-
-
-
-
-
-
-
-
 
 
                     {{--FAQ--}}
