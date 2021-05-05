@@ -54,7 +54,14 @@ class RegisterController extends Controller
             'family'=>['required', 'string', 'max:50'],
             'mobile'=>['required', 'iran_mobile', 'unique:users,mobile'],
             'email' => ['required', 'string', 'email', 'max:70', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => ['required', 'string', 'min:8'],
+            'captcha' => ['required', 'captcha']
+        ], [
+            'captcha' => [
+                'required' => 'وارد کردن کد کپچا الزامیست!',
+                'captcha' => 'کد کپچا اشتباه است!'
+
+            ]
         ]);
     }
 

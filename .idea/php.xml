@@ -136,6 +136,7 @@
       <path value="$PROJECT_DIR$/vendor/mews/purifier" />
       <path value="$PROJECT_DIR$/vendor/nagy/laravel-rating" />
       <path value="$PROJECT_DIR$/vendor/mohsenbostan/ghasedak-sms" />
+      <path value="$PROJECT_DIR$/vendor/mews/captcha" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.2">
