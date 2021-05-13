@@ -11,6 +11,7 @@
         "php": "^7.2.5|^8.0",
         "anetwork/validation": "^2.2",
         "diglactic/laravel-breadcrumbs": "^6.1",
+        "doctrine/dbal": "2.*",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^6.3.1|^7.0.1",
@@ -26,6 +27,7 @@
         "mews/purifier": "^3.3",
         "mohsenbostan/ghasedak-sms": "^1.2",
         "nagy/laravel-rating": "^2.0",
+        "sanjabteam/verify": "^2.0",
         "shetabit/payment": "^4.0",
         "unisharp/laravel-filemanager": "^2.2"
     },

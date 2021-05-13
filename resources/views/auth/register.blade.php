@@ -14,12 +14,17 @@
                             @csrf
 
                             <div class="form-group row">
-                                <label for="name" class="col-md-4 col-form-label text-center">نام</label>
+                                <label for="name"
+                                       class="col-md-4 col-form-label text-center"
+                                >
+                                    <i class="fal fa-asterisk text-danger"></i>
+                                    نام
+                                </label>
 
                                 <div class="col-md-6">
                                     <input id="name"
                                            type="text"
-                                           class="form-control @error('name') is-invalid @enderror"
+                                           class="form-control @error('name') is-invalid @enderror ltr"
                                            name="name"
                                            value="{{ old('name') }}"
                                            required
@@ -32,34 +37,10 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="family"
-                                       class="col-md-4 col-form-label text-center"
-                                >
-                                    نام خانوادگی
-                                </label>
-
-                                <div class="col-md-6">
-                                    <input id="family"
-                                           type="text"
-                                           class="form-control @error('family') is-invalid @enderror"
-                                           name="family"
-                                           value="{{ old('family') }}"
-                                           required
-                                           autocomplete="family"
-                                    >
-
-                                    @error('family')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
                                 <label for="mobile"
                                        class="col-md-4 col-form-label text-center"
                                 >
+                                    <i class="fal fa-asterisk text-danger"></i>
                                     تلفن همراه
                                 </label>
 
@@ -79,27 +60,10 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="email" class="col-md-4 col-form-label text-center">
-                                    آدرس ایمیل
-                                </label>
-
-                                <div class="col-md-6">
-                                    <input id="email" type="email"
-                                           class="ltr form-control @error('email') is-invalid @enderror"
-                                           name="email"
-                                           value="{{ old('email') }}"
-                                           required
-                                           autocomplete="email"
-                                    >
-
-                                   @include('partials.form_error', ['input'=>'email'])
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
                                 <label for="password"
                                        class="col-md-4 col-form-label text-center"
                                 >
+                                    <i class="fal fa-asterisk text-danger"></i>
                                     رمز عبور
                                 </label>
 
@@ -117,29 +81,35 @@
                             </div>
 
 
-                            <div class="form-group row align-items-center justify-content-center">
-                                <label for="captcha"
-                                       class="col-form-label col-md-4 text-left"
+                            <div class="form-group row align-items-center justify-content-start">
+                                <label for="captcha_text"
+                                       class="col-form-label col-12 col-md-8 col-lg-4 text-center"
                                 >
                                     {!! captcha_img('default') !!}
                                 </label>
 
-                                <div class="col-md-2">
+                                <div class="col-md-4 col-lg-6">
                                     <input type="text"
-                                           name="captcha"
-                                           id="captcha"
-                                           class="form-control ltr @error('captcha') is-invalid @enderror"
+                                           name="captcha_text"
+                                           id="captcha_text"
+                                           class="form-control ltr @error('captcha_text') is-invalid @enderror"
                                            minlength="5"
                                            maxlength="5"
                                            required
+                                           autocomplete="off"
                                     >
-                                    @include('partials.form_error', ['input'=>'captcha'])
+                                    @include('partials.form_error', ['input'=>'captcha_text'])
                                 </div>
                             </div>
-
-
+                            <div class="row py-4">
+                                <div class="col-12 text-center">
+                                <span class="text-muted">
+                                    ثبت نام در {{ config('app.short.name') }} به منزله پذیرش قوانین و مقررات آن است!
+                                </span>
+                                </div>
+                            </div>
                             <div class="form-group row mb-0">
-                                <div class="col-md-6 col-md-offset-4">
+                                <div class="col-12">
                                     <button type="submit" class="btn btn-outline-primary form-control">
                                         ثبت نام
                                     </button>

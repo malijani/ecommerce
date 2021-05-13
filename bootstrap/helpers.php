@@ -91,3 +91,12 @@ function generateUniqueString(object $model, string $column, int $length = 11): 
     }
     return $uuid;
 }
+
+function generateUniqueNumber(object $model, string $column, int $length = 11): string
+{
+    $number = str_pad(rand(0, pow(10, $length)-1), $length, '0', STR_PAD_LEFT);
+    while ($model->where($column, '=', $number)->count() > 0) {
+        $number = str_pad(rand(0, pow(10, $length)-1), $length, '0', STR_PAD_LEFT);
+    }
+    return $number;
+}

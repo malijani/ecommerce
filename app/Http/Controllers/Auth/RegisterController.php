@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\User;
+use App\VerificationCode;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use MohsenBostan\GhasedakSms;
 
 class RegisterController extends Controller
 {
@@ -29,7 +31,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectTo = '/user/verify';
 
     /**
      * Create a new controller instance.
@@ -44,42 +46,37 @@ class RegisterController extends Controller
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array  $data
+     * @param array $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
     {
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:50'],
-            'family'=>['required', 'string', 'max:50'],
-            'mobile'=>['required', 'iran_mobile', 'unique:users,mobile'],
-            'email' => ['required', 'string', 'email', 'max:70', 'unique:users'],
+            'mobile' => ['required', 'iran_mobile', 'unique:users,mobile'],
             'password' => ['required', 'string', 'min:8'],
-            'captcha' => ['required', 'captcha']
+            'captcha_text' => ['required', 'captcha', 'string', 'size:5']
         ], [
-            'captcha' => [
-                'required' => 'وارد کردن کد کپچا الزامیست!',
-                'captcha' => 'کد کپچا اشتباه است!'
-
-            ]
+            'captcha_text.required' => 'لطفاً کد کپجا را وارد کنید!',
+            'captcha_text.captcha' => 'کد کپچا اشتباهه!',
+            'captcha_text.size' => 'کد کپچا دارای ۵ کاراکتر است',
+            'mobile.unique' => 'حساب کاربری برای این شماره تلفن قبلاً ثبت شده!',
         ]);
     }
 
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
+     * @param array $data
      * @return \App\User
      */
     protected function create(array $data)
     {
-
         return User::create([
             'name' => $data['name'],
-            'family'=> $data['family'],
-            'email' => $data['email'],
-            'mobile'=> $data['mobile'],
+            'mobile' => $data['mobile'],
             'password' => Hash::make($data['password']),
         ]);
+
     }
 }

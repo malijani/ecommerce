@@ -5,25 +5,24 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header text-center p-5 font-20">تایید حساب کاربری</div>
+                    <div class="card-header text-center p-5 font-20">تایید تلفن همراه</div>
                     <div class="card-body">
 
                         <div class="row">
                             <div class="col-12 text-center text-md-left mb-4">
-                                <a href="{{ route('verify.change-number') }}"
+                                <a href="{{ route('password.get-mobile') }}"
                                    class="btn btn-light font-weight-bolder"
                                 >
-                                    تغییر شماره تلفن ({{ Auth::user()->mobile }})
-                                    <i class="fa fa-arrow-alt-from-right"></i>
-
+                                    تغییر شماره تلفن ({{ $mobile }})
+                                    <i class="far fa-arrow-alt-left"></i>
                                 </a>
                             </div>
 
                             <div class="col-12">
-                                <form action="{{ route('verify.process') }}" method="POST">
+                                <form action="{{ route('password.verify') }}" method="POST">
                                     @csrf
                                     <div class="form-group row justify-content-center">
-                                        <input type="hidden" value="{{ Auth::user()->mobile }}" name="mobile">
+                                        <input type="hidden" value="{{ $mobile }}" name="mobile">
                                         <label for="code"
                                                class="col-form-label col-md-2 text-center"
                                         >
@@ -60,15 +59,16 @@
 
                         <div class="row mt-2 py-4">
                             <div class="col-12 text-center">
-                                <a class="btn btn-light font-weight-bolder"
-                                   href="{{ route('verify.send-code') }}"
-                                   id="resend-code"
+                                <button class="btn btn-light font-weight-bolder"
+                                        data-target="{{ route('password.send-code') }}"
+                                        id="resend-code"
                                 >
                                     ارسال مجدد کد
-                                </a>
+                                </button>
                                 <div id="resend-timer">
                                     <div class="font-weight-bolder font-16">
-                                        <b> برای درخواست مجدد کد <span id="resend-timer-val"></span> ثانیه صبر کنید</b></div>
+                                        <b> برای درخواست مجدد کد <span id="resend-timer-val"></span> ثانیه صبر کنید</b>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -87,19 +87,56 @@
         $(document).ready(function () {
 
             let resend_code = $("#resend-code");
-            let resend_timer_value = $("#resend-timer-val");
             let resend_timer = $("#resend-timer");
-            let delay = 120
-            resend_code.hide();
+            let resend_timer_value = $("#resend-timer-val");
+            let timer;
+            function setTimer() {
+                let delay = 120;
+                resend_code.hide();
+                timer = setInterval(function () {
+                    resend_timer_value.text(delay--);
+                    if (delay === 0) {
+                        resend_code.delay(1000).fadeIn(1000);
+                        resend_timer.hide(1000).fadeOut(1000);
+                    }
+                }, 1000);
+            }
+            setTimer();
 
-            let timer = setInterval(function () {
-                resend_timer_value.text(delay--);
-                if (delay === 0) {
-                    resend_code.delay(1000).fadeIn(1000);
-                    resend_timer.hide(1000).fadeOut(fast);
-                }
-            }, 1000);
+            resend_code.on('click', function () {
+                $.ajax({
+                    url: $(this).attr('data-target'),
+                    type: 'POST',
+                    data: {
+                        '_token': '{{ csrf_token() }}',
+                        'mobile': "{{ $mobile }}",
+                    },
+                    success: function (result) {
+                        $("#flash-message").html(
+                            '<div class="alert alert-success alert-block">' +
+                            '<button type="button" class="close" data-dismiss="alert">×</button>' +
+                            '<strong class="mr-3">' + result.responseJSON + '</strong>' +
+                            '</div>'
+                        );
+                        resend_timer.delay(1000).fadeIn(1000);
+                        clearInterval(timer);
+                        setTimer();
 
+                    },
+                    error: function (result) {
+
+                        $("#flash-message").html(
+                            '<div class="alert alert-danger alert-block">' +
+                            '<button type="button" class="close" data-dismiss="alert">×</button>' +
+                            '<strong class="mr-3">' + result.responseJSON + '</strong>' +
+                            '</div>'
+                        );
+                        resend_timer.delay(1000).fadeIn(1000);
+                        clearInterval(timer);
+                        setTimer();
+                    }
+                });
+            });
         });
     </script>
 @endsection

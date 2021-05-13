@@ -11,21 +11,7 @@
                     <form method="POST" action="{{ route('password.update') }}">
                         @csrf
 
-                        <input type="hidden" name="token" value="{{ $token }}">
-
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-center">آدرس ایمیل</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="ltr form-control @error('email') is-invalid @enderror" name="email" value="{{ $email ?? old('email') }}" required autocomplete="email">
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
+                        <input type="hidden" name="mobile" value="{{ $mobile }}">
 
                         <div class="form-group row">
                             <label for="password" class="col-md-4 col-form-label text-center">رمز عبور</label>

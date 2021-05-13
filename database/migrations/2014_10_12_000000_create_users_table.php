@@ -15,14 +15,19 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+
             $table->string('name', 50);
-            $table->string('family', 50);
             $table->string('mobile',11)->unique();
-            $table->string('email', 70)->unique();
+
+            /*CHANGED IN LAZY_USER MIGRATION*/
+            $table->string('family', 50); // deleted
+            $table->string('email', 70)->unique(); // nullable, not unique
+
             $table->timestamp('email_verified_at')->nullable();
             $table->unsignedTinyInteger('level')->default(0); // 121 admin - 0 user
             $table->boolean('status')->default(true);
             $table->string('password');
+
             $table->rememberToken();
             $table->softDeletes();
             $table->timestamps();

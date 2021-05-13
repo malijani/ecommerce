@@ -15,7 +15,7 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-12 mt-3">
+        <div class="col-12 mt-3" id="flash-message">
             @include('partials.flashes')
         </div>
     </div>

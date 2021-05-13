@@ -2,7 +2,8 @@
 
 namespace App;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Fouladgar\MobileVerification\Contracts\MustVerifyMobile as IMustVerifyMobile;
+use Fouladgar\MobileVerification\Concerns\MustVerifyMobile;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -11,7 +12,7 @@ use Laravel\Passport\HasApiTokens;
 use Nagy\LaravelRating\Traits\Rate\CanRate;
 
 
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable
 {
     use Notifiable, SoftDeletes, HasApiTokens, CanRate;
 
@@ -60,6 +61,20 @@ class User extends Authenticatable implements MustVerifyEmail
     public function tickets()
     {
         return $this->hasMany(Ticket::class, 'user_id');
+    }
+
+    public function verification_code()
+    {
+        return $this->hasOne(VerificationCode::class, 'user_id');
+    }
+
+
+    public function isVerified()
+    {
+        if (!is_null($this->mobile_verified_at)) {
+            return true;
+        }
+        return false;
     }
 
     public function getDefaultAddressAttribute()

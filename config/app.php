@@ -249,7 +249,6 @@ return [
         'LaravelRating' => \Nagy\LaravelRating\LaravelRatingFacade::class,
         'Captcha' => Mews\Captcha\Facades\Captcha::class,
 
-
     ],
 
 ];
