@@ -62,11 +62,11 @@
                 {{--SHOW SEARCH BAR--}}
                 {{--DISPLAY > MD--}}
                 <div class="d-none d-md-block col-md-8 my-auto">
-                    <livewire:search />
+                    <livewire:search/>
                 </div>
                 {{--DISPLAY < MD--}}
                 <div class="d-sm-block d-md-none col-12 my-3">
-                    <livewire:search />
+                    <livewire:search/>
                 </div>
                 {{--./SHOW SEARCH BAR--}}
 
@@ -87,15 +87,16 @@
                                 >
                                     <i class="fal fa-desktop-alt fa-2x align-middle"></i>
 
-                                    <span class="mr-2" dir="ltr">{{ \Illuminate\Support\Facades\Auth::user()->full_name }}</span>
+                                    <span class="mr-2"
+                                          dir="ltr">{{ \Illuminate\Support\Facades\Auth::user()->full_name }}</span>
                                 </a>
                             </div>
                         @else
+
                             <a href="{{ route('login') }}" class="mx-1 py-1 px-2 text-dark rounded" role="button">
                                 <i class="far fa-user-alt fa-2x align-middle"></i>
                                 ورود
                             </a>
-
                         @endauth
 
                     @endif
@@ -121,9 +122,10 @@
                             @endif
                             {{--SHOW TOTAL PRICE OF CART--}}
                             @if(session()->get('total'))
-                                <span class="mr-2">تومن {{ number_format(session()->get('total')['final_price']) }}</span>
+                                <span
+                                    class="mr-2"> {{ number_format(session()->get('total')['final_price']) }} تومن</span>
                             @else
-                                <span class="mr-2">تومن 0</span>
+                                <span class="mr-2"> 0 تومن </span>
                             @endif
                         </a>
                     </div>
@@ -256,13 +258,15 @@
                             </a>
                         </li>
                     @else
+                        @if (\Illuminate\Support\Facades\Route::has('login'))
                         <li class="nav-item mx-2">
                             <a class="nav-link btn p-2"
-                                href="{{ route('login') }}"
+                               href="{{ route('login') }}"
                             >
                                 حساب کاربری
                             </a>
                         </li>
+                            @endif
                     @endauth
 
                     {{--SHOPPING CART--}}

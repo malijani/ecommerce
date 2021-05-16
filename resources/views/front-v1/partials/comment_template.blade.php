@@ -11,14 +11,20 @@
     <div class="row align-items-center">
         @auth
             <div class="col-4 col-md-1 mb-2">
-                <img class="rounded-circle img-fluid" src="{{ asset('images/fallback/user.png') }}" alt="">
+                <img class="img-fluid img-circle"
+                     src="{{ asset(Auth::user()->pic??'images/fallback/user.png') }}"
+                     alt="پروفایل"
+                >
             </div>
             <div class="col-8 col-md-11">
                 <h5>{{ Auth::user()->full_name }}</h5>
             </div>
         @else
             <div class="col-4 col-md-1 mb-2">
-                <img class="rounded-circle img-fluid" src="{{ asset('images/fallback/user.png') }}" alt="">
+                <img class="rounded-circle img-fluid"
+                     src="{{ asset('images/fallback/user.png') }}"
+                     alt="پروفایل"
+                >
             </div>
             <div class="col-8 col-md-11">
                 <h5>کاربر مهمان</h5>

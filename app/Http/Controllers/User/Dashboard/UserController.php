@@ -80,61 +80,68 @@ class UserController extends Controller
     public function update(Request $request, $id): RedirectResponse
     {
         $user = User::withoutTrashed()->findOrFail($id);
+
         if (Auth::id() !== $user->id) {
             return back()->with('error', 'دسترسی نامعتبر');
         }
 
+        if ($request->ajax()) {
+            $request->validate([
+                'delete' => 'required|in:true',
+            ]);
+            unlink(public_path($user->pic));
+            $user->pic = null;
+            $user->save();
+            return redirect()->back()->with('success', 'تصویر پروفایل با موفقیت حذف شد');
+        }
+
         $request->validate([
             'name' => ['required', 'string', 'max:50'],
-            'family' => ['required', 'string', 'max:50'],
-            'mobile' => ['required', 'iran_mobile', 'unique:users,mobile,' . $user->id],
-
-            'current_password' => ['nullable', 'string', 'min:8'],
-            'password' => ['nullable', 'required_with:current_password', 'exclude_if:current_password,null', 'string', 'min:8', 'confirmed'],
+            'email' => ['nullable', 'email', 'min:10', 'max:70'],
+            'password' => ['nullable', 'string', 'min:8', 'confirmed'],
+            'pic' => ['nullable', 'mimes:jpg,jpeg,png', 'max:300'],
         ], [
-            'name'=>[
-                'required'=>'تعیین نام کاربر الزامیست',
-                'string'=>'لطفا از حروف مناسب برای تعیین نام کاربر استفاده نمایید.',
-                'max'=>'نام کاربر حداکثر ۵۰ کاراکتر باشد',
-            ],
-            'family'=>[
-                'required'=>'تعیین نام خانوادگی کاربر الزامیست',
-                'string'=>'لطفا از حروف مناسب برای تعیین نام خانوادگی کاربر استفاده نمایید.',
-                'max'=>'نام خانوادگی کاربر حداکثر ۵۰ کاراکتر باشد',
-            ],
-            'mobile'=>[
-                'required'=>'تعیین شماره تلفن همراه کاربر الزامیست',
-                'iran_mobile'=>'شماره تلفن همراه کاربر باید معتبر و درون شبکه ایران باشد',
-                'unique'=>'این شماره تلفن قبلاً توسط کاربر دیگری ثبت شده',
-            ],
-            'current_password'=>[
-                'string'=>'لطفاً از حروف مناسب برای تعیین رمز عبور استفاده نمایید',
-                'min'=>'رمز عبور حداقل باید دارای ۸ کاراکتر باشد'
-            ],
-            'password'=>[
-                'required_with'=>'لطفا پسورد کنونی خود را تعیین نمایید',
-                'string'=>'لطفاً از حروف مناسب برای تعیین رمز عبور جدید استفاده نمایید',
-                'min'=>'رمز عبور جدید حداقل باید دارای ۸ کاراکتر باشد',
-                'confirmed' => 'لطفاً در تکرار رمز عبور جدید خود دقت فرمایید',
-            ],
+
+            'name.required' => 'تعیین نام کاربر الزامیست',
+            'name.string' => 'لطفا از حروف مناسب برای تعیین نام کاربر استفاده نمایید.',
+            'name.max' => 'نام کاربر حداکثر ۵۰ کاراکتر باشد',
+
+            'email.email' => 'ایمیل وارد شده صحیح نیست.',
+            'email.max' => 'برای ایمیل حداکثر ۷۰ کاراکتر در نظر گرفته شده است.',
+            'email.min' => 'برای ایمیل حداقل ۱۰ کاراکتر در نظر گرفته شده است.',
+
+            'password.string' => 'لطفاً از حروف مناسب برای تعیین رمز عبور جدید استفاده نمایید',
+            'password.min' => 'رمز عبور جدید حداقل باید دارای ۸ کاراکتر باشد',
+            'password.confirmed' => 'لطفاً در تکرار رمز عبور جدید خود دقت فرمایید',
+
+            'pic.mimes' => 'فرمت تصویر نامعتبر، فرمت های png, jpg, jpeg معتبر هستند.',
+            'pic.max' => 'حداکثر حجم فایل 300 کیلوبایت تعیین شده!',
         ]);
 
+        /*UPLOAD IMAGE*/
+        if($request->hasFile('pic')){
+            $pic = imageUploader($request, 'pic', 'user_profile', 300, 300);
+        } else {
+            $pic = $user->pic;
+        }
 
-        $new_password = Auth::user()->password;
+        if($request->hasFile('pic') && !is_null($user->pic)){
+            unlink(public_path($user->pic));
+        }
+
+        $password = Auth::user()->password;
         /*CONTROL PASSWORD IF PRESENT*/
-        if (!is_null($request->input('current_password')) && !is_null($request->input('password'))) {
-            $current_password = $request->input('current_password');
-            if (Hash::check($current_password, Auth::user()->password)) {
-                $new_password = Hash::make($request->input('password'));
-            } else {
-                return back()->with('error' , 'خطایی در بروز رسانی رمز عبور رخ داده، لطفاً دوباره تلاش کنید.');
+        if (!empty($request->input('password'))) {
+            $new_password = $request->input('password');
+            if (!Hash::check($new_password, $password)) {
+                $password = Hash::make($request->input('password'));
             }
         }
 
-
         $user->update(array_merge(
-            $request->except('password'),
-            ['password' => $new_password]
+            $request->except('password', 'mobile', 'pic'),
+            ['password' => $password],
+            ['pic' => $pic]
         ));
 
         return back()->with('success', 'حساب کاربری شما با موفقیت بروز رسانی شد!');

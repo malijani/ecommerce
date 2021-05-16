@@ -13,16 +13,51 @@
 
         <div class="card-body">
 
+            {{--IMAGE--}}
+            <div class="form-group row justify-content-center">
+                <label for="pic" class="profile-pic col-form-label col-md-5 position-relative text-center">
+                    <img src="{{ asset($user->pic ?? 'images/fallback/user.png') }}"
+                         alt="{{ $user->name }}"
+                         class="img img-fluid rounded"
+                         id="preview"
+                    >
+
+                    @if(isset($user->pic))
+                        <button type="button"
+                                data-url="{{ route('dashboard.profile.update', $user->id) }}"
+                                class="delete_pic btn btn-sm btn-outline-danger rounded-circle position-absolute mr-1"
+                        >
+                            <i class="fal fa-times align-middle"></i>
+                        </button>
+                    @endif
+
+                </label>
+
+                <div class="col-md-8">
+                    <input id="pic"
+                           type="file"
+                           name="pic"
+                           accept=".jpg,.jpeg,.png"
+                           onchange="showImage(this);"
+                           hidden
+                    >
+                    @include('partials.form_error', ['input'=>'pic'])
+                </div>
+
+
+            </div>
+
+
             {{--NAME--}}
             <div class="form-group row justify-content-center">
                 <label for="name"
-                       class="col-md-2 col-form-label text-md-left">
+                       class="col-md-2 col-form-label text-md-center">
                     نام
                 </label>
                 <div class="col-md-6">
                     <input id="name"
                            type="text"
-                           class="form-control @error('name') is-invalid @enderror"
+                           class="form-control text-center @error('name') is-invalid @enderror"
                            name="name" value="{{ old('name') ?? $user->name }}"
                            required
                            autocomplete="name"
@@ -32,70 +67,56 @@
                 </div>
             </div>
 
-            {{--FAMILY--}}
+
+            {{--EMAIL--}}
             <div class="form-group row justify-content-center">
-                <label for="family"
-                       class="col-md-2 col-form-label text-md-left">
-                    نام خانوادگی
+                <label for="email"
+                       class="col-md-2 col-form-label text-md-center"
+                >
+                    آدرس ایمیل
                 </label>
 
-                <div class="col-md-6">
-                    <input id="family" type="text"
-                           class="form-control @error('family') is-invalid @enderror"
-                           name="family"
-                           value="{{ old('family') ?? $user->family }}"
-                           required
-                           autocomplete="family"
-                           placeholder="نام خانوادگی کاربر"
-
+                <div class="col-md-6 ">
+                    <input
+                        name="email"
+                        id="email"
+                        class="form-control text-center @error('email') is-invalid @enderror"
+                        value="{{ $user->email }}"
+                        maxlength="70"
+                        minlength="10"
+                        placeholder="user@gmail.com"
                     >
-                    @include('partials.form_error', ['input'=>'family'])
+                    @include('partials.form_error', ['input'=>'name'])
                 </div>
             </div>
+
 
             {{--MOBILE--}}
             <div class="form-group row justify-content-center">
                 <label for="mobile"
-                       class="col-md-2 col-form-label text-md-left"
+                       class="col-md-2 col-form-label text-md-center"
                 >
                     تلفن همراه
                 </label>
 
-                <div class="col-md-6">
+                <div class="col-md-5">
                     <input id="mobile"
                            type="number"
                            class="ltr form-control text-center @error('mobile') is-invalid @enderror"
                            name="mobile"
-                           value="{{ old('mobile') ?? $user->mobile }}"
+                           value="{{ $user->mobile }}"
                            minlength="11"
                            maxlength="11"
                            required
                            autocomplete="mobile"
                            placeholder="09103234432"
+                           readonly
                     >
 
                     @include('partials.form_error', ['input'=>'mobile'])
                 </div>
-            </div>
-
-            {{--EMAIL--}}
-            <div class="form-group row justify-content-center">
-                <label for="email"
-                       class="col-md-2 col-form-label text-md-left"
-                >
-                    آدرس ایمیل
-                </label>
-
-                <div class="col-md-5">
-                    <input
-                        class="form-control"
-                           value="{{ $user->email }}"
-                           readonly
-                    >
-                </div>
-
-                <div class="col-md-1 mt-1 text-center">
-                    @if(!is_null($user->email_verified_at))
+                <div class="col-md-1 mt-1  text-center">
+                    @if(!is_null($user->mobile_verified_at))
                         <span class="badge badge-success font-14">
                             تایید شده
                             <i class="fa fa-check align-middle"></i>
@@ -107,7 +128,10 @@
                         </span>
                     @endif
                 </div>
+
             </div>
+
+
         </div>
 
 
@@ -116,38 +140,15 @@
             <div class="col-md-12">
                 <button class="btn btn-outline-dark w-100" type="button" data-toggle="collapse"
                         data-target="#passwordCollapse" aria-expanded="false" aria-controls="passwordCollapse">
-                    بروز رسانی رمز عبور
+                    تغییر رمز عبور
                 </button>
             </div>
         </div>
 
-        <div class="collapse @if($errors->current_password->any() || $errors->password->any()) show @endif"
+        <div class="collapse @error('password') show @enderror"
              id="passwordCollapse">
 
             <div class="card card-body">
-
-
-                {{--CURRENT PASSWORD--}}
-                <div class="form-group row justify-content-center">
-                    <label for="current_password"
-                           class="col-md-3 col-form-label text-md-left"
-                    >
-                        رمز عبور فعلی
-                        <i class="fa fa-asterisk text-danger"></i>
-                    </label>
-
-                    <div class="col-md-6">
-                        <input id="current_password"
-                               type="password"
-                               class="ltr form-control @error('current_password') is-invalid @enderror"
-                               name="current_password"
-                               placeholder="************"
-                               value=""
-                        >
-
-                        @include('partials.form_error', ['input'=>'current_password'])
-                    </div>
-                </div>
 
                 {{--PASSWORD--}}
                 <div class="form-group row justify-content-center">
@@ -207,4 +208,52 @@
     </form>
 
 @endsection
+
+@push('scripts')
+    <script>
+        // Set image src for selected image tag
+        function readURL(input, img) {
+            if (input.files && input.files[0]) {
+                let reader = new FileReader();
+                reader.onload = function (e) {
+                    img.attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        // Show image preview for each file input
+        function showImage(element) {
+            //$('input[name="file[file]['+id+']"]').attr('name');
+            function id(element) {
+                let name = $(element).attr('name');
+                return name[name.length - 2];
+            }
+
+            readURL(element, $('#preview'));
+        }
+
+        @if(isset($user->pic))
+        $(document).ready(function () {
+            $(".delete_pic").on('click', function () {
+                $.ajax({
+                    url: $(this).attr('data-url'),
+                    type: 'POST',
+                    data: {
+                        '_token': '{{ csrf_token() }}',
+                        '_method': 'PATCH',
+                        'delete': 'true',
+                    },
+                    success: function (result) {
+                        location.reload();
+                    },
+                    error: function () {
+                        location.reload();
+                    }
+                });
+            });
+        });
+        @endif
+    </script>
+@endpush
 

@@ -21,8 +21,36 @@
 
 
                     <div class="row">
+
+                        {{--PIC--}}
+                        <div class="col-md-12">
+                            <div class="form-group row justify-content-center">
+                                <label for="pic"
+                                       class="profile-pic col-form-label col-md-12 position-relative text-center">
+                                    <img src="{{ asset('images/fallback/user.png') }}"
+                                         alt="تصویر پروفایل"
+                                         class="img img-fluid rounded"
+                                         id="preview"
+                                    >
+
+
+                                </label>
+                            </div>
+                            <div class="col-md-8">
+                                <input id="pic"
+                                       type="file"
+                                       name="pic"
+                                       accept=".jpg,.jpeg,.png"
+                                       onchange="showImage(this);"
+                                       hidden
+                                >
+                                @include('partials.form_error', ['input'=>'pic'])
+                            </div>
+                        </div>
+
+
                         {{--NAME--}}
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="form-group row">
                                 <label for="name"
                                        class="col-md-2 col-form-label text-center">
@@ -32,35 +60,14 @@
                                     <input id="name"
                                            type="text"
                                            class="form-control @error('name') is-invalid @enderror"
-                                           name="name" value="{{ old('name') }}"
+                                           name="name"
+                                           value="{{ old('name') }}"
                                            required
                                            autocomplete="name"
                                            autofocus
                                            placeholder="نام کاربر"
                                     >
                                     @include('partials.form_error', ['input'=>'name'])
-                                </div>
-                            </div>
-                        </div>
-                        {{--FAMILY--}}
-                        <div class="col-md-6">
-                            <div class="form-group row">
-                                <label for="family"
-                                       class="col-md-2 col-form-label text-center">
-                                    نام خانوادگی
-                                </label>
-
-                                <div class="col-md-8">
-                                    <input id="family" type="text"
-                                           class="form-control @error('family') is-invalid @enderror"
-                                           name="family"
-                                           value="{{ old('family') }}"
-                                           required
-                                           autocomplete="family"
-                                           placeholder="نام خانوادگی کاربر"
-
-                                    >
-                                    @include('partials.form_error', ['input'=>'family'])
                                 </div>
                             </div>
                         </div>
@@ -252,35 +259,29 @@
 
 @section('page-scripts')
 
-    <script type="text/javascript" src="{{ asset('adminrc/plugins/ckeditor-full/ckeditor.js') }}"></script>
-    <script type="text/javascript">
-        CKEDITOR.replace('text', {
-            height: 400,
-            baseFloatZIndex: 10005,
-            contentsLangDirection: 'rtl',
-            contentsLanguage: 'fa',
-            exportPdf_tokenUrl: "{{ \Illuminate\Support\Str::random(15) }}",
-            font_names: 'Vazir;' +
-                'Arial/Arial, Helvetica, sans-serif;' +
-                'Comic Sans MS/Comic Sans MS, cursive;' +
-                'Courier New/Courier New, Courier, monospace;' +
-                'Georgia/Georgia, serif;' +
-                'Lucida Sans Unicode/Lucida Sans Unicode, Lucida Grande, sans-serif;' +
-                'Tahoma/Tahoma, Geneva, sans-serif;' +
-                'Times New Roman/Times New Roman, Times, serif;' +
-                'Trebuchet MS/Trebuchet MS, Helvetica, sans-serif;' +
-                'Verdana/Verdana, Geneva, sans-serif',
-            font_defaultLabel: 'Vazir',
-            forcePasteAsPlainText: false,
-            forceEnterMode: true,
-            editorplaceholder: 'شرکت کره ای سامسونگ از قدیمی ترین شرکت های عرصه تکنولوژی است...',
-        });
+    <script>
+        // Set image src for selected image tag
+        function readURL(input, img) {
+            if (input.files && input.files[0]) {
+                let reader = new FileReader();
+                reader.onload = function (e) {
+                    img.attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
 
+        // Show image preview for each file input
+        function showImage(element) {
+            //$('input[name="file[file]['+id+']"]').attr('name');
+            function id(element) {
+                let name = $(element).attr('name');
+                return name[name.length - 2];
+            }
 
-        $(".custom-file-input").on("change", function () {
-            var fileName = $(this).val().split("\\").pop();
-            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
-        });
+            readURL(element, $('#preview'));
+        }
+
     </script>
 @endsection
 

@@ -75,7 +75,7 @@
                                     </td>
                                     {{--VERIFIED--}}
                                     <td class="align-middle">
-                                        @if(!is_null($user->email_verified_at))
+                                        @if(!is_null($user->mobile_verified_at))
                                             <span class="badge badge-success">
                                             <i class="fa fa-check-square-o"></i>
                                                 <span class="hide">1</span>
@@ -141,9 +141,6 @@
                 </div>
                 <!-- /.card -->
             </div>
-        </div>
-        <div class="col-md-6 offset-3">
-            {{ $users->links() }}
         </div>
 
 

@@ -26,7 +26,8 @@ class User extends Authenticatable
         'mobile', 'email',
         'password',
         'level', 'status',
-        'email_verified_at'
+        'email_verified_at',
+        'pic'
     ];
 
     /**
@@ -68,14 +69,6 @@ class User extends Authenticatable
         return $this->hasOne(VerificationCode::class, 'user_id');
     }
 
-
-    public function isVerified()
-    {
-        if (!is_null($this->mobile_verified_at)) {
-            return true;
-        }
-        return false;
-    }
 
     public function getDefaultAddressAttribute()
     {

@@ -7,7 +7,10 @@
     <div class="col-12 mt-2 p-1  ">
         <div class="row align-items-center mt-2">
             <div class="col-4 col-md-1">
-                <img class="rounded-circle img-fluid img-bordered-sm" src="{{ asset('images/fallback/user.png') }}" alt="">
+                <img class="img-fluid img-circle img-bordered-sm img-circle"
+                     src="{{ asset($comment->user->pic ?? 'images/fallback/user.png') }}"
+                     alt=""
+                >
             </div>
             <div class="col-8 col-md-11">
                 <div class="row">

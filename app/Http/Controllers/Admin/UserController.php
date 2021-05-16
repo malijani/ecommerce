@@ -24,9 +24,9 @@ class UserController extends Controller
         $users = User::withoutTrashed()
             ->orderByDesc('level')
             ->orderByDesc('status')
-            ->orderByDesc('email_verified_at')
+            ->orderByDesc('mobile_verified_at')
             ->orderByDesc('id')
-            ->paginate(100);
+            ->get();
 
         return response()->view('admin.user.index', [
             'title' => $title,
@@ -58,19 +58,22 @@ class UserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:50'],
-            'family' => ['required', 'string', 'max:50'],
             'mobile' => ['required', 'iran_mobile', 'unique:users,mobile'],
             'email' => ['required', 'string', 'email', 'max:70', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'level' => ['required', 'numeric', 'in:0,121'],
             'status' => ['required', 'numeric', 'in:0,1'],
             'verified' => ['required', 'numeric', 'in:0,1'],
+            'pic' => ['nullable', 'mimes:jpg,jpeg,png', 'max:300']
         ]);
 
+        $pic = imageUploader($request, 'pic', 'user_profile', 300, 300);
+
         User::query()->create(array_merge(
-            $request->except('password', 'verified'),
+            $request->except('password', 'verified', 'pic'),
             ['password' => Hash::make($request->input('password'))],
-            ['email_verified_at' => ($request->input('verified') == 1) ? Carbon::now()->toDateTimeString() : null]
+            ['mobile_verified_at' => ($request->input('verified') == 1) ? Carbon::now()->toDateTimeString() : null],
+            ['pic' => $pic]
         ));
 
         return response()->redirectToRoute('users.index')->with('success', 'کاربر جدید با موفقیت افزوده شد!');
@@ -120,9 +123,18 @@ class UserController extends Controller
     {
         $user = User::withoutTrashed()->findOrFail($id);
 
+        if ($request->ajax()) {
+            $request->validate([
+                'delete' => 'required|in:true',
+            ]);
+            unlink(public_path($user->pic));
+            $user->pic = null;
+            $user->save();
+            return redirect()->back()->with('success', 'تصویر پروفایل با موفقیت حذف شد');
+        }
+
         $request->validate([
             'name' => ['required', 'string', 'max:50'],
-            'family' => ['required', 'string', 'max:50'],
             'mobile' => ['required', 'iran_mobile', 'unique:users,mobile,' . $user->id],
             'email' => ['required', 'string', 'email', 'max:70', 'unique:users,email,' . $user->id],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
@@ -131,10 +143,23 @@ class UserController extends Controller
             'verified' => ['required', 'numeric', 'in:0,1'],
         ]);
 
+        /*UPLOAD IMAGE*/
+        if($request->hasFile('pic')){
+            $pic = imageUploader($request, 'pic', 'user_profile', 300, 300);
+        } else {
+            $pic = $user->pic;
+        }
+
+        if($request->hasFile('pic') && !is_null($user->pic)){
+            unlink(public_path($user->pic));
+        }
+
+
         $user->update(array_merge(
             $request->except('password', 'verified'),
             ['password' => ($user->password == $request->input('password')) ? $user->password : Hash::make($request->input('password'))],
-            ['email_verified_at' => ($request->input('verified') == 1) ? Carbon::now()->toDateTimeString() : null]
+            ['mobile_verified_at' => ($request->input('verified') == 1) ? Carbon::now()->toDateTimeString() : null],
+            ['pic' => $pic]
         ));
 
         return response()->redirectToRoute('users.index')->with('success', 'کاربر ' . $user->full_name . ' با موفقیت بروزرسانی شد');
