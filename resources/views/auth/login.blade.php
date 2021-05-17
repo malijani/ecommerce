@@ -8,6 +8,19 @@
                     <div class="card-header text-center p-5 font-20">ورود به {{ config('app.name') }}</div>
 
                     <div class="card-body">
+                        @if($requested)
+                        <div class="row">
+                            <div class="col-12 text-center text-md-right mb-4">
+                                <a href="{{ route('verify.show') }}"
+                                   class="btn btn-light font-weight-bolder"
+                                >
+                                    <i class="far fa-arrow-alt-right"></i>
+                                   وارد کردن کد
+                                </a>
+                            </div>
+                        </div>
+                        @endif
+
                         <form method="POST" action="{{ route('login') }}">
                             @csrf
 

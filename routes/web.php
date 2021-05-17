@@ -9,6 +9,7 @@ Route::group(['middleware' => ['guest']], function () {
     Route::get('login', 'Auth\AuthController@showLogin')->name('login');
     Route::post('login', 'Auth\AuthController@doLogin')->name('login');
     /*TODO : VERIFY ROUTE PROTECTING*/
+    Route::get('verify', 'Auth\AuthController@showVerify')->name('verify.show');
     Route::post('verify', 'Auth\AuthController@doVerify')->name('verify');
     Route::post('verify/resend', 'Auth\AuthController@resendCode')->name('verify.resend');
 });

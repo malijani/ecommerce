@@ -14,7 +14,7 @@
                                    class="btn btn-light font-weight-bolder"
                                 >
                                     تغییر شماره تلفن ({{ $mobile }})
-                                    <i class="fa fa-arrow-alt-from-right"></i>
+                                    <i class="far fa-arrow-alt-left"></i>
 
                                 </a>
                             </div>
@@ -118,10 +118,11 @@
                         'mobile': "{{ $mobile }}",
                     },
                     success: function (result) {
+                        console.log(result);
                         $("#flash-message").html(
                             '<div class="alert alert-success alert-block">' +
                             '<button type="button" class="close" data-dismiss="alert">×</button>' +
-                            '<strong class="mr-3">' + result.responseJSON + '</strong>' +
+                            '<strong class="mr-3">' + result + '</strong>' +
                             '</div>'
                         );
                         resend_timer.delay(1000).fadeIn(1000);
@@ -130,11 +131,11 @@
 
                     },
                     error: function (result) {
-
+                        console.log(result);
                         $("#flash-message").html(
                             '<div class="alert alert-danger alert-block">' +
                             '<button type="button" class="close" data-dismiss="alert">×</button>' +
-                            '<strong class="mr-3">' + result.responseJSON + '</strong>' +
+                            '<strong class="mr-3">' + result + '</strong>' +
                             '</div>'
                         );
                         resend_timer.delay(1000).fadeIn(1000);
