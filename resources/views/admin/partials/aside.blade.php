@@ -23,11 +23,11 @@
     <div class="sidebar" style="direction: ltr">
         <div style="direction: rtl">
             <!-- Sidebar user panel (optional) -->
-            <div class="user-panel mt-3 pb-3 mb-3 d-flex justify-content-center">
+            <div class="user-panel mt-3 pb-3 mb-3 d-flex justify-content-left">
                 <div class="image mr-2">
-                    <img src="{{ asset('images/fallback/user.png') }}"
+                    <img src="{{ asset(Auth::user()->pic ?? 'images/fallback/user.png') }}"
                          class="img-circle elevation-2"
-                         alt="User Image"
+                         alt="{{ Auth::user()->uuid }}"
                     >
                 </div>
                 <div class="info">
