@@ -11,7 +11,7 @@ class Brand extends Model
 {
     use SoftDeletes;
 
-    protected $fillable =[
+    protected $fillable = [
         'user_id', 'title', 'title_en',
         'text', 'pic', 'pic_alt', 'color', 'keywords',
         'description', 'sort', 'status',
@@ -22,7 +22,12 @@ class Brand extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function scopeSearch($q, $search, $limit=4)
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'brand_id', 'id');
+    }
+
+    public function scopeSearch($q, $search, $limit = 4)
     {
         return $q->where('status', 1)
             ->where(function ($query) use ($search) {
@@ -43,6 +48,7 @@ class Brand extends Model
     {
         return Str::words(strip_tags($this->text), 10);
     }
+
     /**
      * Return a limited description
      */

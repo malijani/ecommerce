@@ -22,7 +22,7 @@ function imageUploader(Request $request, $field, $dir, $wsize = null, $hsize = n
             mkdir($path, 0777, true);
         }
         $pic = $path . '/' . $name;
-        // CONVERT IMAGE TO 300x300 PNG WITH WATERMARK
+        // CONVERT IMAGE TO WxH PNG WITH WATERMARK
         $manager = new ImageManager(['driver' => 'imagick']);
         $handler = $manager->make($file->path());
         if (!is_null($wsize) || !is_null($hsize)) {
@@ -38,6 +38,25 @@ function imageUploader(Request $request, $field, $dir, $wsize = null, $hsize = n
 
         $handler->encode('png');
         $handler->save($pic);
+
+        return $pic;
+    } else {
+        return null;
+    }
+}
+
+
+function icoUploader(Request $request, $field, $dir): ?string
+{
+    if ($request->hasFile($field)) {
+        $file = $request->file($field);
+        $name = Str::random(20) . '.' . $file->extension() ?? 'png';
+        $path = 'storage/files/shares/' . $dir;
+        if (!is_dir($path)) {
+            mkdir($path, 0777, true);
+        }
+        $pic = $path . '/' . $name;
+        $file->move($path , $name);
         return $pic;
     } else {
         return null;
@@ -94,9 +113,9 @@ function generateUniqueString(object $model, string $column, int $length = 11): 
 
 function generateUniqueNumber(object $model, string $column, int $length = 11): string
 {
-    $number = str_pad(rand(0, pow(10, $length)-1), $length, '0', STR_PAD_LEFT);
+    $number = str_pad(rand(0, pow(10, $length) - 1), $length, '0', STR_PAD_LEFT);
     while ($model->where($column, '=', $number)->count() > 0) {
-        $number = str_pad(rand(0, pow(10, $length)-1), $length, '0', STR_PAD_LEFT);
+        $number = str_pad(rand(0, pow(10, $length) - 1), $length, '0', STR_PAD_LEFT);
     }
     return $number;
 }

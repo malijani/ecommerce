@@ -19,6 +19,7 @@ class SuperLazyUserRemovePassword extends Migration
             $table->dropColumn('password');
             $table->dropColumn('mobile_verified_at');
             $table->string('name', 50)->nullable()->change();
+            $table->string('uuid', 10)->after('id');
 
         });
     }
@@ -31,6 +32,7 @@ class SuperLazyUserRemovePassword extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('uuid');
             $table->string('password')
                 ->after('pic')
                 ->default(Hash::make(Str::random(8)));

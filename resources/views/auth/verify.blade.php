@@ -24,16 +24,12 @@
                                     @csrf
                                     <div class="form-group row justify-content-center">
 
-                                        <input type="hidden" value="{{ $mobile }}" name="mobile">
-                                        <input type="hidden" value="{{ $remember }}" name="remember">
-
                                         <label for="code"
-                                               class="col-form-label col-md-2 text-center"
+                                               class="col-form-label col-md-1 text-center"
                                         >
-                                            <i class="fal fa-asterisk text-danger"></i>
                                             کد
                                         </label>
-                                        <div class="col-md-4">
+                                        <div class="col-md-10">
                                             <input type="text"
                                                    name="code"
                                                    id="code"
@@ -44,12 +40,13 @@
                                                    minlength="6"
                                                    maxlength="6"
                                                    required
+                                                   autofocus
                                             >
                                             @include('partials.form_error', ['input'=>'code'])
                                         </div>
                                     </div>
                                     <div class="form-group row justify-content-center">
-                                        <div class="col-12 col-md-6">
+                                        <div class="col-12">
                                             <button type="submit"
                                                     class="form-control btn btn-outline-primary"
                                             >
@@ -112,13 +109,8 @@
             resend_code.on('click', function () {
                 $.ajax({
                     url: $(this).attr('data-target'),
-                    type: 'POST',
-                    data: {
-                        '_token': '{{ csrf_token() }}',
-                        'mobile': "{{ $mobile }}",
-                    },
+                    type: 'GET',
                     success: function (result) {
-                        console.log(result);
                         $("#flash-message").html(
                             '<div class="alert alert-success alert-block">' +
                             '<button type="button" class="close" data-dismiss="alert">×</button>' +
@@ -131,11 +123,10 @@
 
                     },
                     error: function (result) {
-                        console.log(result);
                         $("#flash-message").html(
                             '<div class="alert alert-danger alert-block">' +
                             '<button type="button" class="close" data-dismiss="alert">×</button>' +
-                            '<strong class="mr-3">' + result + '</strong>' +
+                            '<strong class="mr-3">' + result.responseJSON + '</strong>' +
                             '</div>'
                         );
                         resend_timer.delay(1000).fadeIn(1000);

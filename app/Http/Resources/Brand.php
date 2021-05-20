@@ -24,6 +24,7 @@ class Brand extends JsonResource
             'color' => $this->color,
             'keywords' => $this->keywords,
             'description' => $this->description,
+            'products' => new ProductBrand($this->products)
         ];
     }
 }

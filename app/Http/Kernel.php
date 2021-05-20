@@ -65,11 +65,11 @@ class Kernel extends HttpKernel
         'password.confirm' => \Illuminate\Auth\Middleware\RequirePassword::class,
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        /*'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,*/
         //CUSTOM MIDDLEWARES
         'auth.admin' => \App\Http\Middleware\AuthAdmin::class,
         'auth.normal' => \App\Http\Middleware\AuthNormal::class,
-        'auth.password.reset' => \App\Http\Middleware\PasswordReset::class,
+        /*'auth.password.reset' => \App\Http\Middleware\PasswordReset::class,*/
         'xss.sanitizer' => \App\Http\Middleware\XssSanitizer::class,
     ];
 }

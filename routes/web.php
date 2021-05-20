@@ -11,10 +11,10 @@ Route::group(['middleware' => ['guest']], function () {
     /*TODO : VERIFY ROUTE PROTECTING*/
     Route::get('verify', 'Auth\AuthController@showVerify')->name('verify.show');
     Route::post('verify', 'Auth\AuthController@doVerify')->name('verify');
-    Route::post('verify/resend', 'Auth\AuthController@resendCode')->name('verify.resend');
+    Route::get('verify/resend', 'Auth\AuthController@resendCode')->name('verify.resend');
 });
 
-Route::group(['middleware' => ['auth']], function () {
+Route::group(['middleware' => ['web','auth']], function () {
     Route::post('logout', 'Auth\AuthController@doLogout')->name('logout');
 });
 
@@ -87,6 +87,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web', 'auth', 'auth.admin']
     /*WEBSITE CONTROL*/
     Route::resource('top-navs', 'Admin\TopNavController')->except(['show']);
     Route::resource('logos', 'Admin\LogoController')->except(['show']);
+    Route::resource('favicons', 'Admin\FaviconController')->except(['show']);
     Route::resource('banners', 'Admin\BannerController')->except(['show']);
     Route::resource('sliders', 'Admin\SliderController')->except(['show']);
     Route::resource('image-menus', 'Admin\ImageMenuController')->except(['show']);

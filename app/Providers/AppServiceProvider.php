@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Article;
 use App\Comment;
+use App\Favicon;
 use App\FooterImage;
 use App\FooterItem;
 use App\FooterLicense;
@@ -38,6 +39,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+
+
+        /*WEBSITE FAVICON*/
+        $favicon = Favicon::query()->where('status', 1)->first();
+        View::share('favicon', $favicon);
 
         /*MEDIUM SCREEN NAVIGATION ITEMS*/
         $top_navs_medium = TopNav::withoutTrashed()

@@ -373,6 +373,18 @@
                     </li>
 
                     <li class="nav-item">
+                        <a href="{{ route('favicons.index') }}"
+                           class="nav-link {{ Request::routeIs('favicons.*') ? 'active' : '' }}"
+                        >
+                            <i class="nav-icon fab fa-amilia"></i>
+                            <p>
+                                فاواکن ها
+                            </p>
+                        </a>
+                    </li>
+
+
+                    <li class="nav-item">
                         <a href="{{ route('banners.index') }}"
                            class="nav-link {{ Request::routeIs('banners.*') ? 'active' : '' }}"
                         >

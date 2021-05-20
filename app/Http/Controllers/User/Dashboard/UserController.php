@@ -96,23 +96,17 @@ class UserController extends Controller
         }
 
         $request->validate([
-            'name' => ['required', 'string', 'max:50'],
+            'name' => ['nullable', 'string', 'max:50'],
             'email' => ['nullable', 'email', 'min:10', 'max:70'],
-            'password' => ['nullable', 'string', 'min:8', 'confirmed'],
             'pic' => ['nullable', 'mimes:jpg,jpeg,png', 'max:300'],
         ], [
 
-            'name.required' => 'تعیین نام کاربر الزامیست',
             'name.string' => 'لطفا از حروف مناسب برای تعیین نام کاربر استفاده نمایید.',
             'name.max' => 'نام کاربر حداکثر ۵۰ کاراکتر باشد',
 
             'email.email' => 'ایمیل وارد شده صحیح نیست.',
             'email.max' => 'برای ایمیل حداکثر ۷۰ کاراکتر در نظر گرفته شده است.',
             'email.min' => 'برای ایمیل حداقل ۱۰ کاراکتر در نظر گرفته شده است.',
-
-            'password.string' => 'لطفاً از حروف مناسب برای تعیین رمز عبور جدید استفاده نمایید',
-            'password.min' => 'رمز عبور جدید حداقل باید دارای ۸ کاراکتر باشد',
-            'password.confirmed' => 'لطفاً در تکرار رمز عبور جدید خود دقت فرمایید',
 
             'pic.mimes' => 'فرمت تصویر نامعتبر، فرمت های png, jpg, jpeg معتبر هستند.',
             'pic.max' => 'حداکثر حجم فایل 300 کیلوبایت تعیین شده!',
@@ -129,18 +123,8 @@ class UserController extends Controller
             unlink(public_path($user->pic));
         }
 
-        $password = Auth::user()->password;
-        /*CONTROL PASSWORD IF PRESENT*/
-        if (!empty($request->input('password'))) {
-            $new_password = $request->input('password');
-            if (!Hash::check($new_password, $password)) {
-                $password = Hash::make($request->input('password'));
-            }
-        }
-
         $user->update(array_merge(
-            $request->except('password', 'mobile', 'pic'),
-            ['password' => $password],
+            $request->except('mobile', 'pic'),
             ['pic' => $pic]
         ));
 

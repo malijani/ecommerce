@@ -24,7 +24,6 @@ class UserController extends Controller
         $users = User::withoutTrashed()
             ->orderByDesc('level')
             ->orderByDesc('status')
-            ->orderByDesc('mobile_verified_at')
             ->orderByDesc('id')
             ->get();
 
@@ -57,22 +56,20 @@ class UserController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:50'],
+            'name' => ['nullable', 'string', 'max:50'],
             'mobile' => ['required', 'iran_mobile', 'unique:users,mobile'],
-            'email' => ['required', 'string', 'email', 'max:70', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'email' => ['nullable', 'string', 'email', 'max:70', 'unique:users'],
             'level' => ['required', 'numeric', 'in:0,121'],
             'status' => ['required', 'numeric', 'in:0,1'],
-            'verified' => ['required', 'numeric', 'in:0,1'],
             'pic' => ['nullable', 'mimes:jpg,jpeg,png', 'max:300']
         ]);
 
         $pic = imageUploader($request, 'pic', 'user_profile', 300, 300);
+        $uuid = generateUniqueString(app('App\\User'), 'uuid', 10);
 
         User::query()->create(array_merge(
-            $request->except('password', 'verified', 'pic'),
-            ['password' => Hash::make($request->input('password'))],
-            ['mobile_verified_at' => ($request->input('verified') == 1) ? Carbon::now()->toDateTimeString() : null],
+            $request->except('pic'),
+            ['uuid' => $uuid],
             ['pic' => $pic]
         ));
 
@@ -134,31 +131,26 @@ class UserController extends Controller
         }
 
         $request->validate([
-            'name' => ['required', 'string', 'max:50'],
+            'name' => ['nullable', 'string', 'max:50'],
             'mobile' => ['required', 'iran_mobile', 'unique:users,mobile,' . $user->id],
-            'email' => ['required', 'string', 'email', 'max:70', 'unique:users,email,' . $user->id],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'email' => ['nullable', 'string', 'email', 'max:70', 'unique:users,email,' . $user->id],
             'level' => ['required', 'numeric', 'in:0,121'],
             'status' => ['required', 'numeric', 'in:0,1'],
-            'verified' => ['required', 'numeric', 'in:0,1'],
         ]);
 
         /*UPLOAD IMAGE*/
-        if($request->hasFile('pic')){
+        if ($request->hasFile('pic')) {
             $pic = imageUploader($request, 'pic', 'user_profile', 300, 300);
+            if (!is_null($user->pic)) {
+                unlink(public_path($user->pic));
+            }
         } else {
             $pic = $user->pic;
         }
 
-        if($request->hasFile('pic') && !is_null($user->pic)){
-            unlink(public_path($user->pic));
-        }
-
 
         $user->update(array_merge(
-            $request->except('password', 'verified'),
-            ['password' => ($user->password == $request->input('password')) ? $user->password : Hash::make($request->input('password'))],
-            ['mobile_verified_at' => ($request->input('verified') == 1) ? Carbon::now()->toDateTimeString() : null],
+            $request->all(),
             ['pic' => $pic]
         ));
 

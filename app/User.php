@@ -27,7 +27,7 @@ class User extends Authenticatable
         'password',
         'level', 'status',
         'email_verified_at',
-        'pic'
+        'pic', 'uuid'
     ];
 
     /**
@@ -104,28 +104,23 @@ class User extends Authenticatable
      */
     public function getFullNameAttribute()
     {
-        if (isset($this->name, $this->family)) {
-            return $this->name . ' ' . $this->family;
-        } elseif (isset($this->name)) {
+        return current(array_filter([$this->name ?? '', $this->uuid]));
+        /*if(isset($this->name)){
             return $this->name;
-        } elseif (isset($this->family)) {
-            return $this->family;
-        } elseif (isset($this->email)) {
-            return $this->email;
         } else {
-            return $this->mobile;
-        }
+            return $this->uuid;
+        }*/
+
     }
 
     public function getContactInformationAttribute()
     {
-        if (isset($this->mobile) && isset($this->email)) {
-            return $this->mobile . ' ' . $this->email;
-        } elseif (isset($this->mobile)) {
-            return $this->mobile;
-        } else {
-            return $this->email;
-        }
+        return array_filter([$this->mobile, $this->email ?? '']);
+        /*if (isset($this->email)) {
+             return [$this->mobile ,$this->email];
+         } else {
+             return $this->mobile;
+         }*/
     }
 
 }

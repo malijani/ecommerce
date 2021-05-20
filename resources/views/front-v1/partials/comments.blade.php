@@ -9,7 +9,7 @@
             <div class="col-4 col-md-1">
                 <img class="img-fluid img-circle img-bordered-sm img-circle"
                      src="{{ asset($comment->user->pic ?? 'images/fallback/user.png') }}"
-                     alt=""
+                     alt="{{ $comment->user->full_name ?? 'کاربر مهمان' }}"
                 >
             </div>
             <div class="col-8 col-md-11">

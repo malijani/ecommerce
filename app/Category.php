@@ -40,6 +40,11 @@ class Category extends Model
         return $this->children()->with('childrenRecursive');
     }
 
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'category_id', 'id');
+    }
+
     public function activeChildren(): HasMany
     {
         return $this->children()->where('status', 1)->where('menu', 1);

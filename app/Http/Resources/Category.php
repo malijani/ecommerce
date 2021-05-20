@@ -16,7 +16,6 @@ class Category extends JsonResource
     {
         //return parent::toArray($request);
         return [
-            //'parent'=>new Category($this->parent),
             'title'=>$this->title,
             'title_en'=>$this->title_en,
             'text'=>$this->text,
@@ -25,8 +24,7 @@ class Category extends JsonResource
             'color'=>$this->color,
             'keywords'=>$this->keywords,
             'description'=>$this->description,
-
-
+            'products' => new ProductCategory($this->products)
             ];
     }
 }

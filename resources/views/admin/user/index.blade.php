@@ -26,9 +26,9 @@
                                 <td>#</td>
                                 <td>نمایه</td>
                                 <td>نام</td>
+                                <td>کد کاربری</td>
                                 <td>ارتباط</td>
                                 <td>سطح دسترسی</td>
-                                <td>تایید اطلاعات تماس</td>
                                 <td>وضعیت</td>
                                 <td>تاریخ ثبت</td>
                                 <td>عملیات</td>
@@ -61,8 +61,13 @@
                                             {{ $user->full_name }}
                                         </a>
                                     </td>
+                                    <td class="align-middle">
+                                        {{ $user->uuid }}
+                                    </td>
                                     {{--MOBILE, EMAIL--}}
-                                    <td class="align-middle">{{$user->mobile}} <br> {{ $user->email }}</td>
+                                    <td class="align-middle">
+                                        {!! implode("<br>" ,$user->contact_information) !!}
+                                    </td>
                                     {{--LEVEL--}}
                                     <td class="align-middle">
                                         @if($user->isAdmin())
@@ -73,20 +78,7 @@
                                             <span class="badge badge-warning">کاربر نامشخص</span>
                                         @endif
                                     </td>
-                                    {{--VERIFIED--}}
-                                    <td class="align-middle">
-                                        @if(!is_null($user->mobile_verified_at))
-                                            <span class="badge badge-success">
-                                            <i class="fa fa-check-square-o"></i>
-                                                <span class="hide">1</span>
-                                        </span>
-                                        @else
-                                            <span class="badge badge-danger">
-                                            <i class="fa fa-minus-square-o"></i>
-                                                <span class="hide">0</span>
-                                        </span>
-                                        @endif
-                                    </td>
+
                                     {{--STATUS--}}
                                     <td class="align-middle">
                                         @if($user->status==0)

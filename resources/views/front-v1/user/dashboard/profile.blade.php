@@ -15,6 +15,7 @@
 
             {{--IMAGE--}}
             <div class="form-group row justify-content-center">
+
                 <label for="pic" class="profile-pic col-form-label col-md-5 position-relative text-center">
                     <img src="{{ asset($user->pic ?? 'images/fallback/user.png') }}"
                          alt="{{ $user->name }}"
@@ -49,21 +50,25 @@
 
 
             {{--NAME--}}
-            <div class="form-group row justify-content-center">
+            <div class="form-group row justify-content-center align-items-center">
                 <label for="name"
                        class="col-md-2 col-form-label text-md-center">
                     نام
                 </label>
-                <div class="col-md-6">
+                <div class="col-md-6 col-8">
                     <input id="name"
                            type="text"
                            class="form-control text-center @error('name') is-invalid @enderror"
                            name="name" value="{{ old('name') ?? $user->name }}"
-                           required
                            autocomplete="name"
                            placeholder="نام کاربر"
                     >
                     @include('partials.form_error', ['input'=>'name'])
+                </div>
+                <div class="col-4 text-center bg-whitesmoke rounded py-2">
+                    <span class="text-muted font-weight-bolder">
+                        {{ $user->uuid }}
+                    </span>
                 </div>
             </div>
 
@@ -76,7 +81,7 @@
                     آدرس ایمیل
                 </label>
 
-                <div class="col-md-6 ">
+                <div class="col-md-10 ">
                     <input
                         name="email"
                         id="email"
@@ -99,7 +104,7 @@
                     تلفن همراه
                 </label>
 
-                <div class="col-md-5">
+                <div class="col-md-10">
                     <input id="mobile"
                            type="number"
                            class="ltr form-control text-center @error('mobile') is-invalid @enderror"
@@ -107,98 +112,19 @@
                            value="{{ $user->mobile }}"
                            minlength="11"
                            maxlength="11"
-                           required
                            autocomplete="mobile"
                            placeholder="09103234432"
+                           required
                            readonly
                     >
 
                     @include('partials.form_error', ['input'=>'mobile'])
                 </div>
-                <div class="col-md-1 mt-1  text-center">
-                    @if(!is_null($user->mobile_verified_at))
-                        <span class="badge badge-success font-14">
-                            تایید شده
-                            <i class="fa fa-check align-middle"></i>
-                        </span>
-                    @else
-                        <span class="badge badge-danger">
-                            تایید نشده
-                            <i class="fa fa-plus fa-rotate-270"></i>
-                        </span>
-                    @endif
-                </div>
 
             </div>
 
 
         </div>
-
-
-        {{--PASSWORD UPDATE SECTION--}}
-        <div class="row justify-content-center">
-            <div class="col-md-12">
-                <button class="btn btn-outline-dark w-100" type="button" data-toggle="collapse"
-                        data-target="#passwordCollapse" aria-expanded="false" aria-controls="passwordCollapse">
-                    تغییر رمز عبور
-                </button>
-            </div>
-        </div>
-
-        <div class="collapse @error('password') show @enderror"
-             id="passwordCollapse">
-
-            <div class="card card-body">
-
-                {{--PASSWORD--}}
-                <div class="form-group row justify-content-center">
-                    <label for="password"
-                           class="col-md-3 col-form-label text-md-left"
-                    >
-                        رمز عبور جدید
-                        <i class="fa fa-asterisk text-danger"></i>
-                    </label>
-
-                    <div class="col-md-6">
-                        <input id="password"
-                               type="password"
-                               class="ltr form-control @error('password') is-invalid @enderror"
-                               name="password"
-                               autocomplete="new-password"
-                               placeholder="************"
-                               value=""
-                        >
-
-                        @include('partials.form_error', ['input'=>'password'])
-                    </div>
-                </div>
-
-                {{--CONFIRM PASSWORD--}}
-                <div class="form-group row justify-content-center">
-                    <label for="password-confirm"
-                           class="col-md-3 col-form-label text-md-left"
-                    >
-                        تکرار رمز عبور جدید
-                        <i class="fa fa-asterisk text-danger"></i>
-                    </label>
-
-                    <div class="col-md-6">
-                        <input id="password-confirm"
-                               type="password"
-                               class="ltr form-control"
-                               name="password_confirmation"
-                               autocomplete="new-password"
-                               placeholder="************"
-                               value=""
-                        >
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-        {{--./PASSWORD UPDATE SECTION--}}
-
 
         <div class="row my-4">
             <div class="col-12 px-3">

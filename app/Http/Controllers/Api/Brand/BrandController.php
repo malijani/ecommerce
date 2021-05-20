@@ -1,34 +1,27 @@
 <?php
 
-namespace App\Http\Controllers\Api\Category;
+namespace App\Http\Controllers\Api\Brand;
 
-use App\Category;
+use App\Brand;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Categories;
-use App\Http\Resources\Categories as CategoriesResource;
-use App\Http\Resources\ProductCategory;
-use Illuminate\Http\JsonResponse;
+use App\Http\Resources\Brands;
 use Illuminate\Http\Request;
 
-class CategoryController extends Controller
+class BrandController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return JsonResponse
+     * @return \Illuminate\Http\Response
      */
-    public function index() : JsonResponse
+    public function index()
     {
-        $categories = Category::withoutTrashed()
-            ->where('title_en', 'products')
+        $brands = Brand::withoutTrashed()
             ->where('status', 1)
-            ->orderBy('created_at', 'DESC')
-            ->orderBy('sort', 'ASC')
-            ->firstOrFail()
-            ->subActiveChildren()
-            ->paginate(50);
+            ->orderBy('sort')
+            ->paginate(100);
 
-        return response()->json(new CategoriesResource($categories));
+        return new Brands($brands);
     }
 
     /**
@@ -60,12 +53,10 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        $category = Category::withoutTrashed()
-            ->where('status', 1)
+        $brand = Brand::withoutTrashed()
             ->with('products')
             ->findOrFail($id);
-
-        return new \App\Http\Resources\Category($category);
+        return  new \App\Http\Resources\Brand($brand);
     }
 
     /**
