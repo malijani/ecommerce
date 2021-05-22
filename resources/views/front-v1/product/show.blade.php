@@ -79,7 +79,7 @@
 
                 <div class="col-12">{{--ORDER SECTION--}}
                     @if($product->status != 2 && $product->price_type != 2 &&  $product->entity > 0)
-                        <form action="{{ route('cart.store') }}" method="POST">
+                        <form action="{{ route('cart.store') }}" method="POST" id="product_shop_form">
                             @csrf
                             <input type="hidden" name="order[product_id]" value="{{ $product->id }}">
                             {{--CUSTOMIZE ORDER WITH ATTRIBUTES--}}
@@ -340,6 +340,40 @@
                 }
 
             });
+
+
+
+
+
+
+
+
+
+
+
+
+            $("#product_shop_form").submit(function(e) {
+
+                e.preventDefault();
+
+                let form = $(this);
+                let url = form.attr('action');
+
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: form.serialize(), // serializes the form's elements.
+                    success: function(data)
+                    {
+                        location.reload(); // show response from the php script.
+                    }
+                });
+
+
+            });
+
+
+
 
 
             /*OWL CAROUSEL*/

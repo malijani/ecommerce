@@ -4,7 +4,7 @@
 use Diglactic\Breadcrumbs\Breadcrumbs;
 
 Breadcrumbs::for('home', function ($trail) {
-    $trail->push(config('app.name' ?? 'فروشگاه'), route('home'));
+    $trail->push(config('app.short.name' ?? 'فروشگاه'), route('home'));
 });
 
 // Home > Dashboard

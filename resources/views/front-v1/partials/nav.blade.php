@@ -48,13 +48,17 @@
                 {{--SHOW LOGO--}}
                 {{--DISPLAY > MD--}}
                 <div class="d-none d-md-block col-md-4 text-center">
+                    <a href="{{ route('home') }}">
                     <img class="img-fluid rounded align-middle" src="{{asset($logo->pic??'images/fallback/logo.png')}}"
                          alt="{{$logo->pic_alt??config('app.name')}}">
+                    </a>
                 </div>
                 {{--DISPLAY < MD--}}
                 <div class="d-sm-block d-md-none col-md-1 text-center py-3 border-bottom">
+                    <a href="{{ route('home') }}">
                     <img class="img-fluid rounded align-middle" src="{{asset($logo->pic??'images/fallback/logo.png')}}"
                          alt="{{$logo->pic_alt??config('app.name')}}">
+                    </a>
                 </div>
                 {{--./SHOW LOGO--}}
 
@@ -113,18 +117,22 @@
 
                         >
                             <i class="far fa-shopping-cart fa-2x align-middle"></i>
-                            {{--SHOW COUNT OF ITEMS IN CART--}}
-                            @if(session()->get('basket'))
-                                <span
-                                    class="border border-dark rounded px-2 ">{{ count(session()->get('basket')) }}</span>
-                            @else
-                                <span class="border border-dark rounded px-2 ">0</span>
-                            @endif
+                            {{--   --}}{{--SHOW COUNT OF ITEMS IN CART--}}{{--
+                               @if(session()->get('basket'))
+                                   <span
+                                       class="border border-dark rounded px-2 ">{{ count(session()->get('basket')) }}</span>
+                               @else
+                                   <span class="border border-dark rounded px-2 ">0</span>
+                               @endif--}}
                             {{--SHOW TOTAL PRICE OF CART--}}
                             @if(session()->get('total'))
                                 <span
+                                    class="border border-dark rounded px-2 ">{{ session()->get('total')['count'] }}</span>
+                                <span
                                     class="mr-2"> {{ number_format(session()->get('total')['final_price']) }} تومن</span>
                             @else
+
+                                <span class="border border-dark rounded px-2 ">0</span>
                                 <span class="mr-2"> 0 تومن </span>
                             @endif
                         </a>
@@ -259,14 +267,14 @@
                         </li>
                     @else
                         @if (\Illuminate\Support\Facades\Route::has('login'))
-                        <li class="nav-item mx-2">
-                            <a class="nav-link btn p-2"
-                               href="{{ route('login') }}"
-                            >
-                                حساب کاربری
-                            </a>
-                        </li>
-                            @endif
+                            <li class="nav-item mx-2">
+                                <a class="nav-link btn p-2"
+                                   href="{{ route('login') }}"
+                                >
+                                    حساب کاربری
+                                </a>
+                            </li>
+                        @endif
                     @endauth
 
                     {{--SHOPPING CART--}}

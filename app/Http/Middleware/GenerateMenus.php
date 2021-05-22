@@ -23,7 +23,7 @@ class GenerateMenus
 
         \Menu::make('NavBar', function ($menu) {
             /*HOME*/
-            $menu->add(config('app.name') ?? 'خانه', [
+            $menu->add(config('app.short.name') ?? 'خانه', [
                 'route' => 'home',
                 'nickname' => 'home',
             ])->activate();

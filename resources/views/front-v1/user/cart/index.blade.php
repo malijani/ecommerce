@@ -161,7 +161,7 @@
             <div class="col-12 col-lg-4 mt-3 py-3">
                 <h6>مجموع سبد</h6>
                 <div class="table-responsive">
-                    <table class="table table-hover">
+                    <table class="table ">
                         <tbody>
                         <tr>
                             <th scope="row">تعداد کالا</th>

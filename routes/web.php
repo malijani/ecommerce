@@ -60,6 +60,7 @@ Route::group(['prefix' => 'user', 'middleware' => ['web', 'auth', 'auth.normal',
 Route::group(['prefix' => 'admin', 'middleware' => ['web', 'auth', 'auth.admin']], function () {
 
     Route::get('', 'Admin\AdminController@index')->name('admin.home');
+    Route::resource('factors', 'Admin\FactorController');
     Route::resource('users', 'Admin\UserController');
     Route::resource('categories', 'Admin\CategoryController');
     Route::resource('brands', 'Admin\BrandController');

@@ -46,6 +46,20 @@
                          with font-awesome or any other icon font library -->
 
 
+
+                    {{--ORDERS--}}
+                    <li class="nav-item">
+                        <a href="{{ route('factors.index') }}"
+                           class="nav-link {{ Request::routeIs('factors.*') ? 'active' : '' }}"
+                        >
+                            <i class="nav-icon fal fa-th-list"></i>
+                            <p>
+                                سفارشات
+                            </p>
+                        </a>
+                    </li>
+
+
                     <li class="nav-item has-treeview {{Request::routeIs('users.*') ? 'menu-open' : '' }}">
                         <a href="#" class="nav-link {{Request::routeIs('users.*') ? 'active' : '' }}">
                             <i class="nav-icon fal fa-user"></i>
