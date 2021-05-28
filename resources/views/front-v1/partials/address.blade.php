@@ -10,19 +10,22 @@
                     {{$default_address['province']}} - {{$default_address['city']}}
                     - {{ $default_address['address'] }}
                 </div>
-                @if(isset($default_address['name_family']))
+                @if(!empty($default_address['name_family']))
                     <div class="p-2">
                         <i class="fa fa-user"></i>
                         {{$default_address['name_family']}}
                     </div>
                 @endif
-                @if(isset($default_address['mobile']) || isset($default_address['tell']))
+                @if(!empty($default_address['mobile']))
                     <div class="ltr p-2">
-                        {{$default_address['mobile']}} - {{$default_address['tell']}}
+                        {{$default_address['mobile']}}
+                        @if(!empty($default_address['tell']))
+                            - {{$default_address['tell']}}
+                        @endif
                         <i class="fa fa-phone"></i>
                     </div>
                 @endif
-                @if(isset($default_address['post_code']))
+                @if(!empty($default_address['post_code']))
                     <div class="ltr p-2">
                         {{$default_address['post_code']}}
                         <i class="fa fa-home"></i>
@@ -34,7 +37,8 @@
 @else
     <div class="row mt-5">
         <div class="col-12 text-center">
-            <span class="alert-danger p-4 rounded">آدرسی برای ارسال سفارش وجود ندارد! لطفاً یک آدرس جدید ثبت کنید.</span>
+            <span
+                class="alert-danger p-4 rounded">آدرسی برای ارسال سفارش وجود ندارد! لطفاً یک آدرس جدید ثبت کنید.</span>
         </div>
     </div>
 @endif
@@ -55,7 +59,8 @@
         </button>
     </div>
 
-    <div class="col-12 collapse @if($default_address==null || $errors->any()) show @endif" id="add-new-address-form">{{--create address form--}}
+    <div class="col-12 collapse @if($default_address==null || $errors->any()) show @endif"
+         id="add-new-address-form">{{--create address form--}}
         <div class="card">
             <div class="card-header">
                 <div class="text-center font-weight-bolder">
@@ -127,7 +132,7 @@
                                     id="province"
                                     required
                             >
-                                <option value="" >لطفاً استان مقصد را انتخاب کنید</option>
+                                <option value="">لطفاً استان مقصد را انتخاب کنید</option>
                                 @foreach($provinces as $province)
                                     <option value="{{$province->title}}">{{$province->title}}</option>
                                 @endforeach
@@ -307,7 +312,27 @@
 
         }
 
+
+        let
+            persianNumbers = [/۰/g, /۱/g, /۲/g, /۳/g, /۴/g, /۵/g, /۶/g, /۷/g, /۸/g, /۹/g],
+            arabicNumbers = [/٠/g, /١/g, /٢/g, /٣/g, /٤/g, /٥/g, /٦/g, /٧/g, /٨/g, /٩/g],
+            fixNumbers = function (str) {
+                if (typeof str === 'string') {
+                    for (let i = 0; i < 10; i++) {
+                        str = str.replace(persianNumbers[i], i).replace(arabicNumbers[i], i);
+                    }
+                }
+                return str;
+            };
+
         $(document).ready(function () {
+            $("#mobile").on('keyup', function(){
+                $(this).val(fixNumbers($(this).val()));
+            });
+
+
+
+
             let province = $('#province');
             let city = $('#city');
 

@@ -52,7 +52,7 @@
                                 <td class="align-middle text-center">
                                     <span>{{ $ticket->user->full_name}}</span>
                                     <hr>
-                                    <span>{{ $ticket->user->contact_information }}</span>
+                                    <span>{{ implode(" | ", $ticket->user->contact_information) }}</span>
                                 </td>
                                 {{--SHOW TITLE--}}
                                 <td class="align-middle text-center">

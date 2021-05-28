@@ -19,7 +19,7 @@ class PageController extends Controller
      */
     public function index()
     {
-        $title = 'مدیریت صفحات  ' . config('app.name');
+        $title = 'مدیریت صفحات  ' . config('app.short.name');
         $pages = Page::withoutTrashed()
             ->orderBy('sort')
             ->orderByDesc('id')

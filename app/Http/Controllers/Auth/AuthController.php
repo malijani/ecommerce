@@ -42,10 +42,14 @@ class AuthController extends Controller
 
         $user = User::withoutTrashed()
             ->where('mobile', $request->input('mobile'))
-            ->firstOrCreate([
-                'mobile' => $request->input('mobile'),
-                'uuid'=> generateUniqueString(app('App\\User'), 'uuid', 10),
-            ]);
+            ->firstOrCreate(
+                [
+                    'mobile' => $request->input('mobile')
+                ],
+                [
+                    'uuid' => generateUniqueString(app('App\\User'), 'uuid', 10)
+                ]
+            );
 
         $result = $this->sendCode($user);
 
@@ -58,7 +62,6 @@ class AuthController extends Controller
 
         session()->put('login', []);
         session()->put('login.mobile', $user->mobile);
-        session()->put('login.remember', $request->has('remember'));
 
         return redirect(route('verify.show'))
             ->with('success', $result['message']);
@@ -67,7 +70,7 @@ class AuthController extends Controller
 
     public function showVerify()
     {
-        /*CHECK LOGIN SESSION FOR USER AND REMEMBER*/
+        /*CHECK LOGIN SESSION FOR USER*/
         $login = session()->get('login') ?? [];
         if (empty($login)) {
             return redirect(route('login'))
@@ -75,7 +78,6 @@ class AuthController extends Controller
         }
 
         $mobile = (array_key_exists('mobile', $login)) ? $login['mobile'] : null;
-        $remember = (array_key_exists('remember', $login)) ? $login['remember'] : null;
 
         if (empty(User::withoutTrashed()->where('mobile', $mobile)->first())) {
             session()->forget('login');
@@ -86,7 +88,6 @@ class AuthController extends Controller
         return view('auth.verify', [
             'title' => 'تایید حساب کاربری',
             'mobile' => $mobile,
-            'remember' => $remember
         ]);
 
     }
@@ -110,7 +111,6 @@ class AuthController extends Controller
 
         $login = session()->get('login');
         $mobile = $login['mobile'] ?? null;
-        $remember = $login['remember'] ?? false;
         $code = $request->input('code');
 
         $user = User::withoutTrashed()
@@ -131,7 +131,7 @@ class AuthController extends Controller
                 ->with('error', $result['message']); // Show error message
         }
 
-        Auth::login($user, $remember);
+        Auth::login($user, true);
         $request->session()->regenerate();
         session()->forget('login');
         session()->forget('sanjab_verify');

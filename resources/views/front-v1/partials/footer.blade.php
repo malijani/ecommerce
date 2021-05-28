@@ -6,7 +6,7 @@
             <div class="col-12 text-center">
                 <a href="{{ $footer_image->link ?? '#' }}">
                     <img src="{{ asset($footer_image->pic ?? 'images/fallback/footer_licenses.png') }}"
-                         alt="مجوز های {{ $footer_image->pic_alt ?? config('app.name') ?? ' وبسایت' }}"
+                         alt="مجوز های {{ $footer_image->pic_alt ?? config('app.short.name') ?? ' وبسایت' }}"
                          class="img img-fluid rounded"
                     >
                 </a>
@@ -204,8 +204,8 @@
                 @else
                     <div class="col-12">
                         <p class="text-lime-a100 mt-3">
-                            تمامی حقوق مادی و معنوی این وبسایت متعلق به {{ config('app.name') }} می‌باشد و هرگونه سوء
-                            استفاده تحت پیگرد قانونی قرار میگیرد؛ {{ config('app.name') }} هیچ شعبه دیگری ندارد.
+                            تمامی حقوق مادی و معنوی این وبسایت متعلق به {{ config('app.short.name') }} می‌باشد و هرگونه سوء
+                            استفاده تحت پیگرد قانونی قرار میگیرد؛ {{ config('app.short.name') }} هیچ شعبه دیگری ندارد.
                         </p>
                     </div>
                 @endif
@@ -300,7 +300,7 @@
                         کپی رایت @ 1400.
                         طراحی و توسعه توسط
                         <a href="https://github.com/malijani"
-                           title="توسعه دهنده وبسایت {{ config('app.name') }}"
+                           title="توسعه دهنده وبسایت {{ config('app.short.name') }}"
                            class="text-warning"
                         >
                             محمد علی جانی

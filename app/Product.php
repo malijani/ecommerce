@@ -32,7 +32,7 @@ class Product extends Model
         'title', 'title_en', 'short_text', 'long_text',
         'origin', 'deliver', 'warranty',
         'price_type', 'price', 'discount_percent', 'price_self_buy',
-        'entity', 'keywords', 'description', 'visit', 'sort',
+        'entity','sold', 'keywords', 'description', 'visit', 'sort',
         'status', 'before', 'after', 'color', 'weight'
     ];
 

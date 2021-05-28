@@ -33,7 +33,7 @@
                                             <input type="text"
                                                    name="code"
                                                    id="code"
-                                                   class="form-control text-center @error('code') is-invalid @enderror"
+                                                   class="form-control text-center ltr @error('code') is-invalid @enderror"
                                                    placeholder="کد ارسالی به شماره شما"
                                                    autocomplete="off"
                                                    pattern="\d*"
@@ -86,8 +86,27 @@
 
 
 @section('page-scripts')
+
     <script>
+
+        let
+            persianNumbers = [/۰/g, /۱/g, /۲/g, /۳/g, /۴/g, /۵/g, /۶/g, /۷/g, /۸/g, /۹/g],
+            arabicNumbers = [/٠/g, /١/g, /٢/g, /٣/g, /٤/g, /٥/g, /٦/g, /٧/g, /٨/g, /٩/g],
+            fixNumbers = function (str) {
+                if (typeof str === 'string') {
+                    for (let i = 0; i < 10; i++) {
+                        str = str.replace(persianNumbers[i], i).replace(arabicNumbers[i], i);
+                    }
+                }
+                return str;
+            };
+
         $(document).ready(function () {
+
+            let code_input = $("#code")
+            code_input.on('keyup', function(){
+                code_input.val(fixNumbers(code_input.val()));
+            });
 
             let resend_code = $("#resend-code");
             let resend_timer = $("#resend-timer");

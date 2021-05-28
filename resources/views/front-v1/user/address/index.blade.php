@@ -16,7 +16,7 @@
             <div class="col-12 col-lg-4 py-4">{{--FINAL DESCRIPTION--}}
                 <h3>فاکتور نهایی سفارش</h3>
                 <div class="table-responsive">
-                    <table class="table table-hover">
+                    <table class="table">
                         <tbody>
                         <tr>
                             <th scope="row">تعداد کالا</th>
@@ -39,16 +39,16 @@
                             <th scope="row">هزینه نهایی سفارش</th>
                             <td>{{ number_format($total['final_price']) }} تومن</td>
                         </tr>
-                        {{-- <tr class="">
+                         <tr class="">
                              <td colspan="2">
-                                 <a href="{{ route('address.index') }}"
+                                 <a href="{{ route('factor.create') }}"
                                     type="button"
                                     class="btn btn-outline-success w-100 font-weight-bolder"
                                  >
-                                     ثبت سفارش
+                                     ایجاد فاکتور
                                  </a>
                              </td>
-                         </tr>--}}
+                         </tr>
                         </tbody>
                     </table>
                 </div>

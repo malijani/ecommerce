@@ -14,18 +14,19 @@
         <div class="row px-0 bg-white py-3">
             {{--PRODUCT IMAGES--}}
             <div class="col-lg-6 mb-5 ">
-                <div class="row">
-                    <div class="col-2 product-thumbnails">
+                <div class="row align-items-center">
+
+                    <div class="product-thumbnails col-3">
                         @foreach($product->files as $file)
                             <img src="{{ asset($file->link) }}"
                                  alt="{{ $file->title }}"
-                                 class="img-thumbnail img-bordered-sm"
+                                 class="img-thumbnail img-bordered-sm my-2"
                                  id="product-thumbnail-{{$loop->index}}"
                             >
                         @endforeach
                     </div>
 
-                    <div class="col-10" id="main-image-container">
+                    <div class="col-9" id="main-image-container">
                         <img src="{{ asset($product->files()->defaultFile()->link) }}"
                              alt="{{ $product->files()->defaultFile()->title }}"
                              id="main-image"
@@ -39,18 +40,42 @@
 
             <div class="col-lg-6 product-details pl-md-5">{{-- PRODUCT MAIN CONTENT--}}
                 <h3>{{ $product->title }}</h3>
-                <div class="rating d-flex">
-                    <p class="text-left mr-4">
+
+
+                <div class="row my-2">
+
+                    <div class="col-12 my-3">
                         @include('front-v1.partials.rating_stars', ['model'=>$product])
-                    </p>
-                    <p class="text-left mr-4">
-                        <a href="#" class="mr-2" style="color: #000;">100 <span style="color: #bbb;">رای</span></a>
-                    </p>
-                    <p class="text-left">
-                        <a href="#" class="mr-2" style="color: #000;">500 <span
-                                style="color: #bbb;">فروخته شده</span></a>
-                    </p>
+                    </div>
+
+
+                    <div class="col-12">
+                        <p class="text-right mr-md-4">
+                            <span class="mx-2">
+                                <a href="#ratings">
+                                    <span class="text-dark">
+                                        {{ $product->ratingsCount() }}
+                                    </span>
+                                    <span class="text-muted">
+                                        رای
+                                    </span>
+                                </a>
+                            </span>
+
+                            <span class="mx-2">
+                                <span class="text-dark">
+                                    {{ $product->sold }}
+                                </span>
+                                <span class="text-muted">
+                                    فروخته شده
+                                </span>
+                            </span>
+                        </p>
+                    </div>
+
                 </div>
+
+
                 <div class="price w-50 pr-5">
                     <p class="border p-2 rounded text-center">
 
@@ -227,7 +252,7 @@
         </div>
 
         {{--RATING--}}
-        <div class="row bg-white py-3 mt-3 rounded">
+        <div class="row bg-white py-3 mt-3 rounded" id="ratings">
             @include('front-v1.partials.rating', ['user_rate'=>getUserRating($product), 'model'=>$product])
         </div>
         {{--./RATING--}}
@@ -245,7 +270,7 @@
             <div class="row mt-5 bg-white mb-5">
                 <div class="col-12 p-3 d-flex justify-content-between align-items-center">
                     <h3 class="font-14">
-                        <span class="text-dark" >محصولات مشابه</span>
+                        <span class="text-dark">محصولات مشابه</span>
                     </h3>
                 </div>
 
@@ -342,17 +367,7 @@
             });
 
 
-
-
-
-
-
-
-
-
-
-
-            $("#product_shop_form").submit(function(e) {
+            $("#product_shop_form").submit(function (e) {
 
                 e.preventDefault();
 
@@ -363,17 +378,13 @@
                     type: "POST",
                     url: url,
                     data: form.serialize(), // serializes the form's elements.
-                    success: function(data)
-                    {
+                    success: function (data) {
                         location.reload(); // show response from the php script.
                     }
                 });
 
 
             });
-
-
-
 
 
             /*OWL CAROUSEL*/

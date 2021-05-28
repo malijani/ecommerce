@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\User\Dashboard;
 
 use App\Http\Controllers\Controller;
-use App\Mailers\AppMailer;
+
 use App\Ticket;
 use App\TicketCategory;
 use Illuminate\Http\Request;
@@ -57,7 +57,7 @@ class TicketController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, AppMailer $mailer)
+    public function store(Request $request)
     {
         $request->validate([
             'category_id' => 'required|numeric|exists:ticket_categories,id',
@@ -106,7 +106,6 @@ class TicketController extends Controller
             ['uuid' => $uuid]
         ));
         $ticket->save();
-        $mailer->sendTicketInformation(Auth::user(), $ticket);
 
         return response()->redirectToRoute('dashboard.tickets.show', $ticket->uuid)->with('success', 'تیکت شما با موفقیت ثبت شد.');
     }

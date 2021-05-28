@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin\Ticket;
 
 use App\Http\Controllers\Controller;
-use App\Mailers\AppMailer;
 use App\Ticket;
 use App\TicketComment;
 use Illuminate\Http\Request;
@@ -37,7 +36,7 @@ class CommentController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, AppMailer $mailer)
+    public function store(Request $request)
     {
         /*ADD COMMENT TO A TICKET AND HANDLING ADMIN_ID*/
 
@@ -64,8 +63,6 @@ class CommentController extends Controller
         $comment->save();
         $ticket->status = 1;
         $ticket->save();
-
-        $mailer->sendTicketInformation(Auth::user(), $ticket);
 
         return response()->redirectToRoute('tickets.show', $ticket->id)->with('success', 'پاسخ شما ثبت شد.');
     }

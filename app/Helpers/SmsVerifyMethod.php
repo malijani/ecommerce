@@ -1,17 +1,22 @@
 <?php
+
 namespace App\Helpers;
 
-use MohsenBostan\GhasedakSms;
+use Ghasedak\GhasedakApi;
 use SanjabVerify\Contracts\VerifyMethod;
 
 class SmsVerifyMethod implements VerifyMethod
 {
-    public function send(string $receiver, string $code) : bool
+    public function send(string $receiver, string $code): bool
     {
-        // Send code to receiver
-        $message = 'کد تایید ' . config('app.short.name') . " : ". $code;
-        $sms_response = GhasedakSms::sendSingleSMS($message, $receiver);
-        if ($sms_response['result']['message'] == 'success') {
+        $api = new GhasedakApi(env('GHASEDAK_API_KEY'));
+        $type = 1;
+        $template = "gymlandauth";
+        $param1 = $code;
+
+        $sms_response = $api->Verify($receiver, $type, $template, $param1);
+
+        if ($sms_response->result->message == 'success' && $sms_response->result->code == 200) {
             return true; // If code sent successfully then return true
         }
         return false; // If send code failed return false

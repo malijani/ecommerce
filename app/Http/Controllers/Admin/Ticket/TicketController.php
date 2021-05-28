@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin\Ticket;
 
 use App\Http\Controllers\Controller;
-use App\Mailers\AppMailer;
 use App\Ticket;
 use App\TicketCategory;
 use App\User;
@@ -55,7 +54,7 @@ class TicketController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, AppMailer $mailer)
+    public function store(Request $request)
     {
         $request->validate([
             'user_id' => 'required|numeric|exists:users,id',
@@ -80,8 +79,6 @@ class TicketController extends Controller
         ));
 
         $ticket->save();
-
-        $mailer->sendTicketInformation(Auth::user(), $ticket);
 
         return response()->redirectToRoute('tickets.index')->with('success', 'یک تیکت با آیدی #' . $ticket->uuid . ' ایجاد شد');
     }

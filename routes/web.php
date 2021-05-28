@@ -39,6 +39,9 @@ Route::group(['prefix' => 'user', 'middleware' => ['web', 'auth', 'auth.normal',
     /*ADDRESSES*/
     Route::resource('address', 'User\AddressController')->only(['index', 'destroy', 'store', 'update']);
     Route::post('province/cities', 'User\ProvinceController@cities')->name('province.cities');
+    /*FACTOR*/
+    Route::resource('factor', 'User\Factor\FactorController')->only(['create']);
+
     /*RATE*/
     Route::resource('rating', 'User\RatingController')->only(['store']);
 
