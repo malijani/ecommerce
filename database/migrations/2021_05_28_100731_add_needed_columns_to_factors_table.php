@@ -18,6 +18,7 @@ class AddNeededColumnsToFactorsTable extends Migration
             $table->string('discount_price', 10)->default(0)->after('raw_price');
             $table->string('discount_code', 20)->nullable()->after('discount_price');
             $table->string('weight', 10)->default(0)->after('discount_code');
+            $table->string('count', 5)->default(0)->after('weight');
         });
     }
 
@@ -33,7 +34,8 @@ class AddNeededColumnsToFactorsTable extends Migration
                 'raw_price',
                 'discount_price',
                 'discount_code',
-                'weight'
+                'weight',
+                'count'
             ]);
         });
     }

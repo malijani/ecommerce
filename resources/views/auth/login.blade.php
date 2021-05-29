@@ -25,16 +25,10 @@
                             @csrf
 
                             <div class="form-group row">
-                                <label for="mobile"
-                                       class="col-md-4 col-form-label text-center"
-                                >
-                                    تلفن همراه
-                                </label>
-
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <input id="mobile"
                                            type="text"
-                                           class="ltr form-control @error('mobile') is-invalid @enderror"
+                                           class="ltr text-center form-control @error('mobile') is-invalid @enderror"
                                            name="mobile"
                                            value="{{ old('mobile') }}"
                                            pattern="09(0[1-2]|1[0-9]|3[0-9]|2[0-1])-?[0-9]{3}-?[0-9]{4}"
@@ -42,6 +36,7 @@
                                            maxlength="11"
                                            required
                                            autocomplete="mobile"
+                                           placeholder="شماره تلفن همراه 09103944579"
                                     >
                                     @include('partials.form_error', ['input'=>'mobile'])
                                 </div>

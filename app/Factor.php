@@ -15,7 +15,7 @@ class Factor extends Model
         'status', 'shipping_cost', 'delivery',
         'post_tracking', 'description',
         'comment', 'raw_price', 'discount_price',
-        'discount_code', 'weight'
+        'discount_code', 'weight', 'count'
     ];
 
     public function products()

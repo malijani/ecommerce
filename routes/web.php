@@ -117,6 +117,20 @@ Route::group(['prefix' => 'files', 'as' => 'files.', 'middleware' => ['web', 'au
 });
 
 
+Route::get('/test-factor', function(){
+    $factor = \App\Factor::query()
+        ->with('products', 'products.attributes')
+        ->where('user_id', Auth::id())->latest()->first();
+ /*   $factor_products = $factor->products;
+    $factor_products_array = $factor->products->toArray();
+    foreach($factor_products as $factor_product_id => $factor_product) {
+        array_push($factor_products_array[$factor_product_id], $factor_product->attributes->toArray());
+    }*/
+    dd($factor->toArray());
+
+
+});
+
 
 
 

@@ -37,6 +37,7 @@ class FactorController extends Controller
                 ->with('error', 'سبد خرید شما خالیست؛ لطفاً دوباره تلاش کنید.');
         }
 
+
         /*CREATE FACTOR*/
         $factor_array = [
             'user_id' => Auth::id(),
@@ -45,6 +46,7 @@ class FactorController extends Controller
             'discount_price' => $total['discount'],
             'discount_code' => $total['discount_code'],
             'weight' => $total['weight'],
+            'count' => $total['count'],
         ];
 
         $factor = Factor::query()->create($factor_array);
@@ -66,6 +68,7 @@ class FactorController extends Controller
                 'discount_price' => $product_specifics['total_discount'],
                 'weight' => $product_specifics['weight'],
                 'count' => $product_specifics['quantity']
+
             ]);
 
             if (!empty($product_specifics['attribute'])) {
