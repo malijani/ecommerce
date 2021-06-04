@@ -1,5 +1,8 @@
 @extends('layouts.app')
 
+@section('page-styles')
+    @stack('styles')
+@endsection
 @section('content')
 
     @yield('bread-crumb')
@@ -33,7 +36,7 @@
                            class="btn {{ Request::routeIs('dashboard.orders.*') ? 'btn-secondary text-white' : 'btn-outline-secondary' }} w-95 my-2 font-weight-bolder"
                         >
                             <i class="fal fa-list-alt fa-2x align-middle px-2"></i>
-                            سفارش ها
+                            فاکتور ها
                         </a>
                     </div>
                     {{--addresses--}}
@@ -84,7 +87,6 @@
 
 
 @section('page-scripts')
-    <script type="text/javascript" src="{{ asset('front-v1/sweetalert/sweetalert.min.js') }}"></script>
     <script>
         $(document).ready(function () {
             $("#logout").on('click', function () {

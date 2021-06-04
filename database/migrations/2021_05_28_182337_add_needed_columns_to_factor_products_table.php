@@ -14,7 +14,8 @@ class AddNeededColumnsToFactorProductsTable extends Migration
     public function up()
     {
         Schema::table('factor_products', function (Blueprint $table) {
-            $table->string('weight')->nullable()->after('price');
+            $table->unsignedBigInteger('price_self_buy')->after('price'); // toman
+            $table->string('weight')->nullable()->after('price_self_buy');
             $table->string('discount_price')->nullable()->after('weight');
         });
     }
@@ -27,7 +28,7 @@ class AddNeededColumnsToFactorProductsTable extends Migration
     public function down()
     {
         Schema::table('factor_products', function (Blueprint $table) {
-            $table->dropColumn(['weight', 'discount_price']);
+            $table->dropColumn(['weight', 'discount_price', 'price_self_buy']);
         });
     }
 }

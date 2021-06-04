@@ -16,9 +16,9 @@ class UserAddress extends Model
       'post_code', 'status',
     ];
 
-    protected $hidden = [
+    /*protected $hidden = [
         'mobile', 'tell',
-    ];
+    ];*/
 
     public function user() : BelongsTo
     {

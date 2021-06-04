@@ -182,6 +182,7 @@ class CartController extends Controller
                     'quantity' => $request->input('order.count'),
                     'attribute' => $attribute,
                     'price' => $request->input('order.count') * $product->final_price,
+                    'price_self_buy' => $product->price_self_buy,
                     'raw_price' => $request->input('order.count') * $product->price,
                     'price_type' => $product->price_type,
                     'discount_percent' => $product->discount_percent,
@@ -194,6 +195,7 @@ class CartController extends Controller
         } elseif (isset($basket[$product->id])) {
             $quantity = &$basket[$product->id]['quantity'];
             $price = &$basket[$product->id]['price'];
+            $price_self_buy = &$basket[$product->id]['price_self_buy'];
             $total_discount = &$basket[$product->id]['total_discount'];
             $weight = &$basket[$product->id]['weight'];
             $order_attribute = &$basket[$product->id]['attribute'];
@@ -233,6 +235,7 @@ class CartController extends Controller
                     'quantity' => $request->input('order.count'),
                     'attribute' => $attribute,
                     'price' => $request->input('order.count') * $product->final_price,
+                    'price_self_buy' => $product->price_self_buy,
                     'raw_price' => $request->input('order.count') * $product->price,
                     'price_type' => $product->price_type,
                     'discount_percent' => $product->discount_percent,

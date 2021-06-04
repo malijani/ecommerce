@@ -9,11 +9,14 @@ class FactorProduct extends Model
     protected $table = 'factor_products';
     protected $fillable = [
         'factor_id', 'product_id', 'price_type',
-        'price', 'discount_percent', 'count',
+        'price', 'price_self_buy',  'discount_percent', 'count',
         'weight', 'discount_price',
     ];
 
-
+    public function product()
+    {
+        return $this->belongsTo(Product::class, 'product_id');
+    }
     public function factor()
     {
         return $this->belongsTo(Factor::class, 'factor_id');

@@ -36,11 +36,24 @@ class FactorController extends Controller
                 ->back()
                 ->with('error', 'سبد خرید شما خالیست؛ لطفاً دوباره تلاش کنید.');
         }
+        $user = Auth::user();
+        if(empty($user)){
+            return response()
+                ->redirectToRoute('home')
+                ->with('error', 'در تشخیص حساب کاربری مشکلی ایجاد شده! لفطا دوباره وارد شوید و تلاش کنید.');
+        }
 
+        $shipping_address = $user->default_address->toArray();
 
         /*CREATE FACTOR*/
         $factor_array = [
-            'user_id' => Auth::id(),
+            'uuid' => generateUniqueString(app('App\\Factor'), 'uuid', 10),
+            'user_id' => $user->id,
+            'shipping_name_family' => $shipping_address['name_family'],
+            'shipping_address' => $shipping_address['address'],
+            'shipping_mobile' => $shipping_address['mobile'],
+            'shipping_tell' => $shipping_address['tell'],
+            'shipping_post_code' => $shipping_address['post_code'],
             'price' => $total['final_price'],
             'raw_price' => $total['raw_price'],
             'discount_price' => $total['discount'],
@@ -64,6 +77,7 @@ class FactorController extends Controller
                 'product_id' => $product_id,
                 'price_type' => $product_specifics['price_type'],
                 'price' => $product_specifics['price'],
+                'price_self_buy' => $product_specifics['price_self_buy'],
                 'discount_percent' => $product_specifics['discount_percent'],
                 'discount_price' => $product_specifics['total_discount'],
                 'weight' => $product_specifics['weight'],
@@ -83,7 +97,11 @@ class FactorController extends Controller
             }
         }
 
+        session()->forget(['basket', 'total']);
 
+        return response()
+            ->redirectToRoute('factor.show', $factor->uuid)
+            ->with('success', 'فاکتور شما با موفقیت ثبت شد!');
 
     }
 
@@ -101,12 +119,29 @@ class FactorController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param int $id
+     * @param int $uuid
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($uuid)
     {
-        //
+        $factor = Factor::query()
+            ->with('products', 'products.attributes')
+            ->where('user_id', Auth::id())
+            ->where('uuid', $uuid)
+            ->first();
+
+        if (empty($factor)) {
+            return response()
+                ->redirectToRoute('dashboard.orders.index')
+                ->with('error', 'فاکتور مورد نظر شما یافت نشد!');
+        }
+
+        /*   $factor_products = $factor->products;
+           $factor_products_array = $factor->products->toArray();
+           foreach($factor_products as $factor_product_id => $factor_product) {
+               array_push($factor_products_array[$factor_product_id], $factor_product->attributes->toArray());
+           }*/
+        dd($factor);
     }
 
     /**

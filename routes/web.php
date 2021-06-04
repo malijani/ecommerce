@@ -40,7 +40,7 @@ Route::group(['prefix' => 'user', 'middleware' => ['web', 'auth', 'auth.normal',
     Route::resource('address', 'User\AddressController')->only(['index', 'destroy', 'store', 'update']);
     Route::post('province/cities', 'User\ProvinceController@cities')->name('province.cities');
     /*FACTOR*/
-    Route::resource('factor', 'User\Factor\FactorController')->only(['create']);
+    Route::resource('factor', 'User\Factor\FactorController')->only(['create', 'show']);
 
     /*RATE*/
     Route::resource('rating', 'User\RatingController')->only(['store']);
@@ -48,7 +48,7 @@ Route::group(['prefix' => 'user', 'middleware' => ['web', 'auth', 'auth.normal',
     /*DASHBOARD*/
     Route::resource('dashboard', 'User\Dashboard\DashboardController')->only(['index']);
     Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function () {
-        Route::resource('orders', 'User\Dashboard\OrderController')->only(['index']);
+        Route::resource('orders', 'User\Dashboard\OrderController')->only(['index', 'show', 'update', 'destroy']);
         Route::resource('addresses', 'User\Dashboard\AddressController')->only(['index']);
         Route::resource('profile', 'User\Dashboard\UserController')->only(['index', 'update']);
         Route::resource('tickets', 'User\Dashboard\TicketController');
@@ -116,20 +116,6 @@ Route::group(['prefix' => 'files', 'as' => 'files.', 'middleware' => ['web', 'au
     Route::get('ticket/{id}/{type}', 'File\TicketFileController@show')->name('ticket-files');
 });
 
-
-Route::get('/test-factor', function(){
-    $factor = \App\Factor::query()
-        ->with('products', 'products.attributes')
-        ->where('user_id', Auth::id())->latest()->first();
- /*   $factor_products = $factor->products;
-    $factor_products_array = $factor->products->toArray();
-    foreach($factor_products as $factor_product_id => $factor_product) {
-        array_push($factor_products_array[$factor_product_id], $factor_product->attributes->toArray());
-    }*/
-    dd($factor->toArray());
-
-
-});
 
 
 

@@ -35,7 +35,13 @@ Breadcrumbs::for('dashboard.tickets.create', function ($trail) {
 // Home > Dashboard > Orders
 Breadcrumbs::for('dashboard.orders', function($trail){
     $trail->parent('dashboard');
-    $trail->push('سفارش های کاربر', route('dashboard.orders.index'));
+    $trail->push('فاکتور ها', route('dashboard.orders.index'));
+});
+
+// Home > Dashboard > Orders > [Order]
+Breadcrumbs::for('dashboard.orders.show', function($trail, $factor){
+    $trail->parent('dashboard.orders');
+    $trail->push('فاکتور '. $factor->uuid, route('dashboard.orders.show', $factor->uuid));
 });
 
 // Home > Dashboard > Addresses
@@ -43,6 +49,7 @@ Breadcrumbs::for('dashboard.addresses', function($trail){
     $trail->parent('dashboard');
     $trail->push('آدرس های کاربر', route('dashboard.addresses.index'));
 });
+
 
 // Home > Dashboard > Account
 Breadcrumbs::for('dashboard.profile', function($trail){
