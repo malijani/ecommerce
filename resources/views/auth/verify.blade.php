@@ -24,16 +24,16 @@
                                     @csrf
                                     <div class="form-group row justify-content-center">
 
-                                        <label for="code"
+                                       {{-- <label for="code"
                                                class="col-form-label col-md-1 text-center"
                                         >
                                             کد
-                                        </label>
-                                        <div class="col-md-10">
+                                        </label>--}}
+                                        <div class="col-md-12">
                                             <input type="text"
                                                    name="code"
                                                    id="code"
-                                                   class="form-control text-center ltr @error('code') is-invalid @enderror"
+                                                   class="form-control font-weight-bolder font-16 text-center ltr @error('code') is-invalid @enderror"
                                                    placeholder="کد ارسالی به شماره شما"
                                                    autocomplete="off"
                                                    pattern="\d*"

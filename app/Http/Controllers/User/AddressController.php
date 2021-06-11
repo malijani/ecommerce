@@ -22,21 +22,23 @@ class AddressController extends Controller
         /*USER ADDRESS IS AFTER ORDERING PRODUCTS!*/
         /*THE TOTAL SESSION SHOULD BE EXISTS*/
         if(empty(session()->get('total'))){
-            return response()->redirectToRoute('cart.index')->with('error', 'شما هنوز محصولی جهت سفارش ثبت نکرده اید!');
+            return redirect()->back()->with('error', 'شما هنوز محصولی جهت سفارش ثبت نکرده اید!');
         }
 
-        $title = 'انتخاب آدرس';
+        $title = 'انتخاب آدرس ارسال بسته '. config('app.short.name');
 
         $addresses = Auth::user()->addresses;
         $default_address = Auth::user()->defaultAddress;
         $provinces = ProvinceCity::withoutTrashed()->where('parent', 0)->get();
         $total = session()->get('total');
+        $basket = session()->get('basket');
         return response()->view('front-v1.user.address.index', [
             'title' => $title,
             'addresses' => $addresses,
             'default_address' => $default_address,
             'total' => $total,
             'provinces'=>$provinces,
+            'basket' => $basket
         ]);
 
     }

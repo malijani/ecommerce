@@ -9,6 +9,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+/*TODO : MERGE PAYMENT CONTROLLER WITH FACTOR FOR BETTER CONTROLLING OF FACTOR*/
+
 class FactorController extends Controller
 {
     /**
@@ -36,6 +38,8 @@ class FactorController extends Controller
                 ->back()
                 ->with('error', 'سبد خرید شما خالیست؛ لطفاً دوباره تلاش کنید.');
         }
+
+
         $user = Auth::user();
         if(empty($user)){
             return response()
@@ -43,17 +47,17 @@ class FactorController extends Controller
                 ->with('error', 'در تشخیص حساب کاربری مشکلی ایجاد شده! لفطا دوباره وارد شوید و تلاش کنید.');
         }
 
-        $shipping_address = $user->default_address->toArray();
+        $shipping = $user->default_address->toArray();
 
         /*CREATE FACTOR*/
         $factor_array = [
             'uuid' => generateUniqueString(app('App\\Factor'), 'uuid', 10),
             'user_id' => $user->id,
-            'shipping_name_family' => $shipping_address['name_family'],
-            'shipping_address' => $shipping_address['address'],
-            'shipping_mobile' => $shipping_address['mobile'],
-            'shipping_tell' => $shipping_address['tell'],
-            'shipping_post_code' => $shipping_address['post_code'],
+            'shipping_name_family' => $shipping['name_family'],
+            'shipping_address' => $shipping['address'],
+            'shipping_mobile' => $shipping['mobile'],
+            'shipping_tell' => $shipping['tell'],
+            'shipping_post_code' => $shipping['post_code'],
             'price' => $total['final_price'],
             'raw_price' => $total['raw_price'],
             'discount_price' => $total['discount'],
@@ -71,6 +75,7 @@ class FactorController extends Controller
             return $array;
         };
 
+        /*STORE FACTOR PRODUCTS*/
         foreach ($basket as $product_id => $product_specifics) {
             $factor_product = FactorProduct::query()->create([
                 'factor_id' => $factor->id,
@@ -85,6 +90,7 @@ class FactorController extends Controller
 
             ]);
 
+            /*STORE PRODUCT ATTRIBUTES*/
             if (!empty($product_specifics['attribute'])) {
                 foreach ($product_specifics['attribute'] as $attributes) {
                     FactorProductAttribute::query()->create([
@@ -100,9 +106,8 @@ class FactorController extends Controller
         session()->forget(['basket', 'total']);
 
         return response()
-            ->redirectToRoute('factor.show', $factor->uuid)
+            ->redirectToRoute('payment.pay', $factor->uuid)
             ->with('success', 'فاکتور شما با موفقیت ثبت شد!');
-
     }
 
     /**
@@ -124,24 +129,7 @@ class FactorController extends Controller
      */
     public function show($uuid)
     {
-        $factor = Factor::query()
-            ->with('products', 'products.attributes')
-            ->where('user_id', Auth::id())
-            ->where('uuid', $uuid)
-            ->first();
-
-        if (empty($factor)) {
-            return response()
-                ->redirectToRoute('dashboard.orders.index')
-                ->with('error', 'فاکتور مورد نظر شما یافت نشد!');
-        }
-
-        /*   $factor_products = $factor->products;
-           $factor_products_array = $factor->products->toArray();
-           foreach($factor_products as $factor_product_id => $factor_product) {
-               array_push($factor_products_array[$factor_product_id], $factor_product->attributes->toArray());
-           }*/
-        dd($factor);
+       //
     }
 
     /**

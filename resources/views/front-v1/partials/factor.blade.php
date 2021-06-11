@@ -3,24 +3,40 @@
         <div class="card">
             <div class="card-header">
                 <div class="row align-items-center">
-                    <div class="col-4">
+                    <div class="col-12 col-md-4 text-center text-md-right my-1 my-md-0">
                         <h4>فاکتور {{ $factor->uuid }}</h4>
                     </div>
-                    <div class="col-8 text-left">
-                        <button class="btn btn-light"
-                                title="حذف فاکتور {{ $factor->uuid }}"
-                                id="delete_factor"
-                                data-url="{{ route('dashboard.orders.destroy', $factor->uuid) }}"
-                        >
-                            <i class="fal fa-trash-alt fa-2x text-danger"></i>
-                        </button>
-                    </div>
+                    {{--IF STATUS !=1 USER CAN PAY--}}
+                    @if($factor->status != "1")
+                        <div class="col-12 col-md-4 text-center my-1 my-md-0">
+                            <a class="btn btn-outline-success btn-lg w-100 font-16 font-weight-bolder"
+                                    id="factor_pay_button"
+                               href="{{ route('payment.pay', $factor->uuid) }}"
+                            >
+                                <i class="fal fa-clipboard-list-check fa-2x align-middle mx-2"></i>
+                                <span class="">
+                                پرداخت فاکتور
+                            </span>
+                            </a>
+                        </div>
+                        @if($factor->status == "0")
+                            <div class="col-12 col-md-4 text-center text-mdl-left my-1 my-md-0">
+                                <button class="btn btn-light"
+                                        title="حذف فاکتور {{ $factor->uuid }}"
+                                        id="delete_factor"
+                                        data-url="{{ route('dashboard.orders.destroy', $factor->uuid) }}"
+                                >
+                                    <i class="fal fa-trash-alt fa-2x text-danger"></i>
+                                </button>
+                            </div>
+                        @endif
+                    @endif
                 </div>
             </div>
             <div class="card-body">
                 <div class="row justify-content-center">
                     {{--PAY STATUS TABLE--}}
-                    <div class="col-12 col-md-6 mt-2">
+                    <div class="col-12 col-md-8 mt-2">
                         <div class="table-responsive">
                             <table class="table table-striped table-bordered">
                                 <thead>
@@ -42,8 +58,10 @@
                                     <td class="align-middle text-center">
                                         @if($factor->status == "0")
                                             <span class="badge badge-danger font-14 p-2">پرداخت نشده</span>
-                                        @else
+                                        @elseif($factor->status == "1")
                                             <span class="badge badge-success font-14 p-2">پرداخت شده</span>
+                                        @else
+                                            <span class="badge badge-warning font-14 p-2">خطا در پرداخت</span>
                                         @endif
                                     </td>
                                 </tr>
@@ -96,7 +114,7 @@
                     </div>
 
                     {{--PRICE STATUS TABLE--}}
-                    <div class="col-12 col-md-6 mt-2 ">
+                    <div class="col-12 col-md-4 mt-2 ">
                         <div class="table-responsive">
                             <table class="table table-striped table-bordered">
                                 <thead>
@@ -363,11 +381,6 @@
                                           placeholder="درخواست اختصاصی شما برای این فاکتور"
                                 >{{ $factor->description }}</textarea>
                             </div>
-                            <div class="col-12 col-md-8 col-md-offset-4">
-                                <p class="alert w-100  font-14 text-center hide"
-                                   id="user_ask_result"
-                                ></p>
-                            </div>
                             <div class="col-12 col-md-8 col-md-offset-4  my-2">
                                 <button class="form-control btn btn-success font-14 font-weight-bold"
                                         data-url="{{ route('dashboard.orders.update', $factor->uuid) }}"
@@ -497,21 +510,32 @@
     <script>
         /*AJAX TO CHANGE COMMENTS OF FACTOR*/
         $(document).ready(function () {
+            /*FACTOR PAYMENT SECTION*/
+
 
             /*DELETE FACTOR SECTION*/
             let delete_factor_button = $("#delete_factor")
             delete_factor_button.on('click', function (e) {
                 e.preventDefault();
 
-                swal({
+                Swal.fire({
                     title: "آیا از فاکتور مطمعنید؟",
                     text: "با حذف فاکتور، قادر به بازگردانی آن نخواهید بود!",
                     icon: "warning",
-                    buttons: ['نه! حذفش نکن.', 'آره، حذفش کن.'],
-                    dangerMode: true,
+                    confirmButtonText: 'حذف کن',
+                    denyButtonText: 'نه!',
+                    confirmButtonColor: '#3085d6',
+                    denyButtonColor: '#d33',
+                    showDenyButton: true,
+                    showConfirmButton: true,
+                    /*customClass: {
+                        confirmButton: 'btn btn-outline-success mx-2 px-4',
+                        denyButton: 'btn btn-danger mx-2 px-4'
+                    },*/
+                    /*buttonsStyling: false*/
                 })
-                    .then((willDelete) => {
-                        if (willDelete) {
+                    .then((swResult) => {
+                        if (swResult.isConfirmed) {
                             $.ajax({
                                 url: delete_factor_button.attr('data-url'),
                                 type: 'POST',
@@ -520,41 +544,34 @@
                                     '_method': 'DELETE',
                                 },
                                 success: function (result) {
-                                    swal({
-                                        title: result,
-                                        text: "فاکتور با موفقیت حذف شد :)",
-                                        icon: "success",
-                                        button: "حله!",
+                                    Swal.fire({
+                                        position: 'top',
+                                        icon: 'success',
+                                        title: result.message,
+                                        showConfirmButton: false,
+                                        timer: 1500,
+                                    }).then(function () {
+                                        window.location.href = result.url;
                                     });
-                                    window.location.href = result.url;
                                 },
-                                error: function () {
-                                    swal({
-                                        text: "خطای غیر منتظره ای رخ داده، لطفا با توسعه دهنده در میان بگذارید.",
-                                        icon: 'error',
-                                        button: "فهمیدم.",
+                                error: function (result) {
+                                    Swal.fire({
+                                        position: 'top',
+                                        icon: "error",
+                                        title: result.responseJSON.message,
+                                        showConfirmButton: false,
+                                        timer: 1500,
+                                    }).then(function () {
+                                        window.location.href = result.responseJSON.url;
                                     });
                                 }
-                            });
-                            swal({
-                                text: "فاکتور با موفقیت حذف شد :)",
-                                icon: "success",
-                                button: "حله!",
-                            });
-                        } else {
-                            swal({
-                                text: "فاکتور حذف نشد!",
-                                icon: 'info',
-                                button: 'فهمیدم!',
                             });
                         }
                     });
             });
 
-            /* USER ASK SECTION*/
-            let user_ask_result = $("#user_ask_result")
-            user_ask_result.hide();
 
+            /* USER ASK SECTION*/
             let submit_user_ask = $("#submit_user_ask");
             let user_ask_content = $("#user_ask");
             submit_user_ask.on('click', function (e) {
@@ -569,20 +586,32 @@
                             'content': user_ask_content.val(),
                         },
                         success: function (result) {
-                            user_ask_result.show();
-                            user_ask_result.addClass(result.class);
-                            user_ask_result.text(result.message);
+                            Swal.fire({
+                                position: 'top',
+                                icon: "success",
+                                title: result.message,
+                                showConfirmButton: false,
+                                timer: 1500,
+                            });
                         },
                         error: function (result) {
-                            user_ask_result.show();
-                            user_ask_result.addClass(result.responseJSON.class);
-                            user_ask_result.text(result.responseJSON.message);
+                            Swal.fire({
+                                position: 'top',
+                                icon: "error",
+                                title: result.responseJSON.message,
+                                showConfirmButton: false,
+                                timer: 1500,
+                            });
                         }
                     });
                 } else {
-                    user_ask_result.show();
-                    user_ask_result.addClass('alert-danger');
-                    user_ask_result.text('محتوای درخواست خالیست!');
+                    Swal.fire({
+                        position: 'top',
+                        icon: "error",
+                        title: 'درخواست بدون محتوا',
+                        showConfirmButton: false,
+                        timer: 1500,
+                    });
                 }
             });
         });

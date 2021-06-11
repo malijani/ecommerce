@@ -12,7 +12,7 @@
     <h4 class="mb-5">لیست سفارش های شما</h4>
     <div class="container">
         <div class="row">
-            <div class="col-12">
+            <div class="col-12 mb-4">
                 <div class="table-responsive" id="table-content">
 
                     <table class="table table-striped table-hover" id="datatable-user-orders">
@@ -36,7 +36,7 @@
                                        class="badge badge-light font-16"
                                        title="برای مشاهده جزییات فاکتور؛ کلیک کنید!"
                                     >
-                                    {{ $factor->uuid }}
+                                        {{ $factor->uuid }}
                                     </a>
                                 </td>
                                 {{--SHOW PRICE--}}
@@ -44,7 +44,8 @@
                                     {{ number_format($factor->price) . " تومن " }}
                                     @if(!empty($factor->discount_price))
                                         <br>
-                                        <span class="text-success">{{ number_format($factor->discount_price) . " تومن تخفیف "  }}</span>
+                                        <span
+                                            class="text-success">{{ number_format($factor->discount_price) . " تومن تخفیف "  }}</span>
                                     @endif
                                 </td>
 
@@ -52,8 +53,10 @@
                                 <td class="align-middle text-center">
                                     @if($factor->status == "0")
                                         <span class="badge badge-danger">پرداخت نشده</span>
-                                    @else
+                                    @elseif($factor->status == "1")
                                         <span class="badge badge-success">پرداخت شده</span>
+                                    @else
+                                        <span class="badge badge-warning">خطا در پرداخت</span>
                                     @endif
                                 </td>
                                 {{--SHOW DELIVERY STATUS--}}
@@ -79,6 +82,67 @@
                 </div>
             </div>
         </div>
+        @if(!empty($deleted_factors) && count($deleted_factors))
+            <div class="row">
+                <div class="col-12 mt-4">
+
+                    <div class="">
+                        <a class="btn btn-outline-info w-100 text-center font-16 font-weight-bolder"
+                           data-toggle="collapse"
+                           href="#deletedFactorsCollapse"
+                           role="button"
+                           aria-expanded="false"
+                           aria-controls="deletedFactorsCollapse"
+                        >
+                            <i class="fal fa-eye"></i>
+                            <span class="align-middle">
+                                مشاهده فاکتور های حذف شده
+                            </span>
+                        </a>
+                    </div>
+                    <div class="collapse" id="deletedFactorsCollapse">
+                        <div class="card card-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered" id="deleted_factos_table">
+                                    <thead>
+                                    <tr class="text-center alert-info">
+                                        <td colspan="2">
+                                            برای بازگردانی فاکتور حذف شده، شماره فاکتور را به همراه درخواست خود به پشتیبانی تیکت
+                                            بزنید.
+                                        </td>
+                                    </tr>
+                                    <tr class="text-center">
+                                        <td class="font-weight-bolder">
+                                            فاکتور
+                                        </td>
+                                        <td class="font-weight-bolder">
+                                            تاریخ حذف
+                                        </td>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($deleted_factors as $deleted_date => $deleted_uuid)
+                                        <tr class="text-center">
+                                            <td class="font-16">
+                                                {{ $deleted_uuid }}
+                                            </td>
+                                            <td class="font-16">
+                                                {{ verta($deleted_date)->formatJalaliDate() }}
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+        @endif
     </div>
 
 @endsection
@@ -107,7 +171,7 @@
                 'pageLength': 25,
                 'order': [],
                 "info": false,
-                "paging": true,
+                "paging": false,
                 "lengthChange": false,
                 "searching": true,
                 "ordering": false,

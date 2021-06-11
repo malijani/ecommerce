@@ -91,14 +91,25 @@
         $(document).ready(function () {
             $("#logout").on('click', function () {
                 let logout_url = $(this).attr('data-url');
-                swal({
+                Swal.fire({
                     title: "قصد خروج از حساب کاربری خود را دارید؟",
                     icon: "warning",
-                    buttons: ['خیر', 'بله'],
+                    /*buttons: ['خیر', 'بله'],*/
+                    confirmButtonText: 'خروج',
+                    denyButtonText: 'خیر!',
+                    confirmButtonColor: '#3085d6',
+                    denyButtonColor: '#d33',
+                    showDenyButton: true,
+                    showConfirmButton: true,
+                    /*customClass: {
+                        confirmButton: 'btn btn-outline-success mx-2 px-4',
+                        denyButton: 'btn btn-danger mx-2 px-4'
+                    },*/
+                    /*buttonsStyling: false*/
                     dangerMode: true,
                 })
                     .then((logout) => {
-                        if (logout) {
+                        if (logout.isConfirmed) {
                             // console.log('delete');
                             $.ajax({
                                 url: logout_url,
@@ -106,12 +117,12 @@
                                 data: {
                                     '_token': '{{ csrf_token() }}',
                                 },
-                                success: function (result) {
-                                    location.reload();
+                                success: function () {
+                                    window.location.reload();
                                 },
                                 error: function () {
                                     swal({
-                                        text: "خطای غیر منتظره ای رخ داده، لطفا با پشتیبانی وبسایت در میان بگذارید.",
+                                        text: "خطای غیر منتظره ای رخ داده، لطفاً بعداً تلاش نمایید.",
                                         icon: 'error',
                                         button: "فهمیدم.",
                                     });

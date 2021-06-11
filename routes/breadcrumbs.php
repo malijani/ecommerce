@@ -7,6 +7,7 @@ Breadcrumbs::for('home', function ($trail) {
     $trail->push(config('app.short.name' ?? 'فروشگاه'), route('home'));
 });
 
+/*___________________DASHBOARD_______________________*/
 // Home > Dashboard
 Breadcrumbs::for('dashboard', function($trail){
     $trail->parent('home');
@@ -50,12 +51,12 @@ Breadcrumbs::for('dashboard.addresses', function($trail){
     $trail->push('آدرس های کاربر', route('dashboard.addresses.index'));
 });
 
-
 // Home > Dashboard > Account
 Breadcrumbs::for('dashboard.profile', function($trail){
     $trail->parent('dashboard');
     $trail->push('حساب کاربری', route('dashboard.profile.index'));
 });
+/*___________________DASHBOARD_______________________*/
 
 // Home > Cart
 Breadcrumbs::for('cart', function($trail){
@@ -69,6 +70,11 @@ Breadcrumbs::for('address', function($trail){
     $trail->push('تعیین آدرس', route('address.index'));
 });
 
+// Home > Factor > [Factor]
+Breadcrumbs::for('factor.show', function($trail, $factor){
+    $trail->parent('home');
+    $trail->push('فاکتور '. $factor->uuid, route('factor.show', $factor->uuid));
+});
 
 // Home > Faq
 Breadcrumbs::for('faq', function($trail){

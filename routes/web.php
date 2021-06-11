@@ -14,7 +14,7 @@ Route::group(['middleware' => ['guest']], function () {
     Route::get('verify/resend', 'Auth\AuthController@resendCode')->name('verify.resend');
 });
 
-Route::group(['middleware' => ['web','auth']], function () {
+Route::group(['middleware' => ['web', 'auth']], function () {
     Route::post('logout', 'Auth\AuthController@doLogout')->name('logout');
 });
 
@@ -40,10 +40,13 @@ Route::group(['prefix' => 'user', 'middleware' => ['web', 'auth', 'auth.normal',
     Route::resource('address', 'User\AddressController')->only(['index', 'destroy', 'store', 'update']);
     Route::post('province/cities', 'User\ProvinceController@cities')->name('province.cities');
     /*FACTOR*/
-    Route::resource('factor', 'User\Factor\FactorController')->only(['create', 'show']);
-
+    Route::resource('factor', 'User\Factor\FactorController')->only(['create']);
+    /*PAYMENT*/
+    Route::get('factor/pay/{factor_uui}', 'User\Factor\FactorController@pay')->name('factor.pay');
+    Route::get('factor/verify/{factor_uui}', 'User\Factor\FactorController@verify')->name('factor.verify');
     /*RATE*/
     Route::resource('rating', 'User\RatingController')->only(['store']);
+
 
     /*DASHBOARD*/
     Route::resource('dashboard', 'User\Dashboard\DashboardController')->only(['index']);

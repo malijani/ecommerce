@@ -23,6 +23,28 @@ return [
     |
     */
     'drivers' => [
+        'zarinpal' => [
+            /* normal api */
+            'apiPurchaseUrl' => 'https://ir.zarinpal.com/pg/services/WebGate/wsdl',
+            'apiPaymentUrl' => 'https://www.zarinpal.com/pg/StartPay/',
+            'apiVerificationUrl' => 'https://ir.zarinpal.com/pg/services/WebGate/wsdl',
+
+            /* sandbox api */
+            'sandboxApiPurchaseUrl' => 'https://sandbox.zarinpal.com/pg/services/WebGate/wsdl',
+            'sandboxApiPaymentUrl' => 'https://sandbox.zarinpal.com/pg/StartPay/',
+            'sandboxApiVerificationUrl' => 'https://sandbox.zarinpal.com/pg/services/WebGate/wsdl',
+
+            /* zarinGate api */
+            'zaringateApiPurchaseUrl' => 'https://ir.zarinpal.com/pg/services/WebGate/wsdl',
+            'zaringateApiPaymentUrl' => 'https://www.zarinpal.com/pg/StartPay/:authority/ZarinGate',
+            'zaringateApiVerificationUrl' => 'https://ir.zarinpal.com/pg/services/WebGate/wsdl',
+
+            'mode' => 'sandbox', // can be normal, sandbox, zaringate
+            'merchantId' => '1241215151581813819583935315135',
+            'callbackUrl' => 'http://localhost:8000/user/invoice',
+            'description' => 'payment using zarinpal',
+        ],
+
         'asanpardakht' => [
             'apiPurchaseUrl' => 'https://ipgsoap.asanpardakht.ir/paygate/merchantservices.asmx?wsdl',
             'apiPaymentUrl' => 'https://asan.shaparak.ir',
@@ -177,27 +199,7 @@ return [
             'callbackUrl' => 'http://yoursite.com/path/to',
             'description' => 'payment using yekpay',
         ],
-        'zarinpal' => [
-            /* normal api */
-            'apiPurchaseUrl' => 'https://ir.zarinpal.com/pg/services/WebGate/wsdl',
-            'apiPaymentUrl' => 'https://www.zarinpal.com/pg/StartPay/',
-            'apiVerificationUrl' => 'https://ir.zarinpal.com/pg/services/WebGate/wsdl',
 
-            /* sandbox api */
-            'sandboxApiPurchaseUrl' => 'https://sandbox.zarinpal.com/pg/services/WebGate/wsdl',
-            'sandboxApiPaymentUrl' => 'https://sandbox.zarinpal.com/pg/StartPay/',
-            'sandboxApiVerificationUrl' => 'https://sandbox.zarinpal.com/pg/services/WebGate/wsdl',
-
-            /* zarinGate api */
-            'zaringateApiPurchaseUrl' => 'https://ir.zarinpal.com/pg/services/WebGate/wsdl',
-            'zaringateApiPaymentUrl' => 'https://www.zarinpal.com/pg/StartPay/:authority/ZarinGate',
-            'zaringateApiVerificationUrl' => 'https://ir.zarinpal.com/pg/services/WebGate/wsdl',
-
-            'mode' => 'sandbox', // can be normal, sandbox, zaringate
-            'merchantId' => '1241215151581813819583935315135',
-            'callbackUrl' => 'http://yoursite.com/path/to',
-            'description' => 'payment using zarinpal',
-        ],
         'zibal' => [
             /* normal api */
             'apiPurchaseUrl' => 'https://gateway.zibal.ir/v1/request',
@@ -225,6 +227,7 @@ return [
     |
     */
     'map' => [
+        'zarinpal' => \Shetabit\Multipay\Drivers\Zarinpal\Zarinpal::class,
         'asanpardakht' => \Shetabit\Multipay\Drivers\Asanpardakht\Asanpardakht::class,
         'behpardakht' => \Shetabit\Multipay\Drivers\Behpardakht\Behpardakht::class,
         'idpay' => \Shetabit\Multipay\Drivers\Idpay\Idpay::class,
@@ -241,7 +244,6 @@ return [
         'saman' => \Shetabit\Multipay\Drivers\Saman\Saman::class,
         'sepehr' => \Shetabit\Multipay\Drivers\Sepehr\Sepehr::class,
         'yekpay' => \Shetabit\Multipay\Drivers\Yekpay\Yekpay::class,
-        'zarinpal' => \Shetabit\Multipay\Drivers\Zarinpal\Zarinpal::class,
         'zibal' => \Shetabit\Multipay\Drivers\Zibal\Zibal::class,
     ]
 ];
