@@ -11,7 +11,7 @@
                         <div class="col-12 col-md-4 text-center my-1 my-md-0">
                             <a class="btn btn-outline-success btn-lg w-100 font-16 font-weight-bolder"
                                     id="factor_pay_button"
-                               href="{{ route('payment.pay', $factor->uuid) }}"
+                               href="{{ route('factor.pay', $factor->uuid) }}"
                             >
                                 <i class="fal fa-clipboard-list-check fa-2x align-middle mx-2"></i>
                                 <span class="">

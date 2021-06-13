@@ -6,29 +6,89 @@ use App\Factor;
 use App\FactorProduct;
 use App\FactorProductAttribute;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Product;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
-
-/*TODO : MERGE PAYMENT CONTROLLER WITH FACTOR FOR BETTER CONTROLLING OF FACTOR*/
+use Shetabit\Multipay\Exceptions\InvalidPaymentException;
+use Shetabit\Multipay\Invoice;
+use Shetabit\Payment\Facade\Payment;
 
 class FactorController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+
+
+    protected function getFactor($uuid)
     {
-        //
+        return Factor::query()
+            ->with('products', 'products.attributes')
+            ->where('user_id', Auth::id())
+            ->where('uuid', $uuid)
+            ->first();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     */
+    /*CHECK IF FACTOR IS VALID*/
+    protected function controlFactor($factor)
+    {
+        /*codes=> 1 : return to order.index, 2: return to factor show*/
+        try {
+            if (empty($factor)) {
+                throw new \Exception('فاکتور مورد نظر شما یافت نشد!', 1);
+            }
+            if ($factor->status == "1") {
+                throw new \Exception('فاکتور ' . $factor->uuid . ' پرداخت شده! ', 2);
+            }
+            if ($factor->created_at < Carbon::today()->subDays(2)) {
+                throw new \Exception('فاکتور جدیدی ثبت کنید! فاکتور شما آرشیو شده.', 2);
+            }
+            /*CHECK IF PRODUCT QUANTITY EXISTS*/
+            foreach ($factor->products as $ordered_product){
+                $product = Product::withoutTrashed()
+                    ->where('id', $ordered_product->product_id)
+                    ->first();
+                if($product->entity < $ordered_product->count){
+                    throw new \Exception(' موجودی محصول '. $product->title . ' به اتمام رسیده! ', 2);
+                }
+            }
+
+        } catch
+        (\Exception $e) {
+            return [$e->getMessage(), $e->getCode()];
+        }
+        return ['فاکتور معتبر', 200];
+    }
+
+
+    /*CHECK IF USER CAN CREATE OR PAY A FACTOR*/
+    protected function controlUserFactor($user)
+    {
+        /*codes=> 1 : return to order.index, 2: return to factor show*/
+        $userActiveFactors = $user->factors()->activeFactors()->get();
+        try {
+            if (!empty($userActiveFactors) && count($userActiveFactors)) {
+                throw new \Exception('کاربر گرامی شما حداقل یک فاکتور فعال پرداخت نشده دارید.', 1);
+            }
+        } catch (\Exception $e) {
+            $code = $e->getCode();
+            $message = $e->getMessage();
+            return [$message, $code];
+        }
+        return ['کاربر توانایی پرداخت فاکتور را دارد.', 200];
+
+    }
+
+
     public function create()
     {
+        $user = Auth::user();
+        /*CONTROL USER PERMISSION TO CREATE NEW FACTOR*/
+        $control_user = $this->controlUserFactor($user);
+        if ($control_user[1] == 1) {
+            return response()
+                ->redirectToRoute('dashboard.orders.index')
+                ->with('error', $control_user[0]);
+        }
+
+
         $basket = session()->get('basket');
         $total = session()->get('total');
 
@@ -41,7 +101,7 @@ class FactorController extends Controller
 
 
         $user = Auth::user();
-        if(empty($user)){
+        if (empty($user)) {
             return response()
                 ->redirectToRoute('home')
                 ->with('error', 'در تشخیص حساب کاربری مشکلی ایجاد شده! لفطا دوباره وارد شوید و تلاش کنید.');
@@ -106,63 +166,92 @@ class FactorController extends Controller
         session()->forget(['basket', 'total']);
 
         return response()
-            ->redirectToRoute('payment.pay', $factor->uuid)
+            ->redirectToRoute('factor.pay', $factor->uuid)
             ->with('success', 'فاکتور شما با موفقیت ثبت شد!');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+
+    public function pay($uuid)
     {
-        //
+        $user = Auth::user();
+
+        $factor = $user->factors()
+            ->with('products')
+            ->activeFactors()
+            ->where('uuid', $uuid)
+            ->first();
+
+        $control_factor = $this->controlFactor($factor);
+        if ($control_factor[1] == 1) {
+            return response()
+                ->redirectToRoute('dashboard.orders.index')
+                ->with('error', $control_factor[0]);
+        } elseif ($control_factor[1] == 2) {
+            return response()
+                ->redirectToRoute('dashboard.orders.show', $factor->uuid)
+                ->with('error', $control_factor[0]);
+        }
+
+
+        /*CREATE INVOICE BASED ON FACTOR*/
+        $invoice = (new Invoice)->amount((int)$factor->price);
+        $invoice->detail([
+            'mobile' => $user->mobile,
+            'description' => 'پرداخت فاکتور شماره ' . $factor->uuid . ' وبسایت ' . config('app.short.name'),
+        ]);
+
+        /*GO TO ZARINPAL AND BACK TO FACTOR SHOW*/
+        $payment = Payment::callbackUrl(route('factor.verify', $factor->uuid))->purchase($invoice);
+
+        //dd($invoice,$invoice->getDriver(),$invoice->getAmount(), $invoice->getDetails(), $invoice->getTransactionId(), $invoice->getUuid());
+        $factor->pay_trans_id = $invoice->getTransactionId();
+        $factor->pay_tracking = $invoice->getUuid();
+        $factor->save();
+
+        /*GO TO GATE PAY PAGE*/
+        return $payment->pay()->render();
+
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param int $uuid
-     * @return \Illuminate\Http\Response
-     */
-    public function show($uuid)
+    public function verify($uuid)
     {
-       //
+        $user = Auth::user();
+        $factor = $user->factors()
+            ->with('products')
+            ->activeFactors()
+            ->where('uuid', $uuid)
+            ->first();
+
+        /* Verify Payment*/
+        try {
+            /*CHANGE PRODUCT QUANTITY*/
+            $receipt = Payment::amount((int)$factor->price)
+                ->transactionId($factor->pay_trans_id)
+                ->verify();
+            $factor->pay_reference = $receipt->getReferenceId();
+            $factor->status = 1;
+            $factor->paid_at = now();
+            foreach ($factor->products as $ordered_product){
+                $product = Product::withoutTrashed()
+                    ->where('id', $ordered_product->product_id)
+                    ->first();
+                $product->entity -= $ordered_product->count;
+                $product->sold += $ordered_product->count;
+                $product->save();
+            }
+            session()->flash('success', 'فاکتور شما با موفقیت پرداخت شد');
+
+        } catch (InvalidPaymentException $e) {
+            $factor->status = 2; // Failure payment
+            session()->flash('error', $e->getMessage());
+        }
+
+        $factor->save();
+
+        /*SHOW VIEW*/
+        return response()
+            ->redirectToRoute('dashboard.orders.show', $factor->uuid);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

@@ -6,6 +6,7 @@ use App\Factor;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Response;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
@@ -18,21 +19,32 @@ class OrderController extends Controller
     public function index()
     {
         $title = 'سفارش های ثبت شده توسط شما در ' . config('app.short.name');
-        $factors = Factor::withoutTrashed()
-            ->where('user_id', Auth::id())
-            ->orderByDesc('status')
-            ->orderByDesc('updated_at')
+        $user = Auth::user();
+        $factors = [];
+        $factors['active_factors'] = $user->factors()
+            ->activeFactors()
+            ->sort()
             ->get();
 
-        $deleted_factors = Factor::onlyTrashed()
-            ->where('user_id', Auth::id())
-            ->orderBy('deleted_at')
+        $factors['paid_factors'] = $user->factors()
+            ->paidFactors()
+            ->sort()
+            ->get();
+
+        $factors['archived_factors'] = $user->factors()
+            ->archivedFactors()
+            ->sort()
+            ->select('uuid', 'updated_at', 'status')
+            ->get();
+
+
+        $factors['deleted_factors'] = $user->factors()
+            ->deletedFactors()
             ->get()
             ->pluck('uuid', 'deleted_at');
 
         return response()->view('front-v1.user.dashboard.order.index', [
             'factors' => $factors,
-            'deleted_factors' => $deleted_factors,
             'title' => $title,
         ]);
     }
@@ -66,11 +78,19 @@ class OrderController extends Controller
      */
     public function show($uuid)
     {
-        $factor = Factor::query()
+
+        $user = Auth::user();
+        $factor = $user->factors()
+            ->with('products', 'products.attributes')
+            ->factorShow()
+            ->where('uuid', $uuid)
+            ->first();
+
+        /*$factor = Factor::query()
             ->with('products', 'products.attributes')
             ->where('user_id', Auth::id())
             ->where('uuid', $uuid)
-            ->first();
+            ->first();*/
 
         if (empty($factor)) {
             return response()

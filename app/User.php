@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Carbon;
 use Laravel\Passport\HasApiTokens;
 use Nagy\LaravelRating\Traits\Rate\CanRate;
 
@@ -52,6 +53,11 @@ class User extends Authenticatable
     public function addresses(): HasMany
     {
         return $this->hasMany(UserAddress::class)->orderByDesc('id');
+    }
+
+    public function factors()
+    {
+        return $this->hasMany(Factor::class, 'user_id');
     }
 
     public function ticketComments()
