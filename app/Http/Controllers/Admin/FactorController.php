@@ -15,10 +15,24 @@ class FactorController extends Controller
      */
     public function index()
     {
-        $factors = Factor::withoutTrashed()
-            ->orderByDesc('id')
+        $factors = [];
+        $factors['paid'] = Factor::withoutTrashed()
+            ->paidFactors()
+            ->sort()
+            ->get();
+        $factors['active'] = Factor::withoutTrashed()
+            ->activeFactors()
+            ->sort()
+            ->get();
+        $factors['archived'] = Factor::withoutTrashed()
+            ->archivedFactors()
+            ->sort()
+            ->get();
+        $factors['deleted'] = Factor::onlyTrashed()
+            ->sort()
             ->get();
 
+        dd($factors);
         return response()
             ->view('admin.factor.index', [
                 'factors' => $factors
