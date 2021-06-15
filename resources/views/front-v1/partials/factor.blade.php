@@ -10,7 +10,7 @@
                     @if($factor->status != "1")
                         <div class="col-12 col-md-4 text-center my-1 my-md-0">
                             <a class="btn btn-outline-success btn-lg w-100 font-16 font-weight-bolder"
-                                    id="factor_pay_button"
+                               id="factor_pay_button"
                                href="{{ route('factor.pay', $factor->uuid) }}"
                             >
                                 <i class="fal fa-clipboard-list-check fa-2x align-middle mx-2"></i>
@@ -19,7 +19,7 @@
                             </span>
                             </a>
                         </div>
-                        @if($factor->status == "0")
+                        @if($factor->status != "1")
                             <div class="col-12 col-md-4 text-center text-mdl-left my-1 my-md-0">
                                 <button class="btn btn-light"
                                         title="حذف فاکتور {{ $factor->uuid }}"
@@ -69,23 +69,32 @@
                                     <th scope="row"
                                         class="align-middle text-center"
                                     >
-                                        پرداخت شده در
-                                    </th>
-                                    <td class="align-middle text-center">
-                                        {{ (!empty($factor->paid_at)) ? verta($factor->paid_at)->formatJalaliDate() : '-/-/-' }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row"
-                                        class="align-middle text-center"
-                                    >
                                         کد پرداخت
                                     </th>
                                     <td class="align-middle text-center">
                                         {{ $factor->pay_trans_id ?? '-' }}
                                     </td>
                                 </tr>
-
+                                <tr>
+                                    <th scope="row"
+                                        class="align-middle text-center"
+                                    >
+                                        رهگیری پرداخت
+                                    </th>
+                                    <td class="align-middle text-center">
+                                        {{ $factor->pay_tracking ?? '-' }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row"
+                                        class="align-middle text-center"
+                                    >
+                                        پرداخت شده در
+                                    </th>
+                                    <td class="align-middle text-center">
+                                        {{ (!empty($factor->paid_at)) ? verta($factor->paid_at)->formatJalaliDate() : '-/-/-' }}
+                                    </td>
+                                </tr>
                                 <tr>
                                     <th scope="row"
                                         class="align-middle text-center"
@@ -97,14 +106,25 @@
                                     </td>
                                 </tr>
 
+
                                 <tr>
                                     <th scope="row"
                                         class="align-middle text-center"
                                     >
-                                        رهگیری پرداخت
+                                        کد خطای پرداخت
+                                    </th>
+                                    <td class="align-middle text-center ltr">
+                                        {{ $factor->error_code ?? '-' }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row"
+                                        class="align-middle text-center"
+                                    >
+                                        پیام خطای پرداخت
                                     </th>
                                     <td class="align-middle text-center">
-                                        {{ $factor->pay_tracking ?? '-' }}
+                                        {{ $factor->error_message ?? '-' }}
                                     </td>
                                 </tr>
 
@@ -285,6 +305,16 @@
                                         {{ $factor->shipping_mobile }}
                                     </td>
                                 </tr>
+                                <tr>
+                                    <th scope="row"
+                                        class="align-middle text-center"
+                                    >
+                                        آدرس
+                                    </th>
+                                    <td class="align-middle text-center">
+                                        {{ $factor->shipping_address }}
+                                    </td>
+                                </tr>
 
                                 <tr>
                                     <th scope="row"
@@ -297,16 +327,7 @@
                                     </td>
                                 </tr>
 
-                                <tr>
-                                    <th scope="row"
-                                        class="align-middle text-center"
-                                    >
-                                        آدرس
-                                    </th>
-                                    <td class="align-middle text-center">
-                                        {{ $factor->shipping_address }}
-                                    </td>
-                                </tr>
+
                                 <tr>
                                     <th scope="row"
                                         class="align-middle text-center"

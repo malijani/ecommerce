@@ -19,7 +19,8 @@ class Factor extends Model
         'comment', 'raw_price', 'discount_price',
         'discount_code', 'weight', 'count', 'paid_at',
         'shipping_name_family', 'shipping_address', 'shipping_mobile',
-        'shipping_tell', 'shipping_post_code',
+        'shipping_tell', 'shipping_post_code', 'user_ip',
+        'error_code', 'error_message'
     ];
 
     protected $archive_days = 2;
@@ -36,7 +37,9 @@ class Factor extends Model
 
     public function scopeSort($query)
     {
-        return $query->orderByDesc('updated_at');
+        return $query
+            ->orderByDesc('status')
+            ->orderByDesc('updated_at');
     }
 
     protected function archiveDate()
@@ -73,6 +76,22 @@ class Factor extends Model
         return $query
             ->withoutTrashed()
             ->where('status', '!=', '1')
+            ->whereDate('created_at', '>=', $this->archiveDate());
+    }
+
+    public function scopeUnpaidFactors($query)
+    {
+        return $query
+            ->withoutTrashed()
+            ->where('status', '=', '0')
+            ->whereDate('created_at', '>=', $this->archiveDate());
+    }
+
+    public function scopeFailureFactors($query)
+    {
+        return $query
+            ->withoutTrashed()
+            ->where('status', '=' , 2)
             ->whereDate('created_at', '>=', $this->archiveDate());
     }
 

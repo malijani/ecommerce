@@ -7,6 +7,7 @@ use App\FactorProduct;
 use App\FactorProductAttribute;
 use App\Http\Controllers\Controller;
 use App\Product;
+use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Shetabit\Multipay\Exceptions\InvalidPaymentException;
@@ -213,7 +214,7 @@ class FactorController extends Controller
 
     }
 
-    public function verify($uuid)
+    public function verify($uuid, Request $request)
     {
         $user = Auth::user();
         $factor = $user->factors()
@@ -231,6 +232,8 @@ class FactorController extends Controller
             $factor->pay_reference = $receipt->getReferenceId();
             $factor->status = 1;
             $factor->paid_at = now();
+            $factor->error_code = null;
+            $factor->error_message = null;
             foreach ($factor->products as $ordered_product){
                 $product = Product::withoutTrashed()
                     ->where('id', $ordered_product->product_id)
@@ -243,9 +246,11 @@ class FactorController extends Controller
 
         } catch (InvalidPaymentException $e) {
             $factor->status = 2; // Failure payment
+            $factor->error_code = $e->getCode();
+            $factor->error_message = $e->getMessage();
             session()->flash('error', $e->getMessage());
         }
-
+        $factor->user_ip = $request->ip();
         $factor->save();
 
         /*SHOW VIEW*/

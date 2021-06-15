@@ -208,9 +208,9 @@ class OrderController extends Controller
             }
             /*CHECK IF FACTOR IS PAID*/
             /*CHECK IF FACTOR IS PAID*/
-            if (!empty($factor->status)){
+            if ($factor->status == '1'){
                 return response()->json([
-                    'message' == 'وضعیت پرداختی فاکتور تغییر کرده است.',
+                    'message' == 'این فاکتور پرداخت شده و غیرقابل حذف کردن است.',
                     'url' => route('dashboard.orders.show', $factor->uuid),
                 ], Response::HTTP_BAD_REQUEST);
             }

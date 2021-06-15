@@ -15,13 +15,18 @@ class FactorController extends Controller
      */
     public function index()
     {
+        $title = 'مدیریت فاکتور های '. config('app.short.name');
         $factors = [];
         $factors['paid'] = Factor::withoutTrashed()
             ->paidFactors()
             ->sort()
             ->get();
-        $factors['active'] = Factor::withoutTrashed()
-            ->activeFactors()
+        $factors['unpaid'] = Factor::withoutTrashed()
+            ->unpaidFactors()
+            ->sort()
+            ->get();
+        $factors['failure'] = Factor::withoutTrashed()
+            ->failureFactors()
             ->sort()
             ->get();
         $factors['archived'] = Factor::withoutTrashed()
@@ -32,10 +37,10 @@ class FactorController extends Controller
             ->sort()
             ->get();
 
-        dd($factors);
         return response()
             ->view('admin.factor.index', [
-                'factors' => $factors
+                'factors' => $factors,
+                'title' => $title,
             ]);
     }
 
@@ -68,7 +73,14 @@ class FactorController extends Controller
      */
     public function show($id)
     {
-        //
+        $factor = Factor::withTrashed()->findOrFail($id);
+        $title = 'جزییات فاکتور ' . $factor->uuid;
+        return response()
+            ->view('admin.factor.show', [
+                'factor'=> $factor,
+                'title' => $title
+            ]);
+
     }
 
     /**
@@ -104,4 +116,15 @@ class FactorController extends Controller
     {
         //
     }
+
+    public function unArchive()
+    {
+        //
+    }
+
+    public function restore()
+    {
+        //
+    }
+
 }
