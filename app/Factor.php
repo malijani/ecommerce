@@ -35,9 +35,20 @@ class Factor extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
+    /*Accessors*/
+    public function getProfitAttribute()
+    {
+        $total_self_buy = 0;
+        foreach($this->products as $product){
+            $total_self_buy += $product->price_self_buy;
+        }
+        return $this->price - $total_self_buy;
+    }
+    /*Scopes*/
     public function scopeSort($query)
     {
         return $query
+            ->orderBy('delivery')
             ->orderByDesc('status')
             ->orderByDesc('updated_at');
     }
@@ -59,7 +70,7 @@ class Factor extends Model
     {
         return $query
             ->withoutTrashed()
-            ->whereDate('created_at', '>=', $this->archiveDate())
+            ->whereDate('updated_at', '>=', $this->archiveDate())
             ->orWhere('status', '=', '1');
     }
 
@@ -68,7 +79,7 @@ class Factor extends Model
         return $query
             ->withoutTrashed()
             ->where('status', '=', '1')
-            ->whereDate('created_at', '>=', $this->archiveDate());
+            ->whereDate('updated_at', '>=', $this->archiveDate());
     }
 
     public function scopeActiveFactors($query)
@@ -76,7 +87,7 @@ class Factor extends Model
         return $query
             ->withoutTrashed()
             ->where('status', '!=', '1')
-            ->whereDate('created_at', '>=', $this->archiveDate());
+            ->whereDate('updated_at', '>=', $this->archiveDate());
     }
 
     public function scopeUnpaidFactors($query)
@@ -84,15 +95,15 @@ class Factor extends Model
         return $query
             ->withoutTrashed()
             ->where('status', '=', '0')
-            ->whereDate('created_at', '>=', $this->archiveDate());
+            ->whereDate('updated_at', '>=', $this->archiveDate());
     }
 
     public function scopeFailureFactors($query)
     {
         return $query
             ->withoutTrashed()
-            ->where('status', '=' , 2)
-            ->whereDate('created_at', '>=', $this->archiveDate());
+            ->where('status', '=', 2)
+            ->whereDate('updated_at', '>=', $this->archiveDate());
     }
 
     public function scopeArchivedFactors($query)

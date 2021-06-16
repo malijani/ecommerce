@@ -66,7 +66,14 @@ Route::group(['prefix' => 'user', 'middleware' => ['web', 'auth', 'auth.normal',
 Route::group(['prefix' => 'admin', 'middleware' => ['web', 'auth', 'auth.admin']], function () {
 
     Route::get('', 'Admin\AdminController@index')->name('admin.home');
-    Route::resource('factors', 'Admin\FactorController')->only(['index', 'edit', 'update', 'show']);
+    /*FACTORS*/
+    Route::resource('factors', 'Admin\FactorController')->only(['index', 'show', 'edit']);
+    Route::post('factors/comment/{id}', 'Admin\FactorController@comment')->name('factors.comment');
+    Route::post('factors/shipping/{id}', 'Admin\FactorController@shipping')->name('factors.shipping');
+    Route::post('factors/restore/{id}', 'Admin\FactorController@restore')->name('factors.restore');
+    Route::post('factors/unarchive/{id}', 'Admin\FactorController@unArchive')->name('factors.unarchive');
+
+
     Route::resource('users', 'Admin\UserController');
     Route::resource('categories', 'Admin\CategoryController');
     Route::resource('brands', 'Admin\BrandController');

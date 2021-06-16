@@ -42,10 +42,10 @@
                                                 <td>#</td>
                                                 <td>کاربر</td>
                                                 <td>مبلغ</td>
+                                                <td>سود</td>
                                                 <td>مرجع پرداخت</td>
                                                 <td>تعداد محصول</td>
                                                 <td>وضعیت ارسال</td>
-                                                <td>عملیات</td>
                                             </tr>
                                             </thead>
 
@@ -54,11 +54,16 @@
                                                 <tr class="text-center" id="data-{{$factor->id}}">
                                                     {{--ID--}}
                                                     <td class="align-middle">
+                                                        <span class="badge badge-info">
+                                                            No. {{ $factor->id }}
+                                                        </span>
+
                                                         <a href="{{ route('factors.show', $factor->id) }}"
                                                            class="btn btn-light"
                                                         >
                                                             {{ $factor->uuid }}
                                                         </a>
+
 
                                                     </td>
 
@@ -75,6 +80,12 @@
                                                                 class="text-success">{{ $factor->discount_code  }}</span>
                                                         @endif
                                                     </td>
+                                                    <td class="align-middle text-success">
+                                                        <span class="ltr">
+                                                        {{ number_format($factor->profit) }}
+                                                        </span>
+                                                        تومن
+                                                    </td>
 
                                                     <td class="align-middle">
                                                         {{ $factor->pay_reference }}
@@ -84,23 +95,58 @@
                                                         {{ $factor->count . ' عدد '}}
                                                     </td>
                                                     <td class="align-middle">
-                                                        @if($factor->delivery == "0")
-                                                            <span class="badge badge-primary">در انبار</span>
-                                                        @elseif($factor->delivery == "1")
-                                                            <span class="badge badge-primary">پست شده</span>
-                                                        @else
-                                                            <span class="badge badge-primary">تحویل داده شده</span>
-                                                        @endif
-                                                    </td>
-                                                    {{--OPERATION--}}
-                                                    <td class="align-middle">
 
-                                                        <a href="{{ route('factors.edit', $factor->id) }}"
-                                                           class="btn btn-info"
-                                                        >
-                                                            <i class="fa fa-edit"></i>
-                                                        </a>
+                                                        <div class="form-group row align-items-center">
 
+                                                            <label for="shipping_status_{{$factor->id}}"
+                                                                   class="col-form-label col-2 badge
+                                                                    {{  ($factor->delivery == '0')? 'badge-warning' : null }}
+                                                                   {{ ($factor->delivery == '1') ? 'badge-info' : null }}
+                                                                   {{ ($factor->delivery == '2') ? 'badge-success' : null }}
+                                                                       ">
+                                                                <i class="fal fa-2x align-middle fa-truck"></i>
+                                                                <span class="d-none">
+                                                                        {{ $factor->delivery }}
+                                                                    </span>
+                                                            </label>
+
+                                                            <div class="col-10">
+                                                                <select
+                                                                    class="shipping_status form-control custom-select"
+                                                                    data-url="{{ route('factors.shipping', $factor->id) }}"
+                                                                    name="shipping_status"
+                                                                    id="shipping_status_{{$factor->id}}"
+                                                                >
+                                                                    <option value="0"
+                                                                        {{ ($factor->delivery == '0') ? 'selected' : null }}
+                                                                    >
+                                                                        در انبار
+                                                                    </option>
+
+                                                                    <option value="1"
+                                                                        {{ ($factor->delivery == '1') ? 'selected' : null }}
+                                                                    >
+                                                                        پست شده
+                                                                    </option>
+
+                                                                    <option value="2"
+                                                                        {{ ($factor->delivery == '2') ? 'selected' : null }}
+                                                                    >
+                                                                        تحویل داده شده
+                                                                    </option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        {{-- @if($factor->delivery == "0")
+                                                             <span class="badge badge-warning">در انبار</span>
+                                                             <span class="d-none">{{ $factor->delivery }}</span>
+                                                         @elseif($factor->delivery == "1")
+                                                             <span class="badge badge-info">پست شده</span>
+                                                             <span class="d-none">{{ $factor->delivery }}</span>
+                                                         @else
+                                                             <span class="badge badge-success">تحویل داده شده</span>
+                                                             <span class="d-none">{{ $factor->delivery }}</span>
+                                                         @endif--}}
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -111,10 +157,10 @@
                                                 <td>#</td>
                                                 <td>کاربر</td>
                                                 <td>مبلغ</td>
+                                                <td>سود</td>
                                                 <td>مرجع پرداخت</td>
                                                 <td>تعداد محصول</td>
                                                 <td>وضعیت ارسال</td>
-                                                <td>عملیات</td>
                                             </tr>
                                             </tfoot>
 
@@ -154,7 +200,6 @@
                                                 <td>تعداد محصول</td>
                                                 <td>کد خطا</td>
                                                 <td>پیام خطا</td>
-                                                <td>عملیات</td>
                                             </tr>
                                             </thead>
 
@@ -193,16 +238,6 @@
                                                     <td class="align-middle">
                                                         {{ $factor->error_message }}
                                                     </td>
-                                                    {{--OPERATION--}}
-                                                    <td class="align-middle">
-
-                                                        <a href="{{ route('factors.edit', $factor->id) }}"
-                                                           class="btn btn-info"
-                                                        >
-                                                            <i class="fa fa-edit"></i>
-                                                        </a>
-
-                                                    </td>
                                                 </tr>
                                             @endforeach
                                             </tbody>
@@ -215,7 +250,6 @@
                                                 <td>تعداد محصول</td>
                                                 <td>کد خطا</td>
                                                 <td>پیام خطا</td>
-                                                <td>عملیات</td>
                                             </tr>
                                             </tfoot>
 
@@ -255,7 +289,6 @@
                                                 <td>مبلغ</td>
                                                 <td>تعداد محصول</td>
                                                 <td>تاریخ ثبت</td>
-                                                <td>عملیات</td>
                                             </tr>
                                             </thead>
 
@@ -291,16 +324,6 @@
                                                     <td class="align-middle">
                                                         {{ verta($factor->created_at)->formatJalaliDate() }}
                                                     </td>
-                                                    {{--OPERATION--}}
-                                                    <td class="align-middle">
-
-                                                        <a href="{{ route('factors.edit', $factor->id) }}"
-                                                           class="btn btn-info"
-                                                        >
-                                                            <i class="fa fa-edit"></i>
-                                                        </a>
-
-                                                    </td>
                                                 </tr>
                                             @endforeach
                                             </tbody>
@@ -312,7 +335,6 @@
                                                 <td>مبلغ</td>
                                                 <td>تعداد محصول</td>
                                                 <td>تاریخ ثبت</td>
-                                                <td>عملیات</td>
                                             </tr>
                                             </tfoot>
 
@@ -389,6 +411,10 @@
                                                             <span class="badge badge-danger">
                                                                 پرداخت نشده
                                                             </span>
+                                                        @elseif($factor->status == '1')
+                                                            <span class="badge badge-success">
+                                                                پرداخت شده
+                                                            </span>
                                                         @elseif($factor->status == '2')
                                                             <span class="badge badge-warning">
                                                                 دارای خطا
@@ -401,6 +427,7 @@
                                                             <span>
                                                                 {{ $factor->error_message }}
                                                             </span>
+
                                                         @endif
                                                     </td>
                                                     <td class="align-middle">
@@ -412,11 +439,13 @@
                                                     {{--OPERATION--}}
                                                     <td class="align-middle">
 
-                                                        <a href="{{ route('factors.edit', $factor->id) }}"
-                                                           class="btn btn-info"
+                                                        <button
+                                                            id="restore_factor_{{ $factor->id }}"
+                                                            data-url="{{ route('factors.restore', $factor->id) }}"
+                                                            class="restore_factor btn btn-outline-danger"
                                                         >
-                                                            <i class="fa fa-edit"></i>
-                                                        </a>
+                                                            <i class="fal fa-2x align-middle fa-trash-restore"></i>
+                                                        </button>
 
                                                     </td>
                                                 </tr>
@@ -531,11 +560,12 @@
                                                     {{--OPERATION--}}
                                                     <td class="align-middle">
 
-                                                        <a href="{{ route('factors.edit', $factor->id) }}"
-                                                           class="btn btn-info"
+                                                        <button data-url="{{ route('factors.unarchive', $factor->id) }}"
+                                                                id="unarchive_factor_{{$factor->id}}"
+                                                                class="unarchive_factor btn btn-outline-warning"
                                                         >
-                                                            <i class="fa fa-edit"></i>
-                                                        </a>
+                                                            <i class="fal fa-2x align-middle fa-redo"></i>
+                                                        </button>
 
                                                     </td>
                                                 </tr>
@@ -573,45 +603,113 @@
             src="{{ asset('adminrc/plugins/datatables/jquery.dataTables.js') }}"></script>
     <script type="text/javascript"
             src="{{ asset('adminrc/plugins/datatables/dataTables.bootstrap4.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('adminrc/plugins/sweetalert/sweetalert.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('adminrc/plugins/sweetalert/sweetalert2.min.js') }}"></script>
     <script type="text/javascript">
 
         $(document).ready(function () {
+            /*UNARCHIVE FACTOR SECTION*/
+            let unarchive_factor = $(".unarchive_factor");
+            unarchive_factor.on('click', function(e){
+               e.preventDefault();
+                $.ajax({
+                    url: $(this).attr('data-url'),
+                    type: 'POST',
+                    data: {
+                        '_token': '{{ csrf_token() }}',
+                    },
+                    success: function (result) {
+                        Swal.fire({
+                            position: 'top',
+                            icon: "success",
+                            title: result.message,
+                            showConfirmButton: false,
+                            timer: 1500,
+                        }).then(function(){
+                            location.reload();
+                        });
 
-            let destroy_button = $('.destroy-button');
-            destroy_button.on('click', function () {
-                let delete_address = $(this).attr('data-url');
+                    },
+                    error: function (result) {
+                        Swal.fire({
+                            position: 'top',
+                            icon: "error",
+                            title: result.responseJSON.message,
+                            showConfirmButton: false,
+                            timer: 1500,
+                        });
+                    }
+                });
+            });
 
-                swal({
-                    title: "آیا از حذف کاربر مطمعنید؟",
-                    text: "با حذف کاربر، قادر به بازگردانی آن نخواهید بود!",
-                    icon: "warning",
-                    buttons: ['نه! حذفش نکن.', 'آره، حذفش کن.'],
-                    dangerMode: true,
-                })
-                    .then((willDelete) => {
-                        if (willDelete) {
-                            // console.log('delete');
-                            $.ajax({
-                                url: delete_address,
-                                type: 'POST',
-                                data: {
-                                    '_token': '{{ csrf_token() }}',
-                                    '_method': 'DELETE',
-                                },
-                                success: function (result) {
-                                    location.reload();
-                                },
-                                error: function () {
-                                    swal({
-                                        text: "خطای غیر منتظره ای رخ داده، لطفا با توسعه دهنده در میان بگذارید.",
-                                        icon: 'error',
-                                        button: "فهمیدم.",
-                                    });
-                                }
-                            });
-                        }
-                    });
+            /*RESTORE FACTOR SECTION*/
+            let restore_factor = $(".restore_factor");
+            restore_factor.on('click', function(e){
+                e.preventDefault();
+                $.ajax({
+                    url: $(this).attr('data-url'),
+                    type: 'POST',
+                    data: {
+                        '_token': '{{ csrf_token() }}',
+                    },
+                    success: function (result) {
+                        Swal.fire({
+                            position: 'top',
+                            icon: "success",
+                            title: result.message,
+                            showConfirmButton: false,
+                            timer: 1500,
+                        }).then(function(){
+                            location.reload();
+                        });
+
+                    },
+                    error: function (result) {
+                        Swal.fire({
+                            position: 'top',
+                            icon: "error",
+                            title: result.responseJSON.message,
+                            showConfirmButton: false,
+                            timer: 1500,
+                        });
+                    }
+                });
+            });
+
+            /*SHORT HAND CHANGE SHIPPING STATUS*/
+            let shipping_status = $(".shipping_status");
+            shipping_status.on('change', function (e) {
+                e.preventDefault();
+                $.ajax({
+                    url: $(this).attr('data-url'),
+                    type: 'POST',
+                    data: {
+                        '_token': '{{ csrf_token() }}',
+                        'delivery': $(this).val(),
+                        'text' : $(this).find("option:selected").text(),
+                        'short_access' : true,
+                    },
+                    success: function (result) {
+                        Swal.fire({
+                            position: 'top',
+                            icon: "success",
+                            title: result.message,
+                            showConfirmButton: false,
+                            timer: 1500,
+                        }).then(function(){
+                            location.reload();
+                        });
+
+                    },
+                    error: function (result) {
+                        Swal.fire({
+                            position: 'top',
+                            icon: "error",
+                            title: result.responseJSON.message,
+                            showConfirmButton: false,
+                            timer: 1500,
+                        });
+                    }
+                });
             });
 
             $('#datatable-paid-factors').DataTable({

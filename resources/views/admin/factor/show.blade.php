@@ -6,6 +6,7 @@
 
 
 @section('content')
+
     <div class="col-md-12">
         <!-- DETAILS box -->
         <div class="card">
@@ -49,58 +50,66 @@
                                         @endif
                                     </td>
                                 </tr>
-                                <tr>
-                                    <th scope="row"
-                                        class="align-middle text-center"
-                                    >
-                                        کد پرداخت
-                                    </th>
-                                    <td class="align-middle text-center">
-                                        {{ $factor->pay_trans_id ?? '-' }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row"
-                                        class="align-middle text-center"
-                                    >
-                                        رهگیری پرداخت
-                                    </th>
-                                    <td class="align-middle text-center">
-                                        {{ $factor->pay_tracking ?? '-' }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row"
-                                        class="align-middle text-center"
-                                    >
-                                        پرداخت شده در
-                                    </th>
-                                    <td class="align-middle text-center">
-                                        {{ (!empty($factor->paid_at)) ? verta($factor->paid_at)->formatJalaliDate() : '-/-/-' }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row"
-                                        class="align-middle text-center"
-                                    >
-                                        مرجع پرداخت
-                                    </th>
-                                    <td class="align-middle text-center">
-                                        {{ $factor->pay_reference ?? '-' }}
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <th scope="row"
-                                        class="align-middle text-center"
-                                    >
-                                        آیپی کاربر
-                                    </th>
-                                    <td class="align-middle text-center ltr">
-                                        {{ $factor->user_ip ?? '0.0.0.0' }}
-                                    </td>
-                                </tr>
-
+                                @if(!empty($factor->pay_trans_id))
+                                    <tr>
+                                        <th scope="row"
+                                            class="align-middle text-center"
+                                        >
+                                            کد پرداخت
+                                        </th>
+                                        <td class="align-middle text-center">
+                                            {{ $factor->pay_trans_id ?? '-' }}
+                                        </td>
+                                    </tr>
+                                @endif
+                                @if(!empty($factor->pay_tracking))
+                                    <tr>
+                                        <th scope="row"
+                                            class="align-middle text-center"
+                                        >
+                                            رهگیری پرداخت
+                                        </th>
+                                        <td class="align-middle text-center">
+                                            {{ $factor->pay_tracking ?? '-' }}
+                                        </td>
+                                    </tr>
+                                @endif
+                                @if(!empty($factor->paid_at))
+                                    <tr>
+                                        <th scope="row"
+                                            class="align-middle text-center"
+                                        >
+                                            پرداخت شده در
+                                        </th>
+                                        <td class="align-middle text-center">
+                                            {{ (!empty($factor->paid_at)) ? verta($factor->paid_at)->formatJalaliDate() : '-/-/-' }}
+                                        </td>
+                                    </tr>
+                                @endif
+                                @if(!empty($factor->pay_reference))
+                                    <tr>
+                                        <th scope="row"
+                                            class="align-middle text-center"
+                                        >
+                                            مرجع پرداخت
+                                        </th>
+                                        <td class="align-middle text-center">
+                                            {{ $factor->pay_reference ?? '-' }}
+                                        </td>
+                                    </tr>
+                                @endif
+                                @if(!empty($factor->user_ip))
+                                    <tr>
+                                        <th scope="row"
+                                            class="align-middle text-center"
+                                        >
+                                            آیپی کاربر
+                                        </th>
+                                        <td class="align-middle text-center ltr">
+                                            {{ $factor->user_ip ?? '0.0.0.0' }}
+                                        </td>
+                                    </tr>
+                                @endif
                                 @if(!empty($factor->error_code))
                                     <tr>
                                         <th scope="row"
@@ -155,6 +164,7 @@
                                         {{ number_format($factor->price) . " تومن " }}
                                     </td>
                                 </tr>
+                                @if(!empty($factor->discount_price))
                                 <tr>
                                     <th scope="row"
                                         class="align-middle text-center"
@@ -165,24 +175,44 @@
                                         {{ number_format($factor->raw_price) .  " تومن " }}
                                     </td>
                                 </tr>
-                                <tr>
-                                    <th scope="row"
-                                        class="align-middle text-center"
-                                    >
-                                        میزان تخفیف
+                                @endif
+                                @if(!empty($factor->discount_price))
+                                    <tr>
+                                        <th scope="row"
+                                            class="align-middle text-center"
+                                        >
+                                            میزان تخفیف
+                                        </th>
+                                        <td class="align-middle text-center">
+                                            {{ number_format($factor->discount_price) . " تومن " }}
+                                        </td>
+                                    </tr>
+                                @endif
+                                @if(!empty($factor->discount_code))
+                                    <tr>
+                                        <th scope="row"
+                                            class="align-middle text-center"
+                                        >
+                                            کد تخفیف
+                                        </th>
+                                        <td class="align-middle text-center">
+                                            {{ $factor->discount_code ?? '-' }}
+                                        </td>
+                                    </tr>
+                                @endif
+                                <tr class="text-success text-center" >
+                                    <th scope="row" class="align-middle">
+                                        <span>
+                                            <i class="fa fa-2x align-middle fa-dollar"></i>
+                                        </span>
+                                        مجموع سود
                                     </th>
-                                    <td class="align-middle text-center">
-                                        {{ number_format($factor->discount_price) . " تومن " }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row"
-                                        class="align-middle text-center"
-                                    >
-                                        کد تخفیف
-                                    </th>
-                                    <td class="align-middle text-center">
-                                        {{ $factor->discount_code ?? '-' }}
+                                    <td class="align-middle">
+                                        <span class="ltr">
+                                        {{ number_format($factor->profit) }}
+                                        </span>
+                                        تومن
+
                                     </td>
                                 </tr>
                                 </tbody>
@@ -228,41 +258,86 @@
                                     <th scope="row"
                                         class="align-middle text-center"
                                     >
-                                        وضعیت ارسال
+                                        <label for="delivery">
+                                            وضعیت ارسال
+                                        </label>
                                     </th>
-                                    {{-- TODO : CREATE A SELECT OPTION FOR THIS--}}
                                     <td class="align-middle text-center">
-                                        @if($factor->delivery == "0")
-                                            <span class="badge badge-primary font-14 p-2">در انبار</span>
-                                        @elseif($factor->delivery == "1")
-                                            <span class="badge badge-primary font-14 p-2">پست شده</span>
-                                        @else
-                                            <span class="badge badge-primary font-14 p-2">تحویل داده شده</span>
-                                        @endif
+                                        <select name="delivery"
+                                                id="delivery"
+                                                class="form-control custom-select"
+                                        >
+                                            <option value="0"
+                                                {{ ($factor->delivery == '0') ? 'selected' : '' }}
+                                            >
+                                                در انبار
+                                            </option>
+                                            <option value="1"
+                                                {{ ($factor->delivery == '1') ? 'selected' : '' }}
+                                            >
+                                                پست شده
+                                            </option>
+
+                                            <option value="2"
+                                                {{ ($factor->delivery == '2') ? 'selected' : '' }}
+                                            >
+                                                تحویل داده شده
+                                            </option>
+                                        </select>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th scope="row"
                                         class="align-middle text-center"
                                     >
-                                        کد رهگیری
+                                        <label for="post-tracking">
+                                            کد رهگیری
+                                        </label>
                                     </th>
-                                    {{--TODO : CREATE INPUT TEXT FOR THIS--}}
                                     <td class="align-middle text-center">
-                                        {{ $factor->post_tracking ?? '-'}}
+                                        <input type="text"
+                                               name="post-tracking"
+                                               id="post-tracking"
+                                               maxlength="50"
+                                               class="form-control"
+                                               value="{{ (!empty($factor->post_tracking)) ? $factor->post_tracking : null }}"
+                                               placeholder="کد رهگیری پستی را پس از ارسال مرسوله وارد کنید"
+                                        >
+
                                     </td>
                                 </tr>
                                 <tr>
                                     <th scope="row"
                                         class="align-middle text-center"
                                     >
-                                        هزینه شرکت پستی
-                                        <br>
-                                        (پرداخت در محل)
+                                        <label for="shipping-cost">
+                                            هزینه شرکت پستی
+                                            <br>
+                                            (پرداخت در محل)
+                                        </label>
                                     </th>
-                                    {{--TODO : CREATE INPUT TEXT FOR THIS--}}
                                     <td class="align-middle text-center">
-                                        {{ number_format($factor->shipping_cost) . " تومن " }}
+                                        <input type="text"
+                                               name="shipping-cost"
+                                               id="shipping-cost"
+                                               value="{{ (!empty($factor->shipping_cost)) ? $factor->shipping_cost : null }}"
+                                               class="form-control"
+                                               maxlength="10"
+                                               placeholder="هزینه دریافتی در محل سرویس ارائه دهنده پستی (تومن) "
+
+                                        >
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <button
+                                            class="form-control btn btn-outline-info"
+                                            id="submit_post_section"
+                                            name="submit_post_section"
+                                            data-url="{{ route('factors.shipping', $factor->id) }}"
+                                        >
+                                            ثبت تغییرات پستی
+                                        </button>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -316,29 +391,31 @@
                                         {{ $factor->shipping_address }}
                                     </td>
                                 </tr>
+                                @if(!empty($factor->shipping_tell))
+                                    <tr>
+                                        <th scope="row"
+                                            class="align-middle text-center"
+                                        >
+                                            تلفن ثابت
+                                        </th>
+                                        <td class="align-middle text-center">
+                                            {{ $factor->shipping_tell ?? '-' }}
+                                        </td>
+                                    </tr>
+                                @endif
 
-                                <tr>
-                                    <th scope="row"
-                                        class="align-middle text-center"
-                                    >
-                                        تلفن ثابت
-                                    </th>
-                                    <td class="align-middle text-center">
-                                        {{ (!empty($factor->shipping_tell))? $factor->shipping_tell : '-' }}
-                                    </td>
-                                </tr>
-
-
-                                <tr>
-                                    <th scope="row"
-                                        class="align-middle text-center"
-                                    >
-                                        کد پستی
-                                    </th>
-                                    <td class="align-middle text-center">
-                                        {{ (!empty($factor->shipping_post_code)) ? $factor->shipping_post_code : '-' }}
-                                    </td>
-                                </tr>
+                                @if(!empty($factor->shipping_post_code))
+                                    <tr>
+                                        <th scope="row"
+                                            class="align-middle text-center"
+                                        >
+                                            کد پستی
+                                        </th>
+                                        <td class="align-middle text-center">
+                                            {{  $factor->shipping_post_code ?? '-' }}
+                                        </td>
+                                    </tr>
+                                @endif
                                 </tbody>
                             </table>
                         </div>
@@ -430,13 +507,19 @@
                                     >{{ $factor->comment}}</textarea>
                             </div>
                             <div class="col-12  my-2">
-                                <button class="form-control btn btn-light">ثبت</button>
+                                <button class="form-control btn btn-light"
+                                        name="submit_admin_comment"
+                                        id="submit_admin_comment"
+                                        data-url="{{ route('factors.comment', $factor->id) }}"
+                                >
+                                    ثبت
+                                </button>
                             </div>
                         </div>
                     </div>
 
                     {{--ORDERED PRODUCTS--}}
-                    <div class="col-12 mt-4 mb-0">
+                    <div class="col-12 mt-5 mb-0">
                         <div class="font-weight-bolder font-20 text-center">
                             <h3>سبد سفارش</h3>
                         </div>
@@ -538,11 +621,90 @@
             src="{{ asset('adminrc/plugins/datatables/jquery.dataTables.js') }}"></script>
     <script type="text/javascript"
             src="{{ asset('adminrc/plugins/datatables/dataTables.bootstrap4.js') }}"></script>
-
+    <script src="{{ asset('adminrc/plugins/sweetalert/sweetalert2.min.js') }}"></script>
     <script type="text/javascript">
 
         $(document).ready(function () {
 
+            /*POST ATTRIBUTES SECTION*/
+            let delivery = $("#delivery");
+            let post_tracking = $("#post-tracking");
+            let shipping_cost = $("#shipping-cost");
+            let submit_post_section = $("#submit_post_section");
+            submit_post_section.on('click', function(e){
+                e.preventDefault();
+                $.ajax({
+                    url: submit_post_section.attr('data-url'),
+                    type: 'POST',
+                    data: {
+                        '_token': '{{ csrf_token() }}',
+                        'delivery': delivery.val(),
+                        'shipping_cost': shipping_cost.val(),
+                        'post_tracking': post_tracking.val()
+                    },
+                    success: function (result) {
+                        Swal.fire({
+                            position: 'top',
+                            icon: "success",
+                            title: result.message,
+                            showConfirmButton: false,
+                            timer: 1500,
+                        });
+                    },
+                    error: function (result) {
+                        Swal.fire({
+                            position: 'top',
+                            icon: "error",
+                            title: result.responseJSON.message,
+                            showConfirmButton: false,
+                            timer: 1500,
+                        });
+                    }
+                });
+            });
+
+            /* ADMIN COMMENT SECTION*/
+            let submit_admin_comment = $("#submit_admin_comment");
+            let admin_comment_content = $("#admin_comment");
+            submit_admin_comment.on('click', function (e) {
+                e.preventDefault();
+                if (admin_comment_content.val()) {
+                    $.ajax({
+                        url: submit_admin_comment.attr('data-url'),
+                        type: 'POST',
+                        data: {
+                            '_token': '{{ csrf_token() }}',
+                            'content': admin_comment_content.val(),
+                        },
+                        success: function (result) {
+                            Swal.fire({
+                                position: 'top',
+                                icon: "success",
+                                title: result.message,
+                                showConfirmButton: false,
+                                timer: 1500,
+                            });
+                        },
+                        error: function (result) {
+                            Swal.fire({
+                                position: 'top',
+                                icon: "error",
+                                title: result.responseJSON.message,
+                                showConfirmButton: false,
+                                timer: 1500,
+                            });
+                        }
+                    });
+                } else {
+                    Swal.fire({
+                        position: 'top',
+                        icon: "error",
+                        title: 'پاسخ بدون محتوا',
+                        showConfirmButton: false,
+                        timer: 1500,
+                    });
+                }
+            });
 
         });
 

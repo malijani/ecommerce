@@ -21,7 +21,8 @@
 
         @if( $ticket->user->isAdmin())
             <div class="col-5 text-left">
-                {{ $ticket->user->contact_information }}
+
+                {!!  implode("<br>", $ticket->user->contact_information)  !!}
             </div>
         @endif
 
