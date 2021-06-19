@@ -65,7 +65,7 @@
         @endif
 
         {{--SHOW ABOUT IMAGE MENU--}}
-        @include('front-v1.partials.about_image_menu')
+        @include('front-v1.partials.shared.about_image_menus')
         {{--./SHOW ABOUT IMAGE MENU--}}
 
         {{--SHOW MAIN IMAGE MENU--}}

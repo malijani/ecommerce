@@ -190,6 +190,9 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        /*MY SERVICE PROVIDERS*/
+        App\Providers\ViewServiceProvider::class,
+
     ],
 
     /*

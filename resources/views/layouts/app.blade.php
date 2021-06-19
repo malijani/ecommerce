@@ -29,7 +29,7 @@
 
 @include('front-v1.partials.back_to_top')
 
-@include('front-v1.partials.social_media_button')
+@include('front-v1.partials.shared.social_media_button')
 
 @include('front-v1.partials.scripts')
 @yield('page-scripts')

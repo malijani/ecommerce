@@ -3,65 +3,13 @@
 
 <div class="container-fluid">
 
-    {{--DISPLAY > MD--}}
-    <div class="container-fluid d-none d-md-block bg-grey-300 rounded-bottom ">
-        <div class="">
-            <div class="row mr-5">
-
-                @foreach($top_navs_medium as $top_nav_medium)
-                    <div class="mr-4 py-2">
-                        <a href="{{ $top_nav_medium->link }}"
-                           target="_blank"
-                           class="text-cyan-600-dark">
-                            {{ $top_nav_medium->title }}
-                        </a>
-                    </div>
-                @endforeach
-            </div>
-        </div>
-    </div>
-
-    {{--DISPLAY < MD--}}
-    <div class="container-fluid d-block d-md-none rounded-bottom bg-grey-300">
-        <div class="">
-            <div class="row">
-
-                @foreach($top_navs_small as $top_nav_small)
-                    <div class="py-2 col text-center">
-                        <a href="{{ $top_nav_small->link }}"
-                           target="_blank"
-                           class="text-cyan-600-dark">
-                            {{ $top_nav_small->title }}
-                        </a>
-                    </div>
-                @endforeach
-            </div>
-
-        </div>
-    </div>
-
+    @include('front-v1.partials.shared.top_nav')
 
     <div class="pt-md-2 bg-white text-dark rounded">
         <div class="container">
             <div class="row mt-2 align-items-center">
 
-                {{--SHOW LOGO--}}
-                {{--DISPLAY > MD--}}
-                <div class="d-none d-md-block col-md-4 text-center">
-                    <a href="{{ route('home') }}">
-                    <img class="img-fluid rounded align-middle" src="{{asset($logo->pic??'images/fallback/logo.png')}}"
-                         alt="{{$logo->pic_alt??config('app.short.name')}}">
-                    </a>
-                </div>
-                {{--DISPLAY < MD--}}
-                <div class="d-sm-block d-md-none col-md-1 text-center py-3 border-bottom">
-                    <a href="{{ route('home') }}">
-                    <img class="img-fluid rounded align-middle" src="{{asset($logo->pic??'images/fallback/logo.png')}}"
-                         alt="{{$logo->pic_alt??config('app.short.name')}}">
-                    </a>
-                </div>
-                {{--./SHOW LOGO--}}
-
+              @include('front-v1.partials.shared.logo')
 
                 {{--SHOW SEARCH BAR--}}
                 {{--DISPLAY > MD--}}

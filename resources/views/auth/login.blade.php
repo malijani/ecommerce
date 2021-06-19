@@ -31,7 +31,7 @@
                                            class="ltr font-weight-bolder font-16 text-center form-control @error('mobile') is-invalid @enderror"
                                            name="mobile"
                                            value="{{ old('mobile') }}"
-                                           pattern="09(0[1-2]|1[0-9]|3[0-9]|2[0-1])-?[0-9]{3}-?[0-9]{4}"
+                                           {{--pattern="09(0[1-2]|1[0-9]|3[0-9]|2[0-1])-?[0-9]{3}-?[0-9]{4}"--}}
                                            minlength="11"
                                            maxlength="11"
                                            required
