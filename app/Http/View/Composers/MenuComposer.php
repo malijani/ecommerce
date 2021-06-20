@@ -1,35 +1,23 @@
 <?php
 
-namespace App\Http\Middleware;
+namespace App\Http\View\Composers;
 
-use App\Brand;
-use App\Category;
-use App\Page;
-use Closure;
+use Illuminate\View\View;
 
-
-class GenerateMenus
+class MenuComposer
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param \Closure $next
-     * @return mixed
-     */
-    public function handle($request, Closure $next)
+    public function compose(View $view)
     {
+        /*TODO : CREATE A BETTER MENU*/
+        /*\Menu::make('NavBar', function ($menu) {
 
-
-        \Menu::make('NavBar', function ($menu) {
-            /*HOME*/
             $menu->add(config('app.short.name') ?? 'خانه', [
                 'route' => 'home',
                 'nickname' => 'home',
             ])->activate();
 
 
-            /*PRODUCTS*/
+
             $menu->add('محصولات', ['route' => 'product.index', 'nickname' => 'product'])
                 ->data(['header' => 'نمایش کامل محصولات']);
 
@@ -42,7 +30,7 @@ class GenerateMenus
                 $menu->item('product')->add($product_category->title, route('category.show', $product_category->title_en));
             }
 
-            /*BLOG*/
+
             $menu->add('وبلاگ', ['route' => 'blog.index', 'nickname' => 'blog'])
                 ->data('header', 'نمایش کامل مقالات');
             $articles = Category::withoutTrashed()
@@ -54,7 +42,7 @@ class GenerateMenus
                 $menu->item('blog')->add($article_category->title, route('category.show', $article_category->title_en));
             }
 
-            /*BRANDS*/
+
             $menu->add('برند ها', ['route' => 'brand.index', 'nickname' => 'brand'])
                 ->data('header', 'نمایش کامل برند ها');
             $brands = Brand::withoutTrashed()
@@ -63,14 +51,14 @@ class GenerateMenus
                 $menu->item('brand')->add($brand->title, route('brand.show', $brand->title_en));
             }
 
-            /*FAQ*/
+
             $menu->add('پرسشهای متداول', ['route' => 'faq.index', 'nickname' => 'faq']);
-            /*USER PROFILE*/
+
             $menu->add('حساب کاربری', ['route' => 'dashboard.index', 'nickname' => 'dashboard']);
-            /*SHOPPING CART*/
+
             $menu->add('سبد خرید', ['route' => 'cart.index', 'nickname' => 'cart']);
 
-            /*PAGES*/
+
             $menu->add('صفحات', ['route' => 'page.index', 'nickname' => 'page']);
             $pages = Page::withoutTrashed()
                 ->where('menu', 1)
@@ -82,12 +70,12 @@ class GenerateMenus
                     $menu->item('page')->add($page->menu_title, route('page.show', $page->title_en));
                 }
             }
+        });*/
+        /*HOME*/
 
 
-        });
+        $view->with([
 
-        //dd(\Menu::get('NavBar')->item('page'));
-
-        return $next($request);
+        ]);
     }
 }

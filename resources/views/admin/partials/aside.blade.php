@@ -25,14 +25,14 @@
             <!-- Sidebar user panel (optional) -->
             <div class="user-panel mt-3 pb-3 mb-3 d-flex justify-content-left">
                 <div class="image mr-2">
-                    <img src="{{ asset(Auth::user()->pic ?? 'images/fallback/user.png') }}"
+                    <img src="{{ asset($user->pic ?? 'images/fallback/user.png') }}"
                          class="img-circle elevation-2"
-                         alt="{{ Auth::user()->uuid }}"
+                         alt="{{ $user->uuid }}"
                     >
                 </div>
                 <div class="info">
                     <span class="text-white">
-                        {{ \Illuminate\Support\Facades\Auth::user()->full_name }}
+                        {{ $user->full_name }}
                     </span>
 
                 </div>
@@ -42,11 +42,6 @@
             <nav class="mt-2">
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                     data-accordion="false">
-                    <!-- Add icons to the links using the .nav-icon class
-                         with font-awesome or any other icon font library -->
-
-
-
                     {{--ORDERS--}}
                     <li class="nav-item">
                         <a href="{{ route('factors.index') }}"

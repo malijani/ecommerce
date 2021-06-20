@@ -22,7 +22,6 @@
         "laravel/passport": "~9.0",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^2.4",
-        "lavary/laravel-menu": "^1.8",
         "livewire/livewire": "^2.4",
         "mews/captcha": "^3.2",
         "mews/purifier": "^3.3",

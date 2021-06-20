@@ -1,4 +1,4 @@
-@if(isset($about_image_menus))
+@if(!empty($about_image_menus) && count($about_image_menus) > 0)
     <div class="row my-2 py-3 bg-white rounded">
         @foreach($about_image_menus as $about_image_menu)
             <div class="col-6 col-md my-2 my-md-0 text-center">

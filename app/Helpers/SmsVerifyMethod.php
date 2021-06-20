@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Helpers;
-
 use Ghasedak\GhasedakApi;
 use SanjabVerify\Contracts\VerifyMethod;
 
@@ -10,6 +9,7 @@ class SmsVerifyMethod implements VerifyMethod
     public function send(string $receiver, string $code): bool
     {
         $api = new GhasedakApi(env('GHASEDAK_API_KEY'));
+
         $type = 1;
         $template = "gymlandauth";
         $param1 = $code;

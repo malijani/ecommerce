@@ -130,7 +130,6 @@
       <path value="$PROJECT_DIR$/vendor/shetabit/multipay" />
       <path value="$PROJECT_DIR$/vendor/shetabit/payment" />
       <path value="$PROJECT_DIR$/vendor/anetwork/validation" />
-      <path value="$PROJECT_DIR$/vendor/lavary/laravel-menu" />
       <path value="$PROJECT_DIR$/vendor/livewire/livewire" />
       <path value="$PROJECT_DIR$/vendor/ezyang/htmlpurifier" />
       <path value="$PROJECT_DIR$/vendor/mews/purifier" />

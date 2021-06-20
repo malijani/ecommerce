@@ -50,7 +50,7 @@ function icoUploader(Request $request, $field, $dir): ?string
 {
     if ($request->hasFile($field)) {
         $file = $request->file($field);
-        $name = Str::random(20) . '.' . $file->extension() ?? 'png';
+        $name = Str::random(20) . '.' . $file->extension() ?? 'ico';
         $path = 'storage/files/shares/' . $dir;
         if (!is_dir($path)) {
             mkdir($path, 0777, true);

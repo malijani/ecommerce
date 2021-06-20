@@ -84,7 +84,7 @@ class CategoryController extends Controller
             'menu'=>['required', 'numeric'],
         ]);
 
-        $pic = imageUploader($request, 'pic', 'category', 300, 300, true);
+        $pic = imageUploader($request, 'pic', 'category', 300, 300, false);
 
         Category::query()->create(array_merge(
             $request->except(['pic','title_en']),
@@ -248,7 +248,7 @@ class CategoryController extends Controller
             }
         }
 
-        $pic = imageUploader($request, 'pic', 'category', 300, 300, true);
+        $pic = imageUploader($request, 'pic', 'category', 300, 300, false);
         if(!is_null($pic) && !is_null($category->pic)){
             unlink(public_path($category->pic));
         }

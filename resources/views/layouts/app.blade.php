@@ -13,13 +13,15 @@
 <body>
 @include('front-v1.partials.nav')
 
-<div class="container">
-    <div class="row">
-        <div class="col-12 mt-3" id="flash-message">
-            @include('partials.flashes')
+@if($errors->any())
+    <div class="container">
+        <div class="row">
+            <div class="col-12 mt-3" id="flash-message">
+                @include('partials.flashes')
+            </div>
         </div>
     </div>
-</div>
+@endif
 
 @yield('content')
 

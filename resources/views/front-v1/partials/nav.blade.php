@@ -93,18 +93,18 @@
 </div>
 
 {{-- STICKY NAVBAR--}}
-<div class="container-fluid sticky-top">
+{{--<div class="container-fluid sticky-top">
     <nav class="yamm navbar navbar-expand-lg navbar-light bg-white mt-3 p-3 shadow-sm">
 
         <div class="container w-100">
-            {{--BRAND--}}
+            --}}{{--BRAND--}}{{--
             <a class="navbar-brand"
                href="{{ route($NavBar->active()->link->path['route']) }}"
             >
                 <i class="fal fa-home-alt fa-2x align-middle"></i>
                 {{ $NavBar->active()->title }}
             </a>
-            {{--./BRAND--}}
+            --}}{{--./BRAND--}}{{--
 
             <button class="navbar-toggler"
                     type="button"
@@ -118,18 +118,18 @@
                 <ul class="navbar-nav p-0">
 
 
-                    {{--GENERATE ITEMS--}}
+                    --}}{{--GENERATE ITEMS--}}{{--
                     @foreach($NavBar->all() as $menu)
-                        {{--SKIP ACTIVE : IT COMES FIRST--}}
+                        --}}{{--SKIP ACTIVE : IT COMES FIRST--}}{{--
                         @if($loop->first)
                             @continue;
                         @endif
-                        {{--SKIP PAGE : JUST DONT WANNA BE AS DROP DOWN MENU--}}
+                        --}}{{--SKIP PAGE : JUST DONT WANNA BE AS DROP DOWN MENU--}}{{--
                         @if($menu->nickname == "page")
                             @continue;
                         @endif
 
-                        {{--GENERATE PARENTS WITH SUB MENUS--}}
+                        --}}{{--GENERATE PARENTS WITH SUB MENUS--}}{{--
                         @if($menu->hasChildren())
                             <li class="nav-item dropdown yamm-fw mx-2">
 
@@ -173,7 +173,7 @@
                         @endif
                     @endforeach
 
-                    {{--FAQ--}}
+                    --}}{{--FAQ--}}{{--
                     <li class="nav-item mx-2">
 
                         <a class="nav-link btn p-2"
@@ -185,7 +185,7 @@
                         </a>
                     </li>
 
-                    {{--SHOW MENU PAGES--}}
+                    --}}{{--SHOW MENU PAGES--}}{{--
                     @if($NavBar->item('page')->hasChildren())
                         @foreach($NavBar->item('page')->children() as $page_child)
                             <li class="nav-item mx-2">
@@ -201,7 +201,7 @@
                         @endforeach
                     @endif
 
-                    {{--USER DASHBOARD--}}
+                    --}}{{--USER DASHBOARD--}}{{--
                     @auth
                         <li class="nav-item mx-2">
 
@@ -225,7 +225,7 @@
                         @endif
                     @endauth
 
-                    {{--SHOPPING CART--}}
+                    --}}{{--SHOPPING CART--}}{{--
                     <li class="nav-item mx-2">
 
                         <a class="nav-link btn p-2"
@@ -241,7 +241,7 @@
             </div>
         </div>
     </nav>
-</div>
+</div>--}}
 
 
 

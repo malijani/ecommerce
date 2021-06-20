@@ -26,16 +26,21 @@ class HomeController extends Controller
             ->orderBy('sort')
             ->orderByDesc('id')
             ->get();
+
         // get Products category by title_en : products :> it's important
-        $categories = Category::withoutTrashed()
-            ->where('title_en', 'products')
-            ->with('children')
-            ->where('menu', 1)
-            ->orderBy('created_at', 'DESC')
-            ->orderBy('sort', 'ASC')
-            ->firstOrFail()
-            ->children()
-            ->get();
+        try {
+            $categories = Category::withoutTrashed()
+                ->where('title_en', 'products')
+                ->with('children')
+                ->where('menu', 1)
+                ->orderBy('created_at', 'DESC')
+                ->orderBy('sort', 'ASC')
+                ->firstOrFail()
+                ->children()
+                ->get();
+        }catch (\Exception $e){
+            $categories = null;
+        }
 
         $brands = Brand::withoutTrashed()
             ->where('status', 1)
@@ -43,6 +48,7 @@ class HomeController extends Controller
             ->orderByDesc('id')
             ->take(4)
             ->get();
+
         $products = Product::withoutTrashed()
             ->where('status', 1)
             ->where('entity', '>', 0)

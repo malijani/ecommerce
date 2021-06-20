@@ -22,6 +22,7 @@
 
 @section('content')
 
+
     <div class="col-md-6">
         <!-- TREE box -->
         <div class="card">
@@ -58,6 +59,19 @@
             <!-- /.card-body -->
             </div>
             <!-- /.card -->
+        </div>
+        <div class="col-md-12">
+            <div class="border border-info bg-white py-2 px-2">
+                <h6>ثبت دو سردسته زیر حیاتی است: </h6>
+                <ul class="pr-4">
+                    <li>products => محصولات</li>
+                    <li>articles => مقالات</li>
+                </ul>
+                <p> *
+                    محصولات و مقالات بعنوان دسته بندی های اصلی و اولین زیرشاخه های آنان بعنوان عنوان گروه بندی و زیر شاخه های سوم به بعد بعنوان موارد دسته بندی محسوب می‌شوند.
+                </p>
+            </div>
+
         </div>
     </div>
 

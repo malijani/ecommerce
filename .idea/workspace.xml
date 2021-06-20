@@ -149,7 +149,6 @@
       <path value="$PROJECT_DIR$/vendor/shetabit/multipay" />
       <path value="$PROJECT_DIR$/vendor/shetabit/payment" />
       <path value="$PROJECT_DIR$/vendor/anetwork/validation" />
-      <path value="$PROJECT_DIR$/vendor/lavary/laravel-menu" />
       <path value="$PROJECT_DIR$/vendor/livewire/livewire" />
       <path value="$PROJECT_DIR$/vendor/ezyang/htmlpurifier" />
       <path value="$PROJECT_DIR$/vendor/mews/purifier" />
@@ -181,7 +180,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/public/front-v1" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
     <property name="settings.editor.selected.configurable" value="preferences.keymap" />
