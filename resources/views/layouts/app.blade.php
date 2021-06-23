@@ -10,8 +10,8 @@
     @yield('page-styles')
 </head>
 
-<body>
-@include('front-v1.partials.nav')
+<body class="header_sticky header-style-1 has-menu-extra">
+@include('front-v1.partials.shared.header')
 
 @if($errors->any())
     <div class="container">
@@ -25,7 +25,7 @@
 
 @yield('content')
 
-@include('front-v1.partials.footer')
+@include('front-v1.partials.shared.footer')
 
 @include('front-v1.partials.phone_nav')
 

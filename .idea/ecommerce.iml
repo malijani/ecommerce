@@ -150,6 +150,8 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/barryvdh/laravel-debugbar" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/ghasedak/laravel" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/ghasedak/php" />
+      <excludeFolder url="file://$MODULE_DIR$/resources/front-final" />
+      <excludeFolder url="file://$MODULE_DIR$/resources/front-mega-menu" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

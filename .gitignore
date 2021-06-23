@@ -3,6 +3,11 @@
 /public/storage
 /storage/*.key
 /vendor
+/resources/admin  
+/resources/front-final  
+/resources/front-mega-menu  
+/resources/front-v1  
+/resources/inspina
 .env
 .env.backup
 .phpunit.result.cache
@@ -11,3 +16,4 @@ Homestead.yaml
 npm-debug.log
 yarn-error.log
 *.zip
+

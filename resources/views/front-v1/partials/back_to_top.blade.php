@@ -1,5 +1,5 @@
 <a id="back-to-top"
-   href="#"
+   href="#back-to-top"
    class="btn btn-light btn-lg back-to-top bg-whitesmoke border"
    role="button"
 >

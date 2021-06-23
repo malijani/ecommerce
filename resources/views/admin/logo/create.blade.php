@@ -60,6 +60,9 @@
                                            accept=".jpg,.jpeg,.png,.gif"
                                            required
                                     >
+                                    <span class="alert-info rounded px-2">
+                                        سایز ترجیحی ۳۰۰ در ۱۰۰ می‌باشد.
+                                    </span>
                                     @include('partials.form_error', ['input'=>'pic'])
                                 </div>
                             </div>
@@ -71,12 +74,14 @@
 
                     <div class="form-row">
                         <div class="col-md-12">{{--PREVIEW PIC + DEFAULT SELECTOR--}}
-                            <div class="form-group row">
+                            <div class="form-group row justify-content-center">
                                 <div class="col-md-12 text-center">{{--IMG--}}
                                     <img src="{{asset('images/fallback/logo.png')}}"
                                          alt="نمایش لوگو منتخب"
-                                         class="preview img rounded align-middle image-checkable w-50"
+                                         class="preview img rounded align-middle image-checkable"
                                          id="preview"
+                                         width="300"
+                                         height="100"
                                          name="status"
                                     >
                                 </div>{{--./IMG--}}

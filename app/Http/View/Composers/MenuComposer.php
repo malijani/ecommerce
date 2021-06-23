@@ -2,12 +2,48 @@
 
 namespace App\Http\View\Composers;
 
+use App\Logo;
+use App\TopNav;
 use Illuminate\View\View;
 
 class MenuComposer
 {
     public function compose(View $view)
     {
+        /*WEBSITE LOGO*/
+        $logo = Logo::withoutTrashed()
+            ->where('status', '1')
+            ->first();
+
+        /*MEDIUM SCREEN NAVIGATION ITEMS*/
+        $top_navs_medium = TopNav::withoutTrashed()
+            ->where('status', 1)
+            ->where('screen', 1)
+            ->orderBy('id')
+            ->orderByDesc('status')
+            ->get();
+
+        /*SMALL SCREEN NAVIGATION ITEMS*/
+        $top_navs_small = TopNav::withoutTrashed()
+            ->where('status', 1)
+            ->where('screen', 0)
+            ->orderByDesc('id')
+            ->get();
+
+
+        /*NAVBAR*/
+
+        $view->with([
+            'top_navs_medium' => $top_navs_medium,
+            'top_navs_small' => $top_navs_small,
+            'logo' => $logo,
+        ]);
+
+
+
+
+
+
         /*TODO : CREATE A BETTER MENU*/
         /*\Menu::make('NavBar', function ($menu) {
 
@@ -72,10 +108,5 @@ class MenuComposer
             }
         });*/
         /*HOME*/
-
-
-        $view->with([
-
-        ]);
     }
 }

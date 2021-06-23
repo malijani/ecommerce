@@ -1,15 +1,78 @@
 {{--NAVBAR--}}
 
-
 <div class="container-fluid">
+    {{--TOP NAVS--}}
+    {{--DISPLAY > MD--}}
+    <div class="container-fluid d-none d-md-block bg-grey-300 rounded-bottom ">
+        <div class="">
+            <div class="row mr-5">
 
-    @include('front-v1.partials.shared.top_nav')
+                @foreach($top_navs_medium as $top_nav_medium)
+                    <div class="mr-4 py-2">
+                        <a href="{{ $top_nav_medium->link }}"
+                           target="_blank"
+                           class="text-cyan-600-dark">
+                            {{ $top_nav_medium->title }}
+                        </a>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </div>
 
+    {{--DISPLAY < MD--}}
+    <div class="container-fluid d-block d-md-none rounded-bottom bg-grey-300">
+        <div class="">
+            <div class="row">
+
+                @foreach($top_navs_small as $top_nav_small)
+                    <div class="py-2 col text-center">
+                        <a href="{{ $top_nav_small->link }}"
+                           target="_blank"
+                           class="text-cyan-600-dark">
+                            {{ $top_nav_small->title }}
+                        </a>
+                    </div>
+                @endforeach
+            </div>
+
+        </div>
+    </div>
+    {{--./TOP NAVS--}}
+
+    {{--LOGO--}}
     <div class="pt-md-2 bg-white text-dark rounded">
         <div class="container">
             <div class="row mt-2 align-items-center">
 
-              @include('front-v1.partials.shared.logo')
+                {{--SHOW LOGO--}}
+                {{--DISPLAY > MD--}}
+                <div class="d-none d-md-block col-md-4 text-center">
+                    <a href="{{ route('home') }}"
+                       title="{{$logo->pic_alt??config('app.short.name')}}"
+                    >
+                        <img class="img-fluid rounded align-middle"
+                             src="{{asset($logo->pic??'images/fallback/logo.png')}}"
+                             alt="{{$logo->pic_alt??config('app.short.name')}}"
+                             width="300"
+                             height="100"
+                        >
+                    </a>
+                </div>
+                {{--DISPLAY < MD--}}
+                <div class="d-sm-block d-md-none col-md-1 text-center py-3 border-bottom">
+                    <a href="{{ route('home') }}">
+                        <img class="img-fluid rounded align-middle"
+                             src="{{asset($logo->pic??'images/fallback/logo.png')}}"
+                             alt="{{$logo->pic_alt??config('app.short.name')}}"
+                             title="{{$logo->pic_alt??config('app.short.name')}}"
+                             width="300"
+                             height="100"
+                        >
+
+                    </a>
+                </div>
+                {{--./SHOW LOGO--}}
 
                 {{--SHOW SEARCH BAR--}}
                 {{--DISPLAY > MD--}}
@@ -90,7 +153,130 @@
             </div>
         </div>
     </div>
+    {{--./LOGO--}}
 </div>
+
+
+{{--NAVBAR--}}
+<div class="boxed">
+    <div id="site-header-wrap">
+        <!-- Header -->
+        <header id="header" class="header header-container clearfix">
+            <div class="container clearfix" id="site-header-inner">
+                <div id="logo" class="logo float-right">
+                    <a href="#"
+                       title="{{config('app.short.name')}}"
+                    >
+                        <img
+                            src="{{asset('images/asset/logos/logo.png')}}"
+                            alt="{{$logo->pic_alt??config('app.short.name')}}"
+                            width="107" height="24"
+                            data-retina="{{asset('images/asset/logos/logo-min.png')}}"
+                            data-width="107" data-height="24"
+                        >
+                    </a>
+                </div>
+                <!-- /.logo -->
+                <div class="mobile-button"><span></span></div>
+
+                <!-- /.menu-extra -->
+                <div class="nav-wrap">
+                    <nav id="main_nav" class="main_nav">
+                        <ul class="menu">
+                            <li class="active">
+                                <a href="#">محصولات</a>
+                                <ul class="submenu">
+                                    <li>
+                                        <a href="#">
+                                            بر اساس کارایی
+                                            <!--IF SUBMENU HAS SUBMENU-->
+                                            <span class="submenu_icon float-left align-middle">
+                                                <i class="fa fa-chevron-left"></i>
+                                            </span>
+                                        </a>
+                                        <ul class="submenu">
+                                            <li><a href="#">چربی سوزی</a></li>
+                                            <li><a href="#">افزایش حجم</a></li>
+                                            <li><a href="#">کات عضلات</a></li>
+                                            <li><a href="#">آبرسانی</a></li>
+                                            <li><a href="#">افزایش انرژی</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="#">بر اساس عملکرد</a></li>
+                                    <li><a href="#">بر اساس نوع</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#">مقالات</a>
+                                <ul class="submenu">
+                                    <li>
+                                        <a href="#">
+                                            تغذیه
+                                            <!--IF SUBMENU HAS SUBMENU-->
+                                            <span class="submenu_icon float-left align-middle">
+                                                <i class="fa fa-chevron-left"></i>
+                                            </span>
+                                        </a>
+                                        <ul class="submenu">
+                                            <li><a href="#">تغذیه</a></li>
+                                            <li><a href="#">برنامه تمرین</a></li>
+                                            <li><a href="#">آناتومی</a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            دستگاه ورزشی
+                                            <!--IF SUBMENU HAS SUBMENU-->
+                                            <span class="submenu_icon float-left align-middle">
+                                                <i class="fa fa-chevron-left"></i>
+                                            </span>
+                                        </a>
+                                        <ul class="submenu">
+                                            <li><a href="#">ماشین نیمه اوتوماتیک</a></li>
+                                            <li><a href="#">پیشرفته</a></li>
+                                            <li><a href="#">ماشین اوتوماتیک</a></li>
+                                            <li><a href="#">ماشین مکانیکی</a></li>
+                                            <li><a href="#">فیت</a></li>
+                                            <li><a href="#">دمبل</a></li>
+                                            <li><a href="#">هالتر</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#">سایت مپ</a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    تماس با ما
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    قوانین و مقررات
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    حساب کاربری
+                                    <span><i class="fa fa-user"></i></span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <!-- /.mainnav -->
+                </div>
+                <!-- /.nav-wrap -->
+            </div>
+            <!-- /.container-fluid -->
+        </header>
+        <!-- /header -->
+    </div>
+    <!-- /#site-header-wrap -->
+
+
+</div>
+{{--./NAVBAR--}}
 
 {{-- STICKY NAVBAR--}}
 {{--<div class="container-fluid sticky-top">
