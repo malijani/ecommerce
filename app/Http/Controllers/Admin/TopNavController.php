@@ -21,12 +21,14 @@ class TopNavController extends Controller
         $title = 'مدیریت ناوبری ایستا';
         $top_navs_medium = TopNav::withoutTrashed()
             ->where('screen', 1)
+            ->orderByDesc('status')
             ->orderByDesc('id')
             ->orderBy('sort')
             ->get();
 
         $top_navs_small = TopNav::withoutTrashed()
             ->where('screen', 0)
+            ->orderByDesc('status')
             ->orderByDesc('id')
             ->orderBy('sort')
             ->get();

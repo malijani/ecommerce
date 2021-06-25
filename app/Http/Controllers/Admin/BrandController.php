@@ -7,7 +7,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
-use Intervention\Image\ImageManager;
 
 class BrandController extends Controller
 {
@@ -60,7 +59,7 @@ class BrandController extends Controller
             'status'=>['required', 'numeric'],
         ]);
 
-        $pic = imageUploader($request, 'pic', 'brand', 300, 300, true);
+        $pic = imageUploader($request, 'pic', 'brand', 300, 300);
 
         Brand::query()->create(array_merge(
             $request->except(['pic','title_en']),
@@ -127,7 +126,7 @@ class BrandController extends Controller
             }
         }
 
-        $pic = imageUploader($request, 'pic', 'brand', 300, 300, true);
+        $pic = imageUploader($request, 'pic', 'brand', 300, 300);
         if(isset($pic) && isset($brand->pic)){
             unlink(public_path($brand->pic));
         }

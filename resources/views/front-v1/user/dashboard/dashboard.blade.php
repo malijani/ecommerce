@@ -7,7 +7,7 @@
 
     @yield('bread-crumb')
 
-    <div class="container my-3 rounded">
+    <div class="container-fluid my-3 rounded">
         <div class="row bg-white">
 
             <div class="col-md-3">{{--USER NAVIGATION BUTTONS--}}

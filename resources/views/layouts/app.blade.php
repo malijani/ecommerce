@@ -8,9 +8,10 @@
     @yield('page-metas')
     @include('front-v1.partials.styles')
     @yield('page-styles')
+    @stack('styles')
 </head>
 
-<body class="header_sticky header-style-1 has-menu-extra">
+<body class="header_sticky header-style-1 has-menu-extra" >
 @include('front-v1.partials.shared.header')
 
 @if($errors->any())
@@ -35,6 +36,7 @@
 
 @include('front-v1.partials.scripts')
 @yield('page-scripts')
+@stack('scripts')
 </body>
 
 

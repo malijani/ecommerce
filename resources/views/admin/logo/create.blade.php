@@ -60,9 +60,6 @@
                                            accept=".jpg,.jpeg,.png,.gif"
                                            required
                                     >
-                                    <span class="alert-info rounded px-2">
-                                        سایز ترجیحی ۳۰۰ در ۱۰۰ می‌باشد.
-                                    </span>
                                     @include('partials.form_error', ['input'=>'pic'])
                                 </div>
                             </div>
@@ -80,8 +77,7 @@
                                          alt="نمایش لوگو منتخب"
                                          class="preview img rounded align-middle image-checkable"
                                          id="preview"
-                                         width="300"
-                                         height="100"
+                                         height="400"
                                          name="status"
                                     >
                                 </div>{{--./IMG--}}

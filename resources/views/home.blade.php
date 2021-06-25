@@ -1,11 +1,12 @@
 @extends('layouts.app')
 
-@section('page-styles')
+@push('styles')
     <link rel="stylesheet" href="{{ asset('front-v1/slider-pro/css/slider-pro.css') }}">
-@endsection
+@endpush
+
 @section('content')
 
-    <div class="container my-3">
+    <div class="container-fluid my-3">
         {{--SHOW BANNER--}}
         @if(!empty($banner) && $banner->count())
             <div class="row my-3">
@@ -141,7 +142,7 @@
     </div>
 @endsection
 
-@section('page-scripts')
+@push('scripts')
     <script src="{{ asset('front-v1/slider-pro/js/jquery.sliderPro.min.js') }}"></script>
 
     <script>
@@ -164,4 +165,4 @@
             });
         });
     </script>
-@endsection
+@endpush

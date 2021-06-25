@@ -1,5 +1,5 @@
 <footer id="phone-nav">
-    <div class="container-fluid mt-5 d-block d-md-none bg-whitesmoke sticky-footer">
+    <div class="container-fluid mt-5 d-block d-md-none bg-light sticky-footer">
 
         <div class="row justify-content-center align-items-center">
             <div class="col-12 border-top text-center">

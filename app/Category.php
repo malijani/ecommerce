@@ -47,7 +47,7 @@ class Category extends Model
 
     public function activeChildren(): HasMany
     {
-        return $this->children()->where('status', 1)->where('menu', 1);
+        return $this->childrenRecursive()->where('status', 1)->where('menu', 1);
     }
 
     public function subActiveChildren(): HasMany

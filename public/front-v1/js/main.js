@@ -8,7 +8,7 @@
         let s="desktop";
         e(window).on("load resize", function () {
             let t = "desktop";
-            if (matchMedia("only screen and (max-width: 991px)").matches && (t = "mobile"), t !== s)
+            if (matchMedia("only screen and (max-width: 1400px)").matches && (t = "mobile"), t !== s)
                 if (s = t, "mobile" === t) {
                     let a = e("#main_nav").attr("id", "main_nav_mobi").hide(),
                         i = e("#main_nav_mobi").find("li:has(ul)");

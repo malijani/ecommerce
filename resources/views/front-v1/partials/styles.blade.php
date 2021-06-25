@@ -8,3 +8,5 @@
 {{--<link rel="stylesheet" href="{{ asset('front-v1/yamm/yamm.min.css') }}">--}}
 {{--LIVE WIRE--}}
 @livewireStyles
+
+

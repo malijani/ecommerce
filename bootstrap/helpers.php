@@ -1,10 +1,12 @@
 <?php
 
+use Illuminate\Http\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Intervention\Image\ImageManager;
-
+use Intervention\Image\Facades\Image;
 /**
  * Image uploader
  * @param Request $request
@@ -22,6 +24,8 @@ function imageUploader(Request $request, $field, $dir, $wsize = null, $hsize = n
             mkdir($path, 0777, true);
         }
         $pic = $path . '/' . $name;
+
+
         // CONVERT IMAGE TO WxH PNG WITH WATERMARK
         $manager = new ImageManager(['driver' => 'imagick']);
         $handler = $manager->make($file->path());
@@ -31,15 +35,16 @@ function imageUploader(Request $request, $field, $dir, $wsize = null, $hsize = n
                 $c->upsize();
             });
         }
-
         if ($watermark) {
             $handler->insert(env('WATERMARK_PATH', 'images/watermark/watermark-80.png' ?? $watermark_path), 'bottom-right', 5, 5);
         }
 
         $handler->encode('png');
+
         $handler->save($pic);
 
         return $pic;
+
     } else {
         return null;
     }

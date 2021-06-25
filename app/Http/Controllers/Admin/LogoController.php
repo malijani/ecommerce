@@ -58,7 +58,7 @@ class LogoController extends Controller
 
 
         /*STORE FILE*/
-        $pic = imageUploader($request, 'pic', 'logo', 300, 100);
+        $pic = imageUploader($request, 'pic', 'logo');
 
         /*SET STATUS*/
         $status = 0;

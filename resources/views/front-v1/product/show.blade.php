@@ -10,7 +10,7 @@
     {{ \Diglactic\Breadcrumbs\Breadcrumbs::render('products.product', $product) }}
 
 
-    <div class="container my-3 rounded">
+    <div class="container-fluid my-3 rounded">
         <div class="row px-0 bg-white py-3">
             {{--PRODUCT IMAGES--}}
             <div class="col-lg-6 mb-5 ">

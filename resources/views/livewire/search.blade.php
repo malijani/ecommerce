@@ -1,28 +1,26 @@
 <div>
 
-    <div class="input-group">
+    <div class="search_input_group">
+
         <input
+            id="search_input"
             name="q"
-            {{--id="query"--}}
             type="text"
-            class="form-control"
+            class="search_input form-control"
             wire:model.debounce.1s="search"
-            placeholder="جست و جوی محصول، مقاله، برند و ..."
+            placeholder=" "
         >
-        <div class="input-group-prepend">
-            <div
-                class="input-group-text"
-                id="search-button"
-            >
-                <i class="fa fa-search"></i>
-            </div>
-        </div>
+        <label for="search_input"
+               class="search_input_label"
+        >
+            جستجوی محصول، مقاله، برند و ...
+            <i class="fal fa-search align-middle text-dark"></i>
+        </label>
     </div>
 
 
-    @if(isset($products) || isset($articles) || isset($brands))
-        <div class="container">
-            <div class="row search-result-wrapper position-absolute py-4 bg-grey-50 rounded-bottom shadow-sm">
+    @if(!empty($products) && $products->count() ||!empty($articles)  && $articles->count()|| !empty($brands) && $brands->count() || !empty($categories) && $categories->count())
+            <div class="rounded-bottom  shadow-sm search-result-wrapper position-absolute py-4 bg-light">
                 @if(isset($products))
                     @foreach($products as $product)
                         @include('front-v1.partials.search_result', ['route'=>route('product.show', $product->title_en), 'img_src'=>asset($product->files()->defaultFile()->link ?? 'images/fallback/article.png'), 'img_alt'=>$product->files()->defaultFile()->title, 'title'=>$product->title])
@@ -44,12 +42,7 @@
                         @include('front-v1.partials.search_result', ['route'=>route('category.show', $category->title_en), 'img_src'=>asset($category->pic ?? 'images/fallback/category.png'), 'img_alt'=>$category->pic_alt ?? $category->title_en, 'title'=>$category->title])
                     @endforeach
                 @endif
-
-            </div>
-
-
-        </div>
-
+                </div>
     @endif
 
 </div>

@@ -1,282 +1,244 @@
 {{--NAVBAR--}}
-
 <div class="container-fluid">
     {{--TOP NAVS--}}
     {{--DISPLAY > MD--}}
-    <div class="container-fluid d-none d-md-block bg-grey-300 rounded-bottom ">
-        <div class="">
-            <div class="row mr-5">
-
-                @foreach($top_navs_medium as $top_nav_medium)
-                    <div class="mr-4 py-2">
-                        <a href="{{ $top_nav_medium->link }}"
-                           target="_blank"
-                           class="text-cyan-600-dark">
-                            {{ $top_nav_medium->title }}
-                        </a>
-                    </div>
-                @endforeach
-            </div>
+    <div class="d-none d-md-block rounded-bottom bg-info-custom">
+        <div class="row mr-5">
+            @foreach($top_navs_medium as $top_nav_medium)
+                <div class="mr-4 py-2">
+                    <a href="{{ $top_nav_medium->link }}"
+                       target="_blank"
+                       class="text-dark-custom">
+                        {{ $top_nav_medium->title }}
+                    </a>
+                </div>
+            @endforeach
         </div>
     </div>
-
     {{--DISPLAY < MD--}}
-    <div class="container-fluid d-block d-md-none rounded-bottom bg-grey-300">
-        <div class="">
-            <div class="row">
-
-                @foreach($top_navs_small as $top_nav_small)
-                    <div class="py-2 col text-center">
-                        <a href="{{ $top_nav_small->link }}"
-                           target="_blank"
-                           class="text-cyan-600-dark">
-                            {{ $top_nav_small->title }}
-                        </a>
-                    </div>
-                @endforeach
-            </div>
-
+    <div class="d-block d-md-none rounded-bottom bg-info-custom">
+        <div class="row">
+            @foreach($top_navs_small as $top_nav_small)
+                <div class="py-2 col text-center">
+                    <a href="{{ $top_nav_small->link }}"
+                       target="_blank"
+                       class="text-dark-custom font-16">
+                        {{ $top_nav_small->title }}
+                    </a>
+                </div>
+            @endforeach
         </div>
     </div>
     {{--./TOP NAVS--}}
 
+
     {{--LOGO--}}
-    <div class="pt-md-2 bg-white text-dark rounded">
-        <div class="container">
-            <div class="row mt-2 align-items-center">
-
-                {{--SHOW LOGO--}}
-                {{--DISPLAY > MD--}}
-                <div class="d-none d-md-block col-md-4 text-center">
-                    <a href="{{ route('home') }}"
-                       title="{{$logo->pic_alt??config('app.short.name')}}"
-                    >
-                        <img class="img-fluid rounded align-middle"
-                             src="{{asset($logo->pic??'images/fallback/logo.png')}}"
-                             alt="{{$logo->pic_alt??config('app.short.name')}}"
-                             width="300"
-                             height="100"
-                        >
-                    </a>
-                </div>
-                {{--DISPLAY < MD--}}
-                <div class="d-sm-block d-md-none col-md-1 text-center py-3 border-bottom">
-                    <a href="{{ route('home') }}">
-                        <img class="img-fluid rounded align-middle"
-                             src="{{asset($logo->pic??'images/fallback/logo.png')}}"
-                             alt="{{$logo->pic_alt??config('app.short.name')}}"
-                             title="{{$logo->pic_alt??config('app.short.name')}}"
-                             width="300"
-                             height="100"
-                        >
-
-                    </a>
+    <div class="pt-md-2 rounded ">
+        <div class="row align-items-center">
+            {{--SHOW LOGO--}}
+            @if(\Request::routeIs('home'))
+                <div id="parallax_header" class="col-12 my-2 mt-md-0 text-center parallax_header">
+                    {{-- <a href="{{ route('home') }}"
+                        title="{{$logo->pic_alt??config('app.short.name')}}"
+                     >
+                         <img class="img-fluid rounded align-middle logo-image"
+                              src="{{asset($logo->pic??'images/fallback/logo.png')}}"
+                              alt="{{$logo->pic_alt??config('app.short.name')}}"
+                         >
+                     </a>--}}
                 </div>
                 {{--./SHOW LOGO--}}
+            @endif
 
-                {{--SHOW SEARCH BAR--}}
-                {{--DISPLAY > MD--}}
-                <div class="d-none d-md-block col-md-8 my-auto">
-                    <livewire:search/>
-                </div>
-                {{--DISPLAY < MD--}}
-                <div class="d-sm-block d-md-none col-12 my-3">
-                    <livewire:search/>
-                </div>
-                {{--./SHOW SEARCH BAR--}}
+            {{--SHOW SEARCH BAR--}}
+            <div class="col-12 col-lg-5 text-center mx-auto my-4">
+                <livewire:search/>
+            </div>
+            {{--./SHOW SEARCH BAR--}}
 
 
 
-                {{--SHOW LOGIN AND CART--}}
-                <div class="col-md-12 py-3 my-auto text-center mx-auto">
+            {{--SHOW LOGIN AND CART--}}
+            <div class="col-12 col-lg-6 text-center mx-auto my-4">
+                {{--USER INFO--}}
+                @if (\Illuminate\Support\Facades\Route::has('login'))
 
-                    {{--USER INFO--}}
-                    @if (\Illuminate\Support\Facades\Route::has('login'))
+                    @auth
+                        <div class="d-sm-block mb-3 d-md-inline mb-md-0">
+                            <a href="{{ route('dashboard.index') }}" class="mx-1 py-1 pl-3 text-dark rounded"
+                               role="button"
+                               title=" داشبورد {{ \Illuminate\Support\Facades\Auth::user()->full_name }} "
+                               target="_blank"
+                            >
+                                <i class="fal fa-desktop-alt fa-2x align-middle"></i>
 
-                        @auth
-                            <div class="d-sm-block mb-3 d-md-inline mb-md-0">
-                                <a href="{{ route('dashboard.index') }}" class="mx-1 py-1 pl-3 text-dark rounded"
-                                   role="button"
-                                   title=" داشبورد {{ \Illuminate\Support\Facades\Auth::user()->full_name }} "
-                                   target="_blank"
-                                >
-                                    <i class="fal fa-desktop-alt fa-2x align-middle"></i>
+                                <span class="mr-2"
+                                      dir="ltr">{{ \Illuminate\Support\Facades\Auth::user()->full_name }}</span>
+                            </a>
+                        </div>
+                    @else
 
-                                    <span class="mr-2"
-                                          dir="ltr">{{ \Illuminate\Support\Facades\Auth::user()->full_name }}</span>
-                                </a>
-                            </div>
+                        <a href="{{ route('login') }}" class="mx-1 py-1 px-2 text-dark rounded" role="button">
+                            <i class="far fa-user-alt fa-2x align-middle"></i>
+                            ورود
+                        </a>
+                    @endauth
+
+                @endif
+                {{--./USER INFO--}}
+                {{--SHOPPING CART--}}
+                <div class="d-block d-md-inline my-4  mt-md-0">
+                    <a href="{{ route('cart.index') }}"
+                       title="سبد خرید"
+                       role="button"
+                       class="bg-lightgreen mx-1 py-2 px-2 text-dark rounded"
+                       target="_blank"
+
+                    >
+                        <i class="far fa-shopping-cart fa-2x align-middle"></i>
+                        {{--   --}}{{--SHOW COUNT OF ITEMS IN CART--}}{{--
+                           @if(session()->get('basket'))
+                               <span
+                                   class="border border-dark rounded px-2 ">{{ count(session()->get('basket')) }}</span>
+                           @else
+                               <span class="border border-dark rounded px-2 ">0</span>
+                           @endif--}}
+                        {{--SHOW TOTAL PRICE OF CART--}}
+                        @if(session()->get('total'))
+                            <span
+                                class="border border-dark rounded px-2 ">{{ session()->get('total')['count'] }}</span>
+                            <span
+                                class="mr-2"> {{ number_format(session()->get('total')['final_price']) }} تومن</span>
                         @else
 
-                            <a href="{{ route('login') }}" class="mx-1 py-1 px-2 text-dark rounded" role="button">
-                                <i class="far fa-user-alt fa-2x align-middle"></i>
-                                ورود
-                            </a>
-                        @endauth
-
-                    @endif
-                    {{--./USER INFO--}}
-
-
-                    {{--SHOPPING CART--}}
-                    <div class="d-sm-block mt-2 d-md-inline mt-md-0">
-                        <a href="{{ route('cart.index') }}"
-                           title="سبد خرید"
-                           role="button"
-                           class="bg-lightgreen mx-1 py-2 px-2 text-dark rounded"
-                           target="_blank"
-
-                        >
-                            <i class="far fa-shopping-cart fa-2x align-middle"></i>
-                            {{--   --}}{{--SHOW COUNT OF ITEMS IN CART--}}{{--
-                               @if(session()->get('basket'))
-                                   <span
-                                       class="border border-dark rounded px-2 ">{{ count(session()->get('basket')) }}</span>
-                               @else
-                                   <span class="border border-dark rounded px-2 ">0</span>
-                               @endif--}}
-                            {{--SHOW TOTAL PRICE OF CART--}}
-                            @if(session()->get('total'))
-                                <span
-                                    class="border border-dark rounded px-2 ">{{ session()->get('total')['count'] }}</span>
-                                <span
-                                    class="mr-2"> {{ number_format(session()->get('total')['final_price']) }} تومن</span>
-                            @else
-
-                                <span class="border border-dark rounded px-2 ">0</span>
-                                <span class="mr-2"> 0 تومن </span>
-                            @endif
-                        </a>
-                    </div>
+                            <span class="border border-dark rounded px-2 ">0</span>
+                            <span class="mr-2"> 0 تومن </span>
+                        @endif
+                    </a>
                 </div>
-                {{--./SHOW LOGIN AND CART--}}
             </div>
+            {{--./SHOW LOGIN AND CART--}}
         </div>
+
     </div>
     {{--./LOGO--}}
 </div>
+{{--MENU--}}
+<div class="container-fluid sticky-top nav_container">
+    <div class="boxed bg-light">
+        <div id="site-header-wrap">
+            <!-- Header -->
+            <header id="header" class="header header-container clearfix">
+                <div class=" clearfix" id="site-header-inner">
 
-
-{{--NAVBAR--}}
-<div class="boxed">
-    <div id="site-header-wrap">
-        <!-- Header -->
-        <header id="header" class="header header-container clearfix">
-            <div class="container clearfix" id="site-header-inner">
-                <div id="logo" class="logo float-right">
-                    <a href="#"
-                       title="{{config('app.short.name')}}"
-                    >
-                        <img
-                            src="{{asset('images/asset/logos/logo.png')}}"
-                            alt="{{$logo->pic_alt??config('app.short.name')}}"
-                            width="107" height="24"
-                            data-retina="{{asset('images/asset/logos/logo-min.png')}}"
-                            data-width="107" data-height="24"
+                    <div id="logo" class="logo">
+                        <a href="{{ route('home') }}"
+                           title="{{config('app.short.name')}}"
                         >
-                    </a>
-                </div>
-                <!-- /.logo -->
-                <div class="mobile-button"><span></span></div>
+                            <img
+                                src="{{asset('images/asset/logos/logo.png')}}"
+                                alt="{{$logo->pic_alt??config('app.short.name')}}"
+                                width="107" height="24"
+                                data-retina="{{asset('images/asset/logos/logo-min.png')}}"
+                                data-width="107" data-height="24"
+                            >
+                        </a>
+                    </div>
+                    <!-- /.logo -->
+                    <div class="mobile-button"><span></span></div>
 
-                <!-- /.menu-extra -->
-                <div class="nav-wrap">
-                    <nav id="main_nav" class="main_nav">
-                        <ul class="menu">
-                            <li class="active">
-                                <a href="#">محصولات</a>
-                                <ul class="submenu">
+                    <div class="nav-wrap ">
+                        <nav id="main_nav" class="main_nav ">
+                            <ul class="menu">
+                                @if(!empty($categories))
+                                    @foreach($categories as $category)
+                                        @if(!empty($category))
+                                            <li class="@if($loop->first) active @endif">
+                                                <a href="{{ route('category.show', $category['title_en']) }}">
+                                                    {{ $category['title'] }}
+                                                </a>
+                                                @if(!empty($category['active_children']))
+                                                    @include('front-v1.partials.shared.submenu_categories', ['child_categories' => $category['active_children']])
+                                                @endif
+                                            </li>
+                                        @endif
+                                    @endforeach
+                                @endif
+                                @if(!empty($brands) && $brands->count())
                                     <li>
-                                        <a href="#">
-                                            بر اساس کارایی
-                                            <!--IF SUBMENU HAS SUBMENU-->
-                                            <span class="submenu_icon float-left align-middle">
-                                                <i class="fa fa-chevron-left"></i>
-                                            </span>
+                                        <a href="{{ route('brand.index') }}">
+                                            برند ها
                                         </a>
                                         <ul class="submenu">
-                                            <li><a href="#">چربی سوزی</a></li>
-                                            <li><a href="#">افزایش حجم</a></li>
-                                            <li><a href="#">کات عضلات</a></li>
-                                            <li><a href="#">آبرسانی</a></li>
-                                            <li><a href="#">افزایش انرژی</a></li>
+                                            @foreach($brands as $brand)
+                                                <li>
+                                                    <a href="{{ route('brand.show', $brand->title_en) }}">
+                                                        {{ $brand->title  }}
+                                                    </a>
+                                                </li>
+                                            @endforeach
                                         </ul>
                                     </li>
-                                    <li><a href="#">بر اساس عملکرد</a></li>
-                                    <li><a href="#">بر اساس نوع</a></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="#">مقالات</a>
-                                <ul class="submenu">
-                                    <li>
-                                        <a href="#">
-                                            تغذیه
-                                            <!--IF SUBMENU HAS SUBMENU-->
-                                            <span class="submenu_icon float-left align-middle">
-                                                <i class="fa fa-chevron-left"></i>
-                                            </span>
-                                        </a>
-                                        <ul class="submenu">
-                                            <li><a href="#">تغذیه</a></li>
-                                            <li><a href="#">برنامه تمرین</a></li>
-                                            <li><a href="#">آناتومی</a></li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            دستگاه ورزشی
-                                            <!--IF SUBMENU HAS SUBMENU-->
-                                            <span class="submenu_icon float-left align-middle">
-                                                <i class="fa fa-chevron-left"></i>
-                                            </span>
-                                        </a>
-                                        <ul class="submenu">
-                                            <li><a href="#">ماشین نیمه اوتوماتیک</a></li>
-                                            <li><a href="#">پیشرفته</a></li>
-                                            <li><a href="#">ماشین اوتوماتیک</a></li>
-                                            <li><a href="#">ماشین مکانیکی</a></li>
-                                            <li><a href="#">فیت</a></li>
-                                            <li><a href="#">دمبل</a></li>
-                                            <li><a href="#">هالتر</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="#">سایت مپ</a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    تماس با ما
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    قوانین و مقررات
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    حساب کاربری
-                                    <span><i class="fa fa-user"></i></span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
-                    <!-- /.mainnav -->
+                                @endif
+
+                                @if(!empty($pages) && $pages->count())
+                                    @foreach($pages as $page)
+                                        <li>
+                                            <a href="{{ route('page.show', $page->title_en)  }}">
+                                                {{ $page->title }}
+                                            </a>
+                                        </li>
+                                    @endforeach
+                                @endif
+
+                                @if(!empty($custom_pages) && count($custom_pages))
+                                    @foreach($custom_pages as $page)
+                                        <li>
+                                            <a href="{{ $page['route'] }}">
+                                                {{ $page['title'] }}
+                                            </a>
+                                        </li>
+                                    @endforeach
+                                @endif
+
+                                @if (\Illuminate\Support\Facades\Route::has('login'))
+                                    @auth
+                                        <li>
+                                            <a href="{{ route('dashboard.index') }}"
+                                               title=" داشبورد {{ \Illuminate\Support\Facades\Auth::user()->full_name }} "
+                                            >
+                                                <span
+                                                    class="mr-2">{{ \Illuminate\Support\Facades\Auth::user()->full_name }}</span>
+                                                <i class="fal fa-user-alt fa-2x align-middle"></i>
+                                            </a>
+                                        </li>
+                                    @else
+                                        <li>
+                                            <a href="{{ route('login') }}"
+                                               class="mx-1 py-1 px-2 text-dark rounded">
+                                                <i class="far fa-user-alt fa-2x align-middle"></i>
+                                                ورود
+                                            </a>
+                                        </li>
+                                    @endauth
+                                @endif
+
+                            </ul>
+                        </nav>
+                        <!-- /.mainnav -->
+                    </div>
+
+                    <!-- /.nav-wrap -->
                 </div>
-                <!-- /.nav-wrap -->
-            </div>
-            <!-- /.container-fluid -->
-        </header>
-        <!-- /header -->
+                <!-- /.container-fluid -->
+            </header>
+            <!-- /header -->
+        </div>
+        <!-- /#site-header-wrap -->
     </div>
-    <!-- /#site-header-wrap -->
-
-
 </div>
-{{--./NAVBAR--}}
+{{--MENU--}}
+
 
 {{-- STICKY NAVBAR--}}
 {{--<div class="container-fluid sticky-top">
@@ -429,5 +391,21 @@
     </nav>
 </div>--}}
 
+@push('scripts')
+    <script>
+        $(document).ready(function () {
+            /*SET LOGO AS PARALLAX_HEADER*/
+            let parallax_header = $("#parallax_header");
+            parallax_header.css("background-image", "url({{asset($logo->pic??'images/fallback/logo.png')}})")
 
+            /*DISABLE LINK HREF EVENT ON NAV HEADINGS*/
+            /*let menu_headers = $(".submenu").siblings();
+            menu_headers.on('click touch', function(e){
+                e.preventDefault();
+            });*/
+
+        });
+    </script>
+
+@endpush
 
