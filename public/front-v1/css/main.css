@@ -237,7 +237,7 @@ a:hover {
 #site-header-inner {
     position: relative;
     height: 100%;
-    padding: 31px 0 32px;
+    padding: 31px 0 31px;
 }
 
 #main_nav > ul,
@@ -348,6 +348,9 @@ ul {
     left: 0
 }
 
+.submenu_icon{
+    padding-left: 0.5rem;
+}
 .mobile-button {
     display: none;
     position: absolute;
@@ -516,6 +519,17 @@ ul {
 /********/
 
 
+/*********************/
+/*FOOTER PHONE NAVBAR*/
+/*********************/
+#phone-nav{
+    position: sticky;
+    z-index : 1030 !important;
+}
+/*********************/
+/*FOOTER PHONE NAVBAR*/
+/*********************/
+
 /*************/
 /*BACK TO TOP*/
 /*************/
@@ -529,11 +543,13 @@ ul {
 }
 
 /*************/
-
-
+/*BACK TO TOP*/
 /*************/
+
+
+/*********************/
 /*SOCIAL MEDIA BUTTON*/
-/*************/
+/*********************/
 .social-media-button {
     position: fixed;
     bottom: 5rem;
@@ -546,12 +562,14 @@ ul {
 .social-media-button > .img {
     max-height: 60px;
 }
+/*********************/
+/*SOCIAL MEDIA BUTTON*/
+/*********************/
 
-/*************/
 
-
-/*********/
+/***************/
 /**STAR RATING**/
+/***************/
 .starrating > input {
     display: none;
 }
@@ -608,6 +626,9 @@ ul {
 /*./RATING AVERAGE*/
 /*********/
 
+/***************/
+/**STAR RATING**/
+/***************/
 
 /***************/
 /*SHOPPING CART*/
@@ -1008,7 +1029,7 @@ h1, h2, h3, h4, h5, h6 {
 /***************/
 /*MEDIA QUERIES*/
 /***************/
-@media only screen and ( max-width: 1500px) {
+@media only screen and ( max-width: 1700px) {
     #logo{
         margin-right:10rem;
     }

@@ -20,8 +20,8 @@ class CreateProductFilesTable extends Migration
             $table->index('product_id');
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
 
-            $table->string('title',70);
-            $table->string('link', 70);
+            $table->string('title',150);
+            $table->string('link', 150);
             $table->enum('type', [0, 1, 2]); // 0 : pic , 1 : video , 2 : link
             $table->unsignedTinyInteger('sort')->default(1);
             $table->enum('status', [0, 1, 2, 3]); // 0 : dont show, 1 show normal, 2 show default

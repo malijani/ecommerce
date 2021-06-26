@@ -15,39 +15,46 @@
 
         <div class="row p-3 py-5 ">
             <div class="col-12">
-
-                @foreach($faqs as $faq)
-                    <div class="card">
-                        <a class="text-dark" data-toggle="collapse" href="#collapse-{{ $faq->id }}" role="button"
-                           aria-expanded="false" aria-controls="collapse-{{$faq->id}}">
-                            <div class="card-header" id="heading-{{$faq->id}}">
-                                <div class="row justify-content-center">
-                                    <div class="col-10 text-center text-md-right">
-                                        <h5 class="mb-0 font-20">
-                                            {{ $faq->question }}
-                                        </h5>
-                                    </div>
-                                    <div id="faq-{{$faq->id}}-icon" class="col-2 d-none d-md-inline-block text-left">
-                                        @if($faq->collapse == 1)
-                                            <i class="far fa-minus-square fa-2x align-middle"></i>
-                                        @else
-                                            <i class="far fa-plus-square fa-2x align-middle"></i>
-                                        @endif
+                @if(!empty($faqs) && $faqs->count())
+                    @foreach($faqs as $faq)
+                        <div class="card">
+                            <a class="text-dark" data-toggle="collapse" href="#collapse-{{ $faq->id }}" role="button"
+                               aria-expanded="false" aria-controls="collapse-{{$faq->id}}">
+                                <div class="card-header" id="heading-{{$faq->id}}">
+                                    <div class="row justify-content-center">
+                                        <div class="col-10 text-center text-md-right">
+                                            <h5 class="mb-0 font-20">
+                                                {{ $faq->question }}
+                                            </h5>
+                                        </div>
+                                        <div id="faq-{{$faq->id}}-icon"
+                                             class="col-2 d-none d-md-inline-block text-left">
+                                            @if($faq->collapse == 1)
+                                                <i class="far fa-minus-square fa-2x align-middle"></i>
+                                            @else
+                                                <i class="far fa-plus-square fa-2x align-middle"></i>
+                                            @endif
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </a>
-                        <div id="collapse-{{ $faq->id }}" class="collapse @if($faq->collapse == 1)show @endif"
-                             aria-labelledby="heading-{{$faq->id}}"
-                        >
-                            <div class="card-body">
-                                {!! $faq->answer !!}
+                            </a>
+                            <div id="collapse-{{ $faq->id }}" class="collapse @if($faq->collapse == 1)show @endif"
+                                 aria-labelledby="heading-{{$faq->id}}"
+                            >
+                                <div class="card-body">
+                                    {!! $faq->answer !!}
 
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                @endforeach
+                    @endforeach
+                @else
+                    <div class="alert alert-warning text-center">
+                        <span><i class="fal fa-pen fa-2x align-middle"></i></span>
+                        در حال تکمیل بخش پرسش های متداول
+                    </div>
+                @endif
 
             </div>{{--col-12--}}
         </div>{{--row--}}

@@ -51,6 +51,7 @@ class ProductController extends Controller
         $title = 'ثبت محصول جدید';
         $categories = Category::withoutTrashed()
             ->with('childrenRecursive')
+            ->where('title_en', 'products')
             ->where('parent_id', 0)
             ->where('status', 1)
             ->orderBy('created_at', 'DESC')
@@ -178,7 +179,7 @@ class ProductController extends Controller
                 $file->product_id = $product->getAttribute('id');
                 $file->title = $request->input('file.title.' . $iteration);
                 $file->link = imageUploader($request, 'file.file.' . $iteration, 'product/' . $product->getAttribute('id'));
-                $file->type = 0; // type is picture
+                $file->type = '0'; // type is picture
                 $file->status = ((int)$iteration === (int)$show_default) ? '2' : '1'; // set picture as default OR only show it
 
                 array_push($files, $file);
@@ -382,7 +383,7 @@ class ProductController extends Controller
 
             // Set constants
             $file->product_id = $product->getAttribute('id'); // product id
-            $file->type = 0; // its always image
+            $file->type = '0'; // its always image
             $file->sort = $sort++; // sort is automatic.
             // Save final object
             $file->save([$file->toArray()]);

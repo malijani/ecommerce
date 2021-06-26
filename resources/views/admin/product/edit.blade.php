@@ -443,7 +443,7 @@
                                                                title="مقدار دهی الزامی"
                                                                minlength="2"
                                                                maxlength="100"
-                                                               value="{{ $product->files->first()->title }}"
+                                                               value="{{ $product->files->first()->title?? 'فایل نامشخص' }}"
                                                                required
                                                                onclick="updateRow(this, '#changed_titles');"
                                                         >
@@ -476,7 +476,7 @@
                                             <div class="col-md-2">{{--PREVIEW IMAGE--}}
                                                 <div class="form-group row">
                                                     <div class="col-md-12 text-center">{{--IMG--}}
-                                                        <img src="{{asset($product->files->first()->link)}}"
+                                                        <img src="{{asset($product->files->first()->link ?? "#")}}"
                                                              alt="تصویر محصول"
                                                              class="img-0 img rounded align-middle image-checkable"
                                                              id="img-0"

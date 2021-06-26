@@ -1,7 +1,7 @@
-@if(!empty($about_image_menus) && count($about_image_menus) > 0)
-    <div class="row my-2 py-3 bg-white rounded">
+@if(!empty($about_image_menus) && $about_image_menus->count())
+    <div class="row align-items-center mt-3 py-3 rounded  bg-light">
         @foreach($about_image_menus as $about_image_menu)
-            <div class="col-6 col-md my-2 my-md-0 text-center">
+            <div class="col-12 col-sm-6 col-md my-2 my-md-0 py-3 text-center">
                 <div class="row">
                     <div class="col-12">
                         <a href="{{ $about_image_menu->link }}"
@@ -10,6 +10,7 @@
                             <img src="{{ asset($about_image_menu->image) }}"
                                  alt="{{ $about_image_menu->title }}"
                                  class="img img-fluid"
+                                 loading="lazy"
                             >
                         </a>
                     </div>

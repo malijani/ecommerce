@@ -9,13 +9,14 @@
     <div class="container-fluid my-3">
         {{--SHOW BANNER--}}
         @if(!empty($banner) && $banner->count())
-            <div class="row my-3">
+            <div class="row mt-3">
                 <div class="col-12">
                     <a href="{{$banner->link}}" title="{{ $banner->pic_alt }}">
                         <img src="{{asset($banner->pic)}}"
-                             alt="{{ $banner->pic_alt }}"
+                             alt="{{ $banner->pic_alt ?? '' }}"
                              class="banner img rounded align-middle w-100"
                              id="banner"
+                             loading="lazy"
                         >
                     </a>
                 </div>
@@ -25,7 +26,7 @@
 
         {{--SHOW SLIDERS--}}
         @if(!empty($sliders) && $sliders->count())
-            <div class="row my-2">
+            <div class="row mt-3">
                 <div class="col-12">
                     {{--SLIDERS--}}
                     <div id="sliders" class="slider-pro">
@@ -37,6 +38,7 @@
                                              data-src="{{ asset($slider->pic) }}"
                                              data-retina="{{ asset($slider->pic) }}"
                                              alt="{{ $slider->pic_alt }}"
+                                             loading="lazy"
                                         >
                                     </a>
                                     <p class="rounded sp-layer sp-black sp-padding"
@@ -47,14 +49,15 @@
                                     </p>
                                 </div>
                             @endforeach
-
                         </div>
                     </div>
                 </div>
+
                 {{--./SLIDERS--}}
             </div>
         @endif
         {{--./SHOW SLIDERS--}}
+
 
         {{--SHOW ABOUT IMAGE MENU--}}
         @include('front-v1.partials.shared.about_image_menus')
@@ -74,14 +77,16 @@
 
         {{--SHOW BRANDS--}}
         @if(!empty($brands) && $brands->count())
-            <div class="row mt-3 bg-white rounded p-3 ">
+            <div class="row mt-3 rounded p-3 bg-light">
                 <div class="col-12 p-3 d-flex justify-content-between align-items-center">
-                    <h3 class="font-14">
-                        <a class="text-dark" href="#">برند ها</a>
+                    <h3 class="font-16">
+                        <a class="text-dark" href="{{ route('brand.index') }}">
+                            برند ها
+                        </a>
                     </h3>
-                    <a href="#">
+                    <a href="{{ route('brand.index') }}">
                         مشاهده همه
-                        <i class="fa fa-eye"></i>
+                        <i class="fal fa-eye"></i>
                     </a>
                 </div>
                 @include('front-v1.partials.brands', ['brands'=>$brands])
@@ -93,12 +98,16 @@
         @if(!empty($categories) && $categories->count())
             <div class="row mt-3 bg-white rounded p-3 ">
                 <div class="col-12 p-3 d-flex justify-content-between align-items-center">
-                    <h3 class="font-14">
-                        <a class="text-dark" href="#">دسته بندی ها</a>
+                    <h3 class="font-16">
+                        <a class="text-dark"
+                           href="{{ route('category.index') }}"
+                        >
+                            دسته بندی ها
+                        </a>
                     </h3>
-                    <a href="#">
+                    <a href="{{ route('category.index') }}">
                         مشاهده همه
-                        <i class="fa fa-eye"></i>
+                        <i class="fal fa-eye"></i>
                     </a>
                 </div>
                 @include('front-v1.partials.categories', ['categories'=>$categories])
@@ -111,11 +120,16 @@
             <div class="row mt-3 bg-white rounded p-3 mb-3">
                 <div class="col-12 p-3 d-flex justify-content-between align-items-center">
                     <h3 class="font-14">
-                        <a class="text-dark" href="#">محصولات</a>
+                        <a class="text-dark"
+                           href="{{ route('product.index') }}"
+                        >
+                            محصولات برتر
+                        </a>
                     </h3>
-                    <a href="#">
+                    <a href="{{ route('product.index') }}"
+                    >
                         مشاهده همه
-                        <i class="fa fa-eye"></i>
+                        <i class="fal fa-eye"></i>
                     </a>
                 </div>
                 <div class="col-12 mt-2 mb-5">
@@ -139,30 +153,42 @@
             @include('front-v1.partials.big_image_menu', ['items'=>$footer_image_menus])
         @endif
         {{--./SHOW FOOTER IMAGE MENU--}}
+
+
     </div>
 @endsection
 
 @push('scripts')
     <script src="{{ asset('front-v1/slider-pro/js/jquery.sliderPro.min.js') }}"></script>
-
     <script>
         $(document).ready(function () {
             $('#sliders').sliderPro({
                 width: '100%',
+                height: 500,
                 imageScaleMode: 'exact',
                 fade: true,
+                fadeDuration: 2000,
                 orientation: 'horizontal',
                 responsive: true,
                 autoHeight: true,
                 autoSlideSize: false,
+                autoScaleLayers: false,
                 arrows: true,
-                buttons: false,
+                buttons: true,
                 waitForLayers: true,
                 autoplay: true,
+                autoplayDelay: 10000,
                 autoplayDirection: 'backwards',
-                autoScaleLayers: false,
+                breakpoints: {
+                    500: {
+                        orientation: 'vertical',
+                        arrows: false,
+                        buttons: false,
+                    }
+                }
 
             });
+
         });
     </script>
 @endpush
