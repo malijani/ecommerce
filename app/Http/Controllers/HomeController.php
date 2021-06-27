@@ -51,7 +51,7 @@ class HomeController extends Controller
 
         $products = Product::withoutTrashed()
             ->where('status', 1)
-            ->where('entity', '>', 0)
+            ->orderByDesc('entity')
             ->orderBy('created_at', 'DESC')
             ->orderBy('sort', 'ASC')
             ->get();

@@ -118,7 +118,7 @@ class Product extends Model
         if ($this->price_type == "0" && $this->discount_percent != "0") {
             return ($this->price - ($this->price * $this->discount_percent) / 100);
         } else {
-            return 'تخفیف به درستی تعیین نشده.';
+            return null;
         }
     }
 

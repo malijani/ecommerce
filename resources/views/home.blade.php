@@ -58,16 +58,9 @@
         @endif
         {{--./SHOW SLIDERS--}}
 
-
         {{--SHOW ABOUT IMAGE MENU--}}
         @include('front-v1.partials.shared.about_image_menus')
         {{--./SHOW ABOUT IMAGE MENU--}}
-
-        {{--SHOW MAIN IMAGE MENU--}}
-        @if(!empty($main_image_menus) && $main_image_menus->count())
-            @include('front-v1.partials.main_image_menu', ['items'=>$main_image_menus])
-        @endif
-        {{--./SHOW MAIN IMAGE MENU--}}
 
         {{--SHOW BIG IMAGE MENU--}}
         @if(!empty($big_image_menus) && $big_image_menus->count())
@@ -75,69 +68,76 @@
         @endif
         {{--./SHOW BIG IMAGE MENU--}}
 
+        {{--SHOW MAIN IMAGE MENU--}}
+        @if(!empty($main_image_menus) && $main_image_menus->count())
+            @include('front-v1.partials.main_image_menu', ['items'=>$main_image_menus])
+        @endif
+        {{--./SHOW MAIN IMAGE MENU--}}
+
         {{--SHOW BRANDS--}}
         @if(!empty($brands) && $brands->count())
-            <div class="row mt-3 rounded p-3 bg-light">
-                <div class="col-12 p-3 d-flex justify-content-between align-items-center">
-                    <h3 class="font-16">
-                        <a class="text-dark" href="{{ route('brand.index') }}">
+            <div class="row justify-content-between align-items-center mt-5 py-4">
+                <div class="col-4 mx-auto">
+                        <a class="text-dark display-4 font-16 font-weight-bolder"
+                           href="{{ route('brand.index') }}"
+                        >
                             برند ها
                         </a>
-                    </h3>
+                </div>
+                <div class="col-4 mx-auto text-center">
                     <a href="{{ route('brand.index') }}">
                         مشاهده همه
                         <i class="fal fa-eye"></i>
                     </a>
                 </div>
-                @include('front-v1.partials.brands', ['brands'=>$brands])
             </div>
+            @include('front-v1.partials.carousel.brands', ['brands'=>$brands])
         @endif
         {{--./SHOW BRANDS--}}
 
         {{--SHOW CATEGORIES--}}
         @if(!empty($categories) && $categories->count())
-            <div class="row mt-3 bg-white rounded p-3 ">
-                <div class="col-12 p-3 d-flex justify-content-between align-items-center">
-                    <h3 class="font-16">
-                        <a class="text-dark"
-                           href="{{ route('category.index') }}"
-                        >
-                            دسته بندی ها
-                        </a>
-                    </h3>
+            <div class="row justify-content-between align-items-center mt-5 py-4">
+
+                <div class="col-4 mx-auto">
+                    <a class="text-dark display-4 font-16 font-weight-bolder"
+                       href="{{ route('category.index') }}"
+                    >
+                        دسته بندی ها
+                    </a>
+                </div>
+
+                <div class="col-4 mx-auto text-center">
                     <a href="{{ route('category.index') }}">
                         مشاهده همه
                         <i class="fal fa-eye"></i>
                     </a>
                 </div>
-                @include('front-v1.partials.categories', ['categories'=>$categories])
+
+
             </div>
+            @include('front-v1.partials.carousel.categories', ['categories'=>$categories])
         @endif
         {{--./SHOW CATEGORIES--}}
 
         {{--SHOW PRODUCTS--}}
         @if(!empty($products) && $products->count())
-            <div class="row mt-3 bg-white rounded p-3 mb-3">
-                <div class="col-12 p-3 d-flex justify-content-between align-items-center">
-                    <h3 class="font-14">
-                        <a class="text-dark"
-                           href="{{ route('product.index') }}"
-                        >
-                            محصولات برتر
-                        </a>
-                    </h3>
-                    <a href="{{ route('product.index') }}"
+            <div class="row justify-content-between align-items-center mt-5 py-4">
+                <div class="col-4 mx-auto">
+                    <a class="text-dark display-4 font-16 font-weight-bolder"
+                       href="{{ route('product.index') }}"
                     >
+                        محصولات
+                    </a>
+                </div>
+                <div class="col-4 mx-auto text-center">
+                    <a href="{{ route('product.index') }}">
                         مشاهده همه
                         <i class="fal fa-eye"></i>
                     </a>
                 </div>
-                <div class="col-12 mt-2 mb-5">
-                    <div class="row wow fadeIn" style="visibility: visible; animation-name: fadeIn;">
-                        @include('front-v1.partials.products', ['products'=>$products, 'carousel'=>false])
-                    </div>
-                </div>
             </div>
+            @include('front-v1.partials.carousel.products', ['products'=>$products])
         @endif
         {{--./SHOW PRODUCTS--}}
 
@@ -158,7 +158,7 @@
     </div>
 @endsection
 
-@push('scripts')
+@section('page-scripts')
     <script src="{{ asset('front-v1/slider-pro/js/jquery.sliderPro.min.js') }}"></script>
     <script>
         $(document).ready(function () {
@@ -191,4 +191,4 @@
 
         });
     </script>
-@endpush
+@endsection

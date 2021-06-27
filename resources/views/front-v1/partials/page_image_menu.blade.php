@@ -1,5 +1,5 @@
-@if(isset($items))
-    <div class="row my-2 py-2 bg-white rounded align-items-center justify-content-center">
+@if(!empty($items) && $items->count())
+    <div class="row mt-5 py-2 bg-white rounded align-items-center justify-content-center">
         @foreach($items as $item)
             <div class="col-12 col-md my-2 my-md-0 text-center">
                 <div class="row align-items-center">
