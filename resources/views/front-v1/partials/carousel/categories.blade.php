@@ -1,10 +1,28 @@
-<div class="container-fluid mt-2">
+<div class="container-fluid mt-1 mt-md-2">
     <div class="row align-items-center">
-        <div class="oc-categories-prev col-1 text-center cursor-pointer">
+
+        {{--MOBILE BUTTONS--}}
+        <div class="col-12 d-md-none text-center mb-2">
+            <div class="row">
+                <div class="oc-categories-{{ $level ?? '0' }}-prev col-6 ">
+                        <span class="btn btn-outline-secondary">
+                            <i class="fal fa-chevron-right align-middle"></i>
+                        </span>
+                </div>
+                <div class="oc-categories-{{ $level ?? '0' }}-next col-6">
+                        <span class="btn btn-outline-secondary">
+                            <i class="fal fa-chevron-left align-middle ml-0"></i>
+                        </span>
+                </div>
+            </div>
+        </div>
+        {{--./MOBILE BUTTONS--}}
+
+        <div class="oc-categories-{{ $level ?? '0' }}-prev col-1 text-center cursor-pointer d-none d-md-block">
             <i class="far fa-angle-right fa-2x"></i>
         </div>
-        <div class="col-10">
-            <div class="oc-categories owl-carousel owl-theme">
+        <div class="col-12 col-md-10">
+            <div class="oc-categories-{{ $level ?? '0' }} owl-carousel owl-theme">
                 @foreach($categories as $category)
                     <a href="{{ route('category.show', $category->title_en) }}"
                        title="مشاهده محصولات و جزییات دسته بندی {{ $category->title  }}"
@@ -26,7 +44,7 @@
                 @endforeach
             </div>
         </div>
-        <div class="oc-categories-next col-1 text-center cursor-pointer">
+        <div class="oc-categories-{{ $level ?? '0' }}-next col-1 text-center cursor-pointer d-none d-md-block">
             <i class="far fa-angle-left fa-2x"></i>
         </div>
     </div>
@@ -36,17 +54,17 @@
 @push('scripts')
     <script>
         $(document).ready(function () {
-            let categories_owl = $('.oc-categories');
+            let categories_owl = $('.oc-categories-{{ $level ?? '0' }}');
 
             categories_owl.owlCarousel({
                 loop:@if($categories->count() > 4) true @else false @endif,
+                autoplay:@if($categories->count() > 4) true @else false @endif,
                 rtl: true,
                 margin: 20,
-                autoplay: true,
                 autoplayHoverPause: true,
                 autoplayTimeout: 5000,
-                animateIn: 'linear',
-                animateOut: 'linear',
+                animateIn: 'fadeIn',
+                animateOut: 'fadeOut',
                 nav: false,
                 navElement: 'span',
                 dots: false,
@@ -76,11 +94,11 @@
                     }
                 }
             });
-            $('.oc-categories-next').on('click', function () {
+            $('.oc-categories-{{ $level ?? '0' }}-next').on('click', function () {
                 categories_owl.trigger('next.owl.carousel');
                 categories_owl.trigger('stop.owl.autoplay');
             });
-            $('.oc-categories-prev').on('click', function () {
+            $('.oc-categories-{{ $level ?? '0' }}-prev').on('click', function () {
                 categories_owl.trigger('prev.owl.carousel');
                 categories_owl.trigger('stop.owl.autoplay');
             });

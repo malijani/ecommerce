@@ -1,5 +1,5 @@
 @if(!empty($about_image_menus) && $about_image_menus->count())
-    <div class="row align-items-center mt-3 py-3 rounded  bg-light">
+    <div class="row align-items-center mt-3 py-2 py-md-3 rounded  bg-light">
         @foreach($about_image_menus as $about_image_menu)
             <div class="col-12 col-sm-6 col-md my-2 my-md-0 py-3 text-center">
                 <div class="row">

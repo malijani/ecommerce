@@ -34,7 +34,7 @@ class ViewServiceProvider extends ServiceProvider
         /*ADMIN*/
         View::composer('admin.partials.aside', AdminAsideComposer::class);
         /*FRONTEND*/
-        View::composer('front-v1.partials.shared.favicon', FaviconComposer::class);
+        View::composer(['front-v1.partials.shared.favicon', 'admin.partials.metas'], FaviconComposer::class);
         View::composer('front-v1.partials.shared.header', MenuComposer::class);
         View::composer('front-v1.partials.shared.about_image_menus', AboutImageMenuComposer::class);
         View::composer('front-v1.partials.shared.social_media_button', SocialMediaButtonComposer::class);

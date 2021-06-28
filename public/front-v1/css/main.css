@@ -868,7 +868,7 @@ ul {
 
 .img-size-swiper {
     max-height: 300px;
-    min-height: 200px;
+    min-height: 300px;
     object-fit: contain;
     overflow-y: hidden;
 }
@@ -975,9 +975,21 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .left-top-15 {
-    left: 0;
+    left: 15px;
     top: 15px;
 }
+.right-top-0 {
+    right: 0;
+    top: 0;
+}
+
+.right-top-15 {
+    right: 15px;
+    top: 15px;
+}
+
+
+
 
 .discount-label {
     background-color: rgb(232, 16, 74);

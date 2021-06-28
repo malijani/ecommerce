@@ -58,9 +58,12 @@
         @endif
         {{--./SHOW SLIDERS--}}
 
-        {{--SHOW ABOUT IMAGE MENU--}}
-        @include('front-v1.partials.shared.about_image_menus')
-        {{--./SHOW ABOUT IMAGE MENU--}}
+
+        {{--SHOW MAIN IMAGE MENU--}}
+        @if(!empty($main_image_menus) && $main_image_menus->count())
+            @include('front-v1.partials.main_image_menu', ['items'=>$main_image_menus])
+        @endif
+        {{--./SHOW MAIN IMAGE MENU--}}
 
         {{--SHOW BIG IMAGE MENU--}}
         @if(!empty($big_image_menus) && $big_image_menus->count())
@@ -68,11 +71,9 @@
         @endif
         {{--./SHOW BIG IMAGE MENU--}}
 
-        {{--SHOW MAIN IMAGE MENU--}}
-        @if(!empty($main_image_menus) && $main_image_menus->count())
-            @include('front-v1.partials.main_image_menu', ['items'=>$main_image_menus])
-        @endif
-        {{--./SHOW MAIN IMAGE MENU--}}
+        {{--SHOW ABOUT IMAGE MENU--}}
+        @include('front-v1.partials.shared.about_image_menus')
+        {{--./SHOW ABOUT IMAGE MENU--}}
 
         {{--SHOW BRANDS--}}
         @if(!empty($brands) && $brands->count())
@@ -98,7 +99,6 @@
         {{--SHOW CATEGORIES--}}
         @if(!empty($categories) && $categories->count())
             <div class="row justify-content-between align-items-center mt-5 py-4">
-
                 <div class="col-4 mx-auto">
                     <a class="text-dark display-4 font-16 font-weight-bolder"
                        href="{{ route('category.index') }}"
@@ -106,15 +106,12 @@
                         دسته بندی ها
                     </a>
                 </div>
-
                 <div class="col-4 mx-auto text-center">
                     <a href="{{ route('category.index') }}">
                         مشاهده همه
                         <i class="fal fa-eye"></i>
                     </a>
                 </div>
-
-
             </div>
             @include('front-v1.partials.carousel.categories', ['categories'=>$categories])
         @endif
