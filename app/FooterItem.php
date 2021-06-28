@@ -18,7 +18,7 @@ class FooterItem extends Model
 
     public function links()
     {
-        return $this->hasMany(FooterLink::class, 'item_id');
+        return $this->hasMany(FooterLink::class, 'item_id')->where('status', 1);
     }
 
     public function scopeItem($q, $column)

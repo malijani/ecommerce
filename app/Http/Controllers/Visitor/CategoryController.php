@@ -18,11 +18,15 @@ class CategoryController extends Controller
      */
     public function index(): Response
     {
+        $title = 'لیست دسته بندی های وبسایت '. config('app.short.name');
         $categories = Category::withoutTrashed()
-            ->with('user', 'children')
-            ->paginate(100);
+            ->with('childrenRecursive')
+            ->where('parent_id', 0)
+            ->get();
 
+        /*dd($categories);*/
         return response()->view('front-v1.category.index',[
+            'title' => $title,
             'categories'=>$categories,
         ]);
     }
@@ -57,9 +61,15 @@ class CategoryController extends Controller
     public function show(string $slug): Response
     {
         $category = Category::withoutTrashed()
-            ->with('user', 'children')
+            ->with('user', 'children', 'products')
             ->where('title_en', $slug)
-            ->firstOrFail();
+            ->first();
+
+        if(empty($category)){
+            return response()
+                ->view('front-v1.category.404', ['category' => $category]);
+        }
+
         $sub_categories = $category->activeChildren()->get();
         $products = Product::withoutTrashed()
             ->with('user', 'category', 'files')

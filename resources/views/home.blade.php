@@ -58,7 +58,6 @@
         @endif
         {{--./SHOW SLIDERS--}}
 
-
         {{--SHOW MAIN IMAGE MENU--}}
         @if(!empty($main_image_menus) && $main_image_menus->count())
             @include('front-v1.partials.main_image_menu', ['items'=>$main_image_menus])
@@ -138,19 +137,18 @@
         @endif
         {{--./SHOW PRODUCTS--}}
 
+
         {{--SHOW IMAGE PAGE MENU--}}
         @if(!empty($page_image_menus) && $page_image_menus->count())
             @include('front-v1.partials.page_image_menu', ['items'=>$page_image_menus])
         @endif
         {{--./SHOW IMAGE PAGE MENU--}}
 
-
         {{--SHOW FOOTER IMAGE MENU--}}
         @if(!empty($footer_image_menus) && $footer_image_menus->count())
             @include('front-v1.partials.big_image_menu', ['items'=>$footer_image_menus])
         @endif
         {{--./SHOW FOOTER IMAGE MENU--}}
-
 
     </div>
 @endsection

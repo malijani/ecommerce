@@ -1,22 +1,6 @@
 <div class="container-fluid mt-1 mt-md-2">
     <div class="row align-items-center">
 
-        {{--MOBILE BUTTONS--}}
-        <div class="col-12 d-md-none text-center mb-2">
-            <div class="row">
-                <div class="oc-brands-{{ $level ?? '0' }}-prev col-6 ">
-                        <span class="btn btn-outline-secondary">
-                            <i class="fal fa-chevron-right align-middle"></i>
-                        </span>
-                </div>
-                <div class="oc-brands-{{ $level ?? '0' }}-next col-6">
-                        <span class="btn btn-outline-secondary">
-                            <i class="fal fa-chevron-left align-middle ml-0"></i>
-                        </span>
-                </div>
-            </div>
-        </div>
-        {{--./MOBILE BUTTONS--}}
 
 
         <div class="oc-brands-{{ $Level ?? '0' }}-prev col-1 text-center cursor-pointer d-none d-md-block">
@@ -54,6 +38,26 @@
         <div class="oc-brands-{{ $Level ?? '0' }}-next col-1 text-center cursor-pointer d-none d-md-block">
             <i class="far fa-angle-left fa-2x"></i>
         </div>
+
+
+
+        {{--MOBILE BUTTONS--}}
+        <div class="col-12 d-md-none text-center mt-2">
+            <div class="row">
+                <div class="oc-brands-{{ $level ?? '0' }}-prev col-6 ">
+                        <span class="btn btn-outline-secondary">
+                            <i class="fal fa-chevron-right align-middle"></i>
+                        </span>
+                </div>
+                <div class="oc-brands-{{ $level ?? '0' }}-next col-6">
+                        <span class="btn btn-outline-secondary">
+                            <i class="fal fa-chevron-left align-middle ml-0"></i>
+                        </span>
+                </div>
+            </div>
+        </div>
+        {{--./MOBILE BUTTONS--}}
+
     </div>
 </div>
 

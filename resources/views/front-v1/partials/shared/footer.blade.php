@@ -1,29 +1,32 @@
-<footer class="mt-5 mt-sm-3 p-4 p-sm-2 font-14">
+<footer class="mt-5 py-3 py-sm-2">
 
     {{--FOOTER IMAGE--}}
     @if(!empty($footer_image))
-        <div class="container">
-            <div class="row justify-content-center rounded">
+        <div class="container-fluid">
+            <div class="row py-2 mt-2 mt-md-5">
                 <div class="col-12 text-center">
-                    <a href="{{ $footer_image->link ?? '#' }}">
+                    <a href="{{ $footer_image->link ?? '#' }}"
+                       title="{{ $footer_image->pic_alt ?? config('app.short.name') }}"
+                    >
                         <img src="{{ asset($footer_image->pic ?? 'images/fallback/footer_licenses.png') }}"
-                             alt="مجوز های {{ $footer_image->pic_alt ?? config('app.short.name') ?? ' وبسایت' }}"
-                             class="img img-fluid rounded"
+                             alt="{{ $footer_image->pic_alt ?? config('app.short.name') ?? ' مجوز های وبسایت ' }}"
+                             class="img img-fluid rounded w-100 h-100"
+                             loading="lazy"
                         >
                     </a>
                 </div>
             </div>
         </div>
     @endif
-
+    {{--./FOOTER IMAGE--}}
 
     {{--NEW BRIEFES--}}
-
     <div class="container-fluid">
-        <div class="mt-5 bg-white p-3 rounded text-center">
-            <div class="row">
+        <div class="mt-2 mt-md-5 rounded text-center">
+            <div class="row align-items-baseline justify-content-center">
+
                 {{--PROPOSALS--}}
-                <div class="col-md mt-3 mt-md-0 pt-md-1">
+                <div class="col-12 col-md-6 col-lg mt-5 md-lg-0 pt-4 pt-md-1">
                     <h4 class="font-16 font-weight-bolder">
                         محصولات پیشنهادی
                     </h4>
@@ -50,9 +53,14 @@
                                                     | {{ str_replace('-', ' ', $product_proposal->title_en) }}
                                                 </p>
                                                 <p class="font-16">
-                                                    {{ number_format($product_proposal->discount_price) }} تومن
+                                                    @if(in_array($product_proposal->price_type, [0,1]))
+                                                        {{ number_format($product_proposal->discount_price) }} تومن
+                                                    @else
+                                                        <i class="fal fa-phone"></i>
+                                                        تماس بگیرید
+                                                    @endif
                                                 </p>
-                                                <div class="font-8 text-right">
+                                                <div class="font-8">
                                                     @include('front-v1.partials.rating_stars', ['model'=>$product_proposal])
                                                 </div>
                                             </a>
@@ -71,9 +79,8 @@
                     </div>
                 </div>
 
-
                 {{--COMMENTS--}}
-                <div class="col-md mt-3 mt-md-0 pt-4 pt-md-1">
+                <div class="col-12 col-md-6 col-lg mt-5 md-lg-0 pt-4 pt-md-1">
                     <h4 class="font-16 font-weight-bolder">
                         نقد کاربران
                     </h4>
@@ -125,18 +132,17 @@
                     </div>
                 </div>
 
-
                 {{--ARTICLES--}}
-                <div class="col-md mt-3 mt-md-0 pt-4 pt-md-1">
+                <div class="col-12 col-md-6 col-lg mt-5 md-lg-0 pt-4 pt-md-1">
                     <h4 class="font-16 font-weight-bolder">
                         جدید ترین مقالات
                     </h4>
                     <hr class="w-75">
                     <div class="row justify-content-center align-items-center">
-                        @if($footer_last_articles->count()>0)
+                        @if($footer_last_articles->count())
                             @foreach($footer_last_articles as $last_article)
                                 <div class="col-12 mt-3">
-                                    <div class="row">
+                                    <div class="row align-items-center">
                                         <div class="col-4">
                                             <a href="{{ route('blog.show', $last_article->title_en) }}">
                                                 <img src="{{ asset($last_article->pic) }}"
@@ -145,18 +151,22 @@
                                                 >
                                             </a>
                                         </div>
-                                        <div class="col-8">
+                                        <div class="col-8 text-right">
                                             <a href="{{ route('blog.show', $last_article->title_en) }}"
                                                class="text-dark font-16 font-weight-bolder"
                                             >
                                                 {{ $last_article->title }}
                                             </a>
+                                            <p>
+                                                {{ $last_article->short_text_limited }}
+                                            </p>
                                         </div>
+
                                     </div>
                                 </div>
                             @endforeach
                         @else
-                            <div class="col-12">
+                            <div class="col-12 mt-3">
                                 <p class="font-16 font-weight-bolder">
                                     مقاله ای جهت نمایش وجود ندارد!
                                 </p>
@@ -165,20 +175,19 @@
                     </div>
                 </div>
 
-
                 {{--LICENSES--}}
-                <div class="col-md mt-3 mt-md-0 pt-4 pt-md-1">
+                <div class="col-12 col-md-6 col-lg mt-5 md-lg-0 pt-4 pt-md-1">
                     <h4 class="font-16 font-weight-bolder">
                         تاییدیه و مجوز ها
                     </h4>
                     <hr class="w-75">
                     <div class="row justify-content-center align-items-center">
-                        @if($footer_licenses->count()>0)
+                        @if($footer_licenses->links->count())
 
                             @foreach($footer_licenses->links as $footer_license_link)
                                 <div class="col-12 mt-3">
                                     <a href="{{ $footer_license_link->link }}"
-                                       class="text-dark font-weight-bolder font-14"
+                                       class="text-dark font-weight-bolder font-16"
                                     >
                                         {{ $footer_license_link->title }}
                                     </a>
@@ -187,7 +196,7 @@
                             @endforeach
 
                         @else
-                            <div class="col-12">
+                            <div class="col-12 mt-3">
                                 <p class="font-16 font-weight-bolder">
                                     مجوز یا تاییدیه ای جهت نمایش وجود ندارد!
                                 </p>
@@ -202,14 +211,14 @@
 
     <div class="container-fluid">
         {{--FOOTER NAVBAR--}}
-        <div class="mt-5 bg-dark text-center p-3 font-weight-bolder rounded-top">
+        <div class="mt-5 text-center p-3 font-weight-bolder rounded-top bg-light">
             <div class="row align-items-center">
                 {{--STATIC NAVS--}}
-                @if(isset($footer_static_navs->links) && $footer_static_navs->links->count() > 0)
+                @if(isset($footer_static_navs->links) && $footer_static_navs->links->count())
                     @foreach($footer_static_navs->links as $footer_nav_link)
                         <div class="col-12 col-md @if($loop->first) mt-0 @else mt-3 mt-md-0 @endif">
                             <a href="{{ $footer_nav_link->link }}"
-                               class="text-lime-a100"
+                               class="text-info-custom"
                             >
                                 {{ $footer_nav_link->title }}
                             </a>
@@ -217,7 +226,7 @@
                     @endforeach
                 @else
                     <div class="col-12">
-                        <p class="text-lime-a100 mt-3">
+                        <p class="text-info-custom mt-3">
                             تمامی حقوق مادی و معنوی این وبسایت متعلق به {{ config('app.short.name') }} می‌باشد و هرگونه
                             سوء
                             استفاده تحت پیگرد قانونی قرار میگیرد؛ {{ config('app.short.name') }} هیچ شعبه دیگری ندارد.
@@ -229,12 +238,12 @@
 
         {{--SERVICES AND SOCIAL MEDIAS--}}
         @if(!empty($footer_items) && $footer_items->count() || !empty($footer_social_medias) && $footer_social_medias->count())
-            <div class="mt-0 bg-grey-300 text-center p-4 font-16">
-                <div class="row">
+            <div class="mt-0 text-center p-4 font-16">
+                <div class="row justify-content-around">
                     {{--FOOTER ITEMS--}}
                     @foreach($footer_items as $footer_item)
                         @if($footer_item->links->count() > 0)
-                            <div class="col-12 col-md @if($loop->first) mt-0 @else mt-3 @endif mt-md-1">
+                            <div class="col-12 col-md-3 col-lg @if($loop->first) mt-0 @else mt-3 @endif mt-md-1">
                                 <h5>
                                     {{ $footer_item->title }}
                                 </h5>
@@ -257,14 +266,14 @@
                     @endforeach
 
                     {{--SOCIAL MEDIA--}}
-                    <div class="col-md-4 mt-5 mt-md-1" id="social_medias">
+                    <div class="col-12 col-md-3 col-lg mt-5 mt-md-1" id="social_medias">
                         <h5>
                             شبکه های اجتماعی
                         </h5>
                         <hr class="w-50">
                         <div>
-                            @if(isset($footer_social_medias) && $footer_social_medias->count() > 1)
-                                @foreach($footer_social_medias as $social_media)
+                            @if(!empty($social_medias) && $social_medias->count())
+                                @foreach($social_medias as $social_media)
                                     <a target="_blank"
                                        href="{{ $social_media->link }}"
                                        title="{{ $social_media->title }}"
@@ -283,14 +292,14 @@
 
         {{--TEXT AND LICENSE IMAGES--}}
 
-        <div class="mt-0 p-3 mb-0 bg-grey-50">
-            <div class="row align-items-center">
+        <div class="mt-0 p-3 mb-0 bg-light">
+            <div class="row align-items-center justify-content-center">
                 {{--LICENSE IMAGES--}}
                 @if(isset($footer_license_images))
                     <div class="col text-center">
                         <div class="row">
                             @foreach($footer_license_images as $footer_license_image)
-                                <div class="col-md-12 col p-md-3">
+                                <div class="col col-md-12  p-md-3">
                                     <a href="{{ $footer_license_image->link }}"
                                        title="{{ $footer_license_image->title }}"
                                     >
@@ -315,7 +324,7 @@
         </div>
 
         {{--COPYRIGHT--}}
-        <div class="mt-0 bg-awesome text-center p-2  text-lime-a100 rounded-bottom">
+        <div class="mt-2 text-center p-2  text-lime-a100 rounded-bottom bg-light">
             <div class="row align-items-center">
                 <div class="col-12">
                     <span>
@@ -324,7 +333,7 @@
                         طراحی و توسعه توسط
                         <a href="https://github.com/malijani"
                            title="توسعه دهنده وبسایت {{ config('app.short.name') }}"
-                           class="text-warning"
+                           class="text-primary"
                         >
                             محمد علی جانی
                         </a>

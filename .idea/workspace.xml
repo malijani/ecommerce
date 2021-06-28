@@ -205,6 +205,7 @@
   <component name="RunAnythingCache">
     <option name="myCommands">
       <command value="pic" />
+      <command value="px" />
     </option>
   </component>
   <component name="RunManager" selected="PHPUnit.phpunit.xml">

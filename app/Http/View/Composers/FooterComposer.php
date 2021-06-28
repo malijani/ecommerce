@@ -75,11 +75,6 @@ class FooterComposer
                 return !in_array($item->title_en, ['licenses', 'static-nav']);
             });
 
-        /*SOCIAL MEDIA*/
-        $footer_social_medias = SocialMedia::query()
-            ->where('status', 1)
-            ->get();
-
         /*FOOTER TEXT*/
         $footer_text_intro = FooterText::query()
             ->where('status', 1)
@@ -98,7 +93,6 @@ class FooterComposer
             'footer_licenses' => $footer_licenses,
             'footer_static_navs' => $footer_static_navs,
             'footer_items' => $footer_items,
-            'footer_social_medias' => $footer_social_medias,
             'footer_text_intro' => $footer_text_intro,
             'footer_license_images' =>$footer_license_images,
         ]);

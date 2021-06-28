@@ -1,23 +1,6 @@
 <div class="container-fluid mt-1 mt-md-2">
     <div class="row align-items-center">
 
-        {{--MOBILE BUTTONS--}}
-        <div class="col-12 d-md-none text-center mb-2">
-            <div class="row">
-                    <div class="oc-products-{{ $level ?? '0' }}-prev col-6 ">
-                        <span class="btn btn-outline-secondary">
-                            <i class="fal fa-chevron-right align-middle"></i>
-                        </span>
-                    </div>
-                    <div class="oc-products-{{ $level ?? '0' }}-next col-6">
-                        <span class="btn btn-outline-secondary">
-                            <i class="fal fa-chevron-left align-middle ml-0"></i>
-                        </span>
-                    </div>
-            </div>
-        </div>
-        {{--./MOBILE BUTTONS--}}
-
         <div class="oc-products-{{ $level ?? '0'  }}-prev col-1 text-center cursor-pointer d-none d-md-block">
             <i class="far fa-angle-right fa-2x"></i>
         </div>
@@ -37,13 +20,13 @@
                                     >
 
                                     @if(empty($product->entity))
-                                        <span class="badge badge-danger position-absolute right-top-0 p-1 mr-3">
+                                        <span class="badge badge-danger position-absolute right-bottom-0 p-1 mr-3">
                                         ناموجود
                                         <em>!</em>
                                     </span>
                                     @else
                                         @if(!empty($product->discount_percent))
-                                            <span class="badge badge-success position-absolute right-top-0 p-1 mr-3">
+                                            <span class="badge badge-success position-absolute right-bottom-0 p-1 mr-3">
                                         {{ $product->discount_percent . '% تخفیف' }}
                                     </span>
                                         @endif
@@ -51,7 +34,7 @@
                                 </div>
 
                                 {{--SHOW TITLE & TITLE EN--}}
-                                <div class="col-12 py-2 mt-3 font-weight-bolder font-18 text-dark">
+                                <div class="col-12 py-2 mt-1 mt-md-3  font-weight-bolder font-18 text-dark">
                                     <span class="text-right">
                                         {{ $product->title . ' | ' }}
                                     </span>
@@ -62,7 +45,7 @@
                                 </div>
 
                                 {{--SHOW PRICE--}}
-                                <div class="col-12 mt-3 font-weight-bolder font-18 text-dark">
+                                <div class="col-12 mt-1 mt-md-3 font-weight-bolder font-18 text-dark">
                                     @if(in_array($product->price_type, [0,1]))
 
                                         @if(!empty($product->discount_percent))
@@ -90,6 +73,24 @@
         <div class="oc-products-{{ $level ?? '0' }}-next col-1 text-center cursor-pointer d-none d-md-block">
             <i class="far fa-angle-left fa-2x"></i>
         </div>
+
+        {{--MOBILE BUTTONS--}}
+        <div class="col-12 d-md-none text-center mt-2">
+            <div class="row">
+                <div class="oc-products-{{ $level ?? '0' }}-prev col-6 ">
+                        <span class="btn btn-outline-secondary">
+                            <i class="fal fa-chevron-right align-middle"></i>
+                        </span>
+                </div>
+                <div class="oc-products-{{ $level ?? '0' }}-next col-6">
+                        <span class="btn btn-outline-secondary">
+                            <i class="fal fa-chevron-left align-middle ml-0"></i>
+                        </span>
+                </div>
+            </div>
+        </div>
+        {{--./MOBILE BUTTONS--}}
+
     </div>
 </div>
 

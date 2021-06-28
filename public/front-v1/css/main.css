@@ -121,14 +121,14 @@ html, body {
 }
 
 a,
+span,
 body,
 div,
-header,
 html,
 img,
+header,
 li,
 nav,
-span,
 ul {
     font-family: inherit;
     font-size: 100%;
@@ -518,6 +518,41 @@ ul {
 /*HEADER*/
 /********/
 
+
+/*****************/
+/*BIG IMAGE MENU*/
+/*****************/
+.big_image_menu{
+    max-height: 20rem;
+    width: 100%;
+    overflow-y: hidden;
+}
+/*****************/
+/*BIG IMAGE MENU*/
+/*****************/
+
+/*****************/
+/*PAGE IMAGE MENU*/
+/*****************/
+.page_img_menu{
+    max-height: 20rem;
+    /*min-height: 20rem;*/
+    width: 100%;
+    overflow-y: hidden;
+}
+/*****************/
+/*PAGE IMAGE MENU*/
+/*****************/
+
+/***************************/
+/*SOCIAL MEDIA BANNER IMAGE*/
+/***************************/
+.social_media_banner_img{
+    max-height: 20rem;
+}
+/***************************/
+/*SOCIAL MEDIA BANNER IMAGE*/
+/***************************/
 
 /*********************/
 /*FOOTER PHONE NAVBAR*/
@@ -986,6 +1021,15 @@ h1, h2, h3, h4, h5, h6 {
 .right-top-15 {
     right: 15px;
     top: 15px;
+}
+
+.right-bottom-0{
+    right: 0;
+    bottom: 0;
+}
+.right-bottom-15{
+    right: 15px;
+    bottom: 15px;
 }
 
 
