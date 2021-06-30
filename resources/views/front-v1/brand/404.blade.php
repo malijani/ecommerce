@@ -3,7 +3,8 @@
 
 @section('content')
 
-    {{ \Diglactic\Breadcrumbs\Breadcrumbs::render('categories') }}
+    {{ \Diglactic\Breadcrumbs\Breadcrumbs::render('brands') }}
+
 
     <div class="container-fluid">
         <div class="row my-2">
@@ -14,20 +15,20 @@
             <div class="col-12 col-lg-8 my-2 ">
                 <div class="card mb-3 shadow-lg">
                     <img src="{{ asset('images/asset/404.png') }}"
-                         alt="دسته بندی مورد نظر یافت نشد!"
+                         alt="برند مورد نظر یافت نشد!"
                          class="card-img-top img img-fluid img-size-swiper p-1 rounded"
                     >
                     <div class="card-body">
                         <h5 class="card-title px-5 text-center">
-                            دسته بندی {{ $not_found  ?? ' مورد نظر شما '}} یافت نشد!
+                            برند {{ $not_found  ?? ' مورد نظر شما '}} یافت نشد!
                         </h5>
-                        <hr class="w-50">
-                        @if(!empty($categories) && $categories->count())
+                        @if(!empty($brands) && $brands->count())
+                            <hr class="w-50">
                             <div class="my-5 p-0">
                                 <h6 class="font-16 text-dark pr-3">
                                     از اینجا شروع کن:
                                 </h6>
-                                @include('front-v1.partials.carousel.categories', ['categories'=>$categories])
+                                @include('front-v1.partials.carousel.brands', ['brands'=>$brands])
                             </div>
                         @endif
 
@@ -44,5 +45,4 @@
 
     </div>
 @endsection
-
 

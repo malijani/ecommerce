@@ -221,6 +221,7 @@ class ProductController extends Controller
         $categories = Category::withoutTrashed()
             ->with('childrenRecursive')
             ->where('parent_id', 0)
+            ->where('title_en', 'products')
             ->where('status', true)
             ->orderBy('created_at', 'DESC')
             ->orderBy('sort', 'ASC')

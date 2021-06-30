@@ -7,87 +7,60 @@
 
     <div class="container-fluid">
         <div class="row my-2">
-            {{--SHOW BASKET BRIEF--}}
-            <div class="d-none d-lg-block col-lg-2">
-                <div class="row rounded py-2">
-                    <div class="col-12">
-                        <div class="bg-primary"
-                             style="height: 300px">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {{--./SHOW BASKET BRIEF--}}
+
+            @include('front-v1.partials.shared.basket_aside')
 
             {{--SHOW MAIN CONTENT--}}
-            <div class="col-12 col-lg-8">
+            <div class="col-12 col-lg-8 my-2 px-0 px-md-4 rounded shadow-lg">
+                @if(!empty($categories) && $categories->count())
                 @foreach($categories as $parent_category)
                     <a href="{{ route('category.show', $parent_category->title_en) }}"
-                       class="text-dark pr-3"
                        title="مشاهده دسته بندی {{ $parent_category->title }}"
                     >
-                        <div class="row my-2 py-1 bg-light align-items-center">
+                        <div class="row my-2 bg-light align-items-center">
 
-                            <div class="col-4">
-                                <img src="{{ $parent_category->pic ?? 'images/fallback/category.png' }}"
+                            <div class="col text-center pt-1">
+                                <img src="{{ asset($parent_category->pic ?? 'images/fallback/category.png') }}"
                                      alt="{{ $parent_category->pic_alt ?? $parent_category->title_en }}"
-                                     class="img img-fluid rounded pr-0 pb-0"
+                                     class="img img-fluid rounded pr-0"
                                 >
                             </div>
-                            <div class="col-4">
-                                <h3>
+                            <div class="col text-dark text-right">
+                                <h3 class="font-20">
                                     {{ $parent_category->title }}
                                     <i class="fal fa-arrow-alt-down align-middle pr-3"></i>
                                 </h3>
+
                             </div>
 
 
                         </div>
                     </a>
 
-                    <div class="my-4">
+                    <div class="my-5">
                         @include('front-v1.partials.carousel.categories', ['categories'=>$parent_category->childrenRecursive, 'level'=>$loop->iteration])
                     </div>
+                    @if($loop->last)
+                        @continue
+                    @else
+                        <hr class="w-50">
+                    @endif
                 @endforeach
+                @else
+                    <div class="text-center">
+                        <h4>دسته بندی برای نمایش وجود ندارد!</h4>
+                    </div>
+                @endif
             </div>
             {{--./SHOW MAIN CONTENT--}}
 
 
-            {{--SHOW SOCIAL MEDIA SIDE IMAGES--}}
-            <div class="d-none d-lg-block col-lg-2">
-                <div class="row">
-                    @if(!empty($social_medias) && $social_medias->count())
-                        @foreach($social_medias as $social_media)
-                            <div class="col-12 py-2">
-                                <img src="{{ $social_media->side_image }}"
-                                     alt="{{ $social_media->title }}"
-                                     class="img img-fluid w-100 rounded"
-                                >
-                            </div>
-                        @endforeach
-                    @endif
-                </div>
-            </div>
-            {{--./SHOW SOCIAL MEDIA SIDE IMAGES--}}
+            @include('front-v1.partials.shared.social_media_aside')
 
         </div>
 
 
-        {{--SHOW SOCIAL MEDIA BANNER IMAGES--}}
-        @if(!empty($social_medias) && $social_medias->count())
-            <div class="row my-5">
-                @foreach($social_medias as $social_media)
-                    <div class="d-block d-lg-none col-12">
-                        <img src="{{ asset($social_media->banner_image)  }}"
-                             alt="{{ $social_media->title }}"
-                             class="img img-fluid w-100 rounded social_media_banner_img"
-
-                        >
-                    </div>
-                @endforeach
-            </div>
-        @endif
-        {{--./SHOW SOCIAL MEDIA BANNER IMAGES--}}
+     @include('front-v1.partials.shared.social_media_banner')
 
     </div>
 

@@ -116,7 +116,7 @@ html, body {
     text-align: right;
     font-size: 16px;
     font-family: Vazir, IranSans, Tahoma, serif !important;
-    line-height: 1.5;
+    /*line-height: 0;*/
     font-weight: 300;
 }
 
@@ -177,13 +177,17 @@ a:hover {
 /*PARALLAX*/
 #parallax_header {
     width: 100%;
-    min-height:100vh;
+    height: 100%;
+    object-fit: cover;
     background-repeat: no-repeat;
-    background-size: 100% 100%;
+    background-size: 100%;
     background-attachment: fixed;
     background-position: center;
     overflow: hidden;
     border-radius: 0.2rem;
+}
+#parallax_header_img{
+    visibility: hidden;
 }
 
 /*SEARCH*/
@@ -588,7 +592,7 @@ ul {
 .social-media-button {
     position: fixed;
     bottom: 5rem;
-    left: 1rem;
+    left: 0.5rem;
     opacity: 0.8;
     border-radius: 20px;
     z-index: 2;
@@ -1110,9 +1114,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @media screen and (max-width: 768px) {
-    /*#parallax_header {
-        background-attachment: fixed;
-    }*/
+    #parallax_header {
+        background-attachment: local;
+    }
 }
 
 

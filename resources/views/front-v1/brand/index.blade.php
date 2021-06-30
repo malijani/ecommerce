@@ -5,15 +5,29 @@
 
     {{ \Diglactic\Breadcrumbs\Breadcrumbs::render('brands') }}
 
-    <div class="container my-3 bg-white">
+    <div class="container-fluid">
+        <div class="row my-2">
+            @include('front-v1.partials.shared.basket_aside')
+            {{--SHOW MAIN CONTENT--}}
+            <div class="col-12 col-lg-8 my-2 shadow-lg rounded py-md-4">
+                @if(!empty($brands) && $brands->count())
+                    @include('front-v1.partials.brands', ['brands'=>$brands])
 
-        <div class="row">
-            @include('front-v1.partials.brands', ['brands'=>$brands])
-        </div>{{--row--}}
+                    <div class="row justify-content-center my-3">
+                        {{ $brands->links() }}
+                    </div>
+                @else
+                    <div class="text-center">
+                        <h4>برندی برای نمایش وجود ندارد!</h4>
+                    </div>
+                @endif
+            </div>
+            {{--./SHOW MAIN CONTENT--}}
 
-        <div class="row justify-content-center my-3">
-            {{ $brands->links() }}
+            @include('front-v1.partials.shared.social_media_aside')
         </div>
 
-    </div>{{--container--}}
+        @include('front-v1.partials.shared.social_media_banner')
+
+    </div>
 @endsection

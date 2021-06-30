@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Visitor;
 
+use App\Article;
 use App\Http\Controllers\Controller;
 use App\Category;
 use App\Product;
@@ -20,11 +21,11 @@ class CategoryController extends Controller
     {
         $title = 'لیست دسته بندی های وبسایت '. config('app.short.name');
         $categories = Category::withoutTrashed()
-            ->with('childrenRecursive')
+            ->with('children')
             ->where('parent_id', 0)
             ->get();
 
-        /*dd($categories);*/
+
         return response()->view('front-v1.category.index',[
             'title' => $title,
             'categories'=>$categories,
@@ -61,22 +62,39 @@ class CategoryController extends Controller
     public function show(string $slug): Response
     {
         $category = Category::withoutTrashed()
-            ->with('user', 'children', 'products')
+            ->with('user', 'children', 'products', 'articles')
             ->where('title_en', $slug)
             ->first();
 
+
         if(empty($category)){
+            $categories = Category::withoutTrashed()
+                ->with('children')
+                ->where('parent_id', 0)
+                ->limit(20)
+                ->get();
+            $title = 'دسته بندی ' . $slug . ' در ' . config('app.short.name'). ' یافت نشد! ';
             return response()
-                ->view('front-v1.category.404', ['category' => $category]);
+                ->view('front-v1.category.404', [
+                    'categories' => $categories,
+                    'title'=>  $title,
+                    'not_found' => $slug
+                ]);
         }
 
         $sub_categories = $category->activeChildren()->get();
+
         $products = Product::withoutTrashed()
-            ->with('user', 'category', 'files')
             ->where('category_id', $category->id)
             ->orderBy('created_at', 'DESC')
             ->orderBy('sort', 'ASC')
-            ->paginate(100);
+            ->get();
+
+        $articles = Article::withoutTrashed()
+            ->where('category_id', $category->id)
+            ->orderByDesc('created_at')
+            ->orderBy('sort')
+            ->get();
 
         $title = $category->title;
 
@@ -84,6 +102,7 @@ class CategoryController extends Controller
             'title' => $title,
             'category' => $category,
             'products' => $products,
+            'articles' => $articles,
             'sub_categories' => $sub_categories,
         ]);
     }

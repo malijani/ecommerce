@@ -17,10 +17,10 @@
         </div>
     </div>
     {{--DISPLAY < MD--}}
-    <div class="d-block d-md-none rounded-bottom bg-light">
+    <div class="d-block d-md-none rounded-bottom">
         <div class="row">
             @foreach($top_navs_small as $top_nav_small)
-                <div class="py-2 col text-center">
+                <div class="col py-2 text-center bg-light">
                     <a href="{{ $top_nav_small->link }}"
                        target="_blank"
                        class="text-dark-custom font-16">
@@ -43,6 +43,10 @@
                      class="col-12 my-2 mt-md-0 text-center parallax_header"
                      title="{{ $logo->pic_alt ??  config('app.short.name') }}"
                 >
+                    <img src="{{asset($logo->pic??'images/fallback/logo.png')}}"
+                         alt="{{ $logo->pic_alt ?? config('app.short.name') }}"
+                         id="parallax_header_img"
+                    >
                 </div>
             @endif
             {{--./SHOW LOGO--}}
@@ -54,11 +58,11 @@
             {{--./SHOW SEARCH BAR--}}
 
             {{--SHOW LOGIN AND CART--}}
-            <div class="col-12 col-lg-6 text-center mx-auto my-4">
+            <div class="col-12 col-lg-6 text-center mx-auto">
                 {{--USER INFO--}}
                 @if (\Illuminate\Support\Facades\Route::has('login'))
                     @auth
-                        <div class="d-sm-block mb-3 d-md-inline mb-md-0">
+                        <div class="d-sm-block my-4 d-md-inline my-md-0">
                             <a href="{{ route('dashboard.index') }}" class="mx-1 py-1 pl-3 text-dark rounded"
                                role="button"
                                title=" داشبورد {{ \Illuminate\Support\Facades\Auth::user()->full_name }} "
@@ -82,7 +86,7 @@
                 {{--./USER INFO--}}
 
                 {{--SHOPPING CART--}}
-                <div class="d-block d-md-inline my-4  mt-md-0">
+                <div class="d-block d-md-inline my-4  my-md-0">
                     <a href="{{ route('cart.index') }}"
                        title="سبد خرید"
                        role="button"

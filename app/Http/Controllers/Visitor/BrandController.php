@@ -22,7 +22,7 @@ class BrandController extends Controller
             ->where('status', 1)
             ->orderBy('sort')
             ->orderByDesc('id')
-            ->paginate(10);
+            ->paginate(20);
         return response()->view('front-v1.brand.index', [
             'brands' => $brands,
             'title' => $title
@@ -61,7 +61,24 @@ class BrandController extends Controller
     {
         $brand = Brand::withoutTrashed()
             ->where('title_en', $slug)
-            ->firstOrFail();
+            ->first();
+
+        if(empty($brand)){
+            $title = 'برند ' . $slug . ' در وبسایت ' . config('app.short.name') . ' یافت نشد. ';
+            $brands = Brand::withoutTrashed()
+                ->where('status', 1)
+                ->orderBy('sort')
+                ->orderByDesc('id')
+                ->limit(20)
+                ->get();
+            return response()
+                ->view('front-v1.brand.404', [
+                    'title' => $title,
+                    'not_found' => $slug,
+                    'brands' => $brands
+                ]);
+        }
+
         $title = 'نمایش برند '. $brand->title ;
         $products = Product::withoutTrashed()
             ->where('brand_id', $brand->id)
