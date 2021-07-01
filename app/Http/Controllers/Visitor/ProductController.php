@@ -17,6 +17,7 @@ class ProductController extends Controller
      */
     public function index(): Response
     {
+        $title = 'محصولات ' . config('app.short.name');
         $products = Product::withoutTrashed()
             ->active()
 //            ->where('entity', '>', 0)
@@ -27,6 +28,7 @@ class ProductController extends Controller
 
         return response()->view('front-v1.product.index', [
             'products' => $products,
+            'title' => $title
 
         ]);
     }
@@ -43,17 +45,26 @@ class ProductController extends Controller
             ->where('title_en', $slug)
             ->with('bef', 'af', 'category', 'user', 'brand', 'files', 'attrs')
             ->active()
-            ->firstOrFail();
-        $product->increment('visit');
+            ->first();
 
+
+        /*TODO : CREATE 404 PAGE*/
+        if(empty($product)){
+            $title = 'محصول ' . $slug . ' در ' . config('app.short.name') . ' یافت نشد ';
+            return response()
+                ->view('front-v1.product.404', [
+                    'title' => $title,
+                    'not_found' => $slug,
+                ]);
+        }
+
+        $product->increment('visit');
         $comments = $product->comments()
             ->with('childrenRecursive')
             ->where('parent_id', 0)
             ->active()
             ->sort()
             ->get();
-
-        /*SET PAGE TITLE*/
         $title = $product->title;
 
 

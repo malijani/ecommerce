@@ -38,7 +38,7 @@
         <div class="row align-items-center">
 
             {{--SHOW LOGO--}}
-            @if(\Request::routeIs('home'))
+            {{--@if(\Request::routeIs('home'))
                 <div id="parallax_header"
                      class="col-12 my-2 mt-md-0 text-center parallax_header"
                      title="{{ $logo->pic_alt ??  config('app.short.name') }}"
@@ -48,7 +48,7 @@
                          id="parallax_header_img"
                     >
                 </div>
-            @endif
+            @endif--}}
             {{--./SHOW LOGO--}}
 
             {{--SHOW SEARCH BAR--}}
@@ -251,8 +251,8 @@
     <script>
         $(document).ready(function () {
             /*SET LOGO AS PARALLAX_HEADER*/
-            let parallax_header = $("#parallax_header");
-            parallax_header.css("background-image", "url({{asset($logo->pic??'images/fallback/logo.png')}})")
+            /*let parallax_header = $("#parallax_header");
+            parallax_header.css("background-image", "url({{asset($logo->pic??'images/fallback/logo.png')}})")*/
 
             /*DISABLE LINK HREF EVENT ON NAV HEADINGS*/
             /*let menu_headers = $(".submenu").siblings();

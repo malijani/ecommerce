@@ -11,46 +11,59 @@
 
 
     <div class="container-fluid my-3 rounded">
-        <div class="row px-0 bg-white py-3">
-            {{--PRODUCT IMAGES--}}
-            <div class="col-lg-6 mb-5 ">
-                <div class="row align-items-center">
+        <div class="row my-2">
+            @include('front-v1.partials.shared.basket_aside')
 
-                    <div class="product-thumbnails col-3">
-                        @foreach($product->files as $file)
-                            <img src="{{ asset($file->link) }}"
-                                 alt="{{ $file->title }}"
-                                 class="img-thumbnail img-bordered-sm my-2"
-                                 id="product-thumbnail-{{$loop->index}}"
-                            >
-                        @endforeach
-                    </div>
-
-                    <div class="col-9" id="main-image-container">
-                        <img src="{{ asset($product->files()->defaultFile()->link) }}"
-                             alt="{{ $product->files()->defaultFile()->title }}"
-                             id="main-image"
-                             class="img-fluid product-image"
-                        >
-                    </div>
-
-                </div>
-            </div>
-
-
-            <div class="col-lg-6 product-details pl-md-5">{{-- PRODUCT MAIN CONTENT--}}
-                <h3>{{ $product->title }}</h3>
-
-
+            {{--SHOW MAIN CONTENT--}}
+            <div class="col-12 col-lg-8 my-2 shadow-lg rounded py-md-4">
+                {{--PRODUCT SHOW--}}
                 <div class="row my-2">
 
-                    <div class="col-12 my-3">
-                        @include('front-v1.partials.rating_stars', ['model'=>$product])
+
+                    {{--PRODUCT IMAGES--}}
+                    <div class="col-12 col-md-6 mb-5 ">
+                        <div class="row align-items-center">
+                            {{--THUMBNAILS--}}
+                            <div class="product-thumbnails col-4 text-center">
+                                @foreach($product->files as $file)
+                                    <img src="{{ asset($file->link) }}"
+                                         alt="{{ $file->title }}"
+                                         class="img-thumbnail img-bordered-sm my-md-2 "
+                                         id="product-thumbnail-{{$loop->index}}"
+                                         style="max-height: 100px; width:100%; overflow-y: hidden; object-fit: cover"
+                                    >
+                                @endforeach
+                            </div>
+                            {{--./THUMBNAILS--}}
+
+                            {{--SELECTED IMAGE--}}
+                            <div class="col-8 rounded" id="main-image-container">
+                                <img src="{{ asset($product->files()->defaultFile()->link) }}"
+                                     alt="{{ $product->files()->defaultFile()->title }}"
+                                     id="main-image"
+                                     class="img-fluid product-image"
+                                >
+                            </div>
+                            {{--./SELECTED IMAGE--}}
+
+                        </div>
                     </div>
+                    {{--./PRODUCT IMAGES--}}
+
+                    {{-- PRODUCT MAIN CONTENT--}}
+                    <div class="col-12 col-md-6 product-details pl-md-5">
+                        <h3>{{ $product->title }}</h3>
 
 
-                    <div class="col-12">
-                        <p class="text-right mr-md-4">
+                        <div class="row my-2">
+
+                            <div class="col-12 my-3">
+                                @include('front-v1.partials.rating_stars', ['model'=>$product])
+                            </div>
+
+
+                            <div class="col-12">
+                                <p class="text-right mr-md-4">
                             <span class="mx-2">
                                 <a href="#ratings">
                                     <span class="text-dark">
@@ -62,7 +75,7 @@
                                 </a>
                             </span>
 
-                            <span class="mx-2">
+                                    <span class="mx-2">
                                 <span class="text-dark">
                                     {{ $product->sold }}
                                 </span>
@@ -70,233 +83,240 @@
                                     فروخته شده
                                 </span>
                             </span>
-                        </p>
-                    </div>
+                                </p>
+                            </div>
 
-                </div>
+                        </div>
 
 
-                <div class="price w-50 pr-5">
-                    <p class="border p-2 rounded text-center">
+                        <div class="price w-50 pr-5">
+                            <p class="border p-2 rounded text-center">
 
-                        @if($product->price_type=="0" && $product->discount_percent != "0")
-                            <span class="font-weight-bolder">{{$product->show_discount_price}} تومن</span><br>
-                            <span class="discount font-weight-bold">{{ $product->show_price}} تومن</span>
-                            <span class="discount-label font-12 text-center">
+                                @if($product->price_type=="0" && $product->discount_percent != "0")
+                                    <span class="font-weight-bolder">{{$product->show_discount_price}} تومن</span><br>
+                                    <span class="discount font-weight-bold">{{ $product->show_price}} تومن</span>
+                                    <span class="discount-label font-12 text-center">
                             {{ $product->discount_percent }}%  تخفیف
                             </span>
-                        @elseif($product->price_type=="1")
-                            <span class="font-weight-bolder">{{$product->show_price}} تومن</span>
-                        @else
-                            <span class="badge badge-info">
+                                @elseif($product->price_type=="1")
+                                    <span class="font-weight-bolder">{{$product->show_price}} تومن</span>
+                                @else
+                                    <span class="badge badge-info">
                                 <i class="fa fa-phone"></i>
                                 تماس بگیرید
                             </span>
-                        @endif
-                    </p>
+                                @endif
+                            </p>
 
-                </div>
-                <div class="short-text d-flex justify-content-end w-75 mb-3">
-                    <p class="text-center">
-                        {{ $product->short_text }}
-                    </p>
-                </div>
+                        </div>
+                        <div class="short-text d-flex justify-content-end w-75 mb-3">
+                            <p class="text-center">
+                                {{ $product->short_text }}
+                            </p>
+                        </div>
 
-                <div class="col-12">{{--ORDER SECTION--}}
-                    @if($product->status != 2 && $product->price_type != 2 &&  $product->entity > 0)
-                        <form action="{{ route('cart.store') }}" method="POST" id="product_shop_form">
-                            @csrf
-                            <input type="hidden" name="order[product_id]" value="{{ $product->id }}">
-                            {{--CUSTOMIZE ORDER WITH ATTRIBUTES--}}
-                            @if(count($attributes))
-                                <div class="form-group row">
-                                    @foreach($attributes as $attr_id=>$attr_values)
-                                        <div class="col-md-12">
-                                            <label for="order-attribute-{{ $attr_id }}"
-                                                   class="col-form-label col-md-2 text-right">{{ key($attr_values)}}
-                                                :</label>
-                                            <div class="col-md-6 mt-1">
-                                                <select name="order[attribute][{{ $attr_id }}]"
-                                                        id="order-attribute-{{$attr_id}}"
-                                                        class="form-control"
-                                                >
-                                                    @foreach($attr_values as $attr_value)
-                                                        @if(is_array($attr_value))
-                                                            @foreach($attr_value as $attribute)
-                                                                <option
-                                                                    value="{{ $attribute  }}"> {{ $attribute }} </option>
+                        <div class="col-12">{{--ORDER SECTION--}}
+                            @if($product->status != 2 && $product->price_type != 2 &&  $product->entity > 0)
+                                <form action="{{ route('cart.store') }}" method="POST" id="product_shop_form">
+                                    @csrf
+                                    <input type="hidden" name="order[product_id]" value="{{ $product->id }}">
+                                    {{--CUSTOMIZE ORDER WITH ATTRIBUTES--}}
+                                    @if(count($attributes))
+                                        <div class="form-group row">
+                                            @foreach($attributes as $attr_id=>$attr_values)
+                                                <div class="col-md-12">
+                                                    <label for="order-attribute-{{ $attr_id }}"
+                                                           class="col-form-label col-md-2 text-right">{{ key($attr_values)}}
+                                                        :</label>
+                                                    <div class="col-md-6 mt-1">
+                                                        <select name="order[attribute][{{ $attr_id }}]"
+                                                                id="order-attribute-{{$attr_id}}"
+                                                                class="form-control"
+                                                        >
+                                                            @foreach($attr_values as $attr_value)
+                                                                @if(is_array($attr_value))
+                                                                    @foreach($attr_value as $attribute)
+                                                                        <option
+                                                                            value="{{ $attribute  }}"> {{ $attribute }} </option>
+                                                                    @endforeach
+                                                                @else
+                                                                    <option
+                                                                        value="{{ $attr_value }}">{{ $attr_value }}</option>
+                                                                @endif
                                                             @endforeach
-                                                        @else
-                                                            <option value="{{ $attr_value }}">{{ $attr_value }}</option>
-                                                        @endif
-                                                    @endforeach
-                                                </select>
-                                                @include('partials.form_error',['input'=>'order.attribute.'.$attr_id])
-                                            </div>
+                                                        </select>
+                                                        @include('partials.form_error',['input'=>'order.attribute.'.$attr_id])
+                                                    </div>
+                                                </div>
+                                            @endforeach
                                         </div>
-                                    @endforeach
+                                    @endif
+
+                                    {{--SHOW DYNAMIC ENTITY--}}
+                                    <div class="form-group row">
+                                        <label for="order-count"
+                                               class="text-dark col-form-label col-md-12 text-center">موجودی:
+                                            <span id="entity" class="font-weight-bolder">
+                                    {{ $product->entity -1 }}
+                                </span>
+                                            عدد</label>
+                                    </div>
+
+                                    {{--SET AMOUNT OF PRODUCT ORDER--}}
+                                    <div class="form-group row justify-content-center">
+                                        <div class="col-8">
+                                            <button type="button"
+                                                    role="link"
+                                                    class="btn btn-sm btn-outline-success form-control m-1"
+                                                    id="add-product-count"
+                                            >
+                                                <i class="fa fa-plus"></i>
+                                            </button>
+
+                                            <input
+                                                class="text-center form-control font-weight-bolder"
+                                                name="order[count]"
+                                                type="number"
+                                                id="order-count"
+                                                value="{{ old("order.count") ?? 1 }}"
+                                                min="1"
+                                                max="{{ $product->entity}}"
+                                            >
+
+                                            <button type="button"
+                                                    class="btn btn-sm btn-outline-danger form-control m-1"
+                                                    id="sub-product-count"
+                                            >
+                                                <i class="fa fa-minus"></i>
+                                            </button>
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <button
+                                        type="submit"
+                                        class="btn btn-primary form-control"
+                                    >
+                                        <i class="fa fa-plus-square px-2"></i>
+                                        افزودن به سبد خرید
+                                    </button>
+
+                                </form>
+                            @else
+                                <div class="alert alert-danger rounded text-center">
+                                    <i class="fa fa-times-circle-o fa-2x"></i>
+                                    <strong class="align-middle px-2">ناموجود</strong>
+
                                 </div>
                             @endif
 
-                            {{--SHOW DYNAMIC ENTITY--}}
-                            <div class="form-group row">
-                                <label for="order-count"
-                                       class="text-dark col-form-label col-md-12 text-center">موجودی:
-                                    <span id="entity" class="font-weight-bolder">
-                                    {{ $product->entity -1 }}
-                                </span>
-                                    عدد</label>
+                        </div>{{--./ORDER SECTION--}}
+                    </div>
+                    {{--./PRODUCT MAIN CONTENT--}}
+                </div>
+                {{--PRODUCT SHOW--}}
+
+                {{--PRODUCT DETAILS--}}
+                <div class="row p-0 p-md-3  my-2">
+                    <div class="col-xs-12 ">
+                        <nav>
+                            <div class="nav nav-tabs nav-fill font-weight-bolder" id="nav-tab" role="tablist">
+                                {{--DESCRIPTION--}}
+                                <a class="nav-item nav-link active" id="nav-description-tab" data-toggle="tab"
+                                   href="#nav-description"
+                                   role="tab" aria-controls="nav-description" aria-selected="true">
+                                    توضیحات
+                                </a>
+                                {{--DETAILS--}}
+                                <a class="nav-item nav-link" id="nav-details-tab" data-toggle="tab" href="#nav-details"
+                                   role="tab" aria-controls="nav-details" aria-selected="false">
+                                    مشخصات
+                                </a>
+                            </div>
+                        </nav>
+                        <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
+                            {{--DESCRIPTION--}}
+                            <div class="tab-pane fade show active" id="nav-description" role="tabpanel"
+                                 aria-labelledby="nav-description-tab">
+                                <div class="p-0 p-md-5">
+                                    {!! $product->long_text !!}
+                                </div>
+
+                            </div>
+                            {{--DETAILS--}}
+                            <div class="tab-pane fade" id="nav-details" role="tabpanel"
+                                 aria-labelledby="nav-details-tab">
+                                @foreach($product->details as $detail)
+                                    <div class="row mt-2 p-2 border-bottom font-weight-bold font-16">
+
+                                        <div class="col-4 text-md-center border-left">
+                                            {{ $detail->title }}
+                                        </div>
+                                        <div class="col-8 pr-5 text-md-right my-auto">
+                                            {{ $detail->detail }}
+                                        </div>
+
+                                    </div>
+                                @endforeach
                             </div>
 
-                            {{--SET AMOUNT OF PRODUCT ORDER--}}
-                            <div class="form-group row justify-content-center">
+                        </div>
+
+                    </div>
+                </div>
+                {{--./RPODUCT DETAILS--}}
+
+                {{--RATING--}}
+                <div class="row py-3 mt-3 rounded" id="ratings">
+                    @include('front-v1.partials.rating', ['user_rate'=>getUserRating($product), 'model'=>$product])
+                </div>
+                {{--./RATING--}}
+
+
+                {{--COMMENTS--}}
+                <div class="row mb-5 mt-3 py-3 rounded">
+                    @include('front-v1.partials.comment_template', ['comments'=>$comments,'model'=>$product])
+                    {{--'model'=>'Article','model_id'=>$article->id--}}
+                </div>
+                {{--./COMMENTS--}}
+
+                {{--SIMILAR PRODUCTS--}}
+                @if(count($similar_products))
+                    <div class="row mt-5 bg-white mb-5">
+                        <div class="col-12 p-3 d-flex justify-content-between align-items-center">
+                            <h3 class="font-14">
+                                <span class="text-dark">محصولات مشابه</span>
+                            </h3>
+                        </div>
+
+                        <div class="col-12 mt-2 mb-5">
+                            <div class="row align-items-center justify-content-center">
+                                <div class="oc-prev col-2 text-center cursor-pointer">
+                                    <i class="far fa-angle-right fa-4x"></i>
+                                </div>
                                 <div class="col-8">
-                                    <button type="button"
-                                            role="link"
-                                            class="btn btn-sm btn-outline-success form-control m-1"
-                                            id="add-product-count"
-                                    >
-                                        <i class="fa fa-plus"></i>
-                                    </button>
-
-                                    <input
-                                        class="text-center form-control font-weight-bolder"
-                                        name="order[count]"
-                                        type="number"
-                                        id="order-count"
-                                        value="{{ old("order.count") ?? 1 }}"
-                                        min="1"
-                                        max="{{ $product->entity}}"
-                                    >
-
-                                    <button type="button"
-                                            class="btn btn-sm btn-outline-danger form-control m-1"
-                                            id="sub-product-count"
-                                    >
-                                        <i class="fa fa-minus"></i>
-                                    </button>
-
+                                    <div class="owl-carousel">
+                                        @include('front-v1.partials.products', ['products'=>$similar_products, 'carousel'=>true])
+                                    </div>
                                 </div>
-
+                                <div class="oc-next col-2 text-center cursor-pointer">
+                                    <i class="far fa-angle-left fa-4x"></i>
+                                </div>
                             </div>
 
-
-                            <button
-                                type="submit"
-                                class="btn btn-primary form-control"
-                            >
-                                <i class="fa fa-plus-square px-2"></i>
-                                افزودن به سبد خرید
-                            </button>
-
-                        </form>
-                    @else
-                        <div class="alert alert-danger rounded text-center">
-                            <i class="fa fa-times-circle-o fa-2x"></i>
-                            <strong class="align-middle px-2">ناموجود</strong>
-
                         </div>
-                    @endif
-
-                </div>{{--./ORDER SECTION--}}
-            </div>{{--./PRODUCT MAIN CONTENT--}}
-        </div>
-
-
-        <div class="row bg-white p-3 my-2">
-            <div class="col-xs-12 ">
-                <nav>
-                    <div class="nav nav-tabs nav-fill font-weight-bolder" id="nav-tab" role="tablist">
-                        {{--DESCRIPTION--}}
-                        <a class="nav-item nav-link active" id="nav-description-tab" data-toggle="tab"
-                           href="#nav-description"
-                           role="tab" aria-controls="nav-description" aria-selected="true">
-                            توضیحات
-                        </a>
-                        {{--DETAILS--}}
-                        <a class="nav-item nav-link" id="nav-details-tab" data-toggle="tab" href="#nav-details"
-                           role="tab" aria-controls="nav-details" aria-selected="false">
-                            مشخصات
-                        </a>
                     </div>
-                </nav>
-                <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
-                    {{--DESCRIPTION--}}
-                    <div class="tab-pane fade show active" id="nav-description" role="tabpanel"
-                         aria-labelledby="nav-description-tab">
-                        <div class="p-5">
-                            {!! $product->long_text !!}
-                        </div>
-
-                    </div>
-                    {{--DETAILS--}}
-                    <div class="tab-pane fade" id="nav-details" role="tabpanel"
-                         aria-labelledby="nav-details-tab">
-                        @foreach($product->details as $detail)
-                            <div class="row mt-2 p-2 border-bottom font-weight-bold font-16">
-
-                                <div class="col-4 text-md-center border-left">
-                                    {{ $detail->title }}
-                                </div>
-                                <div class="col-8 pr-5 text-md-right my-auto">
-                                    {{ $detail->detail }}
-                                </div>
-
-                            </div>
-                        @endforeach
-                    </div>
-
-                </div>
-
+                @endif
+                {{--./SIMILAR PRODUCTS--}}
             </div>
-        </div>
+            {{--./SHOW MAIN CONTENT--}}
 
-        {{--RATING--}}
-        <div class="row bg-white py-3 mt-3 rounded" id="ratings">
-            @include('front-v1.partials.rating', ['user_rate'=>getUserRating($product), 'model'=>$product])
-        </div>
-        {{--./RATING--}}
-        {{--COMMENTS--}}
-        <div class="row bg-white mb-5 mt-3 py-3 rounded">
-            @include('front-v1.partials.comment_template', ['comments'=>$comments,'model'=>$product])
-            {{--'model'=>'Article','model_id'=>$article->id--}}
-        </div>
-        {{--./COMMENTS--}}
-
-
-
-
-        @if(count($similar_products))
-            <div class="row mt-5 bg-white mb-5">
-                <div class="col-12 p-3 d-flex justify-content-between align-items-center">
-                    <h3 class="font-14">
-                        <span class="text-dark">محصولات مشابه</span>
-                    </h3>
-                </div>
-
-                <div class="col-12 mt-2 mb-5">
-                    <div class="row align-items-center justify-content-center">
-                        <div class="oc-prev col-2 text-center cursor-pointer">
-                            <i class="far fa-angle-right fa-4x"></i>
-                        </div>
-                        <div class="col-8">
-                            <div class="owl-carousel">
-                                @include('front-v1.partials.products', ['products'=>$similar_products, 'carousel'=>true])
-                            </div>
-                        </div>
-                        <div class="oc-next col-2 text-center cursor-pointer">
-                            <i class="far fa-angle-left fa-4x"></i>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        @endif {{--./similar products--}}
-
-
-    </div>{{--./product show container--}}
-
-
+            @include('front-v1.partials.shared.social_media_aside')
+        </div>{{--MAIN ROW--}}
+        @include('front-v1.partials.shared.social_media_banner')
+    </div>{{--CONTAINER FLUID--}}
 
 
 @endsection

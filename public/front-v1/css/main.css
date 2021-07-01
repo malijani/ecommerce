@@ -922,7 +922,8 @@ ul {
 }
 
 .product-image {
-    max-height: 500px;
+    max-height: 100%;
+    width: 100%;
 }
 
 
@@ -1114,9 +1115,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @media screen and (max-width: 768px) {
-    #parallax_header {
+    /*#parallax_header {
         background-attachment: local;
-    }
+    }*/
 }
 
 

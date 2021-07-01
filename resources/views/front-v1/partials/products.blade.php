@@ -1,83 +1,72 @@
-@if(isset($products))
+<div class="container-fluid">
+    <div class="row align-items-baseline justify-content-center">
+        @for($i=0;$i<10;$i++)
+            @foreach($products as $product)
 
-    @foreach($products as $product)
-        <!--Grid column-->
-        <div class="@if(!$carousel) col-lg-3 col-md-6 mb-4 @endif">
-
-            <!--Card-->
-            <div class="card ">
-
-                <!--Card image-->
-                <div class="view overlay">
-                    <img
-                        src="{{ asset($product->files()->defaultFile()->link ?? 'images/fallback/product.png') }}"
-                        class="card-img-top img img-fluid img-size-swiper"
-                        alt="{{ $product->files()->defaultFile()->title }}"
+                <div class="col-12 col-md-6 col-lg-4 col-xl-3 my-4">
+                    <a href="{{ route('product.show', $product->title_en) }}"
+                       title="مشاهده  جزییات محصول {{ $product->title  }}"
                     >
-                    <a href="{{ route('product.show', $product->title_en) }}">
-                        <div class="mask rgba-white-slight"></div>
-                    </a>
-                </div>
-                <!--Card image-->
+                        <div class="@if(empty($product->entity)) border border-danger @endif bg-light rounded">
+                            <div class="row justify-content-between align-items-center rounded mx-1 text-center py-4">
+                                {{--SHOW IMAGE AND BADGES(DISCOUNT,ENTITY)--}}
+                                <div class="col-12 ">
+                                    <img class="img img-fluid rounded img-size-swiper"
+                                         src="{{ asset($product->files()->defaultFile()->link ?? 'images/fallback/product.png') }}"
+                                         alt="{{ $product->files()->defaultFile()->title ?? $product->title_en }}"
+                                    >
 
-                <!--Card content-->
-                <div class="card-body text-center">
-                    <!--Category & Title-->
-                    {{--<a href="{{ route('category.show', $product->category->title_en) }}"
-                       class="grey-text font-8"
-                    >
-                        <span>{{ $product->category->title }}</span>
-                    </a>--}}
-                    <h5>
-                        <strong>
-                            <a href="{{ route('product.show', $product->title_en) }}"
-                               class="dark-grey-text font-16"
-                            >
-                                {{ $product->title }}
-                                <br>
-                                {{ str_replace('-', ' ', $product->title_en) }}
-                                @if($product->price_type=="0" && $product->discount_percent != "0")
+                                    @if(empty($product->entity))
+                                        <span class="badge badge-danger position-absolute right-bottom-0 p-1 mr-3">
+                                        ناموجود
+                                        <em>!</em>
+                                    </span>
+                                    @else
+                                        @if(!empty($product->discount_percent))
+                                            <span class="badge badge-success position-absolute right-bottom-0 p-1 mr-3">
+                                        {{ $product->discount_percent . '% تخفیف' }}
+                                    </span>
+                                        @endif
+                                    @endif
+                                </div>
+
+                                {{--SHOW TITLE & TITLE EN--}}
+                                <div class="col-12 py-2 mt-1 mt-md-3  font-weight-bolder font-18 text-dark">
+                                    <span class="text-right">
+                                        {{ $product->title . ' | ' }}
+                                    </span>
                                     <br>
-                                    <span class="badge badge-success">
-                                                 {{ $product->discount_percent }}%  تخفیف
-                                            </span>
-                                @endif
-                            </a>
-                        </strong>
-                    </h5>
+                                    <span class="text-left">
+                                    {{ str_replace('-', ' ', $product->title_en) }}
+                                    </span>
+                                </div>
 
-                    <h4>
-                        <strong>
-                            <a href="{{ route('product.show', $product->title_en) }}"
-                               class="text-dark"
-                            >
-                                @if($product->price_type=="0" && $product->discount_percent != "0")
-                                    <span class="font-weight-bold">
-                                            {{ $product->show_discount_price }} تومن
-                                        </span>
-                                    <span class="discount text-muted font-12">
-                                            {{ $product->show_price }}
-                                        </span>
+                                {{--SHOW PRICE--}}
+                                <div class="col-12 mt-1 mt-md-3 font-weight-bolder font-18 text-dark">
+                                    @if(in_array($product->price_type, [0,1]))
 
-                                @elseif($product->price_type=="1")
-                                    <span class="font-weight-bold">
-                                            {{ $product->show_price }} تومن
-                                        </span>
-                                @else
-                                    <span class="badge badge-info">
-                                            <i class="fa fa-phone"></i>
+                                        @if(!empty($product->discount_percent))
+                                            <sup class="discount">
+                                                {{ number_format($product->price) }}
+                                            </sup>
+                                        @endif
+                                        <span>
+                                        {{ number_format($product->final_price) . ' تومن '}}
+                                    </span>
+                                    @elseif($product->price_type == 2)
+                                        <span>
+                                            <i class="fal fa-phone"></i>
                                             تماس بگیرید
                                         </span>
-                                @endif
-                            </a>
-                        </strong>
-                    </h4>
-
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </a>
                 </div>
-                <!--Card content-->
-            </div>
-            <!--Card-->
-        </div>
-        <!--Grid column-->
-    @endforeach
-@endif
+            @endforeach
+        @endfor
+    </div>
+</div>
+
+
