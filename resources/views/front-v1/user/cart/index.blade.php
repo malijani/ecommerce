@@ -39,7 +39,7 @@
                                 عدد
                             @else
                                 <div
-                                    class="btn-group btn-group direction-ltr border rounded"
+                                    class="btn-group direction-ltr border rounded"
                                     role="group"
                                 >
                                     <button type="button"

@@ -58,6 +58,29 @@
         @endif
         {{--./SHOW SLIDERS--}}
 
+
+        {{--SHOW PRODUCTS--}}
+        @if(!empty($products) && $products->count())
+            <div class="row justify-content-between align-items-center mt-5 py-4">
+                <div class="col-4 mx-auto">
+                    <a class="text-dark display-4 font-16 font-weight-bolder"
+                       href="{{ route('product.index') }}"
+                    >
+                        محصولات
+                    </a>
+                </div>
+                <div class="col-4 mx-auto text-center">
+                    <a href="{{ route('product.index') }}">
+                        مشاهده همه
+                        <i class="fal fa-eye"></i>
+                    </a>
+                </div>
+            </div>
+            @include('front-v1.partials.carousel.products', ['products'=>$products])
+        @endif
+        {{--./SHOW PRODUCTS--}}
+
+
         {{--SHOW MAIN IMAGE MENU--}}
         @if(!empty($main_image_menus) && $main_image_menus->count())
             @include('front-v1.partials.main_image_menu', ['items'=>$main_image_menus])
@@ -115,28 +138,6 @@
             @include('front-v1.partials.carousel.categories', ['categories'=>$categories])
         @endif
         {{--./SHOW CATEGORIES--}}
-
-        {{--SHOW PRODUCTS--}}
-        @if(!empty($products) && $products->count())
-            <div class="row justify-content-between align-items-center mt-5 py-4">
-                <div class="col-4 mx-auto">
-                    <a class="text-dark display-4 font-16 font-weight-bolder"
-                       href="{{ route('product.index') }}"
-                    >
-                        محصولات
-                    </a>
-                </div>
-                <div class="col-4 mx-auto text-center">
-                    <a href="{{ route('product.index') }}">
-                        مشاهده همه
-                        <i class="fal fa-eye"></i>
-                    </a>
-                </div>
-            </div>
-            @include('front-v1.partials.carousel.products', ['products'=>$products])
-        @endif
-        {{--./SHOW PRODUCTS--}}
-
 
         {{--SHOW IMAGE PAGE MENU--}}
         @if(!empty($page_image_menus) && $page_image_menus->count())
