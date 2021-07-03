@@ -65,13 +65,13 @@
                         <div class="d-sm-block my-4 d-md-inline my-md-0">
                             <a href="{{ route('dashboard.index') }}" class="mx-1 py-1 pl-3 text-dark rounded"
                                role="button"
-                               title=" داشبورد {{ \Illuminate\Support\Facades\Auth::user()->full_name }} "
+                               title=" داشبورد {{ auth()->user()->name_or_mobile }} "
                                target="_blank"
                             >
                                 <i class="fal fa-desktop-alt fa-2x align-middle"></i>
 
                                 <span class="mr-2"
-                                      dir="ltr">{{ \Illuminate\Support\Facades\Auth::user()->full_name }}</span>
+                                      dir="ltr">{{ auth()->user()->name_or_mobile }}</span>
                             </a>
                         </div>
                     @else

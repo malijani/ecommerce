@@ -119,6 +119,14 @@ class User extends Authenticatable
 
     }
 
+    /**
+     * Show user name or mobile
+    */
+    public function getNameOrMobileAttribute()
+    {
+        return current(array_filter([$this->name?? '', $this->mobile]));
+    }
+
     public function getContactInformationAttribute()
     {
         return array_filter([$this->mobile, $this->email ?? '']);

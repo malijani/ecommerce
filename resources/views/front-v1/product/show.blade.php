@@ -16,7 +16,6 @@
 
             {{--SHOW MAIN CONTENT--}}
             <div class="col-12 col-lg-8 my-2 shadow-lg rounded py-md-4">
-
                 <div class="row my-2">
                     {{--SHOW PRODUCT IMAGES--}}
                     <div class="col-12 col-md-6 mb-5 ">
@@ -106,6 +105,36 @@
                             </div>
                             {{--./SHOW PRICE--}}
 
+                            {{--CATEGORY AND BRAND--}}
+                            <div class="col-12 my-2 my-md-3">
+                                <div class="row justify-content-center align-items-center">
+                                    <div class="col-5 mr-auto text-left">
+                                        <span class="text-muted">
+                                            برند
+                                        </span>
+                                        <span>
+                                            <a href="{{ route('brand.show', $product->brand->title_en) }}"
+                                               class="badge badge-secondary p-2"
+                                            >
+                                                {{ $product->brand->title . ' | ' . str_replace('-', ' ', $product->brand->title_en) }}
+                                            </a>
+                                        </span>
+                                    </div>
+                                    <div class="col-5 ml-auto text-right">
+                                        <span class="text-muted">
+                                            دسته
+                                        </span>
+                                        <span>
+                                            <a href="{{ route('category.show', $product->category->title_en) }}"
+                                               class="badge badge-secondary p-2"
+                                            >
+                                                {{ $product->category->title }}
+                                            </a>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            {{--./CATEGORY AND BRAND--}}
 
                             {{--ORDER FORM--}}
                             <div class="col-12 my-1 my-md-3 ">
@@ -121,31 +150,34 @@
 
                                         {{--CUSTOMIZE ORDER WITH ATTRIBUTES--}}
                                         @if(count($attributes))
-                                            <div class="form-group row align-items-center">
+                                            <div class="row align-items-center">
                                                 @foreach($attributes as $attr_id=>$attr_values)
-                                                    <div class="col-md-12">
-                                                        <label for="order-attribute-{{ $attr_id }}"
-                                                               class="col-form-label col-12 col-md-2 text-right align-middle">
-                                                            {{ key($attr_values)}} :
-                                                        </label>
-                                                        <div class="col-12 col-md-10 mt-1">
-                                                            <select name="order[attribute][{{ $attr_id }}]"
-                                                                    id="order-attribute-{{$attr_id}}"
-                                                                    class="form-control order-attributes"
-                                                            >
-                                                                @foreach($attr_values as $attr_value)
-                                                                    @if(is_array($attr_value))
-                                                                        @foreach($attr_value as $attribute)
+                                                    <div class="col-12">
+                                                        <div
+                                                            class="attr_select_group form-group row align-items-center">
+                                                            <label for="order-attribute-{{ $attr_id }}"
+                                                                   class="col-form-label col-4 col-md-3 text-center align-middle attr_select_label">
+                                                                {{ key($attr_values)}}
+                                                            </label>
+                                                            <div class="col-8 col-md-9">
+                                                                <select name="order[attribute][{{ $attr_id }}]"
+                                                                        id="order-attribute-{{$attr_id}}"
+                                                                        class="form-control order-attributes"
+                                                                >
+                                                                    @foreach($attr_values as $attr_value)
+                                                                        @if(is_array($attr_value))
+                                                                            @foreach($attr_value as $attribute)
+                                                                                <option
+                                                                                    value="{{ $attribute  }}"> {{ $attribute }} </option>
+                                                                            @endforeach
+                                                                        @else
                                                                             <option
-                                                                                value="{{ $attribute  }}"> {{ $attribute }} </option>
-                                                                        @endforeach
-                                                                    @else
-                                                                        <option
-                                                                            value="{{ $attr_value }}">{{ $attr_value }}</option>
-                                                                    @endif
-                                                                @endforeach
-                                                            </select>
-                                                            @include('partials.form_error',['input'=>'order.attribute.'.$attr_id])
+                                                                                value="{{ $attr_value }}">{{ $attr_value }}</option>
+                                                                        @endif
+                                                                    @endforeach
+                                                                </select>
+                                                                @include('partials.form_error',['input'=>'order.attribute.'.$attr_id])
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 @endforeach
@@ -242,16 +274,17 @@
                                 <div class="row justify-content-center align-items-center">
                                     <hr class="w-50">
                                     {{--RATES--}}
-                                    <div class="col-12 my-1 my-md-3">
+                                    <div class="col-12 my-1 my-md-2">
                                         <a href="#ratings">
                                             @include('front-v1.partials.rating_stars', ['model'=>$product])
                                         </a>
                                     </div>
                                     {{--./RATES--}}
-                                    <hr class="w-50">
-                                    <div class="col-12">
+
+                                    {{--RATES COUNT, COMMENTS COUNT, SOLD COUNT--}}
+                                    <div class="col-12 my-1 my-md-2">
                                         <div class="row align-items-between align-items-center">
-                                            <div class="col text-center">
+                                            <div class="col-12 col-md text-center">
                                                 <p>
                                                     <a href="#ratings"
                                                        class="px-1"
@@ -266,7 +299,7 @@
                                                     </a>
                                                 </p>
                                             </div>
-                                            <div class="col text-center">
+                                            <div class="col-12 col-md text-center">
                                                 <p>
                                                     <a href="#comments"
                                                        class="px-1"
@@ -281,7 +314,7 @@
                                                     </a>
                                                 </p>
                                             </div>
-                                            <div class="col text-center">
+                                            <div class="col-12 col-md text-center">
                                                 <p>
                                                   <span
                                                       class="px-1"
@@ -299,7 +332,39 @@
                                             </div>
                                         </div>
                                     </div>
+                                    {{--./RATES COUNT, COMMENTS COUNT, SOLD COUNT--}}
 
+                                    {{--ORIGIN, DELIVER, WARRANTY--}}
+                                    <div class="col-12 my-1 my-md-2">
+                                        <div class="row justify-content-between align-items-center">
+                                            <div class="col-12 col-md text-center">
+                                                <p>
+                                                <span class="text-muted">
+                                                    <i class="fal fa-certificate"></i>
+                                                {{ $product->origin_text }}
+                                                </span>
+                                                </p>
+                                            </div>
+                                            <div class="col-12 col-md text-center">
+                                                <p>
+                                                <span class="text-muted">
+                                                    <i class="fal fa-tachometer"></i>
+                                                {{ $product->deliver_text }}
+                                                </span>
+                                                </p>
+                                            </div>
+                                            <div class="col-12 col-md text-center">
+                                                <p>
+                                                <span class="text-muted">
+                                                    <i class="fal fa-award"></i>
+                                                {{ $product->warranty_text }}
+                                                </span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {{--./ORIGIN, DELIVER, WARRANTY--}}
+                                    <hr class="w-50">
                                 </div>
                             </div>
                             {{--./SHOW BRIEF--}}
@@ -307,40 +372,19 @@
 
                     </div>
                     {{--./SHOW BRIEF AND PURCHASE--}}
-                </div>
-
-
-                {{--SHOW ABOUT IMAGE MENU--}}
-                <div class="col-12">
-                    @include('front-v1.partials.shared.about_image_menus')
-                </div>
-                {{--./SHOW ABOUT IMAGE MENU--}}
-            </div>
-            {{--./SHOW MAIN CONTENT--}}
-
-            @include('front-v1.partials.shared.social_media_aside')
-        </div> {{--./MAIN ROW--}}
-        @include('front-v1.partials.shared.social_media_banner')
-    </div>{{--./MAIN CONTAINER--}}
 
 
 
+                    {{--SHOW ABOUT IMAGE MENU--}}
+                    <div class="col-12 ">
+                        @include('front-v1.partials.shared.about_image_menus')
+                    </div>
+                    {{--./SHOW ABOUT IMAGE MENU--}}
 
 
 
-
-    {{-- | OLD |--}}
-
-    <div class="container-fluid">
-        <div class="row">
-            {{--SHOW MAIN CONTENT--}}
-            <div class="col-12 col-lg-8 my-2 shadow-lg rounded py-md-4">
-                {{--PRODUCT SHOW--}}
-
-
-                {{--PRODUCT DETAILS--}}
-                <div class="row p-0 p-md-3  my-2">
-                    <div class="col-xs-12 ">
+                    {{--SHOW DETAILS AND DESCRITION--}}
+                    <div class="col-12 my-3">
                         <nav>
                             <div class="nav nav-tabs nav-fill font-weight-bolder" id="nav-tab" role="tablist">
                                 {{--DESCRIPTION--}}
@@ -349,19 +393,23 @@
                                    role="tab" aria-controls="nav-description" aria-selected="true">
                                     توضیحات
                                 </a>
+
+
                                 {{--DETAILS--}}
                                 <a class="nav-item nav-link" id="nav-details-tab" data-toggle="tab"
                                    href="#nav-details"
                                    role="tab" aria-controls="nav-details" aria-selected="false">
                                     مشخصات
                                 </a>
+
                             </div>
                         </nav>
-                        <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
+
+                        <div class="tab-content" id="nav-tabContent">
                             {{--DESCRIPTION--}}
                             <div class="tab-pane fade show active" id="nav-description" role="tabpanel"
                                  aria-labelledby="nav-description-tab">
-                                <div class="p-0 p-md-5">
+                                <div class="p-1 p-md-3">
                                     {!! $product->long_text !!}
                                 </div>
 
@@ -386,57 +434,128 @@
                         </div>
 
                     </div>
-                </div>
-                {{--./RPODUCT DETAILS--}}
-
-                {{--RATING--}}
-                <div class="row py-3 mt-3 rounded" id="ratings">
-                    @include('front-v1.partials.rating', ['user_rate'=>getUserRating($product), 'model'=>$product])
-                </div>
-                {{--./RATING--}}
+                    {{--./SHOW DETAILS AND DESCRIPTION--}}
 
 
-                {{--COMMENTS--}}
-                <div class="row mb-5 mt-3 py-3 rounded">
-                    @include('front-v1.partials.comment_template', ['comments'=>$comments,'model'=>$product])
-                    {{--'model'=>'Article','model_id'=>$article->id--}}
-                </div>
-                {{--./COMMENTS--}}
-
-                {{--SIMILAR PRODUCTS--}}
-                @if(count($similar_products))
-                    <div class="row mt-5 bg-white mb-5">
-                        <div class="col-12 p-3 d-flex justify-content-between align-items-center">
-                            <h3 class="font-14">
-                                <span class="text-dark">محصولات مشابه</span>
-                            </h3>
-                        </div>
-
-                        <div class="col-12 mt-2 mb-5">
-                            <div class="row align-items-center justify-content-center">
-                                <div class="oc-prev col-2 text-center cursor-pointer">
-                                    <i class="far fa-angle-right fa-4x"></i>
-                                </div>
-                                <div class="col-8">
-                                    <div class="owl-carousel">
-                                        @include('front-v1.partials.products', ['products'=>$similar_products, 'carousel'=>true])
-                                    </div>
-                                </div>
-                                <div class="oc-next col-2 text-center cursor-pointer">
-                                    <i class="far fa-angle-left fa-4x"></i>
-                                </div>
-                            </div>
-
+                    {{--RATING SECTION--}}
+                    <div class="col-12">
+                        <hr class="w-50">
+                        <div class="row">
+                            @include('front-v1.partials.rating', ['user_rate'=>getUserRating($product), 'model'=>$product])
                         </div>
                     </div>
-                @endif
-                {{--./SIMILAR PRODUCTS--}}
+                    {{--./RATING SECTION--}}
+
+                    {{--COMMENT SECTION--}}
+                    <div class="col-12">
+                        <hr class="w-50">
+                        <div class="row">
+                            @include('front-v1.partials.comment_template', ['comments'=>$comments,'model'=>$product])
+                        </div>
+                    </div>
+                    {{--./COMMENT SECTION--}}
+
+
+                    {{--PRODUCT SUGGESTIONS--}}
+                    <div class="col-12 mt-4">
+                        <div class="row align-items-center">
+                            @if(!empty($product->bef))
+                                <div
+                                    class="col-12 col-md-6 mt-2 mt-md-0 ml-auto text-right bg-light before_product_suggestion">
+                                    <a href="{{ route('product.show' , $product->bef->title_en) }}"
+                                       class="text-dark"
+                                    >
+                                        <div class="row align-items-center justify-content-between ">
+                                            <div class="col-1">
+                                                <span>
+                                                    <i class="fas fa-chevron-right"></i>
+                                                </span>
+                                            </div>
+                                            <div class="col-6 text-center">
+                                                <p>
+                                                    {{ $product->bef->title }}
+                                                </p>
+                                                <p>
+                                                    {{ str_replace('-', ' ', $product->bef->title_en) }}
+                                                </p>
+                                            </div>
+                                            <div class="col-4">
+                                                <img src="{{ asset($product->bef->files()->defaultFile()->link) }}"
+                                                     alt="{{ $product->bef->files()->defaultFile()->title }}"
+                                                     id="main-image"
+                                                     class="img-fluid product-image rounded product_suggest_img"
+
+                                                >
+                                            </div>
+                                        </div>
+                                    </a>
+
+                                </div>
+                            @endif
+                            @if(!empty($product->af))
+                                <div
+                                    class="col-12 col-md-6 mt-2 mt-md-0 mr-auto text-left bg-light after_product_suggestion">
+                                    <a href="{{ route('product.show' , $product->af->title_en) }}"
+                                       class="text-dark"
+                                    >
+                                        <div class="row align-items-center justify-content-between ">
+
+                                            <div class="col-4">
+                                                <img src="{{ asset($product->af->files()->defaultFile()->link) }}"
+                                                     alt="{{ $product->af->files()->defaultFile()->title }}"
+                                                     id="main-image"
+                                                     class="img-fluid product-image rounded product_suggest_img"
+
+                                                >
+                                            </div>
+
+                                            <div class="col-6 text-center">
+                                                <p>
+                                                    {{ $product->af->title }}
+                                                </p>
+                                                <p>
+                                                    {{ str_replace('-', ' ', $product->af->title_en) }}
+                                                </p>
+                                            </div>
+
+                                            <div class="col-1">
+                                                <span>
+                                                    <i class="fas fa-chevron-left"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+                    {{--PRODUCT SUGGESTIONS--}}
+
+                    {{--SHOW SIMILAR PRODUCTS--}}
+                    @if(!empty($similar_products) && $similar_products->count())
+                        <div class="col-6 ml-auto mt-3 mt-md-5">
+                            <a class="text-dark display-4 font-16 font-weight-bolder"
+                               href="{{ route('product.index') }}"
+                            >
+                                محصولات مشابه
+                            </a>
+                        </div>
+
+                        @include('front-v1.partials.carousel.products', ['products'=>$similar_products])
+                    @endif
+                    {{--./SHOW PRODUCTS--}}
+
+
+                </div>
             </div>
             {{--./SHOW MAIN CONTENT--}}
-        </div>
-    </div>
 
 
+
+            @include('front-v1.partials.shared.social_media_aside')
+        </div> {{--./MAIN ROW--}}
+        @include('front-v1.partials.shared.social_media_banner')
+    </div>{{--./MAIN CONTAINER--}}
 
 @endsection
 
@@ -547,7 +666,6 @@
             $('.oc_product_images_prev').on('click', function () {
                 product_images_owl.trigger('prev.owl.carousel');
             });
-
 
             /***START***/
             /*COMMENTS*/

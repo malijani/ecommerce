@@ -169,9 +169,9 @@ class Product extends Model
     {
         switch ($this->getAttribute('deliver')) {
             case "0":
-                return "فوری";
+                return "ارسال فوری";
             case "1":
-                return "زمان دار";
+                return "ارسال با وقفه";
             default:
                 return "نامشخص";
         }
