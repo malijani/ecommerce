@@ -1,10 +1,13 @@
-<div class="col-12 text-center border-bottom py-2" id="comments">
-    <span class="fa-stack fa-lg" title="تعداد نظرات">
+<div class="col-12 text-center py-md-4 py-2 border-top" id="comments">
+    <span class="fa-stack ml-2" title="تعداد نظرات">
         <i class="fal fa-comment-alt fa-stack-2x align-middle"></i>
-        <span class="fa-stack-1x text-center align-middle">{{ $model->comments->count() }}</span>
+        <span class="fa-stack-1x text-center align-middle">
+            {{ $model->comments->count() }}
+        </span>
     </span>
-    <h3 class="d-inline">نظرات</h3>
-
+    <h3 class="d-inline font-20">
+        نظرات
+    </h3>
 </div>
 
 <div class="col-12 my-3">
@@ -39,7 +42,7 @@
                 <div class="form-group row">
                     <div class="col-12">
                                 <textarea name="content"
-                                          class="form-control @error('content') is-invalid @enderror"
+                                          class="comment_textarea form-control @error('content') is-invalid @enderror"
                                           id="content"
                                           cols="20"
                                           rows="5"
@@ -48,14 +51,13 @@
                                 >{{ old('content') }}</textarea>
                         @include('partials.form_error', ['input'=>'content'])
                     </div>
+                    <div class="col-12 mt-3">
+                        <button type="submit" class="comment_button form-control ">
+                            <i class="far fa-comment-alt ml-2"></i>
+                            ثبت نظر
+                        </button>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <button type="submit" class="form-control btn btn-outline-success">
-                        <i class="far fa-comment"></i>
-                        ثبت دیدگاه
-                    </button>
-                </div>
-
             </form>
         </div>
     </div>

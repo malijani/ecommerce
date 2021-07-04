@@ -11,18 +11,17 @@
     @stack('styles')
 </head>
 
-<body class="header_sticky header-style-1 has-menu-extra" >
+<body class="header_sticky header-style-1 has-menu-extra">
 @include('front-v1.partials.shared.header')
 
-@if($errors->any())
-    <div class="container">
-        <div class="row">
-            <div class="col-12 mt-3" id="flash-message">
-                @include('partials.flashes')
-            </div>
+<div class="container">
+    <div class="row">
+        <div class="col-12 mt-3" id="flash-message">
+            @include('partials.flashes')
         </div>
     </div>
-@endif
+</div>
+
 
 @yield('content')
 

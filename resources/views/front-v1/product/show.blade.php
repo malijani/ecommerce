@@ -274,7 +274,7 @@
                                 <div class="row justify-content-center align-items-center">
                                     <hr class="w-50">
                                     {{--RATES--}}
-                                    <div class="col-12 my-1 my-md-2">
+                                    <div class="col-12 mt-2 mb-3 mb-md-4">
                                         <a href="#ratings">
                                             @include('front-v1.partials.rating_stars', ['model'=>$product])
                                         </a>
@@ -381,10 +381,8 @@
                     </div>
                     {{--./SHOW ABOUT IMAGE MENU--}}
 
-
-
                     {{--SHOW DETAILS AND DESCRITION--}}
-                    <div class="col-12 my-3">
+                    <div class="col-12 mt-3 border-bottom">
                         <nav>
                             <div class="nav nav-tabs nav-fill font-weight-bolder" id="nav-tab" role="tablist">
                                 {{--DESCRIPTION--}}
@@ -412,13 +410,12 @@
                                 <div class="p-1 p-md-3">
                                     {!! $product->long_text !!}
                                 </div>
-
                             </div>
                             {{--DETAILS--}}
                             <div class="tab-pane fade" id="nav-details" role="tabpanel"
                                  aria-labelledby="nav-details-tab">
                                 @foreach($product->details as $detail)
-                                    <div class="row mt-2 p-2 border-bottom font-weight-bold font-16">
+                                    <div class="row mt-2 p-2 @if(!$loop->last) border-bottom @endif font-weight-bold font-16">
 
                                         <div class="col-4 text-md-center border-left">
                                             {{ $detail->title }}
@@ -432,14 +429,11 @@
                             </div>
 
                         </div>
-
                     </div>
                     {{--./SHOW DETAILS AND DESCRIPTION--}}
 
-
                     {{--RATING SECTION--}}
                     <div class="col-12">
-                        <hr class="w-50">
                         <div class="row">
                             @include('front-v1.partials.rating', ['user_rate'=>getUserRating($product), 'model'=>$product])
                         </div>
@@ -448,8 +442,7 @@
 
                     {{--COMMENT SECTION--}}
                     <div class="col-12">
-                        <hr class="w-50">
-                        <div class="row">
+                        <div class="row py-2">
                             @include('front-v1.partials.comment_template', ['comments'=>$comments,'model'=>$product])
                         </div>
                     </div>
@@ -562,10 +555,7 @@
 @section('page-scripts')
     <script src="{{ asset('front-v1/zoom/jquery.zoom.min.js') }}"></script>
     <script src="{{ asset('front-v1/owl-carousel/owl.carousel.min.js') }}"></script>
-    {{--INCLUDE RATING SCRIPT FROM ITS PARTIAL--}}
-    @stack('rating-script')
-    {{--INCLUDE COMMENT SCRIPT FROM ITS PARTIAL--}}
-    @stack('comment-script')
+    @stack('scripts')
     {{--PAGE SCRIPT--}}
     <script>
         $(document).ready(function () {

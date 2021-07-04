@@ -30,12 +30,12 @@
 
 
 
-    <div class="col-12 border-top-0 mb-2 mt-2 mr-4">
+    <div class="col-12 border-top-0 mb-2 mt-2">
         <div class="row">
             {{--REPLY BUTTON--}}
-            <div class="col-12 mx-auto">
+            <div class="col-4 ml-auto">
                 <button
-                    class="btn-reply btn btn-outline-info"
+                    class="comment_button btn-reply form-control"
                     id="reply-comment-{{ $comment->id }}"
                 >
                     <i class="fal fa-reply"></i>
@@ -51,24 +51,22 @@
                         <div class="form-group row">
                             <div class="col-12">
                                 <textarea name="content"
-                                          class="form-control @error('content') is-invalid @enderror"
+                                          class="comment_textarea form-control @error('content') is-invalid @enderror"
                                           id="content-{{$comment->id}}"
                                           cols="30"
                                           rows="5"
                                           required
+                                          placeholder="پاسخ خود را ثبت کنید"
                                 ></textarea>
                                 @include('partials.form_error', ['input'=>'content'])
                             </div>
+                            <div class="col-12 mt-2">
+                                <button type="submit" class="comment_button form-control">
+                                    <i class="far fa-paper-plane"></i>
+                                    ثبت پاسخ
+                                </button>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-outline-success">
-                                <i class="far fa-paper-plane"></i>
-                                ثبت پاسخ
-
-
-                            </button>
-                        </div>
-
                     </form>
                 </div>
             </div>
@@ -79,7 +77,7 @@
     @endforeach
 </div>
 
-@push('comment-script')
+@push('scripts')
     <script>
         $(document).ready(function () {
             $('.f-reply').hide();
@@ -87,7 +85,7 @@
                 $('.f-reply').hide();
                 let service = $(this).attr('id');
                 let service_id = "#f-" + service;
-                $(service_id).show('slow');
+                $(service_id).show('linear');
             });
         });
     </script>
