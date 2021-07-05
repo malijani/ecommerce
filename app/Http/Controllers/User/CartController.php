@@ -7,8 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Product;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
 
 class CartController extends Controller
 {
@@ -149,6 +149,11 @@ class CartController extends Controller
         $product = Product::withoutTrashed()->with('files', 'attrs')->findOrFail($request->input('order.product_id'));
         /*CHECK EXISTENCE OF PRODUCT*/
         if ($product->getAttribute('entity') <= 0 || $product->getAttribute('price_type') == 2 || $product->getAttribute('status' == 2)) {
+            if($request->ajax()){
+                return response()->json([
+                    'message' => 'اتمام موجودی محصول! لطفاً با مدیر در ارتباط باشید.'
+                ], Response::HTTP_NO_CONTENT);
+            }
             return redirect()->back()->with('error', 'اتمام موجودی محصول برای سفارش و اطلاعات بیشتر با مدیریت تماس بگیرید.');
         }
 
@@ -225,6 +230,12 @@ class CartController extends Controller
                 }
 
             } else {
+                /*TAKE IT AS ERROR*/
+                if ($request->ajax()) {
+                    return response()->json([
+                        'message' => 'تعداد محصول درخواستی در انبار موجود نیست.',
+                    ], Response::HTTP_NO_CONTENT);
+                }
                 return redirect()->back()->with('warning', 'تعداد محصول درخواستی شما در انبار موجود نیست');
             }
         } else {
@@ -248,8 +259,18 @@ class CartController extends Controller
         session()->put('basket', $basket);
         $this->countTotal('basket');
 
-        if($request->ajax()){
-            return response()->json('محصول با موفقیت افزوده شد!');
+
+        $basket_aside = view('front-v1.partials.shared.basket_aside')->render();
+        $basket_total = view('front-v1.partials.shared.basket_total')->render();
+        $remaining_quantity = $product->entity - $quantity;
+        /*RENDER ALL PARTIALS AND REMAINING COUNT OF PRODUCT*/
+        if ($request->ajax()) {
+            return response()->json([
+                'basket_aside' => $basket_aside,
+                'basket_total' => $basket_total,
+                'quantity' => $remaining_quantity,
+                'message' => ' محصول ' . $product->title . ' با موفقیت به سبد خرید شما افزوده شد.'
+            ]);
         }
         return redirect()
             ->back()

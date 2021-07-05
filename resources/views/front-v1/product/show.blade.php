@@ -12,8 +12,9 @@
 
     <div class="container-fluid my-3 rounded">
         <div class="row my-2">
-            @include('front-v1.partials.shared.basket_aside')
-
+            <div class="d-none d-lg-block col-lg-2" id="basket_aside_content">
+                @include('front-v1.partials.shared.basket_aside')
+            </div>
             {{--SHOW MAIN CONTENT--}}
             <div class="col-12 col-lg-8 my-2 shadow-lg rounded py-md-4">
                 <div class="row my-2">
@@ -195,7 +196,7 @@
                                                            class="text-dark col-form-label col-md-12 text-center">
                                                         موجودی:
                                                         <span id="entity" class="font-weight-bolder">
-                                                            {{ $product->entity - 1 }}
+                                                            {{ $product->entity }}
                                                         </span>
                                                         عدد
                                                     </label>
@@ -415,7 +416,8 @@
                             <div class="tab-pane fade" id="nav-details" role="tabpanel"
                                  aria-labelledby="nav-details-tab">
                                 @foreach($product->details as $detail)
-                                    <div class="row mt-2 p-2 @if(!$loop->last) border-bottom @endif font-weight-bold font-16">
+                                    <div
+                                        class="row mt-2 p-2 @if(!$loop->last) border-bottom @endif font-weight-bold font-16">
 
                                         <div class="col-4 text-md-center border-left">
                                             {{ $detail->title }}
@@ -579,6 +581,7 @@
             @endforeach
 
             /*USER ORDER HANDLING*/
+            /*TODO : REWRITE WHOLE THING!*/
             let orderProductCount = $("#order-count");
             let addProductCount = $("#add-product-count");
             let subProductCount = $("#sub-product-count");
@@ -588,28 +591,29 @@
             addProductCount.on('click', function () {
                 if (orderProductCount.val() <= count) {
                     let newValue = parseInt(orderProductCount.val());
-                    orderProductCount.val(++newValue);
-                    entity.text(--productCount);
+                    orderProductCount.val(newValue++);
+                    entity.text(productCount--);
                 }
             });
 
             subProductCount.on('click', function () {
                 if (orderProductCount.val() > 1) {
                     let newValue = parseInt(orderProductCount.val());
-                    orderProductCount.val(--newValue);
-                    entity.text(++productCount)
+                    orderProductCount.val(newValue--);
+                    entity.text(productCount++)
                 }
             });
+
 
             orderProductCount.on('input change', function () {
                 if ($(this).val() <= 0) {
                     $(this).val(1);
-                    entity.text({{ $product->entity - 1 }})
+                    entity.text({{ $product->entity }})
                 } else if ($(this).val() > {{ $product->entity }}) {
                     $(this).val({{ $product->entity}});
                     entity.text("0");
                 } else {
-                    entity.text({{$product->entity - 1 }} -$(this).val());
+                    entity.text({{$product->entity }} -$(this).val());
                 }
 
             });
@@ -618,16 +622,40 @@
             $("#product_shop_form").submit(function (e) {
 
                 e.preventDefault();
-
                 let form = $(this);
                 let url = form.attr('action');
-
                 $.ajax({
                     type: "POST",
                     url: url,
                     data: form.serialize(), // serializes the form's elements.
                     success: function (data) {
-                        location.reload(); // show response from the php script.
+                        /*location.reload();*/ // show response from the php script.
+                        $("#basket_aside_content").html(data.basket_aside);
+                        $("#header_basket_total").html(data.basket_total);
+                        entity.text(data.quantity)
+                        orderProductCount.attr({'max' : data.quantity})
+
+                        if(data.quantity <= 0){
+                            form.html('');
+                        }
+                        orderProductCount.val(1);
+                        console.log(data);
+                        Swal.fire({
+                            position: 'top',
+                            icon: "success",
+                            title: data.message,
+                            showConfirmButton: false,
+                            timer: 1500,
+                        });
+                    },
+                    error: function(data){
+                        Swal.fire({
+                            position: 'top',
+                            icon: "error",
+                            title: data.responseJSON.message,
+                            showConfirmButton: false,
+                            timer: 1500,
+                        });
                     }
                 });
 
