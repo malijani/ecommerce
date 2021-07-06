@@ -35,33 +35,21 @@
 
 </div>
 
-<div class="col-12 col-md-6 text-center py-3" id="summary">
-    <div class="row align-items-center justify-content-center my-3">
-        <div class="col-4 mr-auto text-left p-2" title="امتیاز کلی">
-            <span class="badge badge-primary font-16">
-                {{ (string)((round((float)$model->ratingsAvg() * 100)/5))  }}
-            </span>
-            <i class="fal fa-2x fa-star align-middle"></i>
-        </div>
-        <div class="col-4 ml-auto text-right p-2" title="تعداد افراد رای دهنده" id="ratings-count" >
-            <span class="badge badge-primary font-16">{{ $model->ratingsCount() }}</span>
-            <i class="fal fa-2x fa-user-alt align-middle"></i>
-        </div>
-
-    </div>
-    @include('front-v1.partials.rating_stars')
+<div class="col-12 col-md-6 text-center py-3" id="rating_summary">
+    @include('front-v1.partials.rating_summary')
 </div>
 
 @push('scripts')
     <script>
         $(document).ready(function () {
             /*HIDE MESSAGE BY DEFAULT*/
-            $("#rate-message").hide();
+
             /*******/
             let rating = $('input[name="rating"]');
             rating.on('click', function () {
                 let rate = $(this).val();
                 let rating_address = "{{ route('rating.store') }}";
+                let rating_summary = $("#rating_summary");
                 $.ajax({
                     url: rating_address,
                     type: 'POST',
@@ -71,22 +59,25 @@
                         'rateable': '{{ class_basename($model) }}',
                         'rateable_id': '{{ $model->id }}'
                     },
-                    success: function (result) {
-                        if (result === 'rateable_404') {
-                            window.location.href = '{{ route('home') }}';
-                        } else {
-                            $("#rate-message").show();
-                            $("#rate-message-text").html(result);
-                        }
-
+                    success: function (data) {
+                        rating_summary.html(data.rating_summary);
+                        Swal.fire({
+                            position: 'top',
+                            icon: "success",
+                            title: "<h5>" + data.message + "</h5>",
+                            showConfirmButton: false,
+                            timer: 1500,
+                        });
                     },
-                    error: function () {
-                        $("#rate-message").show();
-                        $("#rate-message-text").html('' +
-                            ' برای ثبت رای خود در وبسایت' +
-                            '<a href="{{ route('login') }}"> لاگین </a>' +
-                            'کنید.'
-                        );
+                    error: function (data) {
+                        Swal.fire({
+                            position: 'top',
+                            icon: "error",
+                            title: "<h5>" + data.responseJSON.message + "</h5>",
+                            showConfirmButton: false,
+                            timer: 1500,
+                        });
+
                     }
                 });
 

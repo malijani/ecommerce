@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 
 class AuthNormal
@@ -24,6 +25,11 @@ class AuthNormal
             } else {
                 return redirect(route('home'));
             }
+        }
+        if($request->ajax()){
+            return response()->json([
+                'message' => 'لطفاً ابتدا وارد حساب کاربری خود شوید.',
+            ], Response::HTTP_NETWORK_AUTHENTICATION_REQUIRED);
         }
         return redirect(route('login'));
     }

@@ -146,7 +146,7 @@
                                     >
                                         @csrf
                                         {{--PRODUCT ID INPUT--}}
-                                        <input type="hidden" name="order[product_id]" value="{{ $product->id }}">
+                                        <input type="hidden" name="order[product_id]" value="{{ $product->title_en }}">
 
 
                                         {{--CUSTOMIZE ORDER WITH ATTRIBUTES--}}
@@ -196,7 +196,7 @@
                                                            class="text-dark col-form-label col-md-12 text-center">
                                                         موجودی:
                                                         <span id="entity" class="font-weight-bolder">
-                                                            {{ $product->entity }}
+                                                            {{ $product->entity - 1 }}
                                                         </span>
                                                         عدد
                                                     </label>
@@ -224,7 +224,6 @@
                                                         <button type="button"
                                                                 class="btn btn-success rounded font-weight-bolder"
                                                                 id="add-product-count"
-
                                                         >
                                                             <i class="fas fa-plus"></i>
                                                         </button>
@@ -562,6 +561,9 @@
     <script>
         $(document).ready(function () {
 
+            /***START*****/
+            /*ZOOM IMAGE */
+            /*************/
             let mainImg = $('#main-image');
             /*INITIALIZE ZOOM*/
             mainImg.wrap('<span style="display:inline-block" class="rounded"></span>')
@@ -580,47 +582,62 @@
             });
             @endforeach
 
+            /*************/
+            /*ZOOM IMAGE */
+            /*****END*****/
+
+            /***START****/
+            /*ORDER FORM*/
+            /************/
             /*USER ORDER HANDLING*/
-            /*TODO : REWRITE WHOLE THING!*/
             let orderProductCount = $("#order-count");
             let addProductCount = $("#add-product-count");
             let subProductCount = $("#sub-product-count");
             let entity = $("#entity");
-            let productCount = parseInt(entity.text());
-            let count = productCount;
+
+            addProductCount.add(subProductCount).on('click', function () {
+                let remainingProductCount = orderProductCount.attr('max');
+                let productCount = parseInt(entity.text());
+                let orderProductCountInt = parseInt(orderProductCount.val());
+                if (isNaN(productCount) || isNaN(orderProductCountInt) || orderProductCount.val() === "") {
+                    orderProductCount.val(1);
+                    entity.text(remainingProductCount - 1);
+                }
+            });
             addProductCount.on('click', function () {
-                if (orderProductCount.val() <= count) {
-                    let newValue = parseInt(orderProductCount.val());
-                    orderProductCount.val(newValue++);
-                    entity.text(productCount--);
+                let remainingProductCount = orderProductCount.attr('max');
+                let productCount = parseInt(entity.text());
+                let orderProductCountInt = parseInt(orderProductCount.val());
+                if (orderProductCountInt < remainingProductCount) {
+                    orderProductCount.val(++orderProductCountInt);
+                    entity.text(--productCount);
                 }
             });
-
             subProductCount.on('click', function () {
-                if (orderProductCount.val() > 1) {
-                    let newValue = parseInt(orderProductCount.val());
-                    orderProductCount.val(newValue--);
-                    entity.text(productCount++)
+                let productCount = parseInt(entity.text());
+                let orderProductCountInt = parseInt(orderProductCount.val());
+                if (orderProductCountInt > 1) {
+                    orderProductCount.val(--orderProductCountInt);
+                    entity.text(++productCount)
                 }
             });
-
-
             orderProductCount.on('input change', function () {
-                if ($(this).val() <= 0) {
+                let remainingProductCount = orderProductCount.attr('max');
+                let productCount = parseInt(entity.text());
+                let orderCount = parseInt($(this).val());
+
+                if (isNaN(orderCount) || orderCount <= 0 || $(this).val() === "" || productCount < 0 || isNaN(productCount) || productCount === "") {
                     $(this).val(1);
-                    entity.text({{ $product->entity }})
-                } else if ($(this).val() > {{ $product->entity }}) {
-                    $(this).val({{ $product->entity}});
+                    entity.text(remainingProductCount - 1);
+                } else if (orderCount >= remainingProductCount) {
+                    $(this).val(remainingProductCount);
                     entity.text("0");
                 } else {
-                    entity.text({{$product->entity }} -$(this).val());
+                    entity.text(remainingProductCount - orderCount);
                 }
-
             });
 
-
             $("#product_shop_form").submit(function (e) {
-
                 e.preventDefault();
                 let form = $(this);
                 let url = form.attr('action');
@@ -628,42 +645,58 @@
                     type: "POST",
                     url: url,
                     data: form.serialize(), // serializes the form's elements.
+
                     success: function (data) {
-                        /*location.reload();*/ // show response from the php script.
+                        /*UPDATE SECTIONS OF PRODUCT*/
                         $("#basket_aside_content").html(data.basket_aside);
                         $("#header_basket_total").html(data.basket_total);
-                        entity.text(data.quantity)
-                        orderProductCount.attr({'max' : data.quantity})
 
-                        if(data.quantity <= 0){
-                            form.html('');
+                        /*SHOW PRODUCT DOESN'T EXISTS*/
+                        if (data.quantity <= 0) {
+                            form.html('<div class="text-danger border border-danger rounded text-center py-3">' +
+                                '<i class="fa fa-times-circle-o fa-2x"></i>' +
+                                '<span class="align-middle px-2 font-20">' +
+                                'ناموجود' +
+                                '<em>!</em>' +
+                                '</span>' +
+                                '</div>');
                         }
+                        /*UPDATE ENTITY  : ONE OF THEM IS IN ORDER COUNT!*/
+                        entity.text(data.quantity - 1);
+                        /*RESET ORDER COUNT*/
                         orderProductCount.val(1);
-                        console.log(data);
+                        /*SET MAX ATTRIBUTE OF INPUT COUNT*/
+                        orderProductCount.attr({'max': data.quantity});
+
                         Swal.fire({
                             position: 'top',
                             icon: "success",
-                            title: data.message,
+                            title: "<h5>" + data.message + "</h5>",
                             showConfirmButton: false,
                             timer: 1500,
                         });
                     },
-                    error: function(data){
+
+                    error: function (data) {
                         Swal.fire({
                             position: 'top',
                             icon: "error",
-                            title: data.responseJSON.message,
+                            title: "<h5>" + data.responseJSON.message + "</h5>",
                             showConfirmButton: false,
                             timer: 1500,
                         });
-                    }
+                    },
+
                 });
-
-
             });
+            /************/
+            /*ORDER FORM*/
+            /****END*****/
 
 
+            /***********START*********/
             /*THUMBNAILS OWL CAROUSEL*/
+            /*************************/
             let product_images_owl = $("#oc_product_images")
             product_images_owl.owlCarousel({
                 rtl: true,
@@ -684,21 +717,11 @@
             $('.oc_product_images_prev').on('click', function () {
                 product_images_owl.trigger('prev.owl.carousel');
             });
+            /*************************/
+            /*THUMBNAILS OWL CAROUSEL*/
+            /**********END************/
 
-            /***START***/
-            /*COMMENTS*/
-            /**********/
-            $('.f-reply').hide();
-            $('.btn-reply').click(function () {
-                $('.f-reply').hide();
-                let service = $(this).attr('id');
-                let service_id = "#f-" + service;
-                $(service_id).show('slow');
-            })
 
-            /**********/
-            /*COMMENTS*/
-            /***END****/
 
         });
     </script>

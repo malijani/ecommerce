@@ -70,3 +70,23 @@
     @endforeach
 </div>
 
+@push('scripts')
+    <script>
+        $(document).ready(function(){
+            /***START***/
+            /*COMMENTS*/
+            /**********/
+            $('.f-reply').hide();
+            $('.btn-reply').click(function () {
+                $('.f-reply').hide();
+                let service = $(this).attr('id');
+                let service_id = "#f-" + service;
+                $(service_id).show('slow');
+            })
+            /**********/
+            /*COMMENTS*/
+            /***END****/
+        });
+    </script>
+@endpush
+

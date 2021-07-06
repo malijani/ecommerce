@@ -146,10 +146,32 @@ class CartController extends Controller
          * $request :
          *     'order.product_id', 'order.attribute.X', 'order.count'
         */
-        $product = Product::withoutTrashed()->with('files', 'attrs')->findOrFail($request->input('order.product_id'));
+        $product = Product::withoutTrashed()
+            ->with('files', 'attrs')
+            ->where('title_en', $request->input('order.product_id'))
+            ->first();
+        if (empty($product)) {
+            if ($request->ajax()) {
+                return response()->json([
+                    'message' => 'محصول مورد نظر یافت نشد!',
+                ], Response::HTTP_NOT_FOUND);
+            }
+            return redirect()->back()->with('warning', 'محصول مورد نظر یافت نشد!');
+        }
+
+        if ($product->entity < $request->input('order.count')) {
+            if ($request->ajax()) {
+                return response()->json([
+                    'message' => 'تعداد درخواستی در انبار موجود نیست!',
+                ], Response::HTTP_NOT_FOUND);
+            }
+            return redirect()->back()->with('warning', ' تعداد درخواستی در انبار موجود نیست!');
+        }
+
+
         /*CHECK EXISTENCE OF PRODUCT*/
         if ($product->getAttribute('entity') <= 0 || $product->getAttribute('price_type') == 2 || $product->getAttribute('status' == 2)) {
-            if($request->ajax()){
+            if ($request->ajax()) {
                 return response()->json([
                     'message' => 'اتمام موجودی محصول! لطفاً با مدیر در ارتباط باشید.'
                 ], Response::HTTP_NO_CONTENT);
@@ -304,9 +326,8 @@ class CartController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      * @param int $id
-     * @return void
      */
-    public function update(Request $request, int $id): void
+    public function update(Request $request, int $id)
     {
         // attribute is optional
         $request->validate([
@@ -329,7 +350,17 @@ class CartController extends Controller
         };
 
         // find product
-        $product = Product::query()->findOrFail($id);
+        $product = Product::query()->find($id);
+
+        if (empty($product)) {
+            if ($request->ajax()) {
+                return response()->json([
+                    'message' => 'محصول مورد نظر یافت نشد!',
+                ], Response::HTTP_NOT_FOUND);
+            }
+            return redirect()->back()->with('warning', 'محصول مورد نظر یافت نشد!');
+        }
+
         // get basket session
         $basket = session()->get('basket');
         // manipulate product
@@ -363,6 +394,14 @@ class CartController extends Controller
             }
         }
         session()->put('basket', $basket);
+
+        if ($request->ajax()) {
+            return response()->json([
+                'message' => 'عملیات با موفقیت انجام شد!',
+            ]);
+        }
+        return redirect()->back()->with('success', 'عملیات با موفقیت انجام شد!');
+
     }
 
     /**

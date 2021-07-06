@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 
 class RatingController extends Controller
@@ -32,10 +33,18 @@ class RatingController extends Controller
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
     {
+        if(!$request->ajax()){
+            return redirect()->back()->with('warning', 'درخواست امتیاز دهی نامعتبر!');
+        }
+
+        if(!Auth::check()){
+            return response()->json([
+                'message' => 'برای امتیاز دهی به حساب کاربری خود وارد شوید!',
+            ], Response::HTTP_NETWORK_AUTHENTICATION_REQUIRED);
+        }
 
         $request->validate([
             'rate' => 'required|numeric|min:1|max:5',
@@ -45,13 +54,24 @@ class RatingController extends Controller
         $rateable = app('App\\' . $request->input('rateable'))::withoutTrashed()
             ->find($request->input('rateable_id'));
 
-        if (is_null($rateable)) {
-            return response()->json('rateable_404');
+        if (empty($rateable)) {
+            return response()->json([
+                'message' => 'آیتم مورد نظر برای امتیاز دهی یافت نشد!'
+            ], Response::HTTP_NOT_FOUND);
         }
+
 
         Auth::user()->rate($rateable, $request->input('rate'));
 
-        return response()->json('رای شما با موفقیت ثبت شد!');
+        $rating_summary = view('front-v1.partials.rating_summary', [
+            'model'=>$rateable
+        ])
+        ->render();
+
+        return response()->json([
+            'message' => 'رای شما با موفقیت ثبت شد!',
+            'rating_summary' => $rating_summary,
+        ]);
 
     }
 
