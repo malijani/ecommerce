@@ -68,12 +68,6 @@ class HomeController extends Controller
             ->orderBy('id')
             ->get();
 
-        $page_image_menus = ImageMenu::query()
-            ->where('type', 3)
-            ->where('status', 1)
-            ->orderBy('id')
-            ->get();
-
         $footer_image_menus = ImageMenu::query()
             ->where('type', 4)
             ->where('status', 1)
@@ -88,7 +82,6 @@ class HomeController extends Controller
             'brands'=>$brands,
             'main_image_menus' => $main_image_menus,
             'big_image_menus' => $big_image_menus,
-            'page_image_menus' => $page_image_menus,
             'footer_image_menus' => $footer_image_menus
         ]);
     }

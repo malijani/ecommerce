@@ -15,9 +15,9 @@ class CartController extends Controller
     /**
      * Compute the total order attributes
      *
-     * @return array
+     * @return void
      */
-    protected function resetTotal(): array
+    protected function resetTotal(): void
     {
         $basket = session()->get('basket');
         $total = [
@@ -38,7 +38,6 @@ class CartController extends Controller
             }
         }
         session()->put('total', $total);
-        return $total;
     }
 
     /**
@@ -98,20 +97,10 @@ class CartController extends Controller
     public function index()
     {
         $title = 'سبد خرید';
-        $basket = session()->get('basket');
         /*show null page of basket*/
-        if (is_null($basket) || count($basket) == 0) {
-            return response()->view('front-v1.user.cart.null', [
-                'title' => $title,
-            ]);
-        }
-
-        $total = $this->resetTotal();
-
+        $this->resetTotal();
         return response()->view('front-v1.user.cart.index', [
             'title' => $title,
-            'basket' => $basket,
-            'total' => $total,
         ]);
     }
 
@@ -414,10 +403,17 @@ class CartController extends Controller
             session()->put('basket', $basket);
             $this->resetTotal();
         }
+        /*RENDER NEEDED PARTIALS*/
+        $basket_total = view('front-v1.partials.shared.basket_total')->render();
+        $cart_total = view('front-v1.user.cart.cart_total')->render();
+        $cart_items = view('front-v1.user.cart.cart_items')->render();
         if($request->ajax()){
             return response()
                 ->json([
                     'message' => 'محصول مورد نظر با موفقیت از سبد خرید حذف شد!',
+                    'basket_total' => $basket_total,
+                    'cart_total' => $cart_total,
+                    'cart_items' => $cart_items,
                 ], Response::HTTP_OK);
         }
         return response()

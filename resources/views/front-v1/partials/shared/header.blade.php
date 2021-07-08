@@ -66,7 +66,6 @@
                             <a href="{{ route('dashboard.index') }}" class="mx-1 py-1 pl-3 text-dark rounded"
                                role="button"
                                title=" داشبورد {{ auth()->user()->name_or_mobile }} "
-                               target="_blank"
                             >
                                 <i class="fal fa-desktop-alt fa-2x align-middle"></i>
 

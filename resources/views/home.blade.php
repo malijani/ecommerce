@@ -140,9 +140,7 @@
         {{--./SHOW CATEGORIES--}}
 
         {{--SHOW IMAGE PAGE MENU--}}
-        @if(!empty($page_image_menus) && $page_image_menus->count())
-            @include('front-v1.partials.page_image_menu', ['items'=>$page_image_menus])
-        @endif
+        @include('front-v1.partials.shared.page_image_menu')
         {{--./SHOW IMAGE PAGE MENU--}}
 
         {{--SHOW FOOTER IMAGE MENU--}}
