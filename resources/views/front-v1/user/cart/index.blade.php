@@ -5,20 +5,27 @@
 
     {{ \Diglactic\Breadcrumbs\Breadcrumbs::render('cart') }}
 
-    <div class="container-fluid my-3 rounded">
+    <div class="container-fluid my-2 rounded">
         <div class="row">
 
+            {{--MAIN CONTENT--}}
+            <div class="col-12 col-lg-10 py-2">
+                <div class="row">
+                    {{--CART TOTAL--}}
+                    <div class="col-12 col-xl-4 text-center" id="cart_total">
+                        @include('front-v1.user.cart.cart_total')
+                    </div>
+                    {{--./CART TOTAL--}}
+                    {{--ORDERED ITEMS--}}
+                    <div class="col-12 col-xl-8 text-center" id="cart_items">
+                        @include('front-v1.user.cart.cart_items')
+                    </div>
+                    {{--./ORDERD ITEMS--}}
+                </div>
 
-            {{--FINAL DESCRIPTION--}}
-            <div class="col-12 col-lg-2 mt-3 py-3" id="cart_total">
-                @include('front-v1.user.cart.cart_total')
             </div>
-            {{--./FINAL DESCRIPTION--}}
+            {{--./MAIN CONTENT--}}
 
-
-            <div class="col-12  col-lg-8 py-4 text-center" id="cart_items">{{--PRODUCTS--}}
-                @include('front-v1.user.cart.cart_items')
-            </div>{{--./PRODUCTS--}}
 
             @include('front-v1.partials.shared.social_media_aside')
 

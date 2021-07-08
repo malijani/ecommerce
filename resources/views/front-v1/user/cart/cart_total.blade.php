@@ -1,67 +1,105 @@
-
 @if(!empty(session()->get('total')) && session()->get('total')['count'] >= 1)
     @php($total = session()->get('total'))
-    <h6>مجموع سبد</h6>
-    <div class="table-responsive">
-        <table class="table">
-            <tbody>
-            <tr>
-                <th scope="row">تعداد کالا</th>
-                <td>{{ $total['count'] }} عدد</td>
-            </tr>
-            <tr>
-                <th scope="row">وزن مرسوله</th>
-                <td>{{ $total['weight'] }} گرم</td>
-            </tr>
-            <tr class="">
-                <th scope="row">جمع قیمت(بدون تخفیف)</th>
-                <td>{{ number_format($total['raw_price']) }} تومن</td>
-            </tr>
-            <tr class="text-success">
-                <th scope="row">جمع تخفیف</th>
-                <td>{{ number_format($total['discount']) }} تومن</td>
-            </tr>
-            <tr class="font-weight-bolder">
-                <th scope="row">قیمت نهایی</th>
-                <td>{{ number_format($total['final_price']) }} تومن</td>
-            </tr>
 
-            <tr class="">
-                <td colspan="2">
+    <div class="card">
+        <div class="card-header">
+            <h5 class="font-20 font-weight-bolder">مجموع سبد</h5>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <div class="row justify-content-around">
+                    <div class="col-auto text-center p-1">
+                        تعداد کالا
+                    </div>
+                    <div class="col-auto text-center p-1">
+                        {{ $total['count'] }} عدد
+                    </div>
+                </div>
+            </li>
 
-                    <form action="{{ route('cart.discount') }}" method="POST">
-                        @csrf
-
-                        <input type="text"
-                               name="discount_code"
-                               id="discount_code"
-                               class="form-control @error('discount_code') is-invalid @enderror"
-                               minlength="2"
-                               maxlength="10"
-                               value="{{old('discount_code')}}"
-                               placeholder="کد تخفیف"
-                               autocomplete="off"
-                        >
-                        @include('partials.form_error', ['input' => 'discount_code'])
-
-
-                        <div class="col-12 text-center mt-2">
-                            <button type="submit"
-                                    class="btn btn-outline-primary form-control font-weight-bold"
-                            >
-                                ثبت سفارش و اعمال تخفیف
-                            </button>
-
+            <li class="list-group-item">
+                <div class="row justify-content-around">
+                    <div class="col-auto text-center p-1">
+                        وزن مرسوله
+                    </div>
+                    <div class="col-auto text-center p-1">
+                        {{ $total['weight'] }} گرم
+                    </div>
+                </div>
+            </li>
+            @if($total['discount'] > 0)
+                <li class="list-group-item">
+                    <div class="row justify-content-around">
+                        <div class="col-auto text-center p-1">
+                            جمع قیمت(بدون تخفیف)
                         </div>
+                        <div class="col-auto text-center p-1">
+                            {{ number_format($total['raw_price']) }} تومن
+                        </div>
+                    </div>
+                </li>
+
+                <li class="list-group-item text-success">
+                    <div class="row justify-content-around">
+                        <div class="col-auto text-center p-1">
+                            جمع تخفیف
+                        </div>
+                        <div class="col-auto text-center p-1">
+                            {{ number_format($total['discount']) }} تومن
+                        </div>
+                    </div>
+                </li>
+            @endif
+            <li class="list-group-item font-weigh-bolder font-18">
+                <div class="row justify-content-around">
+                    <div class="col-auto text-center p-1">
+                        قیمت نهایی
+                    </div>
+                    <div class="col-auto text-center p-1">
+                        {{ number_format($total['final_price']) }} تومن
+                    </div>
+                </div>
+            </li>
+
+            <li class="list-group-item font-weigh-bolder font-18">
+                <div class="row justify-content-around">
+                    <div class="col-12">
+                        <form action="{{ route('cart.discount') }}" method="POST">
+                            @csrf
+                            <div class="form-group row">
+                                <div class="col-12">
+                                    <input type="text"
+                                           name="discount_code"
+                                           id="discount_code"
+                                           class="text-center form-control @error('discount_code') is-invalid @enderror"
+                                           minlength="2"
+                                           maxlength="10"
+                                           value="{{old('discount_code')}}"
+                                           placeholder="کد تخفیف"
+                                           autocomplete="off"
+                                    >
+                                    @include('partials.form_error', ['input' => 'discount_code'])
+                                </div>
+
+                                <div class="col-12 text-center mt-3">
+                                    <button type="submit"
+                                            class="btn btn-custom form-control font-weight-bold"
+                                    >
+                                        <span class="font-14">اعمال تخفیف و</span>
+                                        <span class="font-18">ثبت سفارش</span>
+                                    </button>
+
+                                </div>
+                            </div>
 
 
-                    </form>
-
-                </td>
-            </tr>
-            </tbody>
-        </table>
+                        </form>
+                    </div>
+                </div>
+            </li>
+        </ul>
     </div>
+
 @else
 
 @endif

@@ -789,6 +789,25 @@ ul {
 /**********/
 
 
+
+/*******/
+/*CART*/
+/******/
+#discount_code{
+    width: 100%;
+    outline: 0;
+    border: 0;
+    padding: 0.5rem 0;
+    border-bottom: 2px solid #d3d3d3;
+    border-radius: 0;
+    box-shadow: none !important;
+    color: #111111;
+    -webkit-appearance: none;
+    -webkit-box-shadow: none;
+}
+/*******/
+/*CART*/
+/******/
 /***************************/
 /*SOCIAL MEDIA BANNER IMAGE*/
 /***************************/
@@ -1132,7 +1151,7 @@ ul {
 }
 
 .img-cart {
-    max-height: 200px !important;
+    max-height: 300px !important;
 }
 
 .breadcrumb-item + .breadcrumb-item::before {

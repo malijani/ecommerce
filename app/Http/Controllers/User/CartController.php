@@ -288,7 +288,6 @@ class CartController extends Controller
         return redirect()
             ->back()
             ->with('success', 'محصول با موفقیت به سبد خرید افزوده شد!');
-        /*return response()->redirectTo(route('cart.index'));*/
     }
 
     /**
@@ -318,13 +317,17 @@ class CartController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param Request $request
      * @param int $id
-     * @return void
+     * @return mixed
      */
-    public
-    function update(Request $request, int $id): void
+    public function update(Request $request, int $id)
     {
+        if (!$request->ajax()) {
+            return back()
+                ->with('error', 'درخواست نامعتبر!');
+        }
+
         // attribute is optional
         $request->validate([
             'type' => ['required', 'string', 'max:6'],
@@ -346,7 +349,13 @@ class CartController extends Controller
         };
 
         // find product
-        $product = Product::query()->findOrFail($id);
+        $product = Product::query()->find($id);
+        if (empty($product)) {
+            return response()
+                ->json([
+                    'message' => 'محصول مورد نظر شما یافت نشد!'
+                ], Response::HTTP_NOT_FOUND);
+        }
         // get basket session
         $basket = session()->get('basket');
         // manipulate product
@@ -377,11 +386,39 @@ class CartController extends Controller
             } /*check quantity of ordered product if its less than one, remove whole product*/
             elseif ($type == 'remove' && $ordered_product['quantity'] <= 1) {
                 unset($basket[$id]);
+            } elseif ($ordered_product['quantity'] >= $product->entity) {
+                return response()->json([
+                    'message' => 'اتمام موجودی محصول ' . $product->title,
+                ], Response::HTTP_FAILED_DEPENDENCY);
             }
+        } else {
+            return response()
+                ->json([
+                    'message' => 'محصول مورد نظر در سبد ثبت نشده!',
+                ], Response::HTTP_NOT_FOUND);
         }
-
         session()->put('basket', $basket);
         $this->resetTotal();
+
+        /*RENDER NEEDED PARTIALS*/
+        try {
+            $basket_total = view('front-v1.partials.shared.basket_total')->render();
+            $cart_total = view('front-v1.user.cart.cart_total')->render();
+            $cart_items = view('front-v1.user.cart.cart_items')->render();
+        } catch (\Throwable $e) {
+            return response()
+                ->json([
+                    'message' => 'لطفاً صفحه را بروزرسانی کنید.'
+                ], Response::HTTP_FAILED_DEPENDENCY);
+        }
+
+        return response()
+            ->json([
+                'basket_total' => $basket_total,
+                'cart_total' => $cart_total,
+                'cart_items' => $cart_items,
+            ], Response::HTTP_OK);
+
     }
 
     /**
@@ -394,6 +431,11 @@ class CartController extends Controller
     public
     function destroy(int $id, Request $request)
     {
+        if (!$request->ajax()) {
+            return back()
+                ->with('error', 'درخواست نامعتبر!');
+        }
+
         $basket = session()->get('basket');
         $total = session()->get('total');
         if (isset($basket[$id]) && isset($total)) {
@@ -403,21 +445,27 @@ class CartController extends Controller
             session()->put('basket', $basket);
             $this->resetTotal();
         }
+
         /*RENDER NEEDED PARTIALS*/
-        $basket_total = view('front-v1.partials.shared.basket_total')->render();
-        $cart_total = view('front-v1.user.cart.cart_total')->render();
-        $cart_items = view('front-v1.user.cart.cart_items')->render();
-        if($request->ajax()){
+        try {
+            $basket_total = view('front-v1.partials.shared.basket_total')->render();
+            $cart_total = view('front-v1.user.cart.cart_total')->render();
+            $cart_items = view('front-v1.user.cart.cart_items')->render();
+        } catch (\Throwable $e) {
             return response()
                 ->json([
-                    'message' => 'محصول مورد نظر با موفقیت از سبد خرید حذف شد!',
-                    'basket_total' => $basket_total,
-                    'cart_total' => $cart_total,
-                    'cart_items' => $cart_items,
-                ], Response::HTTP_OK);
+                    'message' => 'لطفاً صفحه را بروزرسانی کنید.'
+                ], Response::HTTP_FAILED_DEPENDENCY);
         }
+
+
         return response()
-            ->redirectToRoute('cart.index')
-            ->with('success', 'محصول مورد نظر با موفقیت از سبد خرید حذف شد.');
+            ->json([
+                'message' => 'محصول مورد نظر با موفقیت از سبد خرید حذف شد!',
+                'basket_total' => $basket_total,
+                'cart_total' => $cart_total,
+                'cart_items' => $cart_items,
+            ], Response::HTTP_OK);
+
     }
 }
