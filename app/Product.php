@@ -58,6 +58,11 @@ class Product extends Model
         return $this->morphMany(Comment::class, 'commentable');
     }
 
+    public function activeComments()
+    {
+        return $this->comments()->where('status', 1)->orderByDesc('created_at');
+    }
+
     public function getLink()
     {
         return route('product.show', $this->title_en);

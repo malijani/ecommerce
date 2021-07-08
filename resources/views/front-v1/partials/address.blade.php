@@ -99,7 +99,7 @@
                                    class="form-control text-center ltr @error('mobile') is-invalid @enderror"
                                    id="mobile"
                                    placeholder="09121231122"
-                                   value="{{ old('mobile') }}"
+                                   value="{{ auth()->user()->mobile ?? old('mobile') }}"
                                    maxlength="11"
                                    required
                                    autocomplete="off"

@@ -48,12 +48,20 @@ class ProductController extends Controller
             ->first();
 
 
-        /*TODO : CREATE 404 PAGE*/
-        if(empty($product)){
+        if (empty($product)) {
             $title = 'محصول ' . $slug . ' در ' . config('app.short.name') . ' یافت نشد ';
+            $products = Product::withoutTrashed()
+                ->active()
+                ->orderByDesc('sold')
+                ->orderBy('entity', 'DESC')
+                ->orderBy('created_at', 'DESC')
+                ->orderBy('sort', 'ASC')
+                ->limit(30)
+                ->get();
             return response()
                 ->view('front-v1.product.404', [
                     'title' => $title,
+                    'products' => $products,
                     'not_found' => $slug,
                 ]);
         }

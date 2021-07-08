@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Visitor;
 
 use App\Comment;
 use App\Http\Controllers\Controller;
-use http\Env\Response;
+use Illuminate\Http\Response;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\View\View;
 
 class CommentController extends Controller
 {
@@ -37,38 +39,56 @@ class CommentController extends Controller
      * @param Request $request
      * @param string $model
      * @param int $id
-     * @return RedirectResponse
+     * @return mixed
      */
-    public function store(Request $request, string $model, int $id): RedirectResponse
+    public
+    function store(Request $request, string $model, int $id)
     {
-
-        $request->validate([
+        $rules = [
             'content' => 'bail|required|string|min:4|max:10000',
             'parent_id' => 'bail|required|numeric|min:0',
-        ], [
-            'content' => [
-                'required' => 'تعیین محتوای نظر الزامیست',
-                'string' => 'نوع داده ای نظر شما غیر مجاز است',
-                'min' => 'حداقل چهار کاراکتر برای تعیین نظر الزامیست',
-                'max' => 'حداکثر ده هزار کاراکتر برای نظر کاربران تعبیه شده',
-            ],
-            'parent_id' => [
-                'required' => 'تعیین والد نظر الزامیست',
-                'numeric' => 'آیدی والد عدد است',
-            ],
-        ]);
+            'comment_captcha' => 'bail|required|captcha'
+        ];
+        $messages = [
+            'content.required' => 'تعیین محتوای نظر الزامیست',
+            'content.string' => 'نوع داده ای نظر شما غیر مجاز است',
+            'content.min' => 'حداقل چهار کاراکتر برای تعیین نظر الزامیست',
+            'content.max' => 'حداکثر ده هزار کاراکتر برای نظر کاربران تعبیه شده',
+
+            'parent_id.required' => 'تعیین والد نظر الزامیست',
+            'parent_id.numeric' => 'آیدی والد عدد است',
+
+            'comment_captcha.required' => 'لطفاً کد کپچا را وارد نمایید.',
+            'comment_captcha.captcha' => 'کد کپچا اشتباه است! با کلیک روی دکمه، کپچا را بروز رسانی کنید.',
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        if ($validator->fails()) {
+            if ($request->ajax()) {
+                return response()->json([
+                    'message' => $validator->errors()->toJson(),
+                ], Response::HTTP_BAD_REQUEST);
+            }
+            return redirect()->back()->with('error', implode(',', $validator->errors()->all()));
+        }
 
         $parent_id = $request->input('parent_id');
         if ($parent_id != 0) {
             $parent = Comment::withoutTrashed()->find($parent_id);
-            if (!$parent) {
+            if (empty($parent)) {
                 $parent_id = 0;
             }
         }
 
         $allowed = ['Article', 'Product'];
         $object = app('App\\' . $model)::withoutTrashed()->find($id);
-        if (!in_array($model, $allowed) || !$object) {
+        if (empty($object) || !in_array($model, $allowed)) {
+            if ($request->ajax()) {
+                return response()->json([
+                    'message' => 'مسیر دهی نامعتبر!',
+                ], Response::HTTP_BAD_REQUEST);
+            }
             return redirect()->back()->with('error', 'مشکل احتمالی در مسیر دهی وبسایت!');
         }
 
@@ -79,7 +99,7 @@ class CommentController extends Controller
         $comment->content = $request->input('content');
         $comment->parent_id = $parent_id;
         /*CHECK COMMENTER ACCESS CONTROL LEVEL*/
-        if(!is_null(Auth::id()) && Auth::user()->isAdmin()) {
+        if (!empty(Auth::id()) && Auth::user()->isAdmin()) {
             $comment->status = 1;
             $message = 'پاسخ شما ثبت شد';
         } else {
@@ -88,6 +108,11 @@ class CommentController extends Controller
         }
         $comment->save();
 
+        if ($request->ajax()) {
+            return response()->json([
+                'message' => $message,
+            ]);
+        }
         return redirect()->back()->with('success', $message);
     }
 
@@ -97,7 +122,8 @@ class CommentController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public
+    function show($id)
     {
         //
     }
@@ -108,7 +134,8 @@ class CommentController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public
+    function edit($id)
     {
         //
     }
@@ -120,7 +147,8 @@ class CommentController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public
+    function update(Request $request, $id)
     {
         //
     }
@@ -131,7 +159,8 @@ class CommentController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public
+    function destroy($id)
     {
         //
     }

@@ -11,6 +11,7 @@
 
             <div class="col-12  col-lg-8 py-4">{{--PRODUCTS--}}
                 <h4>سبد خرید</h4>
+
                 @foreach($basket as $key=>$value)
                     <div class="row d-flex align-items-center text-center mb-4 ml-1 mr-1  p-3 rounded bg-whitesmoke"
                          id="product-{{$key}}">

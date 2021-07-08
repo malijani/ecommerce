@@ -8,12 +8,11 @@ class SmsVerifyMethod implements VerifyMethod
 {
     public function send(string $receiver, string $code): bool
     {
-        $api = new GhasedakApi(env('GHASEDAK_API_KEY'));
+        $api = new GhasedakApi(config("ghasedak-sms.api_key", ""));
 
         $type = 1;
         $template = "gymlandauth";
         $param1 = $code;
-
         $sms_response = $api->Verify($receiver, $type, $template, $param1);
 
         if ($sms_response->result->message == 'success' && $sms_response->result->code == 200) {

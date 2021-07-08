@@ -7,11 +7,39 @@ use App\Http\Controllers\Controller;
 use App\Product;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 
 class CartController extends Controller
 {
+
+    /**
+     * Compute the total order attributes
+     *
+     * @return array
+     */
+    protected function resetTotal(): array
+    {
+        $basket = session()->get('basket');
+        $total = [
+            'raw_price' => 0,
+            'final_price' => 0,
+            'discount' => 0,
+            'count' => 0,
+            'weight' => 0,
+            'discount_code' => null
+        ];
+        if (!empty($basket)) {
+            foreach ($basket as $order) {
+                $total['raw_price'] += (int)$order['raw_price'];
+                $total['final_price'] += (int)$order['price'];
+                $total['discount'] += (int)$order['total_discount'];
+                $total['count'] += (int)$order['quantity'];
+                $total['weight'] += (int)$order['weight'];
+            }
+        }
+        session()->put('total', $total);
+        return $total;
+    }
 
     /**
      * Compute the discount from discount code
@@ -61,25 +89,6 @@ class CartController extends Controller
 
     }
 
-    protected function countTotal($basket_session)
-    {
-        $basket = session()->get('basket');
-        /*append total order price and discount to basket*/
-        $total = ['raw_price' => 0, 'final_price' => 0, 'discount' => 0, 'count' => 0, 'weight' => 0, 'discount_code' => null];
-        if (count($basket)) {
-            foreach ($basket as $order) {
-                $total['raw_price'] += (int)$order['raw_price'];
-                $total['final_price'] += (int)$order['price'];
-                $total['discount'] += (int)$order['total_discount'];
-                $total['count'] += (int)$order['quantity'];
-                $total['weight'] += (int)$order['weight'];
-            }
-        }
-
-
-        session()->put('total', $total);
-        return $total;
-    }
 
     /**
      * Display a listing of the resource.
@@ -97,10 +106,7 @@ class CartController extends Controller
             ]);
         }
 
-
-        $total = $this->countTotal('basket');
-        //$total = session()->get('total');
-
+        $total = $this->resetTotal();
 
         return response()->view('front-v1.user.cart.index', [
             'title' => $title,
@@ -114,7 +120,8 @@ class CartController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public
+    function create()
     {
         //
     }
@@ -123,9 +130,10 @@ class CartController extends Controller
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @return JsonResponse|RedirectResponse
+     * @return mixed
      */
-    public function store(Request $request)
+    public
+    function store(Request $request)
     {
         /*PREPARE ATTRIBUTE IDS AND VALUE FOR VALIDATION */
         if ($request->has('order.attribute')) {
@@ -146,10 +154,12 @@ class CartController extends Controller
          * $request :
          *     'order.product_id', 'order.attribute.X', 'order.count'
         */
+
         $product = Product::withoutTrashed()
             ->with('files', 'attrs')
             ->where('title_en', $request->input('order.product_id'))
             ->first();
+        /*CHECK IF PRODUCT DOESN'T EXISTS*/
         if (empty($product)) {
             if ($request->ajax()) {
                 return response()->json([
@@ -159,6 +169,7 @@ class CartController extends Controller
             return redirect()->back()->with('warning', 'محصول مورد نظر یافت نشد!');
         }
 
+        /*CHECK IF ORDER COUNT IS BIGGER THAN PRODUCT ENTITY*/
         if ($product->entity < $request->input('order.count')) {
             if ($request->ajax()) {
                 return response()->json([
@@ -168,9 +179,8 @@ class CartController extends Controller
             return redirect()->back()->with('warning', ' تعداد درخواستی در انبار موجود نیست!');
         }
 
-
-        /*CHECK EXISTENCE OF PRODUCT*/
-        if ($product->getAttribute('entity') <= 0 || $product->getAttribute('price_type') == 2 || $product->getAttribute('status' == 2)) {
+        /*CHECK IF PRODUCT IS READY FOR ONLINE SELL*/
+        if ($product->entity <= 0 || $product->price_type == 2 || $product->status == 2) {
             if ($request->ajax()) {
                 return response()->json([
                     'message' => 'اتمام موجودی محصول! لطفاً با مدیر در ارتباط باشید.'
@@ -178,7 +188,6 @@ class CartController extends Controller
             }
             return redirect()->back()->with('error', 'اتمام موجودی محصول برای سفارش و اطلاعات بیشتر با مدیریت تماس بگیرید.');
         }
-
 
         /*PREPARE VALUES*/
         $quantity = $request->input('order.count');
@@ -201,6 +210,7 @@ class CartController extends Controller
 
         /*SESSION SECTION*/
         $basket = session()->get('basket');
+
         if (!$basket) {
             $basket = [
                 $product->id => [
@@ -209,7 +219,6 @@ class CartController extends Controller
                     'quantity' => $request->input('order.count'),
                     'attribute' => $attribute,
                     'price' => $request->input('order.count') * $product->final_price,
-                    'price_self_buy' => $product->price_self_buy,
                     'raw_price' => $request->input('order.count') * $product->price,
                     'price_type' => $product->price_type,
                     'discount_percent' => $product->discount_percent,
@@ -222,7 +231,6 @@ class CartController extends Controller
         } elseif (isset($basket[$product->id])) {
             $quantity = &$basket[$product->id]['quantity'];
             $price = &$basket[$product->id]['price'];
-            $price_self_buy = &$basket[$product->id]['price_self_buy'];
             $total_discount = &$basket[$product->id]['total_discount'];
             $weight = &$basket[$product->id]['weight'];
             $order_attribute = &$basket[$product->id]['attribute'];
@@ -252,12 +260,6 @@ class CartController extends Controller
                 }
 
             } else {
-                /*TAKE IT AS ERROR*/
-                if ($request->ajax()) {
-                    return response()->json([
-                        'message' => 'تعداد محصول درخواستی در انبار موجود نیست.',
-                    ], Response::HTTP_NO_CONTENT);
-                }
                 return redirect()->back()->with('warning', 'تعداد محصول درخواستی شما در انبار موجود نیست');
             }
         } else {
@@ -268,7 +270,6 @@ class CartController extends Controller
                     'quantity' => $request->input('order.count'),
                     'attribute' => $attribute,
                     'price' => $request->input('order.count') * $product->final_price,
-                    'price_self_buy' => $product->price_self_buy,
                     'raw_price' => $request->input('order.count') * $product->price,
                     'price_type' => $product->price_type,
                     'discount_percent' => $product->discount_percent,
@@ -279,13 +280,13 @@ class CartController extends Controller
         }
 
         session()->put('basket', $basket);
-        $this->countTotal('basket');
+        $this->resetTotal();
 
-
+        /*RENDER ALL PARTIALS AND REMAINING COUNT OF PRODUCT*/
         $basket_aside = view('front-v1.partials.shared.basket_aside')->render();
         $basket_total = view('front-v1.partials.shared.basket_total')->render();
         $remaining_quantity = $product->entity - $quantity;
-        /*RENDER ALL PARTIALS AND REMAINING COUNT OF PRODUCT*/
+
         if ($request->ajax()) {
             return response()->json([
                 'basket_aside' => $basket_aside,
@@ -294,9 +295,11 @@ class CartController extends Controller
                 'message' => ' محصول ' . $product->title . ' با موفقیت به سبد خرید شما افزوده شد.'
             ]);
         }
+
         return redirect()
             ->back()
             ->with('success', 'محصول با موفقیت به سبد خرید افزوده شد!');
+        /*return response()->redirectTo(route('cart.index'));*/
     }
 
     /**
@@ -306,7 +309,8 @@ class CartController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public
+    function show($id)
     {
         //
     }
@@ -316,7 +320,8 @@ class CartController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public
+    function edit($id)
     {
         //
     }
@@ -326,8 +331,10 @@ class CartController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      * @param int $id
+     * @return void
      */
-    public function update(Request $request, int $id)
+    public
+    function update(Request $request, int $id): void
     {
         // attribute is optional
         $request->validate([
@@ -350,17 +357,7 @@ class CartController extends Controller
         };
 
         // find product
-        $product = Product::query()->find($id);
-
-        if (empty($product)) {
-            if ($request->ajax()) {
-                return response()->json([
-                    'message' => 'محصول مورد نظر یافت نشد!',
-                ], Response::HTTP_NOT_FOUND);
-            }
-            return redirect()->back()->with('warning', 'محصول مورد نظر یافت نشد!');
-        }
-
+        $product = Product::query()->findOrFail($id);
         // get basket session
         $basket = session()->get('basket');
         // manipulate product
@@ -393,46 +390,38 @@ class CartController extends Controller
                 unset($basket[$id]);
             }
         }
+
         session()->put('basket', $basket);
-
-        if ($request->ajax()) {
-            return response()->json([
-                'message' => 'عملیات با موفقیت انجام شد!',
-            ]);
-        }
-        return redirect()->back()->with('success', 'عملیات با موفقیت انجام شد!');
-
+        $this->resetTotal();
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param int $id
-     * @return RedirectResponse
+     * @param Request $request
+     * @return mixed
      */
-    public function destroy(int $id): RedirectResponse
+    public
+    function destroy(int $id, Request $request)
     {
         $basket = session()->get('basket');
         $total = session()->get('total');
         if (isset($basket[$id]) && isset($total)) {
-            /*REMOVE FROM TOTAL FOR BETTER INSURANCE OF GETTING RIGHT TOTAL*/
-            $total['raw_price'] -= (int)$basket[$id]['raw_price'];
-            $total['final_price'] -= (int)$basket[$id]['price'];
-            $total['discount'] -= (int)$basket[$id]['total_discount'];
-            $total['count'] -= (int)$basket[$id]['quantity'];
-            $total['weight'] -= (int)$basket[$id]['weight'];
-            /*CONTROL TOTAL IF THERE IS NO PRODUCT IN BASKET*/
-            if (is_null($total) || $total['count'] == 0) {
-                unset($total);
-            }
             /*UNSET PRODUCT*/
             unset($basket[$id]);
             /*UPDATE SESSIONS*/
             session()->put('basket', $basket);
-            session()->put('total', $total ?? []);
-
+            $this->resetTotal();
         }
-        return response()->redirectToRoute('cart.index')->with('success', 'محصول مورد نظر با موفقیت از سبد خرید حذف شد.');
+        if($request->ajax()){
+            return response()
+                ->json([
+                    'message' => 'محصول مورد نظر با موفقیت از سبد خرید حذف شد!',
+                ], Response::HTTP_OK);
+        }
+        return response()
+            ->redirectToRoute('cart.index')
+            ->with('success', 'محصول مورد نظر با موفقیت از سبد خرید حذف شد.');
     }
-
 }

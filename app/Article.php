@@ -35,6 +35,11 @@ class Article extends Model
         return $this->morphMany(Comment::class, 'commentable');
     }
 
+    public function activeComments()
+    {
+        return $this->comments()->where('status', 1);
+    }
+
     public function getLink()
     {
         return route('blog.show', $this->title_en);

@@ -1,10 +1,5 @@
 @extends('layouts.app')
 
-@section('page-styles')
-    <link rel="stylesheet" href="{{ asset('front-v1/owl-carousel/assets/owl.carousel.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('front-v1/owl-carousel/assets/owl.theme.default.min.css') }}">
-@endsection
-
 @section('content')
 
     {{ \Diglactic\Breadcrumbs\Breadcrumbs::render('products.product', $product) }}
@@ -72,7 +67,7 @@
                     <div class="col-12 col-md-6">
                         <div class="row">
                             {{--SHOW TITLE--}}
-                            <div class="col-12 text-center">
+                            <div class="col-12 text-center  border-bottom">
                                 <h1 class="font-20 text-dark">
                                     {{ $product->title . ' | ' . str_replace('-', ' ', $product->title_en)}}
                                 </h1>
@@ -236,7 +231,7 @@
                                                 {{--SUBMIT FORM--}}
                                                 <button
                                                     type="submit"
-                                                    class="p-0 btn btn-lg btn-outline-success form-control font-18 font-weight-bolder"
+                                                    class="p-0 btn btn-lg btn-custom form-control font-18 font-weight-bolder"
                                                     id="product_order_submit"
                                                 >
                                                     <i class="fal fa-cart-plus align-middle"></i>
@@ -306,7 +301,7 @@
                                                     >
                                             <span class="text-dark">
                                                 <i class="fal fa-comment align-middle ml-1"></i>
-                                                {{ $product->comments->count() }}
+                                                {{ $product->activeComments->count() }}
                                             </span>
                                                         <span class="text-muted">
                                                 نظر
@@ -555,7 +550,6 @@
 
 @section('page-scripts')
     <script src="{{ asset('front-v1/zoom/jquery.zoom.min.js') }}"></script>
-    <script src="{{ asset('front-v1/owl-carousel/owl.carousel.min.js') }}"></script>
     @stack('scripts')
     {{--PAGE SCRIPT--}}
     <script>
@@ -674,6 +668,13 @@
                             title: "<h5>" + data.message + "</h5>",
                             showConfirmButton: false,
                             timer: 1500,
+                        }).then(() => {
+                            if (isNaN(entity.text()) || entity.text() === '') {
+                                let remainingProductCount = orderProductCount.attr('max');
+                                orderProductCount.val(1);
+                                entity.text(remainingProductCount - 1);
+
+                            }
                         });
                     },
 
@@ -684,6 +685,12 @@
                             title: "<h5>" + data.responseJSON.message + "</h5>",
                             showConfirmButton: false,
                             timer: 1500,
+                        }).then(() => {
+                            if (isNaN(entity.text()) || entity.text() === '') {
+                                let remainingProductCount = orderProductCount.attr('max');
+                                orderProductCount.val(1);
+                                entity.text(remainingProductCount - 1);
+                            }
                         });
                     },
 
@@ -720,7 +727,6 @@
             /*************************/
             /*THUMBNAILS OWL CAROUSEL*/
             /**********END************/
-
 
 
         });

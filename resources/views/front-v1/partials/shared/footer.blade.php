@@ -40,7 +40,7 @@
                                             <a href="{{ $product_proposal->getLink() }}">
                                                 <img src="{{ asset($product_proposal->files()->defaultFile()->link) }}"
                                                      alt="{{ $product_proposal->files()->defaultFile()->title }}"
-                                                     class="img img-fluid rounded"
+                                                     class="img img-fluid rounded footer_product_img"
                                                 >
                                             </a>
                                         </div>
@@ -95,7 +95,7 @@
                                                 <img
                                                     src="{{ asset($last_comment->product->files()->defaultFile()->link) }}"
                                                     alt="{{ $last_comment->product->files()->defaultFile()->title }}"
-                                                    class="img img-fluid rounded"
+                                                    class="img img-fluid rounded footer_product_img"
                                                 >
                                             </a>
                                         </div>

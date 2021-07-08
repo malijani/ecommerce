@@ -3,10 +3,14 @@
     <div class="row my-5">
         @foreach($social_medias as $social_media)
             <div class="d-block d-lg-none col-12">
-                <img src="{{ asset($social_media->banner_image)  }}"
-                     alt="{{ $social_media->title }}"
-                     class="img img-fluid w-100 rounded social_media_banner_img"
+                <a href="{{ $social_media->link }}"
+                   title="{{ $social_media->title }}"
                 >
+                    <img src="{{ asset($social_media->banner_image)  }}"
+                         alt="{{ $social_media->title }}"
+                         class="img img-fluid w-100 rounded social_media_banner_img"
+                    >
+                </a>
             </div>
         @endforeach
     </div>
