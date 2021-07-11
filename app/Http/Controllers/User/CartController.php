@@ -49,7 +49,7 @@ class CartController extends Controller
     public function applyDiscount(Request $request): RedirectResponse
     {
         $total = session()->get('total');
-        if (is_null($total) || count($total) == 0) {
+        if (empty($total) || count($total) == 0) {
             return back()->with('error', 'مجموع سبد خرید برای اعمال کد تخفیف وجود ندارد!');
         }
         if (!is_null($total['discount_code'])) {

@@ -67,7 +67,7 @@
                     <div class="col-12 col-md-6">
                         <div class="row">
                             {{--SHOW TITLE--}}
-                            <div class="col-12 text-center  border-bottom">
+                            <div class="col-12 text-center py-2  border-bottom">
                                 <h1 class="font-20 text-dark">
                                     {{ $product->title . ' | ' . str_replace('-', ' ', $product->title_en)}}
                                 </h1>

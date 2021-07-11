@@ -78,8 +78,10 @@ class FactorController extends Controller
     }
 
 
-    public function create()
+    public function store(Request $request)
     {
+
+        dd($request->all());
         $user = Auth::user();
         /*CONTROL USER PERMISSION TO CREATE NEW FACTOR*/
         $control_user = $this->controlUserFactor($user);

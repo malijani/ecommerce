@@ -1,14 +1,13 @@
 @if(!empty(session()->get('basket')) && count(session()->get('basket')) )
     @php($basket = session()->get('basket'))
 
-    <div class="card shadow-lg mt-3 mt-md-0">
-        <h5 class="card-header">
+    <div class="card shadow-sm mt-3 mt-md-0">
+        <h5 class="card-header border-bottom-0">
             سبد خرید
         </h5>
         <div class="card-body">
-
             @foreach($basket as $key=>$value)
-                <div class="row my-3 align-items-center rounded bg-light py-2"
+                <div class="row my-3 align-items-center justify-content-center rounded bg-light"
                      id="product-{{$key}}"
                 >
                     {{--SHOW IMAGE & TITLE--}}
@@ -37,7 +36,7 @@
                         <div class="row align-items-center">
 
 
-                            <div class="col-12 my-3 py-3  my-md-5">
+                            <div class="col-12 my-3 py-3  my-md-3">
                                 @if(is_array($value['attribute'])&&count($value['attribute']))
                                     <div class="row">
                                         <div class="col-12">
@@ -124,7 +123,7 @@
                             </div>
 
 
-                            <div class="col-12 my-3 py-3  my-md-5">
+                            <div class="col-12 my-3 py-3  my-md-3">
                                 <b>{{ number_format($value['price']) }} تومن</b>
                                 @if($value['total_discount'] > 0)
                                     <br>
@@ -137,7 +136,7 @@
                     </div>
 
                     {{--SHOW DELETE BUTTON--}}
-                    <div class="col-md-1 mt-3 mt-md-0">
+                    <div class="col-md-1 mt-3 mt-md-0 d-flex justify-content-center">
                         <button type="button"
                                 class="btn btn-light"
                                 onclick="del({{$key}});"
@@ -153,8 +152,6 @@
 
         </div>{{--./CARD BODY--}}
     </div>{{--./CARD--}}
-
-
 
 
 
@@ -257,16 +254,34 @@
 
 @else
 
-    <i class="fa fa-info-circle fa-2x"></i>
-    <h4 class="d-inline mx-1">سبد خرید شما خالیست.</h4>
+    <div class="card border-0 shadow-lg">
+        <div class="card-header py-4">
+            <i class="fa fa-info-circle fa-2x align-middle"></i>
+            <h4 class="d-inline mx-1">سبد خرید شما خالیست.</h4>
+        </div>
+        <div class="card-body py-4">
+            <div class="my-3">
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                        <a href="{{ route('product.index') }}"
+                           class="btn btn-light w-100 p-4 font-weight-bolder shadow-sm"
+                        >
+                            <i class="fal fa-shoe-prints fa-rotate-270 fa-2x align-middle"></i>
+                            ادامه خرید
+                        </a>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <a href="{{ route('dashboard.index') }}"
+                           class="btn btn-light w-100 p-4 font-weight-bolder shadow-sm"
+                        >
+                            <i class="fal fa-desktop-alt fa-2x align-middle"></i>
+                            داشبورد
+                        </a>
+                    </div>
+                </div>
+            </div>
 
-    <div class="my-3">
-        <a href="{{ route('home') }}"
-           class="btn btn-light w-50 font-16 border p-4 font-weight-bolder"
-        >
-            <i class="fa fa-shoe-prints fa-rotate-270 fa-2x align-middle"></i>
-            ادامه خرید
-        </a>
+        </div>
     </div>
 
 @endif

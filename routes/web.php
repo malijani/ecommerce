@@ -41,7 +41,7 @@ Route::group(['prefix' => 'user', 'middleware' => ['web', 'auth', 'auth.normal',
     Route::post('province/cities', 'User\ProvinceController@cities')->name('province.cities');
 
     /*Factor*/
-    Route::get('factor/create', 'User\Factor\FactorController@create')->name('factor.create');
+    Route::post('factor/create', 'User\Factor\FactorController@store')->name('factor.store');
     Route::get('factor/pay/{factor_uui}', 'User\Factor\FactorController@pay')->name('factor.pay');
     Route::get('factor/verify/{factor_uui}', 'User\Factor\FactorController@verify')->name('factor.verify');
     /*RATE*/

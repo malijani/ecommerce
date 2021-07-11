@@ -224,6 +224,20 @@ input[type=number]::-webkit-outer-spin-button {
 .btn-custom:focus {
     color: #F0FBFC !important;
 }
+
+
+.input-custom{
+    width: 100%;
+    outline: 0;
+    border: 0;
+    padding: 0.5rem 0;
+    border-bottom: 2px solid #d3d3d3;
+    border-radius: 0;
+    box-shadow: none !important;
+    color: #111111;
+    -webkit-appearance: none;
+    -webkit-box-shadow: none;
+}
 /******/
 /*INIT*/
 /******/
@@ -584,6 +598,19 @@ ul {
 /*HEADER*/
 /********/
 
+/***************/
+/*ADDRESS ORDER*/
+/***************/
+.basket_brief_img{
+    max-height:300px;
+    object-fit: cover;
+    -o-object-fit: cover;
+    overflow-y:hidden;
+}
+/***************/
+/*ADDRESS ORDER*/
+/***************/
+
 
 /*****************/
 /*BIG IMAGE MENU*/
@@ -602,12 +629,11 @@ ul {
 /*PAGE IMAGE MENU*/
 /*****************/
 .page_img_menu {
-    max-height: 20rem;
-    /*min-height: 20rem;*/
+    max-height: 300px;
     width: 100%;
+    object-fit: cover;
     overflow-y: hidden;
 }
-
 /*****************/
 /*PAGE IMAGE MENU*/
 /*****************/

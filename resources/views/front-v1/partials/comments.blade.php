@@ -76,7 +76,7 @@
                             </div>
 
                             <div class="col-12 mt-2">
-                                <button type="submit" class="comment_button form-control">
+                                <button type="submit" class="comment_button btn btn-custom form-control">
                                     <i class="far fa-paper-plane"></i>
                                     ثبت پاسخ
                                 </button>

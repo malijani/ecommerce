@@ -45,6 +45,17 @@ return [
             'description' => 'payment using zarinpal',
         ],
 
+        'behpardakht' => [
+            'apiPurchaseUrl' => 'https://bpm.shaparak.ir/pgwchannel/services/pgw?wsdl',
+            'apiPaymentUrl' => 'https://bpm.shaparak.ir/pgwchannel/startpay.mellat',
+            'apiVerificationUrl' => 'https://bpm.shaparak.ir/pgwchannel/services/pgw?wsdl',
+            'terminalId' => '',
+            'username' => '',
+            'password' => '',
+            'callbackUrl' => 'http://yoursite.com/path/to',
+            'description' => 'payment using behpardakht',
+        ],
+
         'asanpardakht' => [
             'apiPurchaseUrl' => 'https://ipgsoap.asanpardakht.ir/paygate/merchantservices.asmx?wsdl',
             'apiPaymentUrl' => 'https://asan.shaparak.ir',
@@ -58,15 +69,15 @@ return [
             'callbackUrl' => 'http://yoursite.com/path/to',
             'description' => 'payment using asanpardakht',
         ],
-        'behpardakht' => [
-            'apiPurchaseUrl' => 'https://bpm.shaparak.ir/pgwchannel/services/pgw?wsdl',
-            'apiPaymentUrl' => 'https://bpm.shaparak.ir/pgwchannel/startpay.mellat',
-            'apiVerificationUrl' => 'https://bpm.shaparak.ir/pgwchannel/services/pgw?wsdl',
+        'sadad' => [
+            'apiPurchaseUrl' => 'https://sadad.shaparak.ir/vpg/api/v0/Request/PaymentRequest',
+            'apiPaymentUrl' => 'https://sadad.shaparak.ir/VPG/Purchase',
+            'apiVerificationUrl' => 'https://sadad.shaparak.ir/VPG/api/v0/Advice/Verify',
+            'key' => '',
+            'merchantId' => '',
             'terminalId' => '',
-            'username' => '',
-            'password' => '',
             'callbackUrl' => 'http://yoursite.com/path/to',
-            'description' => 'payment using behpardakht',
+            'description' => 'payment using sadad',
         ],
         'idpay' => [
             'apiPurchaseUrl' => 'https://api.idpay.ir/v1.1/payment',
@@ -163,16 +174,7 @@ return [
             'callbackUrl' => 'http://yoursite.com/path/to',
             'description' => 'payment using poolam',
         ],
-        'sadad' => [
-            'apiPurchaseUrl' => 'https://sadad.shaparak.ir/vpg/api/v0/Request/PaymentRequest',
-            'apiPaymentUrl' => 'https://sadad.shaparak.ir/VPG/Purchase',
-            'apiVerificationUrl' => 'https://sadad.shaparak.ir/VPG/api/v0/Advice/Verify',
-            'key' => '',
-            'merchantId' => '',
-            'terminalId' => '',
-            'callbackUrl' => 'http://yoursite.com/path/to',
-            'description' => 'payment using sadad',
-        ],
+
         'saman' => [
             'apiPurchaseUrl' => 'https://sep.shaparak.ir/Payments/InitPayment.asmx?WSDL',
             'apiPaymentUrl' => 'https://sep.shaparak.ir/payment.aspx',
