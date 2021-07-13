@@ -16,7 +16,7 @@
                     </h5>
                 </div>
 
-                <div class="card-body row align-items-stretch">
+                <div class="card-body row align-items-stretch justify-content-center">
                     @foreach(array_reverse(session()->get('basket')) as $key=>$value)
                         <div class="col-12 col-md-6 col-lg-4 my-2">
                             <a href="{{ route('product.show',$value['title_en']) }}"

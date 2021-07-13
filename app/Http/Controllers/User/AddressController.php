@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Page;
 use App\ProvinceCity;
 use App\User;
 use App\UserAddress;
@@ -21,24 +22,24 @@ class AddressController extends Controller
 
         /*USER ADDRESS IS AFTER ORDERING PRODUCTS!*/
         /*THE TOTAL SESSION SHOULD BE EXISTS*/
-        if(empty(session()->get('total'))){
+        if (empty(session()->get('total'))) {
             return redirect()->back()->with('error', 'شما هنوز محصولی جهت سفارش ثبت نکرده اید!');
         }
 
-        $title = 'انتخاب آدرس ارسال بسته '. config('app.short.name');
+        $title = 'انتخاب آدرس ارسال بسته ' . config('app.short.name');
 
         $addresses = Auth::user()->addresses;
         $default_address = Auth::user()->defaultAddress;
         $provinces = ProvinceCity::withoutTrashed()->where('parent', 0)->get();
-        $total = session()->get('total');
-        $basket = session()->get('basket');
+
+        $terms_conditions = Page::withoutTrashed()->where('title_en', 'terms-conditions')->first();
+
         return response()->view('front-v1.user.address.index', [
             'title' => $title,
             'addresses' => $addresses,
             'default_address' => $default_address,
-            'total' => $total,
-            'provinces'=>$provinces,
-            'basket' => $basket
+            'provinces' => $provinces,
+            'terms_conditions' => $terms_conditions,
         ]);
 
     }
@@ -78,7 +79,7 @@ class AddressController extends Controller
                 'max' => 'حداکثر طول نام و نام خانوادگی ۱۰۰ کاراکتر است.',
             ],
             'mobile' => [
-                'required'=>'ثبت شماره تلفن همراه گیرنده الزامیست.',
+                'required' => 'ثبت شماره تلفن همراه گیرنده الزامیست.',
             ],
             'tell' => [],
             'province' => [
@@ -175,8 +176,6 @@ class AddressController extends Controller
             ->findOrFail($id)
             ->forceDelete();
     }
-
-
 
 
 }

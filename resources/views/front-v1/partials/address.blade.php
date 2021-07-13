@@ -42,10 +42,10 @@
         @else
             <div class="row mt-5">
                 <div class="col-12 text-center">
-                    <span class="alert-danger p-4 rounded"
+                    <p class="alert alert-danger p-4 rounded"
                     >
                         آدرسی برای ارسال سفارش وجود ندارد! لطفاً یک آدرس جدید ثبت کنید.
-                    </span>
+                    </p>
                 </div>
             </div>
         @endif
@@ -71,148 +71,209 @@
                  id="add-new-address-form"
             >
 
-                <div class="card-body">
+                <div class="card-body px-0">
                     {{--name_family, mobile, tell, province, city, address, post_code, status--}}
                     <form action="{{ route('address.store') }}"
                           method="POST"
                           class="text-right"
                     >
-                            @csrf
-                            <div class="form-row">
-                                <div class="form-group col-md-12">
-                                    <label for="name_family">
-                                        <i class="fa fa-asterisk text-danger"></i>
-                                        نام و نام خانوادگی
-                                    </label>
-                                    <input name="name_family"
-                                           type="text"
-                                           class="input-custom form-control @error('name_family') is-invalid @enderror"
-                                           id="name_family"
-                                           placeholder="نام و نام خانوادگی گیرنده مرسوله : محمد علیجانی"
-                                           value="{{ old('name_family') }}"
-                                           required
-                                           autofocus
-                                           autocomplete="off"
+                        @csrf
+
+                        <div class="form-row form-group">
+                            <label for="name_family"
+                                   class="col-form-label py-0 col-12"
+                            >
+                                <i class="fa fa-asterisk text-danger"></i>
+                                نام و نام خانوادگی
+                            </label>
+                            <div class="col-12">
+                                <input name="name_family"
+                                       type="text"
+                                       class="input-custom form-control @error('name_family') is-invalid @enderror"
+                                       id="name_family"
+                                       placeholder="نام و نام خانوادگی گیرنده مرسوله : محمد علیجانی"
+                                       value="{{ old('name_family') }}"
+                                       minlength="5"
+                                       maxlength="100"
+                                       required
+                                       autofocus
+                                       autocomplete="off"
+                                >
+                                @include('partials.form_error',['input'=>'name_family'] )
+                            </div>
+
+                        </div>
+
+                        <div class="form-row form-group">
+                            <div class="col-md-6">
+                                <div class="form-row">
+                                    <label for="mobile"
+                                           class="col-form-label py-0 col-12"
                                     >
-                                    @include('partials.form_error',['input'=>'name_family'] )
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="mobile">
                                         <i class="fa fa-asterisk text-danger"></i>
                                         تلفن همراه
                                     </label>
-                                    <input name="mobile"
-                                           type="text"
-                                           class="input-custom form-control text-center ltr @error('mobile') is-invalid @enderror"
-                                           id="mobile"
-                                           placeholder="09121231122"
-                                           value="{{ auth()->user()->mobile ?? old('mobile') }}"
-                                           maxlength="11"
-                                           required
-                                           autocomplete="off"
-                                    >
-                                    @include('partials.form_error',['input'=>'mobile'] )
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="tell">
-                                        تلفن ثابت
-                                    </label>
-                                    <input name="tell"
-                                           type="number"
-                                           class="input-custom form-control text-center ltr @error('tell') is-invalid @enderror"
-                                           id="tell"
-                                           placeholder="02122435465"
-                                           value="{{ old('tell') }}"
-                                           autocomplete="off"
-                                    >
-                                    @include('partials.form_error',['input'=>'tell'] )
+                                    <div class="col-12">
+                                        <input name="mobile"
+                                               type="text"
+                                               class="input-custom form-control text-center ltr @error('mobile') is-invalid @enderror"
+                                               id="mobile"
+                                               placeholder="09121231122"
+                                               value="{{ auth()->user()->mobile ?? old('mobile') }}"
+                                               maxlength="11"
+                                               minlength="11"
+                                               required
+                                               autocomplete="off"
+                                        >
+                                        @include('partials.form_error',['input'=>'mobile'] )
+                                    </div>
                                 </div>
                             </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label for="province">
+                            <div class="form-group col-md-6">
+                                <div class="form-row">
+                                    <label for="tell"
+                                           class="col-form-label py-0 col-12"
+                                    >
+                                        تلفن ثابت
+                                    </label>
+                                    <div class="col-12">
+                                        <input name="tell"
+                                               type="text"
+                                               class="input-custom form-control text-center ltr @error('tell') is-invalid @enderror"
+                                               id="tell"
+                                               placeholder="02122435465"
+                                               maxlength="11"
+                                               minlength="11"
+                                               value="{{ old('tell') }}"
+                                               autocomplete="off"
+                                        >
+                                        @include('partials.form_error',['input'=>'tell'] )
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="form-row form-group">
+                            <div class="col-md-6">
+                                <div class="form-row">
+                                    <label for="province"
+                                           class="col-form-label py-0 col-12"
+                                    >
                                         <i class="fa fa-asterisk text-danger"></i>
                                         استان
                                     </label>
-                                    <select name="province"
-                                            class="form-control w-100 @error('province') is-invalid @enderror"
-                                            id="province"
-                                            required
-                                    >
-                                        <option value="">لطفاً استان مقصد را انتخاب کنید</option>
-                                        @foreach($provinces as $province)
-                                            <option value="{{$province->title}}">{{$province->title}}</option>
-                                        @endforeach
-                                    </select>
-                                    @include('partials.form_error',['input'=>'province'] )
+                                    <div class="col-12">
+                                        <select name="province"
+                                                class="input-custom form-control @error('province') is-invalid @enderror"
+                                                id="province"
+                                                required
+                                        >
+                                            <option value="">لطفاً استان مقصد را انتخاب کنید</option>
+                                            @foreach($provinces as $province)
+                                                <option value="{{$province->title}}">{{$province->title}}</option>
+                                            @endforeach
+                                        </select>
+                                        @include('partials.form_error',['input'=>'province'] )
+                                    </div>
                                 </div>
-                                <div class="form-group col-md-6">
-                                    <label for="city">
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-row">
+                                    <label for="city"
+                                           class="col-form-label py-0 col-12"
+                                    >
                                         <i class="fa fa-asterisk text-danger"></i>
                                         شهر
                                     </label>
-                                    <select name="city"
-                                            class="form-control @error('city') is-invalid @enderror"
-                                            id="city"
-                                            required
-                                    >
-                                        <option value="">ابتدا استان مقصد را انتخاب کنید</option>
-                                    </select>
-                                    @include('partials.form_error',['input'=>'city'] )
-                                </div>
-                                <div class="form-group col-md-12">
-                                    <label for="address">
-                                        <i class="fa fa-asterisk text-danger"></i>
-                                        آدرس
-                                    </label>
-                                    <textarea name="address"
-                                              type="text"
-                                              class="form-control @error('address') is-invalid @enderror"
-                                              id="address"
-                                              placeholder=" منطقه 1 شهرداری (گشت 16987)، لشگرک بزرگراه ارتش(لشگرک)، جاده تلو لواسان، پلاک 0"
-                                              rows="5"
-                                              required
-                                    >{{ old('address') }}</textarea>
-                                    @include('partials.form_error',['input'=>'address'] )
-                                </div>
-                                <div class="form-group col-md-12">
-                                    <label for="post_code">
-                                        کد پستی
-                                    </label>
-                                    <input name="post_code"
-                                           type="number"
-                                           class="form-control text-center @error('post_code') is-invalid @enderror"
-                                           id="post_code"
-                                           placeholder="1698713911"
-                                           value="{{ old('post_code') }}"
-                                           autocomplete="off"
-                                    >
-                                    @include('partials.form_error',['input'=>'post_code'] )
+                                    <div class="col-12">
+                                        <select name="city"
+                                                class="input-custom form-control @error('city') is-invalid @enderror"
+                                                id="city"
+                                                required
+                                        >
+                                            <option value="">ابتدا استان مقصد را انتخاب کنید</option>
+                                        </select>
+                                        @include('partials.form_error',['input'=>'city'] )
+                                    </div>
                                 </div>
                             </div>
-                            <div class="form-row d-flex justify-content-center p-4 mb-4">
-                                <div class="form-check">
-                                    <input name="status"
-                                           class="form-check-input"
-                                           type="checkbox"
-                                           id="status"
-                                           @if(old('status'))
-                                           checked
-                                        @endif
-                                    >
-                                    <label class="form-check-label pr-5" for="status">
-                                        تعیین بعنوان آدرس پیش فرض
-                                    </label>
-                                    @include('partials.form_error',['input'=>'status'] )
-                                </div>
+                        </div>
+
+
+                        <div class="form-row form-group align-items-center">
+                            <label for="address"
+                                   class="col-form-label py-0 col-12"
+                            >
+                                <i class="fa fa-asterisk text-danger"></i>
+                                آدرس
+                            </label>
+                            <div class="col-12">
+                                <textarea name="address"
+                                          type="text"
+                                          class="textarea-custom form-control @error('address') is-invalid @enderror"
+                                          id="address"
+                                          placeholder=" منطقه 1 شهرداری (گشت 16987)، لشگرک بزرگراه ارتش(لشگرک)، جاده تلو لواسان، پلاک 0"
+                                          rows="4"
+                                          required
+                                >{{ old('address') }}</textarea>
+                            @include('partials.form_error',['input'=>'address'] )
                             </div>
-                            <button type="submit" class="btn btn-primary w-100">ثبت آدرس گیرنده</button>
-                        </form>
+                        </div>
+
+
+                        <div class="form-row form-group align-items-center">
+                            <label for="post_code"
+                                   class="col-form-label py-0 col-12"
+                            >
+                                کد پستی
+                            </label>
+                            <div class="col-12">
+                                <input name="post_code"
+                                       type="number"
+                                       class="input-custom form-control text-center @error('post_code') is-invalid @enderror"
+                                       id="post_code"
+                                       placeholder="1698713911"
+                                       value="{{ old('post_code') }}"
+                                       autocomplete="off"
+                                >
+                                @include('partials.form_error',['input'=>'post_code'] )
+                            </div>
+                        </div>
+
+                        <div class="form-row form-group align-items-center justify-content-start">
+                            <div class="col-2">
+                                <input name="status"
+                                       class="form-control"
+                                       type="checkbox"
+                                       id="status"
+                                       @if(old('status')) checked @endif
+                                >
+                            </div>
+                            <label class="col-form-label py-0 col-8"
+                                   for="status"
+                            >
+                                تعیین بعنوان آدرس پیش فرض
+                            </label>
+                            @include('partials.form_error',['input'=>'status'] )
+                        </div>
+
+                        <div class="form-row">
+                            <div class="col-12 mt-3">
+                                <button type="submit"
+                                        class="btn btn-custom w-100"
+                                >
+                                    ثبت آدرس گیرنده
+                                </button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
             {{--./FORM COLLAPSE--}}
         </div>
-            {{--./ADD NEW ADDRESS--}}
+        {{--./ADD NEW ADDRESS--}}
 
 
 
@@ -225,7 +286,7 @@
                         @continue
                     @endif
                     <div class="col-12 mt-4 border rounded p-4">
-                        <div class="row">
+                        <div class="row align-items-center">
                             <div class="col-lg-10 col-12 mb-1">
                                 <div class="other-addresses">
                                     <div class="p-1">
@@ -339,7 +400,7 @@
             };
 
         $(document).ready(function () {
-            $("#mobile").on('keyup', function () {
+            $("input:text").on('keyup', function () {
                 $(this).val(fixNumbers($(this).val()));
             });
 

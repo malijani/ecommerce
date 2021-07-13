@@ -1,4 +1,4 @@
-@if ($message = Session::get('success'))
+@if ($message = session()->get('success'))
 
     <div class="alert alert-success alert-block">
 
@@ -11,7 +11,7 @@
 @endif
 
 
-@if ($message = Session::get('error'))
+@if ($message = session()->get('error'))
 
     <div class="alert alert-danger alert-block">
 
@@ -24,7 +24,7 @@
 @endif
 
 
-@if ($message = Session::get('warning'))
+@if ($message = session()->get('warning'))
 
     <div class="alert alert-warning alert-block">
 
@@ -37,7 +37,7 @@
 @endif
 
 
-@if ($message = Session::get('info'))
+@if ($message = session()->get('info'))
 
     <div class="alert alert-info alert-block">
 

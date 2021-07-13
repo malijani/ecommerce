@@ -81,7 +81,6 @@ class FactorController extends Controller
     public function store(Request $request)
     {
 
-        dd($request->all());
         $user = Auth::user();
         /*CONTROL USER PERMISSION TO CREATE NEW FACTOR*/
         $control_user = $this->controlUserFactor($user);
@@ -110,7 +109,12 @@ class FactorController extends Controller
                 ->with('error', 'در تشخیص حساب کاربری مشکلی ایجاد شده! لفطا دوباره وارد شوید و تلاش کنید.');
         }
 
-        $shipping = $user->default_address->toArray();
+        $shipping = $user->default_address;
+        if(empty($shipping)){
+            return back()
+                ->with('error', 'آدرسی برای ارسال سفارش ثبت یا انتخاب نشده!');
+        }
+        $shipping = $shipping->toArray();
 
         /*CREATE FACTOR*/
         $factor_array = [
