@@ -9,7 +9,9 @@ use App\User;
 use App\UserAddress;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Laminas\Diactoros\Response\JsonResponse;
 
 class AddressController extends Controller
 {
@@ -107,13 +109,13 @@ class AddressController extends Controller
 
         if ($request->has('status')) {
             $default_address = Auth::user()->default_address;
-            if (!is_null($default_address)) {
+            if (!empty($default_address)) {
                 $default_address->status = false;
                 $default_address->save();
             }
+            $new_address->status = true;
         }
 
-        $new_address->status = true;
         $new_address->save();
 
         return back()->with('success', 'آدرس جدید با موفقیت ذخیره شد');
@@ -146,35 +148,69 @@ class AddressController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return mixed
      */
-    public function update(Request $request, int $id): void
+    public function update(Request $request, int $id)
     {
-        $request->validate([
-            'status' => ['required', 'string', 'size:2'], // on
-        ]);
-        $target_address = UserAddress::withoutTrashed()->where('user_id', Auth::id())->where('id', $id)->firstOrFail();
+        if (!$request->ajax()) {
+            return back()->with('error', 'درخواست نامعتبر');
+        }
+
+        $target_address = UserAddress::withoutTrashed()
+            ->where('user_id', Auth::id())
+            ->where('id', $id)
+            ->first();
+        if (empty($target_address)) {
+            return response()->json([
+                'message' => 'آدرس مورد نظر شما یافت نشد!',
+            ], Response::HTTP_NOT_FOUND);
+        }
+
         $default_address = Auth::user()->default_address;
-        if (!is_null($default_address)) {
+        if (!empty($default_address)) {
             $default_address->status = false;
             $default_address->save();
         }
         $target_address->status = true;
         $target_address->save();
+
+        return response()->json([
+            'message' => 'آدرس مورد نظر با موفقیت بعنوان پیشفرض تنظیم شد.',
+        ], Response::HTTP_OK);
     }
 
     /**
      * Remove the specified resource from storage.
      *
+     * @param Request $request
      * @param int $id
-     * @return void
+     * @return mixed
      */
-    public function destroy(int $id): void
+    public function destroy(Request $request, int $id)
     {
-        UserAddress::withoutTrashed()
+        if (!$request->ajax()) {
+            return back()->with('error', 'درخواست نامعتبر');
+        }
+
+        $address = UserAddress::withoutTrashed()
             ->where('user_id', Auth::id())
-            ->findOrFail($id)
-            ->forceDelete();
+            ->find($id);
+
+        if (empty($address)) {
+            return response()->json([
+                'message' => 'آدرس مورد نظر یافت نشد!',
+            ], Response::HTTP_NOT_FOUND);
+        }
+        try {
+            $address->forceDelete();
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'در انجام درخواست مشکلی به وجود آمده',
+            ], Response::HTTP_FORBIDDEN);
+        }
+        return response()->json([
+            'message' => 'آدرس مورد نظر با موفقیت حذف شد!',
+        ], Response::HTTP_OK);
     }
 
 

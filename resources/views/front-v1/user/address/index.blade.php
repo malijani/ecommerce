@@ -16,7 +16,7 @@
             {{--./FINAL TOTAL PAY--}}
 
             {{--ADDRESS--}}
-            <div class="col-12 col-xl-8 order-first order-xl-second">
+            <div class="col-12 col-xl-8 order-first order-xl-second" id="addresses">
                 @include('front-v1.partials.address')
             </div>
             {{--./ADDRESS--}}

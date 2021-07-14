@@ -235,7 +235,7 @@
                                                     id="product_order_submit"
                                                 >
                                                     <i class="fal fa-cart-plus align-middle"></i>
-                                                    خرید
+                                                    افزودن به سبد خرید
                                                 </button>
 
                                             </div>

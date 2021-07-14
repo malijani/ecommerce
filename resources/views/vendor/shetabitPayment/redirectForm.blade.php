@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fa">
     <head>
         <meta charset="UTF-8">
-        <title>Forwarding to secure payment provider</title>
+        <title>انتقال از {{ config('app.short.name') }} به درگاه پرداخت</title>
         <style>
             .text-center {
                 text-align: center;
@@ -54,25 +54,25 @@
             }
         </style>
     </head>
-    <body onload="submitForm();">
+    <body onload="submitForm();" dir="rtl">
         <div class="spinner">
             <div class="bounce1"></div>
             <div class="bounce2"></div>
             <div class="bounce3"></div>
         </div>
         <form class="text-center mt-2" method="{{ $method }}" action="{{ $action }}">
-            <p>Forwarding to secure payment provider.</p>
+            <p>در حال انتقال به درگاه پرداخت.</p>
             <p>
-                If you are not automatically redirected to the payment website with in
+                اگر تا
                 <span id="countdown">10</span>
-                seconds...
+                ثانیه دیگه به درگاه پرداخت منتقل نشدی...
             </p>
 
             @foreach($inputs as $name => $value)
                 <input type="hidden" name="{{ $name }}" value="{{ $value }}">
             @endforeach
 
-            <button type="submit">Click here</button>
+            <button type="submit">اینجا کلیک کن</button>
         </form>
         <script>
             // Total seconds to wait

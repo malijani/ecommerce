@@ -1,6 +1,7 @@
 @push('styles')
     <link rel="stylesheet" href="{{ asset('front-v1/select2/select2.min.css') }}">
 @endpush
+
 <div class="card border-0 shadow-sm">
     <div class="card-header border-bottom-0 text-center">
         <h4>آدرس تحویل سفارش</h4>
@@ -356,6 +357,8 @@
 
     <script src="{{ asset('front-v1/select2/select2.min.js') }}"></script>
     <script>
+
+        /*UPDATE USER ADDRESS AS DEFAULT ADDRESS*/
         function setDefault(id) {
             $.ajax({
                 url: $("#set-default-" + id).attr('data-target'),
@@ -363,13 +366,28 @@
                 data: {
                     '_token': '{{ csrf_token() }}',
                     '_method': 'PATCH',
-                    'status': 'on',
                 },
-                success: function (result) {
-                    location.reload();
+                success: function (data) {
+                    Swal.fire({
+                        position: 'top',
+                        icon: "success",
+                        title: "<h5>" + data.message + "</h5>",
+                        showConfirmButton: false,
+                        timer: 1500,
+                    }).then(() => {
+                        location.reload();
+                    });
                 },
-                error: function () {
-                    location.reload();
+                error: function (data) {
+                    Swal.fire({
+                        position: 'top',
+                        icon: "error",
+                        title: "<h5>" + data.responseJSON.message + "</h5>",
+                        showConfirmButton: false,
+                        timer: 1500,
+                    }).then(() => {
+                        location.reload();
+                    });
                 }
 
             })
@@ -385,12 +403,28 @@
                     '_method': 'DELETE',
                     'id': id,
                 },
-                success: function () {
-                    location.reload();
+                success: function (data) {
+                    Swal.fire({
+                        position: 'top',
+                        icon: "success",
+                        title: "<h5>" + data.message + "</h5>",
+                        showConfirmButton: false,
+                        timer: 1500,
+                    }).then(() => {
+                        location.reload();
+                    });
 
                 },
-                error: function () {
-                    location.reload();
+                error: function (data) {
+                    Swal.fire({
+                        position: 'top',
+                        icon: "error",
+                        title: "<h5>" + data.responseJSON.message + "</h5>",
+                        showConfirmButton: false,
+                        timer: 1500,
+                    }).then(() => {
+                        location.reload();
+                    });
                 }
             });
 
@@ -411,13 +445,13 @@
 
         $(document).ready(function () {
 
-
             /*FIX NUMBERS ON INPUT*/
             $("input:text").on('keyup', function () {
                 $(this).val(fixNumbers($(this).val()));
             });
 
 
+            /*CREATE SELECT2 AND AJAX REQUEST OF CITIES*/
             let province = $('#province');
             let city = $('#city');
             province.select2({
@@ -462,6 +496,7 @@
                             });
                             city.prop('disabled', false);
                             $('body').css({'opacity': '1'});
+
 
                         },
                         error: function () {
