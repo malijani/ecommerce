@@ -66,13 +66,32 @@
                     <div class="col-12 px-0 pt-4">
                         <form action="{{ route('factor.store') }}" method="POST">
                             @csrf
-                            <div class="row justify-content-center">
+                            <div class="form-row form-group">
+                                <label for="description"
+                                       class="col-form-label col-12 pt-0"
+                                >
+                                    درخواست شما
+                                </label>
+                                <div class="col-12">
+                                    <textarea name="description"
+                                              id="description"
+                                              class="textarea-custom form-control"
+                                              rows="5"
+                                              placeholder="درخواست اختصاصی شما برای این سفارش"
+                                              maxlength="255"
+                                    >{{ old('user_ask') }}</textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-row form-group justify-content-center">
                                 <div class="col-6 col-lg-4 mx-auto text-center">
-                                    <div class="custom-control custom-radio image-checkbox">
+                                    <div class="custom-control custom-radio image-checkbox bg-dark rounded">
                                         <input type="radio"
                                                class="payment_gate custom-control-input"
                                                id="behpardakht"
-                                               name="driver[behpardakht]"
+                                               name="driver"
+                                               value="behpardakht"
+                                               disabled
                                         >
                                         <label class="custom-control-label"
                                                for="behpardakht"
@@ -93,7 +112,8 @@
                                         <input type="radio"
                                                class="payment_gate custom-control-input"
                                                id="zarinpal"
-                                               name="driver[zarinpal]"
+                                               name="driver"
+                                               value="zarinpal"
                                                checked
                                         >
                                         <label class="custom-control-label"
@@ -107,6 +127,7 @@
                                         </label>
                                     </div>
                                 </div>
+                                @include('partials.form_error', ['input'=> 'driver'])
                             </div>
 
                             {{--SUBMIT--}}
@@ -121,9 +142,10 @@
                                 </div>
                             </div>
 
-
                             {{--TERMS CONDITIONS--}}
                             <div class="form-row align-items-center justify-content-center py-2">
+                                @include('partials.form_error', ['input'=> 'agree_terms'])
+
                                 <div class="col-2">
                                     <input type="checkbox"
                                            class="form-control"
@@ -171,11 +193,8 @@
                                     </div>
                                 @endif
                             </div>
-
-
                         </form>
                     </div>
-
                 </ul>
             </div>
         </div>

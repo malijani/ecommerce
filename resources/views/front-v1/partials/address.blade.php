@@ -1,3 +1,6 @@
+@push('styles')
+    <link rel="stylesheet" href="{{ asset('front-v1/select2/select2.min.css') }}">
+@endpush
 <div class="card border-0 shadow-sm">
     <div class="card-header border-bottom-0 text-center">
         <h4>آدرس تحویل سفارش</h4>
@@ -104,9 +107,9 @@
 
                         </div>
 
-                        <div class="form-row form-group">
+                        <div class="form-row">
                             <div class="col-md-6">
-                                <div class="form-row">
+                                <div class="form-row form-group">
                                     <label for="mobile"
                                            class="col-form-label py-0 col-12"
                                     >
@@ -129,8 +132,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group col-md-6">
-                                <div class="form-row">
+                            <div class="col-md-6">
+                                <div class="form-row form-group">
                                     <label for="tell"
                                            class="col-form-label py-0 col-12"
                                     >
@@ -154,9 +157,9 @@
                         </div>
 
 
-                        <div class="form-row form-group">
+                        <div class="form-row">
                             <div class="col-md-6">
-                                <div class="form-row">
+                                <div class="form-row form-group">
                                     <label for="province"
                                            class="col-form-label py-0 col-12"
                                     >
@@ -180,7 +183,7 @@
                             </div>
 
                             <div class="col-md-6">
-                                <div class="form-row">
+                                <div class="form-row form-group">
                                     <label for="city"
                                            class="col-form-label py-0 col-12"
                                     >
@@ -191,6 +194,7 @@
                                         <select name="city"
                                                 class="input-custom form-control @error('city') is-invalid @enderror"
                                                 id="city"
+                                                disabled
                                                 required
                                         >
                                             <option value="">ابتدا استان مقصد را انتخاب کنید</option>
@@ -218,7 +222,7 @@
                                           rows="4"
                                           required
                                 >{{ old('address') }}</textarea>
-                            @include('partials.form_error',['input'=>'address'] )
+                                @include('partials.form_error',['input'=>'address'] )
                             </div>
                         </div>
 
@@ -231,10 +235,12 @@
                             </label>
                             <div class="col-12">
                                 <input name="post_code"
-                                       type="number"
+                                       type="text"
                                        class="input-custom form-control text-center @error('post_code') is-invalid @enderror"
                                        id="post_code"
                                        placeholder="1698713911"
+                                       maxlength="10"
+                                       minlength="10"
                                        value="{{ old('post_code') }}"
                                        autocomplete="off"
                                 >
@@ -293,19 +299,22 @@
                                         {{$address['province']}} - {{$address['city']}}
                                         - {{ $address['address'] }}
                                     </div>
-                                    @if(isset($address['name_family']))
+                                    @if(!empty($address['name_family']))
                                         <div class="p-2">
                                             <i class="fa fa-user"></i>
                                             {{$address['name_family']}}
                                         </div>
                                     @endif
-                                    @if(isset($address['mobile']) || isset($address['tell']))
+                                    @if(!empty($address['mobile']))
                                         <div class="ltr p-2">
-                                            {{$address['mobile']}} - {{$address['tell']}}
+                                            {{$address['mobile']}}
+                                            @if( !empty($address['tell']))
+                                            - {{$address['tell']}}
+                                            @endif
                                             <i class="fa fa-phone"></i>
                                         </div>
                                     @endif
-                                    @if(isset($address['post_code']))
+                                    @if(!empty($address['post_code']))
                                         <div class="ltr p-2">
                                             {{$address['post_code']}}
                                             <i class="fa fa-home"></i>
@@ -345,6 +354,7 @@
 
 @push('scripts')
 
+    <script src="{{ asset('front-v1/select2/select2.min.js') }}"></script>
     <script>
         function setDefault(id) {
             $.ajax({
@@ -400,6 +410,9 @@
             };
 
         $(document).ready(function () {
+
+
+            /*FIX NUMBERS ON INPUT*/
             $("input:text").on('keyup', function () {
                 $(this).val(fixNumbers($(this).val()));
             });
@@ -407,6 +420,24 @@
 
             let province = $('#province');
             let city = $('#city');
+            province.select2({
+                placeholder: 'استان مقصد را انتخاب نمایید',
+                dir: 'rtl',
+                language: 'fa',
+                width: '100%',
+                noResults: function () {
+                    return "نتیجه ای یافت نشد!";
+                },
+            });
+            city.select2({
+                placeholder: 'ابتدا استان مقصد را انتخاب کنید',
+                dir: 'rtl',
+                language: 'fa',
+                width: '100%',
+                noResults: function () {
+                    return "نتیجه ای یافت نشد!";
+                },
+            });
 
             province.on('change', function () {
                 let title = province.val();
@@ -429,10 +460,13 @@
                                     }),
                                 );
                             });
+                            city.prop('disabled', false);
                             $('body').css({'opacity': '1'});
+
                         },
                         error: function () {
                             $('body').css({'opacity': '1'});
+                            city.prop('disabled', true);
                         },
                     });
                 }

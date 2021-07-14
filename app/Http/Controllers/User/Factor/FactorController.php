@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Shetabit\Multipay\Exceptions\InvalidPaymentException;
+use Shetabit\Multipay\Exceptions\PurchaseFailedException;
 use Shetabit\Multipay\Invoice;
 use Shetabit\Payment\Facade\Payment;
 
@@ -42,12 +43,12 @@ class FactorController extends Controller
                 throw new \Exception('فاکتور جدیدی ثبت کنید! فاکتور شما آرشیو شده.', 2);
             }
             /*CHECK IF PRODUCT QUANTITY EXISTS*/
-            foreach ($factor->products as $ordered_product){
+            foreach ($factor->products as $ordered_product) {
                 $product = Product::withoutTrashed()
                     ->where('id', $ordered_product->product_id)
                     ->first();
-                if($product->entity < $ordered_product->count){
-                    throw new \Exception(' موجودی محصول '. $product->title . ' به اتمام رسیده! ', 2);
+                if ($product->entity < $ordered_product->count) {
+                    throw new \Exception(' موجودی محصول ' . $product->title . ' به اتمام رسیده! ', 2);
                 }
             }
 
@@ -81,6 +82,20 @@ class FactorController extends Controller
     public function store(Request $request)
     {
 
+        $request->validate([
+            'driver' => 'bail|required|in:zarinpal,behpardakht',
+            'agree_terms' => 'bail|required',
+            'description' => 'bail|nullable|max:255',
+        ], [
+            'driver.required' => 'انتخاب درگاه پرداخت الزامیست.',
+            'driver.in' => 'نوع درگاه پرداخت نامشخص است.',
+
+            'agree_terms.required' => 'موافقت با قوانین الزامیست.',
+
+            'description.max' => 'حداکثر طول درخواست ۲۵۵ کاراکتر تعیین شده.'
+        ]);
+
+
         $user = Auth::user();
         /*CONTROL USER PERMISSION TO CREATE NEW FACTOR*/
         $control_user = $this->controlUserFactor($user);
@@ -89,7 +104,6 @@ class FactorController extends Controller
                 ->redirectToRoute('dashboard.orders.index')
                 ->with('error', $control_user[0]);
         }
-
 
         $basket = session()->get('basket');
         $total = session()->get('total');
@@ -110,7 +124,7 @@ class FactorController extends Controller
         }
 
         $shipping = $user->default_address;
-        if(empty($shipping)){
+        if (empty($shipping)) {
             return back()
                 ->with('error', 'آدرسی برای ارسال سفارش ثبت یا انتخاب نشده!');
         }
@@ -131,6 +145,7 @@ class FactorController extends Controller
             'discount_code' => $total['discount_code'],
             'weight' => $total['weight'],
             'count' => $total['count'],
+            'description' => $request->input('description') ?? null,
         ];
 
         $factor = Factor::query()->create($factor_array);
@@ -171,6 +186,7 @@ class FactorController extends Controller
         }
 
         session()->forget(['basket', 'total']);
+        session()->put('driver', $request->input('driver'));
 
         return response()
             ->redirectToRoute('factor.pay', $factor->uuid)
@@ -188,6 +204,7 @@ class FactorController extends Controller
             ->where('uuid', $uuid)
             ->first();
 
+
         $control_factor = $this->controlFactor($factor);
         if ($control_factor[1] == 1) {
             return response()
@@ -199,6 +216,16 @@ class FactorController extends Controller
                 ->with('error', $control_factor[0]);
         }
 
+        if (empty($factor->driver)) {
+            $driver = session()->get('driver', function () {
+                return 'zarinpal';
+            });
+            session()->forget('driver');
+            $factor->driver = $driver;
+
+        } else {
+            $driver = $factor->driver;
+        }
 
         /*CREATE INVOICE BASED ON FACTOR*/
         $invoice = (new Invoice)->amount((int)$factor->price);
@@ -207,12 +234,25 @@ class FactorController extends Controller
             'description' => 'پرداخت فاکتور شماره ' . $factor->uuid . ' وبسایت ' . config('app.short.name'),
         ]);
 
-        /*GO TO ZARINPAL AND BACK TO FACTOR SHOW*/
-        $payment = Payment::callbackUrl(route('factor.verify', $factor->uuid))->purchase($invoice);
+        /*GO TO ZARINPAL OR BEHPARDKHT AND BACK TO FACTOR SHOW*/
+        try {
+            $payment = Payment::via($driver)->callbackUrl(route('factor.verify', $factor->uuid))
+                ->purchase($invoice);
+        } catch (PurchaseFailedException $e) {
+            $factor->status = 2; // Failure payment
+            $factor->error_code = $e->getCode();
+            $factor->error_message = $e->getMessage();
+            $factor->save();
+            return response()
+                ->redirectToRoute('dashboard.orders.show', $factor->uuid)
+                ->with('error', $e->getMessage());
+
+        }
 
         //dd($invoice,$invoice->getDriver(),$invoice->getAmount(), $invoice->getDetails(), $invoice->getTransactionId(), $invoice->getUuid());
         $factor->pay_trans_id = $invoice->getTransactionId();
         $factor->pay_tracking = $invoice->getUuid();
+
         $factor->save();
 
         /*GO TO GATE PAY PAGE*/
@@ -229,6 +269,12 @@ class FactorController extends Controller
             ->where('uuid', $uuid)
             ->first();
 
+        if (empty($factor)) {
+            return response()
+                ->redirectToRoute('dashboard.orders.index')
+                ->with('error', 'فاکتور مورد نظر یافت نشد!');
+        }
+
         /* Verify Payment*/
         try {
             /*CHANGE PRODUCT QUANTITY*/
@@ -240,7 +286,7 @@ class FactorController extends Controller
             $factor->paid_at = now();
             $factor->error_code = null;
             $factor->error_message = null;
-            foreach ($factor->products as $ordered_product){
+            foreach ($factor->products as $ordered_product) {
                 $product = Product::withoutTrashed()
                     ->where('id', $ordered_product->product_id)
                     ->first();

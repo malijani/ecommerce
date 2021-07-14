@@ -40,8 +40,8 @@ class OrderController extends Controller
 
         $factors['deleted_factors'] = $user->factors()
             ->deletedFactors()
-            ->get()
-            ->pluck('uuid', 'deleted_at');
+            ->select('uuid', 'deleted_at', 'status')
+            ->get();
 
         return response()->view('front-v1.user.dashboard.order.index', [
             'factors' => $factors,
@@ -136,6 +136,12 @@ class OrderController extends Controller
                         'message' => 'محتوای درخواست خالیست.',
                     ], 204);
             }
+            $request->validate([
+                'content' => 'bail|required|max:255',
+            ],[
+               'content.required' => 'تعیین محتوای درخواست الزامیست.',
+                'content.max' => 'حداکثر درخواست ۲۵۵ کاراکتر تعیین شده.'
+            ]);
             /*FIND FACTOR*/
             $factor = Factor::withoutTrashed()
                 ->where('user_id', Auth::id())
@@ -150,7 +156,7 @@ class OrderController extends Controller
             }
 
             /*CHECK IF FACTOR IS DELIVERED*/
-            if (!empty($factor->delivered)){
+            if (!empty($factor->delivered)) {
                 return response()->json([
                     'class' => 'alert-danger',
                     'message' => 'بسته ارسال شده است.'
@@ -160,7 +166,7 @@ class OrderController extends Controller
             /*CHECK IF ASK EXISTS*/
             if ($factor->description === $request->input('content')) {
                 return response()->json([
-                    'class'=> 'alert-danger',
+                    'class' => 'alert-danger',
                     'message' => 'درخواست تکراری!'
                 ], Response::HTTP_FORBIDDEN);
             }
@@ -208,7 +214,7 @@ class OrderController extends Controller
             }
             /*CHECK IF FACTOR IS PAID*/
             /*CHECK IF FACTOR IS PAID*/
-            if ($factor->status == '1'){
+            if ($factor->status == '1') {
                 return response()->json([
                     'message' == 'این فاکتور پرداخت شده و غیرقابل حذف کردن است.',
                     'url' => route('dashboard.orders.show', $factor->uuid),

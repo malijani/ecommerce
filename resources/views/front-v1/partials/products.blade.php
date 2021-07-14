@@ -23,21 +23,21 @@
                                 @else
                                     @if(!empty($product->discount_percent))
                                         <span class="badge badge-success position-absolute right-bottom-0 p-1 mr-3">
-                                        {{ $product->discount_percent . '% تخفیف' }}
-                                    </span>
+                                            {{ $product->discount_percent . '% تخفیف' }}
+                                        </span>
                                     @endif
                                 @endif
                             </div>
 
                             {{--SHOW TITLE & TITLE EN--}}
                             <div class="col-12 py-2 mt-1 mt-md-3  font-weight-bolder font-18 text-dark">
-                                    <span class="text-right">
-                                        {{ $product->title . ' | ' }}
-                                    </span>
+                                <span class="text-right">
+                                    {{ $product->title . ' | ' }}
+                                </span>
                                 <br>
                                 <span class="text-left">
                                     {{ str_replace('-', ' ', $product->title_en) }}
-                                    </span>
+                                </span>
                             </div>
 
                             {{--SHOW PRICE--}}
@@ -54,9 +54,9 @@
                                     </span>
                                 @elseif($product->price_type == 2)
                                     <span>
-                                            <i class="fal fa-phone"></i>
-                                            تماس بگیرید
-                                        </span>
+                                        <i class="fal fa-phone"></i>
+                                        تماس بگیرید
+                                    </span>
                                 @endif
                             </div>
                         </div>
