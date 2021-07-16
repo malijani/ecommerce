@@ -4,38 +4,45 @@
 @section('content')
 
     {{ \Diglactic\Breadcrumbs\Breadcrumbs::render('blog') }}
-
-    <div class="container my-3">
-
-        <div class="row">
-            @foreach($articles as $article)
-                <div class="col-12 col-lg-3 my-3">
-                    <div class="card" style="width: 18rem;">
-                        <div class="d-flex align-items-center justify-content-center img-size-swiper">
-                            <img class="img img-fluid"
-                                 src="{{ asset($article->pic ?? 'images/fallback/article.png') }}"
-                                 alt="{{$article->pic_alt ?? $article->title_en}}"
-                            >
-                        </div>
-                        <div class="card-body">
-                            <h5 class="card-title">{{$article->title}}</h5>
-                            <p class="card-text">{{ html_entity_decode($article->short_text_limited ?? $article->long_text_limited) }}</p>
-                            <a href="{{ route('blog.show', $article->title_en) }}" class="btn btn-primary">ادامه
-                                مطلب</a>
-                        </div>
-                    </div>
-
-                </div>{{--col-12--}}
-            @endforeach
-
-        </div>{{--row--}}
-        <div class="row my-3">
-            <div class="col-12">
-                <div class="d-flex align-items-center justify-content-center">
-                    {{ $articles->links() }}
+    {{--CONTAINER-FLUID--}}
+    <div class="container-fluid my-3">
+        {{--MAIN ROW--}}
+        <div class="row justify-content-center">
+            <div class="d-none d-lg-block col-lg-2">
+                @include('front-v1.partials.shared.menu_aside')
+                <div id="basket_aside_content">
+                    @include('front-v1.partials.shared.basket_aside')
                 </div>
             </div>
-        </div>
-    </div>{{--container--}}
+
+            {{--SHOW ARTICLES--}}
+            <div class="col-12 col-lg-8 my-2 shadow-lg rounded py-md-4">
+                <div class="row">
+                    <section>
+                        <div class="h1 text-center text-dark" id="pageHeaderTitle">
+                            وبلاگ {{ config('app.short.name') }}
+                        </div>
+                        @foreach($articles as $article)
+                            @include('front-v1.blog.article_brief')
+                        @endforeach
+                    </section>
+
+                </div>
+                {{--PAGINATION--}}
+                @if($articles->hasPages())
+                    <div class="row my-3 p-3">
+                        <div class="mx-auto">
+                            {{ $articles->links() }}
+                        </div>
+                    </div>
+                @endif
+                {{--./PAGINATION--}}
+            </div>
+            {{--./SHOW ARTICLES--}}
+
+            @include('front-v1.partials.shared.social_media_aside')
+        </div>{{--./MAIN ROW--}}
+        @include('front-v1.partials.shared.social_media_banner')
+    </div>{{--./CONTAINER-FLUID--}}
 
 @endsection

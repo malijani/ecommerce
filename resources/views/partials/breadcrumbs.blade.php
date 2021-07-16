@@ -7,9 +7,9 @@
                     @foreach ($breadcrumbs as $breadcrumb)
 
                         @if (!is_null($breadcrumb->url) && !$loop->last)
-                            <li class="breadcrumb-item">
+                            <li class="breadcrumb-item text-dark">
                                 <a class="text-dark" href="{{ $breadcrumb->url }}">{{ $breadcrumb->title }}</a>
-                                <i class="far fa-chevron-left mx-1 align-middle"></i>
+                                <i class="far fa-slash fa-rotate-270 mx-1 align-middle"></i>
                             </li>
                         @else
                             <li class="breadcrumb-item active">{{ $breadcrumb->title }}</li>

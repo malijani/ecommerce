@@ -94,17 +94,17 @@ class Article extends Model
      * Relation between posts as previous article => ux , seo
      * @return mixed
      */
-    public function before()
+    public function bef()
     {
-        return $this->belongsTo(Article::class, 'before')->active()->select('id', 'title', 'title_en');
+        return $this->belongsTo(Article::class, 'before')->active();
     }
 
     /**
      * Relation between posts as next article => ux , seo
      */
-    public function after()
+    public function af()
     {
-        return $this->belongsTo(Article::class, 'after')->active()->select('id', 'title', 'title_en');
+        return $this->belongsTo(Article::class, 'after')->active();
     }
 
 

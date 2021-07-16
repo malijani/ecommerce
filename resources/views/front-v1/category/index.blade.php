@@ -8,8 +8,11 @@
     <div class="container-fluid">
         <div class="row my-2">
 
-            <div class="d-none d-lg-block col-lg-2" id="basket_aside_content">
-                @include('front-v1.partials.shared.basket_aside')
+            <div class="d-none d-lg-block col-lg-2">
+                @include('front-v1.partials.shared.menu_aside')
+                <div id="basket_aside_content">
+                    @include('front-v1.partials.shared.basket_aside')
+                </div>
             </div>
             {{--SHOW MAIN CONTENT--}}
             <div class="col-12 col-lg-8 my-2 px-0 px-md-4 rounded shadow-lg">

@@ -1,11 +1,22 @@
 {{--SHOW BASKET BRIEF--}}
 <div class="row rounded py-2">
     <div class="col-12">
+        <a class="btn btn-custom w-100"
+           data-toggle="collapse"
+           href="#basket_aside_collapse"
+           role="button"
+           aria-expanded="false"
+           aria-controls="basket_aside_collapse">
+            <i class="fal fa-shopping-basket align-middle"></i>
+            سبد خرید
+        </a>
+
         <aside class="basket_aside">
-            <div class="row">
+            <div class="row collapse @if(Request::routeIs('product.*')) show @endif" id="basket_aside_collapse">
 
                 @if(!empty(session()->get('basket')))
                     @foreach(array_reverse(session()->get('basket')) as $key=>$value)
+
 
                         <div class="col-12">
                             <a href="{{ route('product.show',$value['title_en']) }}"

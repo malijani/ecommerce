@@ -16,5 +16,6 @@
             @endforeach
         @endif
     </div>
+
 </div>
 {{--./SHOW SOCIAL MEDIA SIDE IMAGES--}}

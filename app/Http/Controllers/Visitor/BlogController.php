@@ -24,7 +24,7 @@ class BlogController extends Controller
             ->orderBy('created_at', 'DESC')
             ->orderBy('id', 'DESC')
             ->orderBy('sort', 'ASC')
-            ->paginate(12);
+            ->paginate(10);
 
         return view('front-v1.blog.index', [
             'title' => $title,
@@ -62,10 +62,20 @@ class BlogController extends Controller
     public function show($slug)
     {
         $article = Article::withoutTrashed()
-            ->with('user', 'category', 'before', 'after')
+            ->with('user', 'category', 'bef', 'af')
             ->active()
             ->where('title_en', $slug)
-            ->firstOrFail();
+            ->first();
+
+        if(empty($article)){
+            $articles = "";
+            $title = "مقاله ". $slug . " یافت نشد!";
+            return response()->view('front-v1.blog.404', [
+                'articles' => $articles,
+                'title' => $title,
+            ]);
+        }
+        $title = $article->title;
 
         $comments = $article->comments()
             ->with('childrenRecursive')
@@ -74,9 +84,7 @@ class BlogController extends Controller
             ->sort()
             ->get();
 
-        $title = $article->title;
-
-        $article->increment('visit');
+        $article->increment('visit', 1);
 
         return view('front-v1.blog.show', [
             'title' => $title,

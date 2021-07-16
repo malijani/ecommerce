@@ -101,7 +101,7 @@ class CommentController extends Controller
         /*CHECK COMMENTER ACCESS CONTROL LEVEL*/
         if (!empty(Auth::id()) && Auth::user()->isAdmin()) {
             $comment->status = 1;
-            $message = 'پاسخ شما ثبت شد';
+            $message = 'نظر شما ثبت شد';
         } else {
             $comment->status = 0;
             $message = 'نظر شما با موفقیت ثبت شد و پس از تایید مدیریت نمایش داده خواهد شد';
