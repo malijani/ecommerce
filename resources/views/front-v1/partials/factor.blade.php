@@ -491,7 +491,7 @@
                                     </a>
                                 </div>
                                 {{--SHOW TITLE--}}
-                                <div class="col-md-4 my-3 my-md-0">
+                                <div class="col-md-4 my-md-0">
                                     <a href="{{ route('product.show', $factor_product->product->title_en)  }}"
                                        class="text-dark">
                                         <p class="font-weight-bolder">{{ $factor_product->product->title }}</p>
@@ -522,7 +522,7 @@
                                 {{--BREAK POINT COL--}}
                                 @if(!empty($factor_product->attributes)&& count($factor_product->attributes))
                                     {{--SHOW ATTRIBUTES--}}
-                                    <div class="col-12 col-md-3 mt-3">
+                                    <div class="col-12 col-md-3 mt-3 text-right text-md-center">
                                         <h6>
                                             ویژگی ها:
                                         </h6>
@@ -535,7 +535,7 @@
                                             >
                                                 <div class="row align-items-center">
                                                     @foreach($factor_product->attributes as $product_attribute)
-                                                        <div class="col-12 text-center text-md-right  font-weight-bold">
+                                                        <div class="col-12 text-right  font-weight-bold">
                                                             <button type="button"
                                                                     class="text-dark bg-white btn my-0 font-weight-bolder mx-md-2"
                                                             >
