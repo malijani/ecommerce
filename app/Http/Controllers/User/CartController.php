@@ -274,11 +274,18 @@ class CartController extends Controller
         $this->resetTotal();
 
         /*RENDER ALL PARTIALS AND REMAINING COUNT OF PRODUCT*/
-        $basket_aside = view('front-v1.partials.shared.basket_aside')->render();
-        $basket_total = view('front-v1.partials.shared.basket_total')->render();
+
         $remaining_quantity = $product->entity - $quantity;
 
         if ($request->ajax()) {
+            try {
+                $basket_aside = view('front-v1.partials.shared.basket_aside', ['collapse_show' => true])->render();
+                $basket_total = view('front-v1.partials.shared.basket_total')->render();
+            } catch(\Throwable $e){
+                return response()->json([
+                    'message' => 'افزودن محصول با موفقیت انجام شد؛ لطفاً صفحه را بروز رسانی کنید.',
+                ], Response::HTTP_FAILED_DEPENDENCY);
+            }
             return response()->json([
                 'basket_aside' => $basket_aside,
                 'basket_total' => $basket_total,

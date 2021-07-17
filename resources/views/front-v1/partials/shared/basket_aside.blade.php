@@ -12,7 +12,7 @@
         </a>
 
         <aside class="basket_aside">
-            <div class="row collapse @if(Request::routeIs('product.*') || Request::routeIs('brand.*')) show @endif"
+            <div class="row collapse @if(Request::routeIs('product.*') || Request::routeIs('brand.*') || !empty($collapse_show)) show @endif"
                  id="basket_aside_collapse"
             >
 
