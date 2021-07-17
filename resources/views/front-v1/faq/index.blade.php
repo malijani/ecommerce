@@ -5,30 +5,35 @@
 
     {{ \Diglactic\Breadcrumbs\Breadcrumbs::render('faq') }}
 
-    <div class="container my-3 bg-white rounded">
-        {{--TITLE--}}
-        {{--META KEYWORDS--}}
-        {{--META DISCRIPTION--}}
-        {{--HEADER BOX--}}
-        {{--FOOTER BOX--}}
+    <div class="container-fluid my-3">{{--CONTAINER-FLUID--}}
+        <div class="row justify-content-center">{{--ROW--}}
+            {{--RIGHT ASIDE CONTENT--}}
+            <div class="d-none d-lg-block col-lg-2">
+                @include('front-v1.partials.shared.menu_aside')
+                <div id="basket_aside_content">
+                    @include('front-v1.partials.shared.basket_aside')
+                </div>
+            </div>
+            {{--./RIGHT ASIDE CONTENT--}}
 
-
-        <div class="row p-3 py-5 ">
-            <div class="col-12">
+            {{--MAIN CONTENT--}}
+            <div class="col-12 col-lg-8 my-2 shadow-lg rounded p-0">
                 @if(!empty($faqs) && $faqs->count())
                     @foreach($faqs as $faq)
-                        <div class="card">
+                        <div class="card border-0 @if(!$loop->first) mt-1 @endif  border-radius-0">
                             <a class="text-dark" data-toggle="collapse" href="#collapse-{{ $faq->id }}" role="button"
                                aria-expanded="false" aria-controls="collapse-{{$faq->id}}">
-                                <div class="card-header" id="heading-{{$faq->id}}">
+                                <div class="card-header border-bottom-0"
+                                     id="heading-{{$faq->id}}"
+                                >
                                     <div class="row justify-content-center">
-                                        <div class="col-10 text-center text-md-right">
+                                        <div class="col-12 col-md-10 text-right">
                                             <h5 class="mb-0 font-20">
                                                 {{ $faq->question }}
                                             </h5>
                                         </div>
                                         <div id="faq-{{$faq->id}}-icon"
-                                             class="col-2 d-none d-md-inline-block text-left">
+                                             class="col-md-2 d-none d-md-inline-block text-left">
                                             @if($faq->collapse == 1)
                                                 <i class="far fa-minus-square fa-2x align-middle"></i>
                                             @else
@@ -41,7 +46,7 @@
                             <div id="collapse-{{ $faq->id }}" class="collapse @if($faq->collapse == 1)show @endif"
                                  aria-labelledby="heading-{{$faq->id}}"
                             >
-                                <div class="card-body">
+                                <div class="card-body border-bottom">
                                     {!! $faq->answer !!}
 
                                 </div>
@@ -50,24 +55,29 @@
 
                     @endforeach
                 @else
-                    <div class="alert alert-warning text-center">
-                        <span><i class="fal fa-pen fa-2x align-middle"></i></span>
-                        در حال تکمیل بخش پرسش های متداول
+                    <div class="alert alert-warning border-0 text-center py-5">
+                        <h5>
+                            <span><i class="fal fa-pen fa-2x align-middle"></i></span>
+                            در حال تکمیل بخش پرسش های متداول
+                        </h5>
                     </div>
                 @endif
 
-            </div>{{--col-12--}}
-        </div>{{--row--}}
-    </div>{{--container--}}
+            </div>
+            {{--./MAIN CONTENT--}}
+
+            @include('front-v1.partials.shared.social_media_aside')
+        </div>{{--./ROW--}}
+        @include('front-v1.partials.shared.social_media_banner')
+    </div>{{--./CONTAINER-FLUID--}}
 
 @endsection
 
-@section('page-scripts')
+@push('scripts')
     <script>
         $(document).ready(function () {
             /*CONTROL THE DIRECTION OF CARET IN ATTRIBUTE SHOW*/
             @foreach($faqs as $faq)
-
             $("#collapse-{{$faq->id}}").on('show.bs.collapse hide.bs.collapse', function (e) {
                 if (e.type === 'show') {
                     $("#faq-{{$faq->id}}-icon").html('<i class="far fa-minus-square fa-2x align-middle"></i>');
@@ -79,4 +89,4 @@
             @endforeach
         });
     </script>
-@endsection
+@endpush

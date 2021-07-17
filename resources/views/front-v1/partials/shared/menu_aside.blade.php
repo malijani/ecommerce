@@ -1,5 +1,5 @@
 <div class="row rounded py-2">
-    <div class="col-12">
+    <div class="col-12 px-lg-1 px-xl-3">
         <aside id="side_nav">
             <div class="user-control text-center">
                 <a href="{{ route('product.index') }}"
@@ -39,6 +39,16 @@
                     دسته بندی ها
                 </a>
             </div>
+
+            <div class="user-control text-center">
+                <a href="{{ route('faq.index') }}"
+                   class="btn {{ Request::routeIs('faq.*') ? 'btn-custom-active' : 'btn-custom' }} w-100"
+                >
+                    پرسش های متداول
+                </a>
+            </div>
+
+
 
 
             <div class="user-control text-center">
