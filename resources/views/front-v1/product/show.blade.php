@@ -453,7 +453,7 @@
                         <div class="row align-items-center">
                             @if(!empty($product->bef))
                                 <div
-                                    class="col-12 col-md-6 mt-2 mt-md-0 ml-auto text-right bg-light before_product_suggestion">
+                                    class="col-12 col-md-6 mt-2 mt-md-0 ml-auto text-right bg-light product_suggestion">
                                     <a href="{{ route('product.show' , $product->bef->title_en) }}"
                                        class="text-dark"
                                     >
@@ -475,7 +475,7 @@
                                                 <img src="{{ asset($product->bef->files()->defaultFile()->link) }}"
                                                      alt="{{ $product->bef->files()->defaultFile()->title }}"
                                                      id="main-image"
-                                                     class="img-fluid product-image rounded product_suggest_img"
+                                                     class="img-fluid product-image rounded suggest_img"
 
                                                 >
                                             </div>
@@ -486,7 +486,7 @@
                             @endif
                             @if(!empty($product->af))
                                 <div
-                                    class="col-12 col-md-6 mt-2 mt-md-0 mr-auto text-left bg-light after_product_suggestion">
+                                    class="col-12 col-md-6 mt-2 mt-md-0 mr-auto text-left bg-light after_suggestion">
                                     <a href="{{ route('product.show' , $product->af->title_en) }}"
                                        class="text-dark"
                                     >
@@ -496,7 +496,7 @@
                                                 <img src="{{ asset($product->af->files()->defaultFile()->link) }}"
                                                      alt="{{ $product->af->files()->defaultFile()->title }}"
                                                      id="main-image"
-                                                     class="img-fluid product-image rounded product_suggest_img"
+                                                     class="img-fluid product-image rounded suggest_img"
 
                                                 >
                                             </div>

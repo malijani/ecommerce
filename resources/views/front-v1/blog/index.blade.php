@@ -19,9 +19,6 @@
             <div class="col-12 col-lg-8 my-2 shadow-lg rounded py-md-4">
                 <div class="row">
                     <section>
-                        <div class="h1 text-center text-dark" id="pageHeaderTitle">
-                            وبلاگ {{ config('app.short.name') }}
-                        </div>
                         @foreach($articles as $article)
                             @include('front-v1.blog.article_brief')
                         @endforeach

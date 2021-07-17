@@ -19,7 +19,7 @@ class BlogController extends Controller
     {
         $title = 'وبلاگ';
         $articles = Article::withoutTrashed()
-            ->with('user', 'category', 'before', 'after')
+            ->with('category')
             ->active()
             ->orderBy('created_at', 'DESC')
             ->orderBy('id', 'DESC')
@@ -67,14 +67,26 @@ class BlogController extends Controller
             ->where('title_en', $slug)
             ->first();
 
-        if(empty($article)){
-            $articles = "";
-            $title = "مقاله ". $slug . " یافت نشد!";
+        if (empty($article)) {
+            $title = 'مقاله ' . $slug . ' در ' . config('app.short.name') . ' یافت نشد ';
+
+            $articles = Article::withoutTrashed()
+                ->with('category')
+                ->active()
+                ->orderBy('created_at', 'DESC')
+                ->orderBy('id', 'DESC')
+                ->orderBy('sort', 'ASC')
+                ->limit(10)
+                ->get();
+
+
             return response()->view('front-v1.blog.404', [
                 'articles' => $articles,
                 'title' => $title,
+                'not_found' => $slug,
             ]);
         }
+
         $title = $article->title;
 
         $comments = $article->comments()
@@ -113,7 +125,7 @@ class BlogController extends Controller
      */
     public function update(Request $request, $id)
     {
-       //
+        //
     }
 
     /**

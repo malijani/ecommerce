@@ -12,9 +12,20 @@
         </a>
 
         <aside class="basket_aside">
-            <div class="row collapse @if(Request::routeIs('product.*')) show @endif" id="basket_aside_collapse">
+            <div class="row collapse @if(Request::routeIs('product.*') || Request::routeIs('brand.*')) show @endif"
+                 id="basket_aside_collapse"
+            >
 
                 @if(!empty(session()->get('basket')))
+                    <div class="col-12">
+                        <a role="link"
+                           href="{{ route('cart.index') }}"
+                           class="btn basket_aside_button w-100"
+                        >
+                            <i class="fal fa-shopping-cart"></i>
+                            رفتن به سبد خرید
+                        </a>
+                    </div>
                     @foreach(array_reverse(session()->get('basket')) as $key=>$value)
 
 
@@ -26,7 +37,7 @@
                                     <img class="card-img-top img img-fluid img-responsive product_basket_aside_image"
                                          src="{{ asset($value['pic']) }}"
                                          alt="{{ $value['title'] }}">
-                                    <div class="card-body text-dark">
+                                    <div class="card-body p-0 pt-1 text-dark">
                                         <div class="row">
                                             <div class="col-12 text-center"
                                                  id=""
@@ -82,15 +93,7 @@
                         </div>
 
                     @endforeach
-                    <div class="col-12">
-                        <a role="link"
-                           href="{{ route('cart.index') }}"
-                           class="btn basket_aside_button w-100"
-                        >
-                            <i class="fal fa-shopping-cart"></i>
-                            رفتن به سبد خرید
-                        </a>
-                    </div>
+
                 @else
                     <div class="col-12 text-center">
                         <div class="card basket_aside_card bg-light">

@@ -40,6 +40,14 @@
                 </a>
             </div>
 
+
+            <div class="user-control text-center">
+                <a href="{{ route('dashboard.index') }}"
+                   class="btn {{ Request::routeIs('dashboard.*') ? 'btn-custom-active' : 'btn-custom' }} w-100"
+                >
+                    داشبورد
+                </a>
+            </div>
         </aside>
 
     </div>
