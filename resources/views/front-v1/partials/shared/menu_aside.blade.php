@@ -17,11 +17,12 @@
                 </a>
             </div>
 
+
             <div class="user-control text-center">
-                <a href="{{ route('page.index') }}"
-                   class="btn {{ Request::routeIs('page.*') ? 'btn-custom-active' : 'btn-custom' }} w-100"
+                <a href="{{ route('category.index') }}"
+                   class="btn {{ Request::routeIs('category.*') ? 'btn-custom-active' : 'btn-custom' }} w-100"
                 >
-                    صفحات
+                    دسته بندی ها
                 </a>
             </div>
 
@@ -32,13 +33,7 @@
                     برند ها
                 </a>
             </div>
-            <div class="user-control text-center">
-                <a href="{{ route('category.index') }}"
-                   class="btn {{ Request::routeIs('category.*') ? 'btn-custom-active' : 'btn-custom' }} w-100"
-                >
-                    دسته بندی ها
-                </a>
-            </div>
+
 
             <div class="user-control text-center">
                 <a href="{{ route('faq.index') }}"
@@ -48,7 +43,13 @@
                 </a>
             </div>
 
-
+            <div class="user-control text-center">
+                <a href="{{ route('page.index') }}"
+                   class="btn {{ Request::routeIs('page.*') ? 'btn-custom-active' : 'btn-custom' }} w-100"
+                >
+                    صفحات
+                </a>
+            </div>
 
 
             <div class="user-control text-center">

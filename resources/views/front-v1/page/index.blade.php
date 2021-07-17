@@ -5,31 +5,43 @@
 
     {{ \Diglactic\Breadcrumbs\Breadcrumbs::render('page') }}
 
-    <div class="container my-3 bg-white">
+    <div class="container-fluid my-3">{{--MAIN CONTAINER--}}
 
-        <div class="row py-3">
+        <div class="row justify-content-center">{{--MAIN ROW--}}
 
-            @foreach($pages as $page)
-                <div class="col-md-12 col-lg-4 mt-3 text-center text-md-right">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ $page->menu_title }}</h5>
-                            <p class="card-text">{{ strip_tags($page->content_short) }}</p>
-                            <a href="{{ route('page.show', $page->title_en) }}" class="card-link">مشاهده</a>
-                        </div>
-                    </div>
-                </div>
-            @endforeach
-                
-
-        </div>{{--row--}}
-        <div class="row my-3">
-            <div class="col-12">
-                <div class="d-flex align-items-center justify-content-center">
-                    {{ $pages->links() }}
+            {{--ASIDE CONTENT--}}
+            <div class="d-none d-lg-block col-lg-2">
+                @include('front-v1.partials.shared.menu_aside')
+                <div id="basket_aside_content">
+                    @include('front-v1.partials.shared.basket_aside')
                 </div>
             </div>
-        </div>
-    </div>{{--container--}}
+            {{--ASIDE CONTENT--}}
+
+
+            <div class="col-12 col-lg-8 my-2 shadow-lg rounded">
+                <div class="row">
+                    @foreach($pages as $page)
+                        @include('front-v1.page.page_brief', ['page' => $page, 'loop'=> $loop])
+                    @endforeach
+                    {{--PAGINATION--}}
+                    @if($pages->hasPages())
+                        <div class="mx-auto my-3">
+                            {{ $pages->links() }}
+                        </div>
+                    @endif
+                    {{--PAGINATION--}}
+                </div>
+
+
+            </div>
+
+            <div class="d-none d-lg-block col-lg-2">
+                @include('front-v1.partials.shared.social_media_aside')
+            </div>
+
+        </div>{{--./MAIN ROW--}}
+        @include('front-v1.partials.shared.social_media_banner')
+    </div>{{--./MAIN CONTAINER--}}
 
 @endsection

@@ -29,7 +29,9 @@
             </div>
             {{--./SHOW MAIN CONTENT--}}
 
-            @include('front-v1.partials.shared.social_media_aside')
+            <div class="d-none d-lg-block col-lg-2">
+                @include('front-v1.partials.shared.social_media_aside')
+            </div>
         </div>
 
         @include('front-v1.partials.shared.social_media_banner')

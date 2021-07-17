@@ -19,7 +19,10 @@
                 @include('front-v1.blog.article_show')
             </div>{{--./MAIN CONTENT--}}
 
-            @include('front-v1.partials.shared.social_media_aside')
+            <div class="d-none d-lg-block col-lg-2">
+                @include('front-v1.partials.shared.social_media_aside')
+            </div>
+
         </div>{{--./MAIN ROW--}}
         @include('front-v1.partials.shared.social_media_banner')
     </div>{{--./MAIN CONTAINER-FLUID--}}

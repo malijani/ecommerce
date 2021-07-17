@@ -19,7 +19,8 @@ class PageController extends Controller
         $pages = Page::withoutTrashed()
             ->where('status', 1)
             ->orderBy('sort')
-            ->paginate(26);
+            ->orderByDesc('created_at')
+            ->paginate(10);
 
         return response()->view('front-v1.page.index', [
            'title'=>$title,
@@ -60,7 +61,15 @@ class PageController extends Controller
         $page = Page::withoutTrashed()
             ->where('status', 1)
             ->where('title_en', $slug)
-            ->firstOrFail();
+            ->first();
+
+        if(empty($page)){
+            $title = 'صفحه ' . $slug . ' در ' . config('app.short.name') . ' یافت نشد! ';
+            return response()->view('front-v1.page.404', [
+                'title' => $title,
+                'not_found' => $slug,
+            ]);
+        }
 
         $page->increment('visit');
 

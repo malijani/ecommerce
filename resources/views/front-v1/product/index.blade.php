@@ -14,7 +14,7 @@
                     @include('front-v1.partials.shared.basket_aside')
                 </div>
             </div>
-            
+
             {{--SHOW MAIN CONTENT--}}
             <div class="col-12 col-lg-8 my-2 shadow-lg rounded py-md-4">
                 @if(!empty($products) && $products->count())
@@ -30,8 +30,9 @@
                 @endif
             </div>
             {{--./SHOW MAIN CONTENT--}}
-
-            @include('front-v1.partials.shared.social_media_aside')
+            <div class="d-none d-lg-block col-lg-2">
+                @include('front-v1.partials.shared.social_media_aside')
+            </div>
         </div>
 
         @include('front-v1.partials.shared.social_media_banner')

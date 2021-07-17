@@ -91,7 +91,7 @@ Breadcrumbs::for('page', function ($trail) {
 // Home > Pge > [Content]
 Breadcrumbs::for('page.show', function ($trail, $page) {
     $trail->parent('page');
-    $trail->push($page->menu_title, route('page.show', $page->title_en));
+    $trail->push($page->title, route('page.show', $page->title_en));
 });
 
 
