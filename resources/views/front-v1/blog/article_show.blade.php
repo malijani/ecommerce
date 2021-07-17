@@ -177,8 +177,19 @@
                 @include('front-v1.partials.comment_template', ['comments'=>$comments,'model'=>$article])
             </div>
             {{--./COMMENTS--}}
-
         </div>
+        @if($similar_articles->count())
+            <div class="col-12 border-top">
+                <div class="h1 text-center text-dark"
+                     id="pageHeaderTitle"
+                >
+                    مقالات مشابه
+                </div>
+                @foreach($similar_articles as $similar_article)
+                    @include('front-v1.blog.article_brief', ['article' => $similar_article])
+                @endforeach
+            </div>
+        @endif
     </div>
 </div>{{--./ARTICLE SHOW--}}
 

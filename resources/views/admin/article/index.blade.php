@@ -65,7 +65,7 @@
 
                                 <td class="align-middle">{{ $article->short_text ?? $article->long_text_limited }}</td>
                                 <td class="align-middle">{{ $article->jalali_updated_at }}</td>
-                                <td class="align-middle">{{ $article->user->name }} {{ $article->user->family }}</td>
+                                <td class="align-middle">{{ $article->user->full_name }}</td>
 
 
                                 <td class="align-middle">

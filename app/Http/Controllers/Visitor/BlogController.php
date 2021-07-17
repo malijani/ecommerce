@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Visitor;
 
 use App\Article;
+use App\Category;
 use App\Comment;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -57,7 +58,7 @@ class BlogController extends Controller
      * Display the specified resource.
      *
      * @param string slug
-     * @return \Illuminate\Http\Response
+     * @return mixed
      */
     public function show($slug)
     {
@@ -96,12 +97,24 @@ class BlogController extends Controller
             ->sort()
             ->get();
 
+        $similar_articles = Article::withoutTrashed()
+            ->active()
+            ->orderBy('created_at', 'DESC')
+            ->orderBy('id', 'DESC')
+            ->orderBy('sort', 'ASC')
+            ->where('category_id', $article->category_id)
+            ->where('id', '!=', $article->id)
+            ->limit(10)
+            ->get();
+
+
         $article->increment('visit', 1);
 
         return view('front-v1.blog.show', [
             'title' => $title,
             'article' => $article,
             'comments' => $comments,
+            'similar_articles' => $similar_articles,
         ]);
     }
 
