@@ -1,4 +1,4 @@
-<footer class="mt-5 py-3 py-sm-2">
+<footer class="py-1">
 
     {{--FOOTER IMAGE--}}
     @if(!empty($footer_image))
@@ -44,13 +44,14 @@
                                                 >
                                             </a>
                                         </div>
-                                        <div class="col-8 mt-1">
+                                        <div class="col-8 p-0 mt-1 text-right">
                                             <a href="{{ $product_proposal->getLink() }}"
                                                class="text-dark"
                                             >
                                                 <p class="font-16 font-weight-bolder">
-                                                    {{ $product_proposal->title }}
-                                                    | {{ str_replace('-', ' ', $product_proposal->title_en) }}
+                                                    {{ $product_proposal->title . '|'}}
+                                                    <br>
+                                                    {{ str_replace('-', ' ', $product_proposal->title_en) }}
                                                 </p>
                                                 <p class="font-16">
                                                     @if(in_array($product_proposal->price_type, [0,1]))
@@ -60,10 +61,10 @@
                                                         تماس بگیرید
                                                     @endif
                                                 </p>
-                                                <div class="font-8">
-                                                    @include('front-v1.partials.rating_stars', ['model'=>$product_proposal])
-                                                </div>
                                             </a>
+                                        </div>
+                                        <div class="col-12">
+                                            @include('front-v1.partials.rating_stars', ['model'=>$product_proposal])
                                         </div>
                                     </div>
 

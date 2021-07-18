@@ -1,116 +1,53 @@
 @extends('layouts.app')
 
-@section('page-styles')
-    @stack('styles')
-@endsection
 @section('content')
 
     @yield('bread-crumb')
 
-    <div class="container-fluid my-3 rounded">
-        <div class="row bg-white">
-
-            <div class="col-md-3">{{--USER NAVIGATION BUTTONS--}}
-                <div class="border rounded my-md-5 mt-5 bg-light">
-                    {{--dashboard--}}
-                    <div class="user-control text-center">
-                        <a href="{{ route('dashboard.index') }}"
-                           class="btn {{ Request::routeIs('dashboard.index') ? 'btn-secondary text-white' : 'btn-outline-secondary' }} w-95 my-2 font-weight-bolder"
-                        >
-                            <i class="fal fa-desktop fa-2x align-middle px-2"></i>
-                            داشبورد
-                        </a>
-                    </div>
-                    {{--tickets--}}
-                    <div class="user-control text-center">
-                        <a href="{{ route('dashboard.tickets.index') }}"
-                           class="btn {{ Request::routeIs('dashboard.tickets.*') ? 'btn-secondary text-white' : 'btn-outline-secondary' }} w-95 my-2 font-weight-bolder"
-                        >
-                            <i class="fal fa-ticket-alt fa-2x align-middle px-2"></i>
-                            پشتیبانی
-                        </a>
-                    </div>
-                    {{--orders--}}
-                    <div class="user-control text-center">
-                        <a href="{{ route('dashboard.orders.index') }}"
-                           class="btn {{ Request::routeIs('dashboard.orders.*') ? 'btn-secondary text-white' : 'btn-outline-secondary' }} w-95 my-2 font-weight-bolder"
-                        >
-                            <i class="fal fa-list-alt fa-2x align-middle px-2"></i>
-                            فاکتور ها
-                        </a>
-                    </div>
-                    {{--addresses--}}
-                    <div class="user-control text-center">
-                        <a href="{{ route('dashboard.addresses.index') }}"
-                           id="show-address"
-                           class="btn {{ Request::routeIs('dashboard.addresses.*') ? 'btn-secondary text-white' : 'btn-outline-secondary' }} w-95 my-2 font-weight-bolder"
-                        >
-                            <i class="fal fa-location-arrow fa-2x align-middle px-2"></i>
-                            آدرس ها
-                        </a>
-                    </div>
-
-
-                    {{--user details--}}
-                    <div class="user-control text-center">
-                        <a href="{{ route('dashboard.profile.index') }}"
-                           class="btn {{ Request::routeIs('dashboard.profile.*') ? 'btn-secondary text-white' : 'btn-outline-secondary' }} w-95 my-2 font-weight-bolder"
-                        >
-                            <i class="fal fa-user-cog fa-2x align-middle px-2"></i>
-                            پروفایل
-                        </a>
-                    </div>
-                    @if(\Illuminate\Support\Facades\Route::has('logout'))
-                        {{--logout--}}
-                        <div class="user-control text-center">
-                            <button
-                                id="logout"
-                                data-url="{{ route('logout') }}"
-                                class="btn btn-outline-secondary w-95 my-2 font-weight-bolder"
-                            >
-                                <i class="fal fa-sign-out fa-2x align-middle px-2"></i>
-                                خروج
-                            </button>
-                        </div>
-                    @endif
+    <div class="container-fluid my-3">
+        {{--MAIN ROW--}}
+        <div class="row justify-content-center">
+            <div class="d-none d-lg-block col-lg-2">
+                @include('front-v1.partials.shared.menu_aside')
+                <div id="basket_aside_content">
+                    @include('front-v1.partials.shared.basket_aside')
                 </div>
-            </div>{{--./USER NAVIGATION BUTTONS--}}
+            </div>
 
-            <div class="col-md-9">{{--USER CONTROLL--}}
-                <div class="my-md-5 p-3">
-                    @yield('dashboard-content')
-                </div>
+            <div class="col-12 col-lg-8 my-2 shadow-lg rounded py-3">{{--USER CONTROLL--}}
+                @include('front-v1.user.dashboard.buttons')
+
+                @yield('dashboard-content')
             </div>{{--./USER CONTROLL--}}
+
+            <div class="d-none d-lg-block col-lg-2">
+                @include('front-v1.partials.shared.social_media_aside')
+            </div>
+
         </div>{{--row--}}
+
+        @include('front-v1.partials.shared.social_media_banner')
     </div>{{--container--}}
 @endsection
 
 
-@section('page-scripts')
+@push('scripts')
     <script>
         $(document).ready(function () {
             $("#logout").on('click', function () {
                 let logout_url = $(this).attr('data-url');
                 Swal.fire({
-                    title: "قصد خروج از حساب کاربری خود را دارید؟",
+                    title: "<h4>قصد خروج از حساب کاربری خود را دارید؟</h4>",
                     icon: "warning",
-                    /*buttons: ['خیر', 'بله'],*/
-                    confirmButtonText: 'خروج',
-                    denyButtonText: 'خیر!',
-                    confirmButtonColor: '#3085d6',
-                    denyButtonColor: '#d33',
+                    confirmButtonText: 'خروج از حساب کاربری',
+                    denyButtonText: 'نه!',
+                    confirmButtonColor: '#d33',
+                    denyButtonColor: '#3085d6',
                     showDenyButton: true,
                     showConfirmButton: true,
-                    /*customClass: {
-                        confirmButton: 'btn btn-outline-success mx-2 px-4',
-                        denyButton: 'btn btn-danger mx-2 px-4'
-                    },*/
-                    /*buttonsStyling: false*/
-                    dangerMode: true,
                 })
                     .then((logout) => {
                         if (logout.isConfirmed) {
-                            // console.log('delete');
                             $.ajax({
                                 url: logout_url,
                                 type: 'POST',
@@ -133,7 +70,6 @@
             });
         });
     </script>
-    @stack('scripts')
-@endsection
+@endpush
 
 

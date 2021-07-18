@@ -32,6 +32,31 @@
 
             <div class="d-none d-lg-block col-lg-2">
                 @include('front-v1.partials.shared.social_media_aside')
+
+                @if(!empty($other_pages) && $other_pages->count())
+                    <div class="card p-0 mt-2 border-radius-0 border-0 shadow-sm">
+                        <div class="card-header text-center">
+                            <h6>سایر صفحات</h6>
+                        </div>
+                        <ul class="list-group list-group-flush text-center">
+                            @foreach($other_pages as $other_page)
+                                @if($other_page->id === $page->id)
+                                    @continue
+                                @endif
+                                <li class="list-group-item">
+                                    <a href="{{ route('page.show', $other_page->title_en) }}"
+                                       class="text-dark font-weight-bolder"
+                                       title="مشاهده صفحه {{ $other_page->title }}"
+                                    >
+                                        {{ $other_page->title }}
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+
+                @endif
+
             </div>
 
         </div>{{--./MAIN ROW--}}

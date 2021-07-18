@@ -52,12 +52,12 @@ class Article extends Model
 
     public function getLongTextLimitedAttribute()
     {
-        return (!is_null($this->long_text) ? Str::words(strip_tags($this->long_text), 10) : null);
+        return (!is_null($this->long_text) ? Str::words(html_entity_decode(strip_tags($this->long_text)), 50) : null);
     }
 
     public function getShortTextLimitedAttribute()
     {
-        return (!is_null($this->short_text) ? Str::words(strip_tags($this->short_text), 10) : null);
+        return (!is_null($this->short_text) ? Str::words(html_entity_decode(strip_tags($this->short_text)), 10) : null);
     }
 
     public function getJalaliUpdatedAtAttribute()

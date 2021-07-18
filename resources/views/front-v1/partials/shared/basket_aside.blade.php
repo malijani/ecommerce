@@ -1,6 +1,6 @@
 {{--SHOW BASKET BRIEF--}}
 <div class="row rounded py-2">
-    <div class="col-12">
+    <div class="col-12 p-1">
         <a class="btn btn-custom w-100"
            data-toggle="collapse"
            href="#basket_aside_collapse"

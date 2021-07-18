@@ -1,8 +1,8 @@
 @unless ($breadcrumbs->isEmpty())
 
-    <div class="container py-3">
+    <div class="container-fluid py-3">
         <div class="row">
-            <div class="col-12 px-0">
+            <div class="col-12 mx-auto">
                 <ol class="breadcrumb shadow-sm">
                     @foreach ($breadcrumbs as $breadcrumb)
 

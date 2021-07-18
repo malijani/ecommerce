@@ -80,7 +80,6 @@ class BlogController extends Controller
                 ->limit(10)
                 ->get();
 
-
             return response()->view('front-v1.blog.404', [
                 'articles' => $articles,
                 'title' => $title,
@@ -108,6 +107,15 @@ class BlogController extends Controller
             ->get();
 
 
+        $other_articles = Article::withoutTrashed()
+            ->with('category')
+            ->active()
+            ->orderBy('created_at', 'DESC')
+            ->orderBy('id', 'DESC')
+            ->orderBy('sort', 'ASC')
+            ->limit(10)
+            ->get();
+
         $article->increment('visit', 1);
 
         return view('front-v1.blog.show', [
@@ -115,6 +123,7 @@ class BlogController extends Controller
             'article' => $article,
             'comments' => $comments,
             'similar_articles' => $similar_articles,
+            'other_articles' => $other_articles,
         ]);
     }
 

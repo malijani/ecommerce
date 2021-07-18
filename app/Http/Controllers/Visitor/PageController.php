@@ -23,8 +23,8 @@ class PageController extends Controller
             ->paginate(10);
 
         return response()->view('front-v1.page.index', [
-           'title'=>$title,
-           'pages'=>$pages
+            'title' => $title,
+            'pages' => $pages
         ]);
 
     }
@@ -63,11 +63,20 @@ class PageController extends Controller
             ->where('title_en', $slug)
             ->first();
 
-        if(empty($page)){
+
+        $other_pages = Page::withoutTrashed()
+            ->where('status', 1)
+            ->orderBy('sort')
+            ->orderByDesc('created_at')
+            ->limit(10)
+            ->get();
+
+        if (empty($page)) {
             $title = 'صفحه ' . $slug . ' در ' . config('app.short.name') . ' یافت نشد! ';
             return response()->view('front-v1.page.404', [
                 'title' => $title,
                 'not_found' => $slug,
+                'other_pages' => $other_pages,
             ]);
         }
 
@@ -75,7 +84,8 @@ class PageController extends Controller
 
         return response()->view('front-v1.page.show', [
             'title' => $page->title,
-            'page' => $page
+            'page' => $page,
+            'other_pages' => $other_pages,
         ]);
     }
 

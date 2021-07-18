@@ -4,8 +4,8 @@
        class="text-dark"
        title="مشاهده صفحه {{ $page->title }}"
     >
-        <div class="card p-0 border-radius-0 shadow-sm mt-3 border-0">
-            <div class="card-header pb-0">
+        <div class="card p-0 border-radius-0 shadow-sm mt-3">
+            <div class="card-header border-bottom-0">
                 <h4 class="card-title">
                     {{ $page->title }}
                 </h4>

@@ -10,7 +10,7 @@
                     <a href="{{ route('blog.show', $article->title_en) }}"
                        title="مشاهده  مقاله  {{ $article->title  }}"
                     >
-                        <div class="row justify-content-between align-items-center rounded mx-1 text-center py-4">
+                        <div class="row justify-content-between align-items-stretch rounded mx-1 text-right py-4">
                                 {{--SHOW IMAGE --}}
                                 <div class="col-12">
                                     <img class="img img-fluid rounded"
@@ -20,7 +20,7 @@
                                 </div>
 
                                 {{--SHOW TITLE & TITLE EN--}}
-                                <div class="col-12 py-2 mt-1 font-weight-bolder font-18 text-dark">
+                                <div class="col-12 py-2 mt-1 font-14 text-dark font-weight-bolder">
                                     <span class="text-right">
                                         {{ $article->title }}
                                     </span>
@@ -30,11 +30,6 @@
                                 <div class="col-12 mt-1 font-14 text-dark">
                                     {{ $article->short_text_limited }}
                                 </div>
-                            <div class="col-12 mt-1">
-                                <button class="btn btn-outline-secondary w-100">
-                                    ادامه مطلب
-                                </button>
-                            </div>
                             </div>
 
                     </a>

@@ -47,7 +47,6 @@ Route::group(['prefix' => 'user', 'middleware' => ['web', 'auth', 'auth.normal',
     /*RATE*/
     Route::resource('rating', 'User\RatingController')->only(['store']);
 
-
     /*DASHBOARD*/
     Route::resource('dashboard', 'User\Dashboard\DashboardController')->only(['index']);
     Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function () {
@@ -57,7 +56,6 @@ Route::group(['prefix' => 'user', 'middleware' => ['web', 'auth', 'auth.normal',
         Route::resource('tickets', 'User\Dashboard\TicketController');
         Route::resource('ticket-comments', 'User\Dashboard\CommentController');
     });
-
 
 });
 

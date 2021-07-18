@@ -55,7 +55,7 @@
                         @endif
                         @if(!empty($articles) && $articles->count())
                             <div class="my-5 p-0">
-                                <h6 class="font-16 text-dark pr-3">مقالات</h6>
+                                {{--<h6 class="font-16 text-dark pr-3">مقالات</h6>--}}
                                 @include('front-v1.partials.carousel.articles', ['articles' =>$articles])
                             </div>
                         @endif

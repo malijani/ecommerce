@@ -29,7 +29,7 @@
                             <hr class="w-50">
                             <div class="my-5 p-0">
                                 @foreach($articles as $article)
-                                    @include('front-v1.blog.article_brief', ['brands'=>$article])
+                                    @include('front-v1.blog.article_brief', ['article'=>$article])
                                 @endforeach
                             </div>
                         @endif
@@ -42,7 +42,7 @@
             <div class="d-none d-lg-block col-lg-2">
                 @include('front-v1.partials.shared.social_media_aside')
             </div>
-            
+
         </div>
 
         @include('front-v1.partials.shared.social_media_banner')
