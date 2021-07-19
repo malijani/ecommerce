@@ -20,3 +20,20 @@
 {{--LIVE WIRE--}}
 @livewireScripts
 
+
+{{--<script src="{{ asset('front-v1/mega-menu/script.js') }}"></script>--}}
+
+<script>
+    $(document).ready(function () {
+        /*SET LOGO AS PARALLAX_HEADER*/
+        /*let parallax_header = $("#parallax_header");
+        parallax_header.css("background-image", "url({{asset($logo->pic??'images/fallback/logo.png')}})")*/
+
+        /*DISABLE LINK HREF EVENT ON NAV HEADINGS*/
+        /*let menu_headers = $(".submenu").siblings();
+        menu_headers.on('click touch', function(e){
+            e.preventDefault();
+        });*/
+    });
+</script>
+

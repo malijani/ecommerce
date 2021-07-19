@@ -11,7 +11,7 @@
     @stack('styles')
 </head>
 
-<body class="header_sticky header-style-1 has-menu-extra">
+<body>
 @include('front-v1.partials.shared.header')
 
 <div class="container">

@@ -12,11 +12,17 @@
 {{--YAMM : YET ANOTHER MEGA MENU BASED ON BOOTSTRAP--}}
 {{--<link rel="stylesheet" href="{{ asset('front-v1/yamm/yamm.min.css') }}">--}}
 
+
 {{--CUSTOM CSS--}}
 <link rel="stylesheet" href="{{ asset('front-v1/css/main.css') }}">
-
+{{--<link rel="stylesheet" href="{{ asset('front-v1/mega-menu/style.css') }}">--}}
 {{--LIVE WIRE--}}
 @livewireStyles
+
+
+
+
+
 
 
 

@@ -3,7 +3,7 @@
         <input type="number"
                name="comment_captcha"
                class="comment_captcha_input form-control align-middle text-center"
-               placeholder="*کد کپچا"
+               placeholder="کد کپچا *"
                required
         >
     </div>
