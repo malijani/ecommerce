@@ -18,8 +18,10 @@ class DashboardController extends Controller
     {
         $title = 'داشبورد حساب کاربری شما | '. config('app.name');
 
+        $paid_factors = Auth::user()->factors()->paidFactors()->get();
         return response()->view('front-v1.user.dashboard.index', [
             'title'=>$title,
+            'paid_factors'=> $paid_factors,
         ]);
 
     }

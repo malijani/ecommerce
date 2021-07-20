@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-12">
-        <div class="card border-0 shadow-lg">
+        <div class="card border-0">
             <div class="card-header border-bottom-0">
                 <div class="row align-items-center">
                     <div class="col-12 col-md-4 text-center text-md-right my-1 my-md-0">
