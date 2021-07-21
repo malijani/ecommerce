@@ -33,7 +33,7 @@
                                             <input type="text"
                                                    name="code"
                                                    id="code"
-                                                   class="form-control font-weight-bolder font-16 text-center ltr @error('code') is-invalid @enderror"
+                                                   class="form-control input-custom font-weight-bolder font-16 text-center ltr @error('code') is-invalid @enderror"
                                                    placeholder="کد ارسالی به شماره شما"
                                                    autocomplete="off"
                                                    pattern="\d*"
@@ -48,7 +48,7 @@
                                     <div class="form-group row justify-content-center">
                                         <div class="col-12">
                                             <button type="submit"
-                                                    class="form-control btn btn-outline-primary"
+                                                    class="form-control btn btn-custom"
                                             >
                                                 اعتبار سنجی
                                             </button>
@@ -113,7 +113,7 @@
             let resend_timer_value = $("#resend-timer-val");
             let timer;
             function setTimer() {
-                let delay = 120;
+                let delay = 60;
                 resend_code.hide();
                 timer = setInterval(function () {
                     resend_timer_value.text(delay--);

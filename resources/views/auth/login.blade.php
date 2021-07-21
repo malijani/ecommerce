@@ -5,9 +5,11 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header text-center p-5 font-20">ورود به {{ config('app.short.name') }}</div>
+                    <div class="card-header text-center p-5 font-20">
+                        ورود به {{ config('app.short.name') }}
+                    </div>
 
-                    <div class="card-body">
+                    <div class="card-body py-5">
                         @if($requested)
                             <div class="row">
                                 <div class="col-12 text-center text-md-right mb-4">
@@ -28,7 +30,7 @@
                                 <div class="col-md-12">
                                     <input id="mobile"
                                            type="text"
-                                           class="ltr font-weight-bolder font-16 text-center form-control @error('mobile') is-invalid @enderror"
+                                           class="ltr input-custom font-weight-bolder font-16 text-center form-control @error('mobile') is-invalid @enderror"
                                            name="mobile"
                                            value="{{ old('mobile') }}"
                                            {{--pattern="09(0[1-2]|1[0-9]|3[0-9]|2[0-1])-?[0-9]{3}-?[0-9]{4}"--}}
@@ -44,7 +46,9 @@
 
                             <div class="form-group row mb-0 ">
                                 <div class="col-12">
-                                    <button type="submit" class="btn btn-outline-primary form-control ">
+                                    <button type="submit"
+                                            class="btn btn-custom form-control "
+                                    >
                                         ورود
                                     </button>
 
@@ -74,9 +78,9 @@
                 return str;
             };
 
-        $(document).ready(function() {
+        $(document).ready(function () {
             let mobile_input = $("#mobile")
-            mobile_input.on('keyup', function(){
+            mobile_input.on('keyup', function () {
                 mobile_input.val(fixNumbers(mobile_input.val()));
             });
         });

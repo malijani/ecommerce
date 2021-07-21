@@ -10,6 +10,7 @@ use App\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use SanjabVerify\Models\VerifyLog;
 use SanjabVerify\Support\Facades\Verify;
 
 class AuthController extends Controller
@@ -79,6 +80,8 @@ class AuthController extends Controller
 
         $mobile = (array_key_exists('mobile', $login)) ? $login['mobile'] : null;
 
+        /*$lastestLog = VerifyLog::where('ip', request()->ip())->orWhere('receiver', $mobile)->latest()->first();
+        $delay = config('verify.resend_delay') - $lastestLog->created_at->diffInSeconds();*/
         if (empty(User::withoutTrashed()->where('mobile', $mobile)->first())) {
             session()->forget('login');
             return redirect(route('login'))
@@ -88,6 +91,7 @@ class AuthController extends Controller
         return view('auth.verify', [
             'title' => 'تایید حساب کاربری',
             'mobile' => $mobile,
+            /*'delay' => $delay*/
         ]);
 
     }
