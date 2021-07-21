@@ -33,7 +33,7 @@
 
 @push('scripts')
     <script>
-        $("#logout").on('click tap touchstart', function () {
+        $(".logout").on('click tap touchstart', function () {
             let logout_url = $(this).attr('data-url');
             Swal.fire({
                 position: 'top',

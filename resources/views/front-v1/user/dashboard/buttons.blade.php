@@ -51,7 +51,7 @@
             <button
                 id="logout"
                 data-url="{{ route('logout') }}"
-                class="btn btn-custom w-100"
+                class="logout btn btn-custom w-100"
             >
                 <i class="fal fa-sign-out fa-2x align-middle px-2"></i>
                 خروج
