@@ -12,7 +12,7 @@
                 <i class="fal fa-user fa-2x"></i>
             @endif
         </div>
-        <div class="col-3">
+        <div class="col-10 col-md-3">
             {{ $ticket->user->full_name }}
             @if($ticket->user->isAdmin())
                 <span class="badge badge-primary">ادمین</span>
@@ -20,7 +20,7 @@
         </div>
 
         @if( $ticket->user->isAdmin())
-            <div class="col-5 text-left">
+            <div class="col-12 col-md-5 text-left mt-2 mt-md-0">
 
                 {!!  implode("<br>", $ticket->user->contact_information)  !!}
             </div>
@@ -29,7 +29,7 @@
     </div>
     <hr>
     <div class="row px-4 py-2">
-        <div class="col-12">
+        <div class="col-12 p-0">
             {!! $ticket->message !!}
         </div>
     </div>
@@ -37,7 +37,7 @@
     <div class="row align-items-center px-3 py-1">
 
         @if(!is_null($ticket->file))
-            <div class="col-4">
+            <div class="col-12 col-md-4">
                 <a
                     @if(isset($type) && $type === 'comment')
                     href="{{ route('files.ticket-files', [$ticket->id, 'comment']) }}"
@@ -52,9 +52,10 @@
                 </a>
             </div>
         @endif
-        <div class="col text-left">
+        <div class="col text-md-left">
                     <span class="text-muted">
                         ثبت شده در :
+                        <br>
                     {{ $ticket->created_at }}
                     </span>
         </div>

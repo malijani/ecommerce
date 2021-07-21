@@ -1,6 +1,6 @@
-<div class="row d-lg-none my-3">
+<div class="row d-lg-none justify-content-center align-items-center my-3">
     {{--dashboard--}}
-    <div class="col-12 col-md-6 text-center">
+    <div class="col-12 col-md-6  ">
         <a href="{{ route('dashboard.index') }}"
            class="btn {{ Request::routeIs('dashboard.index') ? 'btn-custom-active' : 'btn-custom' }} w-100"
         >
@@ -9,7 +9,7 @@
         </a>
     </div>
     {{--tickets--}}
-    <div class="col-12 col-md-6 text-center">
+    <div class="col-12 col-md-6 ">
         <a href="{{ route('dashboard.tickets.index') }}"
            class="btn {{ Request::routeIs('dashboard.tickets.*') ? 'btn-custom-active' : 'btn-custom' }} w-100"
         >
@@ -18,7 +18,7 @@
         </a>
     </div>
     {{--orders--}}
-    <div class="col-12 col-md-6 text-center">
+    <div class="col-12 col-md-6 ">
         <a href="{{ route('dashboard.orders.index') }}"
            class="btn {{ Request::routeIs('dashboard.orders.*') ? 'btn-custom-active' : 'btn-custom' }} w-100"
         >
@@ -27,7 +27,7 @@
         </a>
     </div>
     {{--addresses--}}
-    <div class="col-12 col-md-6 text-center">
+    <div class="col-12 col-md-6 ">
         <a href="{{ route('dashboard.addresses.index') }}"
            id="show-address"
            class="btn {{ Request::routeIs('dashboard.addresses.*') ? 'btn-custom-active' : 'btn-custom' }} w-100"
@@ -37,7 +37,7 @@
         </a>
     </div>
     {{--user details--}}
-    <div class="col-12 col-md-6 text-center">
+    <div class="col-12 col-md-6 ">
         <a href="{{ route('dashboard.profile.index') }}"
            class="btn {{ Request::routeIs('dashboard.profile.*') ? 'btn-custom-active' : 'btn-custom' }} w-100"
         >
@@ -47,7 +47,7 @@
     </div>
     @if(\Illuminate\Support\Facades\Route::has('logout'))
         {{--logout--}}
-        <div class="col-12 col-md-6 text-center">
+        <div class="col-12 col-md-6 ">
             <button
                 id="logout"
                 data-url="{{ route('logout') }}"

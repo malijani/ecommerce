@@ -7,6 +7,7 @@
                 <a href="{{ route('dashboard.index') }}"
                    class="btn {{ Request::routeIs('dashboard.*') ? 'btn-custom-active' : 'btn-custom' }} w-100"
                 >
+                    <i class="fal fa-user-alt align-middle px-2"></i>
                     داشبورد
                 </a>
                 @if(Request::routeIs('dashboard.*'))

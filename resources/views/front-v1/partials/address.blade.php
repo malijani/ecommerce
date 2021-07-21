@@ -3,7 +3,7 @@
 @endpush
 
 <div class="card border-0 shadow-sm">
-    <div class="card-header border-bottom-0 text-center">
+    <div class="card-header ">
         <h4>آدرس تحویل سفارش</h4>
     </div>
 
