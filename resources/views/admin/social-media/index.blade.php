@@ -67,9 +67,9 @@
                                 </td>
                                 {{--SHOW STATUS--}}
                                 <td class="align-middle">
-                                    @if($social_media->status === 1)
+                                    @if($social_media->status == 1)
                                         <i class="fa fa-2x fa-check-square-o text-success"></i>
-                                    @elseif($social_media->status===0)
+                                    @elseif($social_media->status == 0)
                                         <i class="fa fa-2x fa-minus-square-o text-danger"></i>
                                     @else
                                         نامشخص

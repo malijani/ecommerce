@@ -66,9 +66,9 @@
                                 </td>
                                 {{--SHOW STATUS--}}
                                 <td class="align-middle">
-                                    @if($image_menu->status === 1)
+                                    @if($image_menu->status == 1)
                                         <i class="fa fa-2x fa-check-square-o text-success"></i>
-                                    @elseif($image_menu->status === 0)
+                                    @elseif($image_menu->status == 0)
                                         <i class="fa fa-2x fa-minus-square-o text-danger"></i>
                                     @else
                                         نامشخص

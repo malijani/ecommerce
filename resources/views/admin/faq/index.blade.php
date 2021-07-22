@@ -180,10 +180,10 @@
                                 </td>
                                 {{--SHOW STATUS--}}
                                 <td class="align-middle">
-                                    @if($faq->status === 1)
+                                    @if($faq->status == 1)
                                         <i class="fa fa-2x fa-check-square-o text-success"></i>
                                         <span class="hide">{{ $faq->status }}</span>
-                                    @elseif($faq->status===0)
+                                    @elseif($faq->status == 0)
                                         <i class="fa fa-2x fa-minus-square-o text-danger"></i>
                                         <span class="hide">{{ $faq->status }}</span>
                                     @else

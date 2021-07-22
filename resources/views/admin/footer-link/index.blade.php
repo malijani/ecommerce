@@ -56,9 +56,9 @@
                                 </td>
                                 {{--SHOW STATUS--}}
                                 <td class="align-middle">
-                                    @if($link->status === 1)
+                                    @if($link->status == 1)
                                         <i class="fa fa-2x fa-check-square-o text-success"></i>
-                                    @elseif($link->status===0)
+                                    @elseif($link->status == 0)
                                         <i class="fa fa-2x fa-minus-square-o text-danger"></i>
                                     @else
                                         نامشخص

@@ -49,9 +49,9 @@
                                 </td>
                                 {{--SHOW STATUS--}}
                                 <td class="align-middle">
-                                    @if($discount_code->status === 1)
+                                    @if($discount_code->status == 1)
                                         <i class="fa fa-2x fa-check-square-o text-success"></i>
-                                    @elseif($discount_code->status===0)
+                                    @elseif($discount_code->status ==0)
                                         <i class="fa fa-2x fa-minus-square-o text-danger"></i>
                                     @else
                                         نامشخص
@@ -63,7 +63,7 @@
 
                                     <input class="status big-checkbox mb-1 w-100 text-green"
                                            type="checkbox"
-                                           @if($discount_code->status ===1) checked @endif
+                                           @if($discount_code->status == 1) checked @endif
                                            id="status-{{$discount_code->id}}"
                                            title="تعیین بعنوان پیشفرض"
                                            data-url="{{ route('discount-codes.update', $discount_code->id) }}"

@@ -41,9 +41,9 @@
                                 <td class="align-middle">{{ $slider->id }}</td>
                                 {{--SHOW STATUS--}}
                                 <td class="align-middle">
-                                    @if($slider->status === 1)
+                                    @if($slider->status == 1)
                                         <i class="fa fa-2x fa-check-square-o text-success"></i>
-                                    @elseif($slider->status===0)
+                                    @elseif($slider->status == 0)
                                         <i class="fa fa-2x fa-minus-square-o text-danger"></i>
                                     @else
                                         نامشخص
@@ -73,7 +73,7 @@
 
                                     <input class="status big-checkbox mb-1 w-100 text-green"
                                            type="checkbox"
-                                           @if($slider->status ===1) checked @endif
+                                           @if($slider->status == 1) checked @endif
                                            id="status-{{$slider->id}}"
                                            title="تعیین بعنوان پیشفرض"
                                            data-url="{{ route('sliders.update', $slider->id) }}"

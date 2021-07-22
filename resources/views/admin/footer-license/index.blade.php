@@ -60,9 +60,9 @@
                                 </td>
                                 {{--SHOW STATUS--}}
                                 <td class="align-middle">
-                                    @if($footer_license->status === 1)
+                                    @if($footer_license->status == 1)
                                         <i class="fa fa-2x fa-check-square-o text-success"></i>
-                                    @elseif($footer_license->status===0)
+                                    @elseif($footer_license->status == 0)
                                         <i class="fa fa-2x fa-minus-square-o text-danger"></i>
                                     @else
                                         نامشخص
@@ -74,7 +74,7 @@
 
                                     <input class="status big-checkbox mb-1 w-100 text-green"
                                            type="checkbox"
-                                           @if($footer_license->status ===1) checked @endif
+                                           @if($footer_license->status == 1) checked @endif
                                            id="status-{{$footer_license->id}}"
                                            title="نمایش نماد"
                                            data-url="{{ route('footer-licenses.update', $footer_license->id) }}"

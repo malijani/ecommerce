@@ -64,7 +64,7 @@
 
                                 {{--SHOW STATUS--}}
                                 <td class="align-middle">
-                                    @if($comment->status === 1)
+                                    @if($comment->status == 1)
                                         <i class="fa fa-2x fa-check-square-o text-success"></i>
                                         <span class="hide">{{ $comment->status }}</span>
 
@@ -76,7 +76,7 @@
                                                title="عدم تایید کامنت"
                                         >
 
-                                    @elseif($comment->status===0)
+                                    @elseif($comment->status == 0)
                                         <i class="fa fa-2x fa-minus-square-o text-danger"></i>
                                         <span class="hide">{{ $comment->status }}</span>
 

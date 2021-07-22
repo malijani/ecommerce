@@ -40,9 +40,9 @@
                                 <td class="align-middle">{{ $website_logo->id }}</td>
                                 {{--SHOW STATUS--}}
                                 <td class="align-middle">
-                                    @if($website_logo->status === 1)
+                                    @if($website_logo->status == 1)
                                         <i class="fa fa-2x fa-check-square-o text-success"></i>
-                                    @elseif($website_logo->status===0)
+                                    @elseif($website_logo->status==0)
                                         <i class="fa fa-2x fa-minus-square-o text-danger"></i>
                                     @else
                                         نامشخص
@@ -67,7 +67,7 @@
 
                                     <input class="status big-checkbox mb-1 w-100 text-green"
                                            type="radio"
-                                           @if($website_logo->status ===1) checked @endif
+                                           @if($website_logo->status ==1) checked @endif
                                            id="status-{{$website_logo->id}}"
                                            title="تعیین بعنوان پیشفرض"
                                            data-url="{{ route('logos.update', $website_logo->id) }}"

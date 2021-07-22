@@ -53,9 +53,9 @@
                                 </td>
                                 {{--SHOW STATUS--}}
                                 <td class="align-middle">
-                                    @if($top_nav_medium->status === 1)
+                                    @if($top_nav_medium->status == 1)
                                         <i class="fa fa-2x fa-check-square-o text-success"></i>
-                                    @elseif($top_nav_medium->status===0)
+                                    @elseif($top_nav_medium->status == 0)
                                         <i class="fa fa-2x fa-minus-square-o text-danger"></i>
                                     @else
                                         نامشخص
@@ -148,9 +148,9 @@
 
                                 {{--SHOW STATUS--}}
                                 <td class="align-middle">
-                                    @if($top_nav_small->status === 1)
+                                    @if($top_nav_small->status == 1)
                                         <i class="fa fa-2x fa-check-square-o text-success"></i>
-                                    @elseif($top_nav_small->status===0)
+                                    @elseif($top_nav_small->status == 0)
                                         <i class="fa fa-2x fa-minus-square-o text-danger"></i>
                                     @else
                                         نامشخص

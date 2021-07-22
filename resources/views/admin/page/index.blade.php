@@ -69,10 +69,10 @@
 
                                 {{--SHOW MENU--}}
                                 <td class="align-middle">
-                                    @if($page->menu === 1)
+                                    @if($page->menu == 1)
                                         <span class="badge badge-success">نمایش</span>
                                         <span class="hide">{{ $page->menu }}</span>
-                                    @elseif($page->menu === 0)
+                                    @elseif($page->menu == 0)
                                         <span class="badge badge-warning">عدم نمایش</span>
                                         <span class="hide">{{ $page->menu }}</span>
                                     @else
@@ -81,10 +81,10 @@
                                 </td>
                                 {{--SHOW STATUS--}}
                                 <td class="align-middle">
-                                    @if($page->status === 1)
+                                    @if($page->status == 1)
                                         <i class="fa fa-2x fa-check-square-o text-success"></i>
                                         <span class="hide">{{ $page->status }}</span>
-                                    @elseif($page->status===0)
+                                    @elseif($page->status == 0)
                                         <i class="fa fa-2x fa-minus-square-o text-danger"></i>
                                         <span class="hide">{{ $page->status }}</span>
                                     @else

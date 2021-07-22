@@ -41,9 +41,9 @@
                                 <td class="align-middle">{{ $social_media_button->id }}</td>
                                 {{--SHOW STATUS--}}
                                 <td class="align-middle">
-                                    @if($social_media_button->status === 1)
+                                    @if($social_media_button->status == 1)
                                         <i class="fa fa-2x fa-check-square-o text-success"></i>
-                                    @elseif($social_media_button->status===0)
+                                    @elseif($social_media_button->status == 0)
                                         <i class="fa fa-2x fa-minus-square-o text-danger"></i>
                                     @else
                                         نامشخص
@@ -76,7 +76,7 @@
 
                                     <input class="status big-checkbox mb-1 w-100 text-green"
                                            type="radio"
-                                           @if($social_media_button->status ===1) checked @endif
+                                           @if($social_media_button->status == 1) checked @endif
                                            id="status-{{$social_media_button->id}}"
                                            title="تعیین بعنوان پیشفرض"
                                            data-url="{{ route('social-media-buttons.update', $social_media_button->id) }}"
