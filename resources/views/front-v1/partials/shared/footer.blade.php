@@ -183,7 +183,7 @@
                     </h4>
                     <hr class="w-75">
                     <div class="row justify-content-center align-items-center">
-                        @if($footer_licenses->links->count())
+                        @if(!empty($footer_licenses->links) && $footer_licenses->links->count())
 
                             @foreach($footer_licenses->links as $footer_license_link)
                                 <div class="col-12 mt-3">
@@ -215,7 +215,7 @@
         <div class="mt-5 text-center p-3 font-weight-bolder rounded-top bg-light">
             <div class="row align-items-center">
                 {{--STATIC NAVS--}}
-                @if(isset($footer_static_navs->links) && $footer_static_navs->links->count())
+                @if(!empty($footer_static_navs->links) && $footer_static_navs->links->count())
                     @foreach($footer_static_navs->links as $footer_nav_link)
                         <div class="col-12 col-md @if($loop->first) mt-0 @else mt-3 mt-md-0 @endif">
                             <a href="{{ $footer_nav_link->link }}"

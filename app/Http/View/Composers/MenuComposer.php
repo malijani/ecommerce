@@ -45,11 +45,16 @@ class MenuComposer
             ->where('title', 'مقالات')
             ->first();
 
+        if (!empty($products) && $products->count()) {
+            $products_arr = $products->toArray();
+        }
+        if (!empty($articles) && $articles->count()) {
+            $articles_arr = $articles->toArray();
+        }
         $categories = [
-            'products' => $products->toArray(),
-            'articles' => $articles->toArray()
+            'products' => $products_arr ?? null,
+            'articles' => $articles_arr ?? null
         ];
-
 
 
         $brands = Brand::withoutTrashed()
@@ -62,7 +67,7 @@ class MenuComposer
             ->where('status', 1)
             ->orderBy('sort')
             ->get();
-        $custom_pages =[
+        $custom_pages = [
             'faq' => [
                 'title' => 'پرسش های متداول',
                 'route' => route('faq.index')
