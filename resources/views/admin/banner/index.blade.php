@@ -40,9 +40,9 @@
                                 <td class="align-middle">{{ $banner->id }}</td>
                                 {{--SHOW STATUS--}}
                                 <td class="align-middle">
-                                    @if($banner->status === 1)
+                                    @if($banner->status == 1)
                                         <i class="fa fa-2x fa-check-square-o text-success"></i>
-                                    @elseif($banner->status===0)
+                                    @elseif($banner->status == 0)
                                         <i class="fa fa-2x fa-minus-square-o text-danger"></i>
                                     @else
                                         نامشخص
@@ -69,7 +69,7 @@
 
                                     <input class="status big-checkbox mb-1 w-100 text-green"
                                            type="radio"
-                                           @if($banner->status ===1) checked @endif
+                                           @if($banner->status == 1) checked @endif
                                            id="status-{{$banner->id}}"
                                            title="تعیین بعنوان پیشفرض"
                                            data-url="{{ route('banners.update', $banner->id) }}"
@@ -135,15 +135,20 @@
                     data: {
                         '_token': '{{ csrf_token() }}',
                         '_method': 'PATCH',
-                        'status': 'on',
-                        'ajax': '1',
                     },
-                    success: function (result) {
-                        location.reload();
-                    },
-                    error: function () {
+                    success: function (data) {
                         swal({
-                            text: "خطای غیر منتظره ای رخ داده، لطفا با توسعه دهنده در میان بگذارید.",
+                            text: data.message,
+                            icon: 'success',
+                            button: false
+                        }).then(() => {
+                            location.reload();
+                        });
+
+                    },
+                    error: function (data) {
+                        swal({
+                            text: data.responseJSON.message,
                             icon: 'error',
                             button: "فهمیدم.",
                         });
@@ -174,12 +179,19 @@
                                     '_token': '{{ csrf_token() }}',
                                     '_method': 'DELETE',
                                 },
-                                success: function (result) {
-                                    location.reload();
-                                },
-                                error: function () {
+                                success: function (data) {
                                     swal({
-                                        text: "خطای غیر منتظره ای رخ داده، لطفا با توسعه دهنده در میان بگذارید.",
+                                        text: data.message,
+                                        icon: 'success',
+                                        button: false,
+                                    }).then(()=>{
+                                        location.reload();
+                                    });
+
+                                },
+                                error: function (data) {
+                                    swal({
+                                        text: data.responseJSON.message,
                                         icon: 'error',
                                         button: "فهمیدم.",
                                     });

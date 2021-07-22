@@ -6,6 +6,7 @@ use App\Banner;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\JsonResponse;
 
@@ -68,7 +69,7 @@ class BannerController extends Controller
             $status = 1;
             /*DEACTIVATE LAST ACTIVE BANNER*/
             $last_active_banner = Banner::query()->where('status', '1')->first();
-            if(!is_null($last_active_banner)){
+            if (!is_null($last_active_banner)) {
                 $last_active_banner->status = 0;
                 $last_active_banner->save();
             }
@@ -118,32 +119,38 @@ class BannerController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return mixed
      */
-    public function update(Request $request, $id): RedirectResponse
+    public function update(Request $request, $id)
     {
-        $banner = Banner::withoutTrashed()->findOrFail($id);
+        $banner = Banner::withoutTrashed()
+            ->findOrFail($id);
 
         /*AJAX PATCH REQUEST : ONLY CHANGE DEFAULT IMAGE*/
         /*CHECK IF REQUEST COMES FROM AJAX*/
-        if ($request->has('ajax') && $request->input('ajax') == '1') {
+        if ($request->ajax()) {
             /*CHECK ACTIVATE BANNER*/
-            $last_active_banner = Banner::withoutTrashed()->where('status', 1)->first();
-            if (!is_null($last_active_banner) && $last_active_banner->id == $id) {
-                return response()->redirectToRoute('banners.index')->with('warning', 'بنر انتخاب شده ، بنر پیشفرض می‌باشد.');
+            $last_active_banner = Banner::withoutTrashed()
+                ->where('status', 1)
+                ->first();
+            if (!empty($last_active_banner) && $last_active_banner->id == $id) {
+                return response()
+                    ->json([
+                        'message' => 'بنر انتخاب شده ، بنر پیشفرض می‌باشد.',
+                    ], Response::HTTP_FORBIDDEN);
             }
-            $request->validate([
-                'status' => ['required', 'string', 'size:2'],
-            ]);
             /*Change Banner Status*/
             $banner->status = 1;
             $banner->save();
-            if (!is_null($last_active_banner)) {
+            if (!empty($last_active_banner)) {
                 /*DEACTIVATE LAST ACTIVE BANNER*/
                 $last_active_banner->status = 0;
                 $last_active_banner->save();
             }
-            return response()->redirectToRoute('banners.index')->with('success', 'بنر منتخب بعنوان بنر پیشفرض تعیین شد.');
+            return response()
+                ->json([
+                    'message' => 'بنر منتخب بعنوان بنر پیشفرض تعیین شد.',
+                ]);
         }
 
         /*VIEW PUT REQUEST ONLY CHANGE PIC_ALT AND PIC*/
@@ -164,26 +171,42 @@ class BannerController extends Controller
             ['pic' => $pic]
         ));
 
-        return response()->redirectToRoute('banners.index')->with('success', 'بنر شماره ' . $banner->id . ' با موفقیت بروزرسانی شد!');
+        return response()
+            ->redirectToRoute('banners.index')
+            ->with('success', 'بنر شماره ' . $banner->id . ' با موفقیت بروزرسانی شد!');
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return mixed
      */
-    public function destroy($id): RedirectResponse
+    public function destroy(Request $request, $id)
     {
-        $last_active_banner = Banner::withoutTrashed()->where('status', 1)->first();
-
-        if (!is_null($last_active_banner)) {
-            if ($last_active_banner->id != $id) {
-                return response()->redirectToRoute('banners.index')->with('success', 'بنر با موفقیت حذف شد');
+        if ($request->ajax()) {
+            $last_active_banner = Banner::withoutTrashed()
+                ->where('status', 1)
+                ->first();
+            if (!empty($last_active_banner) && $last_active_banner->id == $id) {
+                return response()
+                    ->json([
+                        'message' => 'بنر انتخاب شده، فعال و غیر قابل حذف می باشد'
+                    ], Response::HTTP_FORBIDDEN);
             }
+            try {
+                Banner::withoutTrashed()->findOrFail($id)->delete();
+            } catch (\Exception $e) {
+                return response()->json([
+                    'message'=> 'در حذف بنر خطایی رخ داده : '. $e->getMessage(),
+                ], Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
+            return response()
+                ->json([
+                    'message' => 'بنر مورد نظر با موفقیت حذف شد!',
+                ]);
+        } else {
+            return back()->with('error', 'درخواست نامعتبر');
         }
-        Banner::withoutTrashed()->findOrFail($id)->delete();
-        return response()->redirectToRoute('banners.index')->with('error', 'بنر انتخابی نباید بنر پیشفرض باشد!');
-
     }
 }
