@@ -39,15 +39,14 @@
                                     </div>
 
 
-                                    <div class="owl-carousel product-thumbnails col-9 mx-auto"
+                                    <div class="owl-carousel  product_thumbnails col-9 mx-auto"
                                          id="oc_product_images"
                                     >
                                         @foreach($product->files as $file)
                                             <img src="{{ asset($file->link) }}"
                                                  alt="{{ $file->title }}"
-                                                 class="img-thumbnail"
+                                                 class="img-thumbnail suggest_img"
                                                  id="product-thumbnail-{{$loop->index}}"
-                                                 style="max-height: 100px; overflow-y: hidden; object-fit: cover"
                                             >
                                         @endforeach
 
@@ -106,29 +105,31 @@
 
                             {{--CATEGORY AND BRAND--}}
                             <div class="col-12 my-2 my-md-3">
-                                <div class="row justify-content-center align-items-center">
-                                    <div class="col-5 mr-auto text-left">
+                                <div class="row justify-content-end align-items-center">
+                                    <div class="col text-center text-md-left">
+                                        <span class="">
                                         <span class="text-muted">
                                             برند
                                         </span>
-                                        <span>
+                                            <span>
                                             <a href="{{ route('brand.show', $product->brand->title_en) }}"
                                                class="badge badge-secondary p-2"
                                             >
                                                 {{ $product->brand->title . ' | ' . str_replace('-', ' ', $product->brand->title_en) }}
                                             </a>
                                         </span>
-                                    </div>
-                                    <div class="col-5 ml-auto text-right">
+                                        </span>
+                                        <span class="">
                                         <span class="text-muted">
                                             دسته
                                         </span>
-                                        <span>
+                                            <span>
                                             <a href="{{ route('category.show', $product->category->title_en) }}"
                                                class="badge badge-secondary p-2"
                                             >
                                                 {{ $product->category->title }}
                                             </a>
+                                        </span>
                                         </span>
                                     </div>
                                 </div>
