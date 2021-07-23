@@ -3,11 +3,12 @@
 /public/storage
 /storage/*.key
 /vendor
-/resources/admin  
-/resources/front-final  
-/resources/front-mega-menu  
-/resources/front-v1  
+/resources/admin
+/resources/front-final
+/resources/front-mega-menu
+/resources/front-v1
 /resources/inspina
+/resources/backup
 .env
 .env.backup
 .phpunit.result.cache

@@ -43,6 +43,7 @@ class ArticleController extends Controller
             ->with('childrenRecursive')
             ->where('parent_id', 0)
             ->where('status', 1)
+            ->where('title_en', 'articles')
             ->orderBy('created_at', 'DESC')
             ->orderBy('sort', 'ASC')
             ->get();

@@ -17,23 +17,30 @@
 
             {{--SHOW ARTICLES--}}
             <div class="col-12 col-lg-8 my-2 shadow-lg rounded py-md-4">
-                <div class="row">
-                    <section>
-                        @foreach($articles as $article)
-                            @include('front-v1.blog.article_brief')
-                        @endforeach
-                    </section>
+                @if(!empty($articles) && $articles->count())
 
-                </div>
-                {{--PAGINATION--}}
-                @if($articles->hasPages())
-                    <div class="row my-3 p-3">
-                        <div class="mx-auto">
-                            {{ $articles->links() }}
+                    <div class="row">
+                        <section>
+                            @foreach($articles as $article)
+                                @include('front-v1.blog.article_brief')
+                            @endforeach
+                        </section>
+                    </div>
+                    {{--PAGINATION--}}
+                    @if($articles->hasPages())
+                        <div class="row my-3 p-3">
+                            <div class="mx-auto">
+                                {{ $articles->links() }}
+                            </div>
                         </div>
+                    @endif
+                    {{--./PAGINATION--}}
+
+                @else
+                    <div class="text-center">
+                        <h4>مقاله ای برای نمایش وجود ندارد!</h4>
                     </div>
                 @endif
-                {{--./PAGINATION--}}
             </div>
             {{--./SHOW ARTICLES--}}
 
