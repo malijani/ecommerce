@@ -42,10 +42,10 @@
             {{--@if(\Request::routeIs('home'))
                 <div id="parallax_header"
                      class="col-12 my-2 mt-md-0 text-center parallax_header"
-                     title="{{ $logo->pic_alt ??  config('app.short.name') }}"
+                     title="{{ $logo->pic_alt ??  config('app.brand.name') }}"
                 >
                     <img src="{{asset($logo->pic??'images/fallback/logo.png')}}"
-                         alt="{{ $logo->pic_alt ?? config('app.short.name') }}"
+                         alt="{{ $logo->pic_alt ?? config('app.brand.name') }}"
                          id="parallax_header_img"
                     >
                 </div>

@@ -16,7 +16,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $title = 'داشبورد حساب کاربری شما | '. config('app.name');
+        $title = 'داشبورد حساب کاربری شما | '. config('app.long.title');
 
         $paid_factors = Auth::user()->factors()->paidFactors()->get();
         return response()->view('front-v1.user.dashboard.index', [

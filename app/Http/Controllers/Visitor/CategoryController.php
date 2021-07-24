@@ -19,7 +19,7 @@ class CategoryController extends Controller
      */
     public function index(): Response
     {
-        $title = 'لیست دسته بندی های وبسایت '. config('app.short.name');
+        $title = 'لیست دسته بندی های وبسایت '. config('app.brand.name');
         $categories = Category::withoutTrashed()
             ->with('children')
             ->where('parent_id', 0)
@@ -73,7 +73,7 @@ class CategoryController extends Controller
                 ->where('parent_id', 0)
                 ->limit(20)
                 ->get();
-            $title = 'دسته بندی ' . $slug . ' در ' . config('app.short.name'). ' یافت نشد! ';
+            $title = 'دسته بندی ' . $slug . ' در ' . config('app.brand.name'). ' یافت نشد! ';
             return response()
                 ->view('front-v1.category.404', [
                     'categories' => $categories,

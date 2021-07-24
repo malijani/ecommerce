@@ -231,7 +231,7 @@ class FactorController extends Controller
         $invoice = (new Invoice)->amount((int)$factor->price);
         $invoice->detail([
             'mobile' => $user->mobile,
-            'description' => 'پرداخت فاکتور شماره ' . $factor->uuid . ' وبسایت ' . config('app.short.name'),
+            'description' => 'پرداخت فاکتور شماره ' . $factor->uuid . ' وبسایت ' . config('app.brand.name'),
         ]);
 
         /*GO TO ZARINPAL OR BEHPARDKHT AND BACK TO FACTOR SHOW*/

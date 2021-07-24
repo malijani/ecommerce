@@ -15,7 +15,7 @@ class PageController extends Controller
      */
     public function index()
     {
-        $title = 'صفحات وبسایت ' . config('app.name');
+        $title = 'صفحات وبسایت ' . config('app.brand.name');
         $pages = Page::withoutTrashed()
             ->where('status', 1)
             ->orderBy('sort')
@@ -72,7 +72,7 @@ class PageController extends Controller
             ->get();
 
         if (empty($page)) {
-            $title = 'صفحه ' . $slug . ' در ' . config('app.short.name') . ' یافت نشد! ';
+            $title = 'صفحه ' . $slug . ' در ' . config('app.brand.name') . ' یافت نشد! ';
             return response()->view('front-v1.page.404', [
                 'title' => $title,
                 'not_found' => $slug,

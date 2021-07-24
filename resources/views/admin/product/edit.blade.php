@@ -1395,7 +1395,7 @@
             });
 
             @foreach($product->files as $file)
-            @if($file->status === "2")
+            @if($file->status == "2")
 
             let selector = $(".img-" +{{$loop->index}});
             selector.mouseover();

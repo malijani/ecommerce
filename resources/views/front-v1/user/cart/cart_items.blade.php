@@ -254,7 +254,7 @@
 
 @else
 
-    <div class="card border-0 shadow-lg">
+    <div class="card border-0 shadow">
         <div class="card-header py-4">
             <i class="fa fa-info-circle fa-2x align-middle"></i>
             <h4 class="d-inline mx-1">سبد خرید شما خالیست.</h4>

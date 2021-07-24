@@ -22,7 +22,7 @@ class AuthController extends Controller
     public function showLogin()
     {
         $requested = !empty(session()->get('login.mobile'));
-        $title = 'ثبت نام/ورود به ' . config('app.short.name');
+        $title = 'ثبت نام/ورود به ' . config('app.brand.name');
         return view('auth.login', [
             'title' => $title,
             'requested' => $requested,

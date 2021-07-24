@@ -2,7 +2,7 @@
 <html lang="fa">
 <head>
     @include('admin.partials.metas')
-    <title>{{ $title ?? config('app.name') }}</title>
+    <title>{{ $title ?? config('app.brand.name') }}</title>
     @include('admin.partials.styles')
     @yield('page-styles')
 </head>

@@ -175,7 +175,7 @@
                                     @else
                                         قوانین و مقررات
                                     @endif
-                                    {{ config('app.short.name') }} را میپذیرم.
+                                    {{ config('app.brand.name') }} را میپذیرم.
                                 </label>
 
                                 @if(!empty($terms_conditions))

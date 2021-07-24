@@ -14,7 +14,7 @@
                 </div>
             </div>
             {{--SHOW MAIN CONTENT--}}
-            <div class="col-12 col-lg-8 my-2 shadow-lg rounded py-md-4">
+            <div class="col-12 col-lg-8 my-2 shadow rounded py-md-4">
                 <div class="row my-2">
                     {{--SHOW PRODUCT IMAGES--}}
                     <div class="col-12 col-md-6 mb-5 ">

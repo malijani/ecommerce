@@ -19,11 +19,11 @@
                         </div>
                         <div class="col-md-6">
                             <span class="text-muted">وضعیت کلی تیکت : </span>
-                            @if($ticket->status === 0)
+                            @if($ticket->status == 0)
                                 <span class="badge badge-success">{{ $ticket->status_text }}</span>
-                            @elseif($ticket->status === 1)
+                            @elseif($ticket->status == 1)
                                 <span class="badge badge-warning">{{ $ticket->status_text }}</span>
-                            @elseif($ticket->status === 2)
+                            @elseif($ticket->status == 2)
                                 <span class="badge badge-danger">{{ $ticket->status_text }}</span>
                             @else
                                 <span class="badge badge-light">نامشخص</span>

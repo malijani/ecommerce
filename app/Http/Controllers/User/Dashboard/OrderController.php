@@ -18,7 +18,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $title = 'سفارش های ثبت شده توسط شما در ' . config('app.short.name');
+        $title = 'سفارش های ثبت شده توسط شما در ' . config('app.brand.name');
         $user = Auth::user();
         $factors = [];
         $factors['active_factors'] = $user->factors()
@@ -97,7 +97,7 @@ class OrderController extends Controller
                 ->redirectToRoute('dashboard.orders.index')
                 ->with('error', 'فاکتور مورد نظر شما یافت نشد!');
         }
-        $title = 'جزییات فاکتور ' . $factor->uuid . ' در ' . config('app.short.name');
+        $title = 'جزییات فاکتور ' . $factor->uuid . ' در ' . config('app.brand.name');
         return response()
             ->view('front-v1.user.dashboard.order.show', [
                 'title' => $title,

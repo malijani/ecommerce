@@ -2,7 +2,7 @@
 <html lang="fa">
     <head>
         <meta charset="UTF-8">
-        <title>انتقال از {{ config('app.short.name') }} به درگاه پرداخت</title>
+        <title>انتقال از {{ config('app.brand.name') }} به درگاه پرداخت</title>
         <style>
             .text-center {
                 text-align: center;

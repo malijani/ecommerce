@@ -18,7 +18,7 @@ class FactorController extends Controller
      */
     public function index()
     {
-        $title = 'مدیریت فاکتور های ' . config('app.short.name');
+        $title = 'مدیریت فاکتور های ' . config('app.brand.name');
         $factors = [];
         $factors['paid'] = Factor::withoutTrashed()
             ->paidFactors()

@@ -16,7 +16,7 @@
             </div>
 
             {{--SHOW MAIN CONTENT--}}
-            <div class="col-12 col-lg-8 my-2 shadow-lg rounded py-md-4">
+            <div class="col-12 col-lg-8 my-2 shadow rounded py-md-4">
                 @if(!empty($products) && $products->count())
                     @include('front-v1.partials.products', ['products'=>$products])
 

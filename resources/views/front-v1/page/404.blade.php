@@ -16,7 +16,7 @@
             </div>
             {{--SHOW MAIN CONTENT--}}
             <div class="col-12 col-lg-8 my-2 ">
-                <div class="card mb-3 shadow-lg">
+                <div class="card mb-3 shadow">
                     <img src="{{ asset('images/asset/404.png') }}"
                          alt="صفحه مورد نظر یافت نشد!"
                          class="card-img-top img img-fluid img-size-swiper p-1 rounded"

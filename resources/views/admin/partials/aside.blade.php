@@ -11,7 +11,7 @@
             </div>
             <div class="col-6 text-center">
                 <img src="{{ asset($logo->pic ?? 'images/fallback/logo.png') }}"
-                     alt="{{ $logo->pic_alt ?? config('app.short.name') }}"
+                     alt="{{ $logo->pic_alt ?? config('app.brand.name') }}"
                      class="elevation-3 img-fluid bg-white rounded align-middle w-75"
                      style="opacity: .8"
                 >

@@ -289,7 +289,7 @@
             <div class="row mx-2 w-100">
                 @foreach($addresses as $address)
 
-                    @if($address['id']===$default_address['id'])
+                    @if($address['id']==$default_address['id'])
                         @continue
                     @endif
                     <div class="col-12 mt-4 border rounded p-4">

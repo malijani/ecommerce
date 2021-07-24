@@ -3,12 +3,12 @@
 
         <div class="menu__brand_and_icon">
             <a href="{{ route('home') }}"
-               title="رفتن به صفحه اصلی {{config('app.short.name')}}"
+               title="رفتن به صفحه اصلی {{config('app.brand.name')}}"
                class="menu__navbar_brand mr-3"
             >
                 <img
                     src="{{asset('images/asset/logos/logo.png')}}"
-                    alt="{{$logo->pic_alt??config('app.short.name')}}"
+                    alt="{{$logo->pic_alt??config('app.brand.name')}}"
                     width="107" height="24"
                     data-retina="{{asset('images/asset/logos/logo-min.png')}}"
                     data-width="107" data-height="24"
@@ -43,7 +43,7 @@
 
                                 <div class="menu__sub_menu py-3">
                                     @if(!empty($category['active_children']))
-                                        
+
                                         @foreach($category['active_children'] as $sub_cat)
                                             <div class="menu__sub_menu_item">
                                                 <h4>
@@ -166,7 +166,7 @@
                     @else
                         <li>
                             <a href="{{ route('login') }}"
-                               title="ورود یا ایجاد حساب کاربری در {{ config('app.short.name') }}"
+                               title="ورود یا ایجاد حساب کاربری در {{ config('app.brand.name') }}"
                             >
                                 <i class="far fa-user-alt align-middle"></i>
                                 ورود

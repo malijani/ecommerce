@@ -18,7 +18,7 @@ class BlogController extends Controller
      */
     public function index()
     {
-        $title = 'وبلاگ';
+        $title = ' وبلاگ ' . config('app.brand.name');
         $articles = Article::withoutTrashed()
             ->with('category')
             ->active()
@@ -69,7 +69,7 @@ class BlogController extends Controller
             ->first();
 
         if (empty($article)) {
-            $title = 'مقاله ' . $slug . ' در ' . config('app.short.name') . ' یافت نشد ';
+            $title = 'مقاله ' . $slug . ' در ' . config('app.brand.name') . ' یافت نشد ';
 
             $articles = Article::withoutTrashed()
                 ->with('category')

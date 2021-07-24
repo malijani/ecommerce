@@ -17,7 +17,7 @@ class ProductController extends Controller
      */
     public function index(): Response
     {
-        $title = 'محصولات ' . config('app.short.name');
+        $title = 'محصولات ' . config('app.brand.name');
         $products = Product::withoutTrashed()
             ->active()
 //            ->where('entity', '>', 0)
@@ -49,7 +49,7 @@ class ProductController extends Controller
 
 
         if (empty($product)) {
-            $title = 'محصول ' . $slug . ' در ' . config('app.short.name') . ' یافت نشد ';
+            $title = 'محصول ' . $slug . ' در ' . config('app.brand.name') . ' یافت نشد ';
             $products = Product::withoutTrashed()
                 ->active()
                 ->orderByDesc('sold')

@@ -16,7 +16,7 @@
         <!-- DETAILS box -->
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">لیست فاواکن های {{ config('app.short.name') }}</h3>
+                <h3 class="card-title">لیست فاواکن های {{ config('app.brand.name') }}</h3>
             </div>
             <div class="card-body">
                 <div class="table-responsive" id="table-content">

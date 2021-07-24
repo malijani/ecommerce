@@ -15,7 +15,7 @@
             </div>
 
 
-            <div class="col-12 col-lg-8 my-2 shadow-lg rounded">{{--MAIN CONTENT--}}
+            <div class="col-12 col-lg-8 my-2 shadow rounded">{{--MAIN CONTENT--}}
                 @include('front-v1.blog.article_show')
             </div>{{--./MAIN CONTENT--}}
 
@@ -28,7 +28,7 @@
                         </div>
                         <ul class="list-group list-group-flush text-center">
                             @foreach($other_articles as $other_article)
-                                @if($other_article->id === $article->id)
+                                @if($other_article->id == $article->id)
                                     @continue
                                 @endif
                                 <li class="list-group-item">

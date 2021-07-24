@@ -15,7 +15,7 @@
                 </div>
             </div>
             {{--SHOW MAIN CONTENT--}}
-            <div class="col-12 col-lg-8 my-2 px-0 px-md-4 rounded shadow-lg">
+            <div class="col-12 col-lg-8 my-2 px-0 px-md-4 rounded shadow">
                 @if(!empty($categories) && $categories->count())
                     @foreach($categories as $parent_category)
                         <a href="{{ route('category.show', $parent_category->title_en) }}"

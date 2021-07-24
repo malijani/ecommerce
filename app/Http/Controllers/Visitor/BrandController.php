@@ -64,7 +64,7 @@ class BrandController extends Controller
             ->first();
 
         if(empty($brand)){
-            $title = 'برند ' . $slug . ' در وبسایت ' . config('app.short.name') . ' یافت نشد. ';
+            $title = 'برند ' . $slug . ' در وبسایت ' . config('app.brand.name') . ' یافت نشد. ';
             $brands = Brand::withoutTrashed()
                 ->where('status', 1)
                 ->orderBy('sort')

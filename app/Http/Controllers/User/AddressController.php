@@ -28,7 +28,7 @@ class AddressController extends Controller
             return redirect()->back()->with('error', 'شما هنوز محصولی جهت سفارش ثبت نکرده اید!');
         }
 
-        $title = 'انتخاب آدرس ارسال بسته ' . config('app.short.name');
+        $title = 'انتخاب آدرس ارسال بسته ' . config('app.brand.name');
 
         $addresses = Auth::user()->addresses;
         $default_address = Auth::user()->defaultAddress;

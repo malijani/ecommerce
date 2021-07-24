@@ -17,7 +17,7 @@
             {{--SHOW MAIN CONTENT--}}
             <div class="col-12 col-lg-8 my-2">
 
-                <div class="card mb-3 shadow-lg">
+                <div class="card mb-3 shadow">
                     <div class="card-body">
                         <div class="row align-items-center bg-light pt-md-2 rounded">
 

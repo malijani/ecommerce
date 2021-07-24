@@ -18,7 +18,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $title = 'مدیریت حساب شما | ' . config('app.name');
+        $title = 'مدیریت حساب شما | ' . config('app.long.title');
 
         $user = Auth::user();
         return response()->view('front-v1.user.dashboard.profile', [

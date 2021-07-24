@@ -3,7 +3,7 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
-    <title>{{ $title ?? config('app.name') }}</title>
+    <title>{{ $title ?? config('app.long.title') }}</title>
     @include('front-v1.partials.metas')
     @yield('page-metas')
     @include('front-v1.partials.styles')

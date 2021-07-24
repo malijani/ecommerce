@@ -6,10 +6,10 @@
             <div class="row py-2 mt-2 mt-md-5">
                 <div class="col-12 text-center">
                     <a href="{{ $footer_image->link ?? '#' }}"
-                       title="{{ $footer_image->pic_alt ?? config('app.short.name') }}"
+                       title="{{ $footer_image->pic_alt ?? config('app.brand.name') }}"
                     >
                         <img src="{{ asset($footer_image->pic ?? 'images/fallback/footer_licenses.png') }}"
-                             alt="{{ $footer_image->pic_alt ?? config('app.short.name') ?? ' مجوز های وبسایت ' }}"
+                             alt="{{ $footer_image->pic_alt ?? config('app.brand.name') ?? ' مجوز های وبسایت ' }}"
                              class="img img-fluid rounded w-100 h-100"
                              loading="lazy"
                         >
@@ -228,9 +228,9 @@
                 @else
                     <div class="col-12">
                         <p class="text-info-custom mt-3">
-                            تمامی حقوق مادی و معنوی این وبسایت متعلق به {{ config('app.short.name') }} می‌باشد و هرگونه
+                            تمامی حقوق مادی و معنوی این وبسایت متعلق به {{ config('app.brand.name') }} می‌باشد و هرگونه
                             سوء
-                            استفاده تحت پیگرد قانونی قرار میگیرد؛ {{ config('app.short.name') }} هیچ شعبه دیگری ندارد.
+                            استفاده تحت پیگرد قانونی قرار میگیرد؛ {{ config('app.brand.name') }} هیچ شعبه دیگری ندارد.
                         </p>
                     </div>
                 @endif
@@ -333,7 +333,7 @@
                         کپی رایت @ 1400.
                         طراحی و توسعه توسط
                         <a href="https://github.com/malijani"
-                           title="توسعه دهنده وبسایت {{ config('app.short.name') }}"
+                           title="توسعه دهنده وبسایت {{ config('app.brand.name') }}"
                            class="text-primary"
                         >
                             محمد علی جانی

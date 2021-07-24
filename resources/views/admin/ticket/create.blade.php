@@ -45,7 +45,7 @@
 
                                         @foreach($users as $user)
                                             <option value="{{ $user->id }}"
-                                                    @if(old('user_id') === $user->id) selected @endif
+                                                    @if(old('user_id') == $user->id) selected @endif
                                             >
                                                 {{ $user->full_name }} | {{ $user->contact_information }}
                                             </option>
@@ -79,7 +79,7 @@
 
                                         @foreach($categories as $category)
                                             <option value="{{ $category->id }}"
-                                                    @if(old('category_id') === $category->id) selected @endif
+                                                    @if(old('category_id') == $category->id) selected @endif
                                             >
                                                 {{ $category->title }}
                                             </option>
@@ -176,9 +176,9 @@
                                         @if(is_null(old('priority')))
                                             <option value="" selected>انتخاب کنید...</option>
                                         @endif
-                                        <option value="0" @if(old('priority')==='0') selected @endif>پایین</option>
-                                        <option value="1" @if(old('priority')==='1') selected @endif>متوسط</option>
-                                        <option value="2" @if(old('priority')==='2') selected @endif>مهم</option>
+                                        <option value="0" @if(old('priority')=='0') selected @endif>پایین</option>
+                                        <option value="1" @if(old('priority')=='1') selected @endif>متوسط</option>
+                                        <option value="2" @if(old('priority')=='2') selected @endif>مهم</option>
                                     </select>
                                     @include('partials.form_error', ['input'=>'priority'])
                                 </div>
@@ -202,9 +202,9 @@
                                         @if(is_null(old('status')))
                                             <option value="" selected>انتخاب کنید...</option>
                                         @endif
-                                        <option value="0" @if(old('status')==='0') selected @endif>باز</option>
-                                        <option value="1" @if(old('status')==='1') selected @endif>پاسخ داده شده</option>
-                                        <option value="2" @if(old('status')==='2') selected @endif>بسته شده</option>
+                                        <option value="0" @if(old('status')=='0') selected @endif>باز</option>
+                                        <option value="1" @if(old('status')=='1') selected @endif>پاسخ داده شده</option>
+                                        <option value="2" @if(old('status')=='2') selected @endif>بسته شده</option>
                                     </select>
                                     @include('partials.form_error', ['input'=>'status'])
                                 </div>

@@ -1,11 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
+    <div class="container my-5">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header text-center p-5 font-20">تایید حساب کاربری</div>
+                <div class="card border-0 border-radius-0 shadow">
+                    <div class="card-header border-bottom-0 text-center p-5 font-20">
+                        <h3>
+                            تایید حساب کاربری
+                        </h3>
+                    </div>
                     <div class="card-body">
 
                         <div class="row">
@@ -24,12 +28,12 @@
                                     @csrf
                                     <div class="form-group row justify-content-center">
 
-                                       {{-- <label for="code"
-                                               class="col-form-label col-md-1 text-center"
-                                        >
-                                            کد
-                                        </label>--}}
-                                        <div class="col-md-12">
+                                        {{-- <label for="code"
+                                                class="col-form-label col-md-1 text-center"
+                                         >
+                                             کد
+                                         </label>--}}
+                                        <div class="col-md-12 my-2">
                                             <input type="text"
                                                    name="code"
                                                    id="code"
@@ -104,7 +108,7 @@
         $(document).ready(function () {
 
             let code_input = $("#code")
-            code_input.on('keyup', function(){
+            code_input.on('keyup', function () {
                 code_input.val(fixNumbers(code_input.val()));
             });
 
@@ -112,6 +116,7 @@
             let resend_timer = $("#resend-timer");
             let resend_timer_value = $("#resend-timer-val");
             let timer;
+
             function setTimer() {
                 let delay = 60;
                 resend_code.hide();
@@ -123,6 +128,7 @@
                     }
                 }, 1000);
             }
+
             setTimer();
 
             resend_code.on('click', function () {

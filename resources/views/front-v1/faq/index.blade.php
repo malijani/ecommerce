@@ -17,7 +17,7 @@
             {{--./RIGHT ASIDE CONTENT--}}
 
             {{--MAIN CONTENT--}}
-            <div class="col-12 col-lg-8 my-2 shadow-lg rounded p-0">
+            <div class="col-12 col-lg-8 my-2 shadow rounded p-0">
                 @if(!empty($faqs) && $faqs->count())
                     @foreach($faqs as $faq)
                         <div class="card border-0 @if(!$loop->first) mt-1 @endif  border-radius-0">

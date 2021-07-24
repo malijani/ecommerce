@@ -15,8 +15,12 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
-    'short' => [
-        'name'=> env('APP_SHORT_NAME', 'lara')
+    'long' => [
+        'title'=> env('APP_LONG_TITLE', 'Laravel')
+    ],
+
+    'brand' =>[
+        'name' => env('APP_BRAND_NAME', 'BRAND')
     ],
 
     /*

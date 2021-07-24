@@ -19,7 +19,7 @@
             {{--ASIDE CONTENT--}}
 
 
-            <div class="col-12 col-lg-8 my-2 shadow-lg rounded">
+            <div class="col-12 col-lg-8 my-2 shadow rounded">
                 <div class="row">
                     @foreach($pages as $page)
                         @include('front-v1.page.page_brief', ['page' => $page, 'loop'=> $loop])

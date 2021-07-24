@@ -8,13 +8,13 @@
 
     <div class="card border-0 p-0">
         <div class="card-header">
-            <h4>داشبورد {{ \Illuminate\Support\Facades\Auth::user()->full_name}} در {{ config('app.short.name') }}</h4>
+            <h4>داشبورد {{ \Illuminate\Support\Facades\Auth::user()->full_name}} در {{ config('app.brand.name') }}</h4>
         </div>
 
 
         <div class="card-body">
             <div class="border p-2 m-md-4 rounded text-center font-weight-bolder font-16">
-                با کلیک روی گزینه های داشبورد، حساب {{ config('app.short.name') }} خود را مدیریت کنید.
+                با کلیک روی گزینه های داشبورد، حساب {{ config('app.brand.name') }} خود را مدیریت کنید.
             </div>
 
 

@@ -37,7 +37,7 @@
 
                                             @foreach($categories as $category)
                                                 <option value="{{ $category->id }}"
-                                                        @if(old('category_id') === $category->id) selected @endif
+                                                        @if(old('category_id') == $category->id) selected @endif
                                                 >
                                                     {{ $category->title }}
                                                 </option>
@@ -66,9 +66,9 @@
                                             @if(is_null(old('priority')))
                                                 <option value="" selected>انتخاب کنید...</option>
                                             @endif
-                                            <option value="0" @if(old('priority')==='0') selected @endif>پایین</option>
-                                            <option value="1" @if(old('priority')==='1') selected @endif>متوسط</option>
-                                            <option value="2" @if(old('priority')==='2') selected @endif>مهم</option>
+                                            <option value="0" @if(old('priority')=='0') selected @endif>پایین</option>
+                                            <option value="1" @if(old('priority')=='1') selected @endif>متوسط</option>
+                                            <option value="2" @if(old('priority')=='2') selected @endif>مهم</option>
                                         </select>
                                         @include('partials.form_error', ['input'=>'priority'])
                                     </div>

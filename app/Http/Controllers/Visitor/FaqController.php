@@ -16,7 +16,7 @@ class FaqController extends Controller
      */
     public function index()
     {
-        $title = 'پرسش های متداول کاربران وبسایت ' . config('app.name');
+        $title = 'پرسش های متداول کاربران وبسایت ' . config('app.brand.name');
         $faqs = Faq::withoutTrashed()->orderBy('sort')->where('status', 1)->get();
 
         $faq_page = FaqPage::query()->first();

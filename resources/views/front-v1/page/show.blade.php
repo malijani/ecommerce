@@ -18,7 +18,7 @@
             {{--./ASIDE CONTENT--}}
 
             {{--MAIN CONTENT--}}
-            <div class="col-12 col-lg-8 my-2 shadow-lg p-0">
+            <div class="col-12 col-lg-8 my-2 shadow p-0">
                 <div class="card border-0 p-0 rounded">
                     <div class="card-header text-center border-bottom-0">
                         <h3 class="h1" id="pageHeaderTitle">{{ $page->title }}</h3>
@@ -40,7 +40,7 @@
                         </div>
                         <ul class="list-group list-group-flush text-center">
                             @foreach($other_pages as $other_page)
-                                @if($other_page->id === $page->id)
+                                @if($other_page->id == $page->id)
                                     @continue
                                 @endif
                                 <li class="list-group-item">

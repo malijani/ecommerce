@@ -1,12 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
+    <div class="container my-5">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header text-center p-5 font-20">
-                        ورود به {{ config('app.short.name') }}
+                <div class="card border-0 shadow border-radius-0">
+                    <div class="card-header border-bottom-0 text-center p-5 font-20">
+                      <h3>
+                          ورود به {{ config('app.brand.name') }}
+                      </h3>
                     </div>
 
                     <div class="card-body py-5">
@@ -27,7 +29,7 @@
                             @csrf
 
                             <div class="form-group row">
-                                <div class="col-md-12">
+                                <div class="col-md-12 mb-4">
                                     <input id="mobile"
                                            type="text"
                                            class="ltr input-custom font-weight-bolder font-16 text-center form-control @error('mobile') is-invalid @enderror"

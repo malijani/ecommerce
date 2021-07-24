@@ -14,7 +14,7 @@
                 </div>
             </div>
 
-            <div class="col-12 col-lg-8 my-2 shadow-lg rounded p-md-0">{{--USER CONTROLL--}}
+            <div class="col-12 col-lg-8 my-2 shadow rounded p-md-0">{{--USER CONTROLL--}}
                 @include('front-v1.user.dashboard.buttons')
 
                 @yield('dashboard-content')

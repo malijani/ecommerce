@@ -39,7 +39,7 @@
         @if(!is_null($ticket->file))
             <div class="col-12 col-md-4">
                 <a
-                    @if(isset($type) && $type === 'comment')
+                    @if(isset($type) && $type == 'comment')
                     href="{{ route('files.ticket-files', [$ticket->id, 'comment']) }}"
                     @else
                     href="{{ route('files.ticket-files', [$ticket->uuid, 'ticket']) }}"
