@@ -27,7 +27,9 @@
 
 @include('front-v1.partials.shared.footer')
 
-@include('front-v1.partials.phone_nav')
+<footer id="phone-nav" class="d-block d-md-none sticky-footer bg-light">
+    @include('front-v1.partials.phone_nav')
+</footer>
 
 @include('front-v1.partials.back_to_top')
 

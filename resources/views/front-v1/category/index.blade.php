@@ -6,7 +6,7 @@
     {{ \Diglactic\Breadcrumbs\Breadcrumbs::render('categories') }}
 
     <div class="container-fluid">
-        <div class="row my-2">
+        <div class="row px-2 px-md-0 my-2">
 
             <div class="d-none d-lg-block col-lg-2">
                 @include('front-v1.partials.shared.menu_aside')
@@ -15,7 +15,7 @@
                 </div>
             </div>
             {{--SHOW MAIN CONTENT--}}
-            <div class="col-12 col-lg-8 my-2 px-0 px-md-4 rounded shadow">
+            <div class="col-12 col-lg-8 my-2 px-md-4 rounded shadow">
                 @if(!empty($categories) && $categories->count())
                     @foreach($categories as $parent_category)
                         <a href="{{ route('category.show', $parent_category->title_en) }}"

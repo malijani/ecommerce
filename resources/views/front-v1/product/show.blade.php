@@ -5,14 +5,15 @@
     {{ \Diglactic\Breadcrumbs\Breadcrumbs::render('products.product', $product) }}
 
 
-    <div class="container-fluid my-3 rounded">
-        <div class="row my-2">
+    <div class="container-fluid">
+        <div class="row">
             <div class="d-none d-lg-block col-lg-2">
                 @include('front-v1.partials.shared.menu_aside')
                 <div id="basket_aside_content">
                     @include('front-v1.partials.shared.basket_aside')
                 </div>
             </div>
+
             {{--SHOW MAIN CONTENT--}}
             <div class="col-12 col-lg-8 my-2 shadow rounded py-md-4">
                 <div class="row my-2">
@@ -103,41 +104,8 @@
                             </div>
                             {{--./SHOW PRICE--}}
 
-                            {{--CATEGORY AND BRAND--}}
-                            <div class="col-12 my-2 my-md-3">
-                                <div class="row justify-content-end align-items-center">
-                                    <div class="col text-center text-md-left">
-                                        <span class="">
-                                        <span class="text-muted">
-                                            برند
-                                        </span>
-                                            <span>
-                                            <a href="{{ route('brand.show', $product->brand->title_en) }}"
-                                               class="badge badge-secondary p-2"
-                                            >
-                                                {{ $product->brand->title . ' | ' . str_replace('-', ' ', $product->brand->title_en) }}
-                                            </a>
-                                        </span>
-                                        </span>
-                                        <span class="">
-                                        <span class="text-muted">
-                                            دسته
-                                        </span>
-                                            <span>
-                                            <a href="{{ route('category.show', $product->category->title_en) }}"
-                                               class="badge badge-secondary p-2"
-                                            >
-                                                {{ $product->category->title }}
-                                            </a>
-                                        </span>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            {{--./CATEGORY AND BRAND--}}
-
                             {{--ORDER FORM--}}
-                            <div class="col-12 my-1 my-md-3 ">
+                            <div class="col-12 my-3 ">
                                 @if($product->status != 2 && $product->price_type != 2 &&  $product->entity > 0)
                                     <form action="{{ route('cart.store') }}"
                                           method="POST"
@@ -261,7 +229,7 @@
 
 
                             {{--SHORT TEXT--}}
-                            <div class="col-12 p-1 p-md-3">
+                            <div class="col-12">
                                 <p>
                                     {{ $product->short_text }}
                                 </p>
@@ -271,6 +239,40 @@
                             {{--SHOW BRIEF--}}
                             <div class="col-12 mb-3">
                                 <div class="row justify-content-center align-items-center">
+                                    {{--CATEGORY AND BRAND--}}
+                                    <div class="col-12 col-md-6 mt-2 mt-md-0 text-center ">
+
+                                        <span class="text-muted">
+                                            برند
+                                        </span>
+                                        <span>
+                                            <a href="{{ route('brand.show', $product->brand->title_en) }}"
+                                               class="badge badge-secondary p-2"
+                                            >
+                                                {{ $product->brand->title . ' | ' . str_replace('-', ' ', $product->brand->title_en) }}
+                                            </a>
+                                        </span>
+
+
+                                    </div>
+                                    <div class="col-12 col-md-6 mt-2 mt-md-0 text-center ">
+
+                                        <span class="text-muted">
+                                            دسته
+                                        </span>
+                                        <span>
+                                            <a href="{{ route('category.show', $product->category->title_en) }}"
+                                               class="badge badge-secondary p-2"
+                                            >
+                                                {{ $product->category->title }}
+                                            </a>
+                                        </span>
+
+
+                                    </div>
+
+                                    {{--./CATEGORY AND BRAND--}}
+
                                     <hr class="w-50">
                                     {{--RATES--}}
                                     <div class="col-12 mt-2 mb-3 mb-md-4">
@@ -381,7 +383,7 @@
                     {{--./SHOW ABOUT IMAGE MENU--}}
 
                     {{--SHOW DETAILS AND DESCRITION--}}
-                    <div class="col-12 mt-3 border-bottom">
+                    <div class="col-12 px-2 mt-3 border-bottom">
                         <nav>
                             <div class="nav nav-tabs nav-fill font-weight-bolder" id="nav-tab" role="tablist">
                                 {{--DESCRIPTION--}}
@@ -415,12 +417,12 @@
                                  aria-labelledby="nav-details-tab">
                                 @foreach($product->details as $detail)
                                     <div
-                                        class="row mt-2 p-2 @if(!$loop->last) border-bottom @endif font-weight-bold font-16">
+                                        class="row mt-2 p-2 @if(!$loop->last) border-bottom @endif align-items-center">
 
-                                        <div class="col-4 text-md-center border-left">
+                                        <div class="col-4 text-center border-left">
                                             {{ $detail->title }}
                                         </div>
-                                        <div class="col-8 pr-5 text-md-right my-auto">
+                                        <div class="col-8 text-right my-auto">
                                             {{ $detail->detail }}
                                         </div>
 
@@ -648,7 +650,7 @@
                         /*UPDATE SECTIONS OF PRODUCT*/
                         $("#basket_aside_content").html(data.basket_aside);
                         $("#header_basket_total").html(data.basket_total);
-
+                        $("#phone-nav").html(data.phone_nav);
                         /*SHOW PRODUCT DOESN'T EXISTS*/
                         if (data.quantity <= 0) {
                             form.html('<div class="text-danger border border-danger rounded text-center py-3">' +

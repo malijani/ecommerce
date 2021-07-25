@@ -281,7 +281,8 @@ class CartController extends Controller
             try {
                 $basket_aside = view('front-v1.partials.shared.basket_aside', ['collapse_show' => true])->render();
                 $basket_total = view('front-v1.partials.shared.basket_total')->render();
-            } catch(\Throwable $e){
+                $phone_nav = view('front-v1.partials.phone_nav')->render();
+            } catch (\Throwable $e) {
                 return response()->json([
                     'message' => 'افزودن محصول با موفقیت انجام شد؛ لطفاً صفحه را بروز رسانی کنید.',
                 ], Response::HTTP_FAILED_DEPENDENCY);
@@ -289,6 +290,7 @@ class CartController extends Controller
             return response()->json([
                 'basket_aside' => $basket_aside,
                 'basket_total' => $basket_total,
+                'phone_nav' => $phone_nav,
                 'quantity' => $remaining_quantity,
                 'message' => ' محصول ' . $product->title . ' با موفقیت به سبد خرید شما افزوده شد.'
             ]);

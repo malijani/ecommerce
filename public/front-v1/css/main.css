@@ -658,6 +658,23 @@ input[type=number] {
     z-index: 1030 !important;
 }
 
+.fa-stack[data-count]:after {
+    position: absolute;
+    right: 0;
+    top: 0;
+    content: attr(data-count);
+    font-size: 0.6em;
+    font-weight:bold;
+    padding: 0.6em;
+    line-height: 0.75em;
+    color: #9e0505;
+    text-align: center;
+    min-width: 2em;
+    background: white;
+    border: 1px solid #0c0c0c;
+    border-radius: 30px;
+}
+
 /*********************/
 /*FOOTER PHONE NAVBAR*/
 /*********************/
@@ -685,7 +702,7 @@ input[type=number] {
 .social-media-button {
     background-color: #fffff5;
     position: fixed;
-    bottom: 5rem;
+    bottom: 4rem;
     left: 1rem;
     opacity: 0.9;
     border-radius: 20px;
