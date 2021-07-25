@@ -35,7 +35,7 @@
                             <div class="col-12 mt-2 mt-md-0">
                                 <div class="row align-items-center justify-content-center m-0 text-center">
 
-                                    <div class="oc_product_images_prev cursor-pointer col-1 mx-auto text-center">
+                                    <div class="oc_product_images_prev cursor-pointer col-1 p-0 mx-auto text-center">
                                         <i class="fal fa-angle-right fa-2x align-middle"></i>
                                     </div>
 
@@ -53,7 +53,7 @@
 
                                     </div>
 
-                                    <div class="oc_product_images_next cursor-pointer col-1 mx-auto text-center">
+                                    <div class="oc_product_images_next cursor-pointer col-1 p-0 mx-auto text-center">
                                         <i class="fal fa-angle-left fa-2x align-middle"></i>
                                     </div>
 

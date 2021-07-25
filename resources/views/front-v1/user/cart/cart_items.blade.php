@@ -262,7 +262,7 @@
         <div class="card-body py-4">
             <div class="my-3">
                 <div class="row">
-                    <div class="col-12 col-md-6">
+                    <div class="col-12 col-md-6 mt-1">
                         <a href="{{ route('product.index') }}"
                            class="btn btn-light w-100 p-4 font-weight-bolder shadow-sm"
                         >
@@ -270,7 +270,7 @@
                             ادامه خرید
                         </a>
                     </div>
-                    <div class="col-12 col-md-6">
+                    <div class="col-12 col-md-6 mt-1">
                         <a href="{{ route('dashboard.index') }}"
                            class="btn btn-light w-100 p-4 font-weight-bolder shadow-sm"
                         >
