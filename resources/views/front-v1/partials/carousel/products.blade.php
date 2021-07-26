@@ -11,7 +11,7 @@
                        title="مشاهده  جزییات محصول {{ $product->title  }}"
                     >
                         <div class="@if(empty($product->entity)) border border-danger rounded @endif ">
-                            <div class="row justify-content-between align-items-center rounded mx-1 text-center py-md-4">
+                            <div class="row justify-content-between align-items-center rounded mx-1 text-center pb-md-4">
                                 {{--SHOW IMAGE AND BADGES(DISCOUNT,ENTITY)--}}
                                 <div class="col-12">
                                     <img class="img img-fluid rounded img-size-swiper"

@@ -60,26 +60,74 @@
 
 
         {{--SHOW PRODUCTS--}}
+
         @if(!empty($products) && $products->count())
-            <div class="row justify-content-between align-items-center mt-5 py-4">
-                <div class="col-4 mx-auto">
-                    <a class="text-dark display-4 font-16 font-weight-bolder"
-                       href="{{ route('product.index') }}"
-                    >
-                        محصولات
-                    </a>
+            <div class="shadow py-4 px-2 px-md-0 my-3">
+                <div class="row justify-content-between align-items-center py-2">
+                    <div class="col-6 col-md-4 mx-auto">
+                        <a class="text-dark display-4 font-16 font-weight-bolder"
+                           href="{{ route('product.index') }}"
+                        >
+                            محصولات
+                        </a>
+                    </div>
+                    <div class="col-6 col-md-4 mx-auto text-left">
+                        <a href="{{ route('product.index') }}">
+                            مشاهده همه
+                            <i class="fal fa-eye"></i>
+                        </a>
+                    </div>
                 </div>
-                <div class="col-4 mx-auto text-center">
-                    <a href="{{ route('product.index') }}">
-                        مشاهده همه
-                        <i class="fal fa-eye"></i>
-                    </a>
-                </div>
+                @include('front-v1.partials.carousel.products', ['products'=>$products])
             </div>
-            @include('front-v1.partials.carousel.products', ['products'=>$products])
         @endif
         {{--./SHOW PRODUCTS--}}
 
+        {{--SHOW BRANDS--}}
+        @if(!empty($brands) && $brands->count())
+            <div class="shadow py-4 px-2 px-md-0 my-3">
+                <div class="row justify-content-between align-items-center py-2">
+                    <div class="col-6 col-md-4 mx-auto">
+                        <a class="text-dark display-4 font-16 font-weight-bolder"
+                           href="{{ route('brand.index') }}"
+                        >
+                            برند ها
+                        </a>
+                    </div>
+                    <div class="col-6 col-md-4 mx-auto text-left">
+                        <a href="{{ route('brand.index') }}">
+                            مشاهده همه
+                            <i class="fal fa-eye"></i>
+                        </a>
+                    </div>
+                </div>
+                @include('front-v1.partials.carousel.brands', ['brands'=>$brands])
+            </div>
+        @endif
+        {{--./SHOW BRANDS--}}
+
+        {{--SHOW CATEGORIES--}}
+        @if(!empty($categories) && $categories->count())
+            <div class="shadow py-4 px-2 px-md-0 my-3">
+                <div class="row justify-content-between align-items-center py-2">
+                    <div class="col-6 col-md-4 mx-auto">
+                        <a class="text-dark display-4 font-16 font-weight-bolder"
+                           href="{{ route('category.index') }}"
+                        >
+                            دسته بندی ها
+                        </a>
+                    </div>
+                    <div class="col-6 col-md-4 mx-auto text-left">
+                        <a href="{{ route('category.index') }}">
+                            مشاهده همه
+                            <i class="fal fa-eye"></i>
+                        </a>
+                    </div>
+                </div>
+                @include('front-v1.partials.carousel.categories', ['categories'=>$categories])
+            </div>
+        @endif
+        {{--./SHOW CATEGORIES--}}
 
         {{--SHOW MAIN IMAGE MENU--}}
         @if(!empty($main_image_menus) && $main_image_menus->count())
@@ -96,48 +144,6 @@
         {{--SHOW ABOUT IMAGE MENU--}}
         @include('front-v1.partials.shared.about_image_menus')
         {{--./SHOW ABOUT IMAGE MENU--}}
-
-        {{--SHOW BRANDS--}}
-        @if(!empty($brands) && $brands->count())
-            <div class="row justify-content-between align-items-center mt-5 py-4">
-                <div class="col-4 mx-auto">
-                        <a class="text-dark display-4 font-16 font-weight-bolder"
-                           href="{{ route('brand.index') }}"
-                        >
-                            برند ها
-                        </a>
-                </div>
-                <div class="col-4 mx-auto text-center">
-                    <a href="{{ route('brand.index') }}">
-                        مشاهده همه
-                        <i class="fal fa-eye"></i>
-                    </a>
-                </div>
-            </div>
-            @include('front-v1.partials.carousel.brands', ['brands'=>$brands])
-        @endif
-        {{--./SHOW BRANDS--}}
-
-        {{--SHOW CATEGORIES--}}
-        @if(!empty($categories) && $categories->count())
-            <div class="row justify-content-between align-items-center mt-5 py-4">
-                <div class="col-4 mx-auto">
-                    <a class="text-dark display-4 font-16 font-weight-bolder"
-                       href="{{ route('category.index') }}"
-                    >
-                        دسته بندی ها
-                    </a>
-                </div>
-                <div class="col-4 mx-auto text-center">
-                    <a href="{{ route('category.index') }}">
-                        مشاهده همه
-                        <i class="fal fa-eye"></i>
-                    </a>
-                </div>
-            </div>
-            @include('front-v1.partials.carousel.categories', ['categories'=>$categories])
-        @endif
-        {{--./SHOW CATEGORIES--}}
 
         {{--SHOW IMAGE PAGE MENU--}}
         @include('front-v1.partials.shared.page_image_menu')
