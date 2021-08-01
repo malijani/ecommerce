@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\User\Dashboard;
 
+use App\HeaderPage;
 use App\Http\Controllers\Controller;
 
 use App\Ticket;
@@ -18,7 +19,6 @@ class TicketController extends Controller
      */
     public function index()
     {
-        $title = 'پشتیبانی و تیکت های من';
         $tickets = Ticket::query()
             ->where('user_id', Auth::id())
             ->orderBy('status')
@@ -27,8 +27,20 @@ class TicketController extends Controller
             ->orderByDesc('id')
             ->paginate(10);
 
+        /*LOAD META*/
+        $page_header = HeaderPage::query()
+            ->where('page', '=', 'dashboard-ticket-index')
+            ->first();
+
+        if (!empty($page_header->title)) {
+            $title = $page_header->title;
+        } else {
+            $title = 'پشتیبانی و تیکت های شما در  ' . config('app.brand.name');
+        }
+
         return response()->view('front-v1.user.dashboard.ticket.index', [
             'title' => $title,
+            'page_header' => $page_header,
             'tickets' => $tickets,
         ]);
     }
@@ -40,13 +52,25 @@ class TicketController extends Controller
      */
     public function create()
     {
-        $title = 'ثبت تیکت جدید';
+
         $categories = TicketCategory::query()
             ->where('status', 1)
             ->get();
 
+        /*LOAD META*/
+        $page_header = HeaderPage::query()
+            ->where('page', '=', 'dashboard-ticket-create')
+            ->first();
+
+        if (!empty($page_header->title)) {
+            $title = $page_header->title;
+        } else {
+            $title = 'ثبت تیکت جدید در ' . config('app.brand.name');
+        }
+
         return response()->view('front-v1.user.dashboard.ticket.create', [
             'title' => $title,
+            'page_header' => $page_header,
             'categories' => $categories,
         ]);
     }

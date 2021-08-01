@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@include('front-v1.partials.seo_metas', ['page_header' => $page_header ?? null])
+
 @push('styles')
     <link rel="stylesheet" href="{{ asset('front-v1/slider-pro/css/slider-pro.css') }}">
 @endpush

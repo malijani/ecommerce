@@ -3,9 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Faq;
-use App\FaqPage;
+use App\HeaderPage;
 use App\Http\Controllers\Controller;
-use http\Env\Response;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -26,12 +25,9 @@ class FaqController extends Controller
             ->orderBy('sort')
             ->get();
 
-        $faq_page = FaqPage::query()->first();
-
         return response()->view('admin.faq.index', [
             'title' => $title,
             'faqs' => $faqs,
-            'faq_page'=>$faq_page
         ]);
     }
 
@@ -70,7 +66,9 @@ class FaqController extends Controller
             ['user_id' => Auth::id()]
         ));
 
-        return response()->redirectToRoute('faqs.index')->with('success', 'پرسش متداول جدید با موفقیت افزوده شد!');
+        return response()
+            ->redirectToRoute('faqs.index')
+            ->with('success', 'پرسش متداول جدید با موفقیت افزوده شد!');
     }
 
     /**
@@ -108,9 +106,11 @@ class FaqController extends Controller
      * @param int $id
      * @return RedirectResponse
      */
-    public function update(Request $request, $id): RedirectResponse
+    public function update(Request $request, int $id): RedirectResponse
     {
-        $faq = Faq::withoutTrashed()->findOrFail($id);
+        $faq = Faq::withoutTrashed()
+            ->findOrFail($id);
+
         $request->validate([
             'question' => ['required', 'string', 'min:5', 'max:70'],
             'answer' => ['required', 'min:5'],
@@ -130,10 +130,19 @@ class FaqController extends Controller
      * @param int $id
      * @return
      */
-    public function destroy($id): RedirectResponse
+    public function destroy(int $id): RedirectResponse
     {
         $faq = Faq::withoutTrashed()->findOrFail($id);
-        $faq->delete();
-        return response()->redirectToRoute('faqs.index')->with('success', 'پرسش متداول شماره ' . $faq->id . ' حذف شد!');
+        try {
+            $faq->delete();
+        } catch(\Exception $e){
+            return response()
+                ->redirectToRoute('faq.index')
+                ->with($e->getMessage());
+        }
+
+        return response()
+            ->redirectToRoute('faqs.index')
+            ->with('success', 'پرسش متداول شماره ' . $faq->id . ' حذف شد!');
     }
 }

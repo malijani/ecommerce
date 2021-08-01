@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Visitor;
 
+use App\HeaderPage;
 use App\Http\Controllers\Controller;
 use App\Product;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\View\View;
 
 
 class ProductController extends Controller
@@ -13,23 +15,33 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return Response
+     * @return View
      */
-    public function index(): Response
+    public function index(): View
     {
-        $title = 'محصولات ' . config('app.brand.name');
         $products = Product::withoutTrashed()
             ->active()
-//            ->where('entity', '>', 0)
-            ->orderBy('entity', 'DESC')
-            ->orderBy('created_at', 'DESC')
+            ->orderBy('updated_at', 'DESC')
             ->orderBy('sort', 'ASC')
+            ->orderBy('entity', 'DESC')
             ->paginate(100);
 
-        return response()->view('front-v1.product.index', [
-            'products' => $products,
-            'title' => $title
 
+        /*LOAD META*/
+        $page_header = HeaderPage::query()
+            ->where('page', '=', 'products')
+            ->first();
+
+        if (!empty($page_header->title)) {
+            $title = $page_header->title;
+        } else {
+            $title = 'محصولات ' . config('app.brand.name');
+        }
+
+        return view('front-v1.product.index', [
+            'title' => $title,
+            'page_header' => $page_header,
+            'products' => $products,
         ]);
     }
 
@@ -37,9 +49,9 @@ class ProductController extends Controller
      * Display the specified resource.
      *
      * @param string $slug
-     * @return Response
+     * @return View
      */
-    public function show(string $slug): Response
+    public function show(string $slug): View
     {
         $product = Product::withoutTrashed()
             ->where('title_en', $slug)
@@ -58,12 +70,11 @@ class ProductController extends Controller
                 ->orderBy('sort', 'ASC')
                 ->limit(30)
                 ->get();
-            return response()
-                ->view('front-v1.product.404', [
-                    'title' => $title,
-                    'products' => $products,
-                    'not_found' => $slug,
-                ]);
+            return view('front-v1.product.404', [
+                'title' => $title,
+                'products' => $products,
+                'not_found' => $slug,
+            ]);
         }
 
         $product->increment('visit');
@@ -118,8 +129,17 @@ class ProductController extends Controller
         }
 
 
-        return response()->view('front-v1.product.show', [
+        $page_header = new \stdClass();
+        $page_header->keywords = $product->keywords;
+        $page_header->description = $product->description;
+        $page_header->author = $product->user->full_name;
+        $page_header->url = route('product.show', $product->title_en);
+        $page_header->image = asset($product->files()->defaultFile()->link);
+        $page_header->type = 'product';
+
+        return view('front-v1.product.show', [
             'title' => $title,
+            'page_header' => $page_header,
             'product' => $product,
             'attributes' => $attributes,
             'similar_products' => $similar_products,

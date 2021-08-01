@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\DiscountCode;
+use App\HeaderPage;
 use App\Http\Controllers\Controller;
 use App\Product;
 use Illuminate\Http\RedirectResponse;
@@ -96,12 +97,26 @@ class CartController extends Controller
      */
     public function index()
     {
-        $title = 'سبد خرید';
+
         /*show null page of basket*/
         $this->resetTotal();
+
+        /*LOAD META*/
+        $page_header = HeaderPage::query()
+            ->where('page', '=', 'cart')
+            ->first();
+
+        if (!empty($page_header->title)) {
+            $title = $page_header->title;
+        } else {
+            $title = 'سبد خرید شما در ' . config('app.brand.name');
+        }
+
         return response()->view('front-v1.user.cart.index', [
             'title' => $title,
+            'page_header'=> $page_header,
         ]);
+
     }
 
     /**

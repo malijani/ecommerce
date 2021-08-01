@@ -52,7 +52,11 @@
                                                     <tbody>
 
                                                     @foreach($factors['active_factors'] as $active_factor)
-                                                        <tr class="text-center" id="data-{{$active_factor->uuid}}">
+                                                        <tr class="text-center showable_factor_row"
+                                                            id="data-{{$active_factor->uuid}}"
+                                                            data-url="{{ route('dashboard.orders.show', $active_factor->uuid) }}"
+                                                            title="برای مشاهده جزییات فاکتور؛ کلیک کنید!"
+                                                        >
                                                             {{--SHOW ID--}}
                                                             <td class="align-middle">
                                                                 <a href="{{ route('dashboard.orders.show', $active_factor->uuid ) }}"
@@ -146,7 +150,11 @@
                                                     </thead>
                                                     <tbody>
                                                     @foreach($factors['paid_factors'] as $paid_factor)
-                                                        <tr class="text-center" id="data-{{$paid_factor->uuid}}">
+                                                        <tr class="text-center showable_factor_row"
+                                                            id="data-{{$paid_factor->uuid}}"
+                                                            data-url="{{ route('dashboard.orders.show', $paid_factor->uuid) }}"
+                                                            title="برای مشاهده جزییات فاکتور؛ کلیک کنید!"
+                                                        >
                                                             {{--SHOW ID--}}
                                                             <td class="align-middle">
                                                                 <a href="{{ route('dashboard.orders.show', $paid_factor->uuid ) }}"
@@ -357,5 +365,15 @@
     </div>
 
 @endsection
+
+@push('scripts')
+    <script>
+        $('.showable_factor_row').on('click', function () {
+            window.location = $(this).data("url");
+
+        });
+    </script>
+@endpush
+
 
 

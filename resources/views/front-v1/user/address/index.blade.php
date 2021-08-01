@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@include('front-v1.partials.seo_metas', ['page_header' => $page_header ?? null])
+
 @section('content')
 
 

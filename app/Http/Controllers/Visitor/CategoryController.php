@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Visitor;
 
 use App\Article;
+use App\HeaderPage;
 use App\Http\Controllers\Controller;
 use App\Category;
 use App\Product;
@@ -19,16 +20,27 @@ class CategoryController extends Controller
      */
     public function index(): Response
     {
-        $title = 'لیست دسته بندی های وبسایت '. config('app.brand.name');
+
         $categories = Category::withoutTrashed()
             ->with('children')
             ->where('parent_id', 0)
             ->get();
 
+        /*LOAD META*/
+        $page_header = HeaderPage::query()
+            ->where('page', '=', 'categories')
+            ->first();
 
-        return response()->view('front-v1.category.index',[
+        if (!empty($page_header->title)) {
+            $title = $page_header->title;
+        } else {
+            $title = 'لیست دسته بندی های وبسایت ' . config('app.brand.name');
+        }
+
+        return response()->view('front-v1.category.index', [
             'title' => $title,
-            'categories'=>$categories,
+            'page_header' => $page_header,
+            'categories' => $categories,
         ]);
     }
 
@@ -67,17 +79,17 @@ class CategoryController extends Controller
             ->first();
 
 
-        if(empty($category)){
+        if (empty($category)) {
             $categories = Category::withoutTrashed()
                 ->with('children')
                 ->where('parent_id', 0)
                 ->limit(20)
                 ->get();
-            $title = 'دسته بندی ' . $slug . ' در ' . config('app.brand.name'). ' یافت نشد! ';
+            $title = 'دسته بندی ' . $slug . ' در ' . config('app.brand.name') . ' یافت نشد! ';
             return response()
                 ->view('front-v1.category.404', [
                     'categories' => $categories,
-                    'title'=>  $title,
+                    'title' => $title,
                     'not_found' => $slug
                 ]);
         }
@@ -97,9 +109,17 @@ class CategoryController extends Controller
             ->get();
 
         $title = $category->title;
+        $page_header = new \stdClass();
+        $page_header->keywords = $category->keywords;
+        $page_header->description = $category->description;
+        $page_header->author = $category->user->full_name;
+        $page_header->url = route('category.show', $category->title_en);
+        $page_header->image = asset($category->pic ?? 'images/fallback/category.png');
+        $page_header->type = 'category';
 
         return response()->view('front-v1.category.show', [
             'title' => $title,
+            'page_header' => $page_header,
             'category' => $category,
             'products' => $products,
             'articles' => $articles,

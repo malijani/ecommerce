@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Visitor;
 
 use App\Brand;
+use App\HeaderPage;
 use App\Http\Controllers\Controller;
 use App\Product;
 use Illuminate\Http\Request;
@@ -15,17 +16,30 @@ class BrandController extends Controller
      *
      * @return Response
      */
-    public function index() : Response
+    public function index(): Response
     {
-        $title = 'لیست برند ها';
+
         $brands = Brand::withoutTrashed()
             ->where('status', 1)
             ->orderBy('sort')
             ->orderByDesc('id')
             ->paginate(20);
+
+        /*LOAD META*/
+        $page_header = HeaderPage::query()
+            ->where('page', '=', 'brands')
+            ->first();
+
+        if (!empty($page_header->title)) {
+            $title = $page_header->title;
+        } else {
+            $title = 'لیست برند های ' . config('app.brand.name');
+        }
+
         return response()->view('front-v1.brand.index', [
+            'title' => $title,
+            'page_header' => $page_header,
             'brands' => $brands,
-            'title' => $title
         ]);
     }
 
@@ -57,13 +71,13 @@ class BrandController extends Controller
      *
      * @return Response
      */
-    public function show(string $slug) : Response
+    public function show(string $slug): Response
     {
         $brand = Brand::withoutTrashed()
             ->where('title_en', $slug)
             ->first();
 
-        if(empty($brand)){
+        if (empty($brand)) {
             $title = 'برند ' . $slug . ' در وبسایت ' . config('app.brand.name') . ' یافت نشد. ';
             $brands = Brand::withoutTrashed()
                 ->where('status', 1)
@@ -79,15 +93,25 @@ class BrandController extends Controller
                 ]);
         }
 
-        $title = 'نمایش برند '. $brand->title ;
+
         $products = Product::withoutTrashed()
             ->where('brand_id', $brand->id)
             ->get();
 
+        $title = 'نمایش برند ' . $brand->title;
+        $page_header = new \stdClass();
+        $page_header->keywords = $brand->keywords;
+        $page_header->description = $brand->description;
+        $page_header->author = $brand->user->full_name;
+        $page_header->url = route('brand.show', $brand->title_en);
+        $page_header->image = asset($brand->pic ?? 'images/fallback/brand.png');
+        $page_header->type = 'brand';
+
         return response()->view('front-v1.brand.show', [
+            'title' => $title,
+            'page_header' => $page_header,
             'brand' => $brand,
-            'products'=>$products,
-            'title'=>$title,
+            'products' => $products,
         ]);
     }
 

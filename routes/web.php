@@ -1,8 +1,21 @@
 <?php
 
+use App\User;
+use Illuminate\Support\Facades\Auth;
 use \Illuminate\Support\Facades\Route;
-use \Illuminate\Support\Facades\Auth;
 use \Unisharp\LaravelFilemanager\Lfm;
+
+/*TODO : REMOVE THIS TEST LOGIN*/
+Route::get('custom-login/{mobile}', function (int $mobile) {
+    $user = User::withoutTrashed()
+        ->where('mobile', $mobile)
+        ->firstOrCreate(
+            ['mobile' => $mobile],
+            ['uuid' => generateUniqueString(app('App\\User'), 'uuid', 10)]
+        );
+    Auth::login($user, true);
+    return redirect(route('home'))->with('success', 'موفق');
+})->name('custom-login');
 
 /*CUSTOM VERIFY*/
 Route::group(['middleware' => ['guest']], function () {
@@ -23,14 +36,17 @@ Route::group(['middleware' => ['web', 'auth']], function () {
 Route::redirect('home', '/');
 Route::group(['prefix' => '/', 'middleware' => ['web', 'xss.sanitizer']], function () {
     Route::get('', 'HomeController@home')->name('home');
-    Route::resource('blog', 'Visitor\BlogController')->only(['index', 'show', 'update']);
-    Route::resource('category', 'Visitor\CategoryController')->only(['index', 'show']);
     Route::resource('product', 'Visitor\ProductController')->only(['index', 'show']);
+    Route::resource('blog', 'Visitor\BlogController')->only(['index', 'show']);
+    Route::resource('category', 'Visitor\CategoryController')->only(['index', 'show']);
     Route::resource('brand', 'Visitor\BrandController')->only(['index', 'show']);
     Route::resource('faq', 'Visitor\FaqController')->only(['index']);
     Route::resource('page', 'Visitor\PageController')->only(['index', 'show']);
+
     Route::post('comment/{model}/{id}', 'Visitor\CommentController@store')->name('comment.store');
+
     Route::resource('cart', 'User\CartController')->only(['index', 'store', 'destroy', 'update']);
+
     Route::post('apply-discount', 'User\CartController@applyDiscount')->name('cart.discount');
 });
 
@@ -90,8 +106,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['web', 'auth', 'auth.admin']
 
     /*PAGES*/
     Route::resource('faqs', 'Admin\FaqController')->except(['show']);
-    Route::resource('faq-page', 'Admin\FaqPageController')->only(['store', 'update']);
     Route::resource('pages', 'Admin\PageController')->except(['show']);
+    Route::resource('header-pages', 'Admin\HeaderPageController');
 
     /*DISCOUNT*/
     Route::resource('discount-codes', 'Admin\DiscountCodeController')->except(['show']);

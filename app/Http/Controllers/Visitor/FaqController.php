@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Visitor;
 
 use App\Faq;
-use App\FaqPage;
+use App\HeaderPage;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -16,18 +16,26 @@ class FaqController extends Controller
      */
     public function index()
     {
-        $title = 'پرسش های متداول کاربران وبسایت ' . config('app.brand.name');
-        $faqs = Faq::withoutTrashed()->orderBy('sort')->where('status', 1)->get();
+        $faqs = Faq::withoutTrashed()
+            ->orderBy('sort')
+            ->where('status', 1)
+            ->get();
 
-        $faq_page = FaqPage::query()->first();
-        if(isset($faq_page->title)){
-            $title = $faq_page->title;
+        /*LOAD META*/
+        $page_header = HeaderPage::query()
+            ->where('page', '=', 'faq')
+            ->first();
+
+        if (!empty($page_header->title)) {
+            $title = $page_header->title;
+        } else {
+            $title = 'پرسش های متداول کاربران وبسایت  ' . config('app.brand.name');
         }
 
         return response()->view('front-v1.faq.index', [
             'title' => $title,
+            'page_header' => $page_header,
             'faqs' => $faqs,
-            'faq_page'=>$faq_page
         ]);
 
     }

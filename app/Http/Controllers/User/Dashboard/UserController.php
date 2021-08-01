@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\User\Dashboard;
 
+use App\HeaderPage;
 use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Http\RedirectResponse;
@@ -18,11 +19,24 @@ class UserController extends Controller
      */
     public function index()
     {
-        $title = 'مدیریت حساب شما | ' . config('app.long.title');
+
 
         $user = Auth::user();
+
+        /*LOAD META*/
+        $page_header = HeaderPage::query()
+            ->where('page', '=', 'dashboard-profile-index')
+            ->first();
+
+        if (!empty($page_header->title)) {
+            $title = $page_header->title;
+        } else {
+            $title = 'مدیریت حساب شما | ' . config('app.long.title');
+        }
+
         return response()->view('front-v1.user.dashboard.profile', [
             'title' => $title,
+            'page_header' => $page_header,
             'user' => $user,
         ]);
     }
@@ -113,13 +127,13 @@ class UserController extends Controller
         ]);
 
         /*UPLOAD IMAGE*/
-        if($request->hasFile('pic')){
+        if ($request->hasFile('pic')) {
             $pic = imageUploader($request, 'pic', 'user_profile', 300, 300);
         } else {
             $pic = $user->pic;
         }
 
-        if($request->hasFile('pic') && !is_null($user->pic)){
+        if ($request->hasFile('pic') && !is_null($user->pic)) {
             unlink(public_path($user->pic));
         }
 

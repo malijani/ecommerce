@@ -2,16 +2,15 @@
 
 namespace App\Http\Controllers\User;
 
+use App\HeaderPage;
 use App\Http\Controllers\Controller;
 use App\Page;
 use App\ProvinceCity;
-use App\User;
 use App\UserAddress;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
-use Laminas\Diactoros\Response\JsonResponse;
+
 
 class AddressController extends Controller
 {
@@ -28,16 +27,26 @@ class AddressController extends Controller
             return redirect()->back()->with('error', 'شما هنوز محصولی جهت سفارش ثبت نکرده اید!');
         }
 
-        $title = 'انتخاب آدرس ارسال بسته ' . config('app.brand.name');
-
         $addresses = Auth::user()->addresses;
         $default_address = Auth::user()->defaultAddress;
         $provinces = ProvinceCity::withoutTrashed()->where('parent', 0)->get();
 
         $terms_conditions = Page::withoutTrashed()->where('title_en', 'terms-conditions')->first();
 
+        /*LOAD META*/
+        $page_header = HeaderPage::query()
+            ->where('page', '=', 'address')
+            ->first();
+
+        if (!empty($page_header->title)) {
+            $title = $page_header->title;
+        } else {
+            $title = 'انتخاب آدرس ارسال بسته ' . config('app.brand.name');
+        }
+
         return response()->view('front-v1.user.address.index', [
             'title' => $title,
+            'page_header' => $page_header,
             'addresses' => $addresses,
             'default_address' => $default_address,
             'provinces' => $provinces,

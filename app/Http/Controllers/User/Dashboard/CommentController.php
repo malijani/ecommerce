@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User\Dashboard;
 use App\Http\Controllers\Controller;
 use App\Ticket;
 use App\TicketComment;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -33,10 +34,10 @@ class CommentController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return RedirectResponse
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $request->validate([
             'message' => 'required|string|min:5|max:6000',
@@ -54,9 +55,9 @@ class CommentController extends Controller
                 'max' => 'حداکثر اندازه فایل باید ۲ مگابایت باشد.',
             ],
             'ticket_id' => [
-              'required'=>'تعیین آیدی تیکت الزامیست.',
-              'string'=>'نوع داده ای آیدی تیکت کاراکتر است',
-              'exists'=>'این تیکت در سیستم ثبت نشده.'
+                'required' => 'تعیین آیدی تیکت الزامیست.',
+                'string' => 'نوع داده ای آیدی تیکت کاراکتر است',
+                'exists' => 'این تیکت در سیستم ثبت نشده.'
             ],
         ]);
         $ticket_uuid = $request->input('ticket_id');
@@ -68,23 +69,25 @@ class CommentController extends Controller
         $file = fileUploader($request, 'file', $dir);
 
         $comment = new TicketComment(array_merge(
-            $request->except('ticket_id','file'),
-            ['ticket_id'=>$ticket->id],
+            $request->except('ticket_id', 'file'),
+            ['ticket_id' => $ticket->id],
             ['file' => $file],
-            ['user_id'=>Auth::id()]
+            ['user_id' => Auth::id()]
         ));
 
         $comment->save();
         $ticket->status = 0;
         $ticket->save();
 
-        return response()->redirectToRoute('dashboard.tickets.show', $ticket->uuid)->with('success', 'پاسخ شما ثبت شد.');
+        return response()
+            ->redirectToRoute('dashboard.tickets.show', $ticket->uuid)
+            ->with('success', 'پاسخ شما ثبت شد.');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -95,7 +98,7 @@ class CommentController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -106,8 +109,8 @@ class CommentController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -118,7 +121,7 @@ class CommentController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

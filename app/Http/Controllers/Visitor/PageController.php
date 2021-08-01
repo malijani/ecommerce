@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Visitor;
 
+use App\HeaderPage;
 use App\Http\Controllers\Controller;
 use App\Page;
 use Illuminate\Http\Request;
@@ -15,15 +16,29 @@ class PageController extends Controller
      */
     public function index()
     {
-        $title = 'صفحات وبسایت ' . config('app.brand.name');
+
         $pages = Page::withoutTrashed()
             ->where('status', 1)
             ->orderBy('sort')
             ->orderByDesc('created_at')
             ->paginate(10);
 
+
+        /*LOAD META*/
+        $page_header = HeaderPage::query()
+            ->where('page', '=', 'pages')
+            ->first();
+
+        if (!empty($page_header->title)) {
+            $title = $page_header->title;
+        } else {
+            $title = 'صفحات وبسایت ' . config('app.brand.name');
+        }
+
+
         return response()->view('front-v1.page.index', [
             'title' => $title,
+            'page_header' => $page_header,
             'pages' => $pages
         ]);
 
@@ -80,10 +95,22 @@ class PageController extends Controller
             ]);
         }
 
+        /*LOAD META*/
+        $page_header = HeaderPage::query()
+            ->where('page', '=', $page->title_en)
+            ->first();
+
+        if (!empty($page_header->title)) {
+            $title = $page_header->title;
+        } else {
+            $title = $page->title;
+        }
+
         $page->increment('visit');
 
         return response()->view('front-v1.page.show', [
-            'title' => $page->title,
+            'title' => $title,
+            'page_header' => $page_header,
             'page' => $page,
             'other_pages' => $other_pages,
         ]);

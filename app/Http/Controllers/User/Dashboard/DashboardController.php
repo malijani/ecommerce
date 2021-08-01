@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\User\Dashboard;
 
+use App\HeaderPage;
 use App\Http\Controllers\Controller;
-use App\ProvinceCity;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,12 +16,23 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $title = 'داشبورد حساب کاربری شما | '. config('app.long.title');
-
         $paid_factors = Auth::user()->factors()->paidFactors()->get();
+
+        /*LOAD META*/
+        $page_header = HeaderPage::query()
+            ->where('page', '=', 'dashboard-index')
+            ->first();
+
+        if (!empty($page_header->title)) {
+            $title = $page_header->title;
+        } else {
+            $title = 'داشبورد حساب کاربری شما | ' . config('app.long.title');
+        }
+
         return response()->view('front-v1.user.dashboard.index', [
-            'title'=>$title,
-            'paid_factors'=> $paid_factors,
+            'title' => $title,
+            'page_header' => $page_header,
+            'paid_factors' => $paid_factors,
         ]);
 
     }
@@ -39,7 +50,7 @@ class DashboardController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -50,7 +61,7 @@ class DashboardController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -61,7 +72,7 @@ class DashboardController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -72,8 +83,8 @@ class DashboardController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -84,7 +95,7 @@ class DashboardController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

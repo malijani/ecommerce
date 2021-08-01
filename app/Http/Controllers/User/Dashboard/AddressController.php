@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\User\Dashboard;
 
+use App\HeaderPage;
 use App\Http\Controllers\Controller;
 use App\ProvinceCity;
 use Illuminate\Http\Request;
@@ -16,16 +17,28 @@ class AddressController extends Controller
      */
     public function index()
     {
-        $title = 'مدیریت آدرس های ارسال سفارش';
+
         $addresses = Auth::user()->addresses;
         $default_address = Auth::user()->defaultAddress;
         $provinces = ProvinceCity::withoutTrashed()->where('parent', 0)->get();
 
+        /*LOAD META*/
+        $page_header = HeaderPage::query()
+            ->where('page', '=', 'dashboard-address-index')
+            ->first();
+
+        if (!empty($page_header->title)) {
+            $title = $page_header->title;
+        } else {
+            $title = 'مدیریت آدرس های ارسال سفارش شما در ' . config('app.brand.name');
+        }
+
         return response()->view('front-v1.user.dashboard.addresses', [
-            'title'=>$title,
-            'addresses'=>$addresses,
-            'default_address'=>$default_address,
-            'provinces'=>$provinces,
+            'title' => $title,
+            'page_header' => $page_header,
+            'addresses' => $addresses,
+            'default_address' => $default_address,
+            'provinces' => $provinces,
         ]);
     }
 
@@ -42,7 +55,7 @@ class AddressController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -53,7 +66,7 @@ class AddressController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -64,7 +77,7 @@ class AddressController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -75,8 +88,8 @@ class AddressController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -87,7 +100,7 @@ class AddressController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

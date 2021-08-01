@@ -25,6 +25,7 @@ class PageController extends Controller
             ->orderByDesc('id')
             ->get();
 
+
         return response()->view('admin.page.index', [
             'title' => $title,
             'pages' => $pages

@@ -159,6 +159,20 @@
                         </ul>
                     </li>
 
+                    {{--HEADER PAGES--}}
+                    <li class="nav-item">
+                        <a href="{{ route('header-pages.index') }}"
+                           class="nav-link {{ Request::routeIs('header-pages.*') ? 'active' : '' }}"
+                        >
+                            <i class="nav-icon fal fa-code"></i>
+                            <p>
+                                عنوان و متای صفحات
+                            </p>
+                        </a>
+                    </li>
+
+
+                    {{--CATEGORIES--}}
                     <li
                         class="nav-item has-treeview {{Request::routeIs('categories.*') ? 'menu-open' : '' }}"
                     >

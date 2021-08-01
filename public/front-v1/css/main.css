@@ -654,7 +654,7 @@ input[type=number] {
 /*FOOTER PHONE NAVBAR*/
 /*********************/
 #phone-nav {
-    position:sticky;
+    position: sticky;
     z-index: 1030 !important;
 }
 
@@ -664,7 +664,7 @@ input[type=number] {
     top: 0;
     content: attr(data-count);
     font-size: 0.6em;
-    font-weight:bold;
+    font-weight: bold;
     padding: 0.6em;
     line-height: 0.75em;
     color: #9e0505;
@@ -1771,6 +1771,14 @@ a, a:hover {
 /*HEADER*/
 /********/
 
+/*****************/
+/*DASHBOARD*/
+/*****************/
+.showable_factor_row, .profile_picture_dashboard {
+    cursor: pointer;
+    cursor: hand;
+}
 
-
-
+/*****************/
+/*END DASHBOARD*/
+/*****************/

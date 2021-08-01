@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User\Dashboard;
 
 use App\Factor;
+use App\HeaderPage;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Response;
 use Illuminate\Http\Request;
@@ -43,8 +44,20 @@ class OrderController extends Controller
             ->select('uuid', 'deleted_at', 'status')
             ->get();
 
+        /*LOAD META*/
+        $page_header = HeaderPage::query()
+            ->where('page', '=', 'dashboard-order-index')
+            ->first();
+
+        if (!empty($page_header->title)) {
+            $title = $page_header->title;
+        } else {
+            $title = 'ثبت تیکت جدید در ' . config('app.brand.name');
+        }
+
         return response()->view('front-v1.user.dashboard.order.index', [
             'factors' => $factors,
+            'page_header' => $page_header,
             'title' => $title,
         ]);
     }
@@ -138,8 +151,8 @@ class OrderController extends Controller
             }
             $request->validate([
                 'content' => 'bail|required|max:255',
-            ],[
-               'content.required' => 'تعیین محتوای درخواست الزامیست.',
+            ], [
+                'content.required' => 'تعیین محتوای درخواست الزامیست.',
                 'content.max' => 'حداکثر درخواست ۲۵۵ کاراکتر تعیین شده.'
             ]);
             /*FIND FACTOR*/

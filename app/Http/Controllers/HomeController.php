@@ -5,19 +5,21 @@ namespace App\Http\Controllers;
 use App\Banner;
 use App\Brand;
 use App\Category;
+use App\HeaderPage;
 use App\ImageMenu;
 use App\Product;
 use App\Slider;
+use Illuminate\View\View;
 
 class HomeController extends Controller
 {
 
     /**
-     * Show the application dashboard.
+     * Show the landing page of website
      *
-     * @return \Illuminate\Contracts\Support\Renderable
+     * @return View
      */
-    public function home()
+    public function home() : View
     {
         $banner = Banner::withoutTrashed()->where('status', '1')->first();
         $sliders = Slider::withoutTrashed()
@@ -38,7 +40,7 @@ class HomeController extends Controller
                 ->firstOrFail()
                 ->children()
                 ->get();
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             $categories = null;
         }
 
@@ -74,15 +76,29 @@ class HomeController extends Controller
             ->orderBy('id')
             ->get();
 
+        /*LOAD META*/
+        $page_header = HeaderPage::query()
+            ->where('page', '=', 'home')
+            ->first();
+
+        if (!empty($page_header->title)) {
+            $title = $page_header->title;
+        } else {
+            $title = config('app.long.title');
+        }
+
+
         return view('home', [
-            'categories'=>$categories,
-            'products'=>$products,
-            'banner'=>$banner,
-            'sliders'=>$sliders,
-            'brands'=>$brands,
+            'title' => $title,
+            'page_header' => $page_header,
+            'categories' => $categories,
+            'products' => $products,
+            'banner' => $banner,
+            'sliders' => $sliders,
+            'brands' => $brands,
             'main_image_menus' => $main_image_menus,
             'big_image_menus' => $big_image_menus,
-            'footer_image_menus' => $footer_image_menus
+            'footer_image_menus' => $footer_image_menus,
         ]);
     }
 }

@@ -23,8 +23,9 @@
                         <label for="pic" class="profile-pic col-form-label col-md-5 position-relative text-center">
                             <img src="{{ asset($user->pic ?? 'images/fallback/user.png') }}"
                                  alt="{{ $user->name }}"
-                                 class="img img-fluid rounded"
+                                 class="img img-fluid rounded profile_picture_dashboard"
                                  id="preview"
+                                 title="برای انتخاب تصویر پروفایل کلیک کنید!"
                             >
 
                             @if(isset($user->pic))
@@ -111,16 +112,17 @@
 
                         <div class="col-md-10">
                             <input id="mobile"
-                                   type="number"
+                                   type="text"
                                    class="ltr input-custom form-control text-center @error('mobile') is-invalid @enderror"
                                    name="mobile"
                                    value="{{ $user->mobile }}"
                                    minlength="11"
                                    maxlength="11"
                                    autocomplete="mobile"
-                                   placeholder="09103234432"
+                                   placeholder="09103944579"
                                    required
                                    readonly
+                                   disabled
                             >
 
                             @include('partials.form_error', ['input'=>'mobile'])

@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
+@include('front-v1.partials.seo_metas', ['page_header' => $page_header ?? null])
 
 @section('content')
-
     {{ \Diglactic\Breadcrumbs\Breadcrumbs::render('faq') }}
 
     <div class="container-fluid my-3">{{--CONTAINER-FLUID--}}

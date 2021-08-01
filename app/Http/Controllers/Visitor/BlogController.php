@@ -3,11 +3,10 @@
 namespace App\Http\Controllers\Visitor;
 
 use App\Article;
-use App\Category;
-use App\Comment;
+use App\HeaderPage;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+
 
 class BlogController extends Controller
 {
@@ -18,17 +17,29 @@ class BlogController extends Controller
      */
     public function index()
     {
-        $title = ' وبلاگ ' . config('app.brand.name');
         $articles = Article::withoutTrashed()
             ->with('category')
             ->active()
             ->orderBy('created_at', 'DESC')
+            ->orderBy('updated_at', 'DESC')
             ->orderBy('id', 'DESC')
             ->orderBy('sort', 'ASC')
             ->paginate(10);
 
+        /*LOAD META*/
+        $page_header = HeaderPage::query()
+            ->where('page', '=', 'articles')
+            ->first();
+
+        if (!empty($page_header->title)) {
+            $title = $page_header->title;
+        } else {
+            $title = ' وبلاگ ' . config('app.brand.name');
+        }
+
         return view('front-v1.blog.index', [
             'title' => $title,
+            'page_header' => $page_header,
             'articles' => $articles,
         ]);
     }
@@ -87,8 +98,6 @@ class BlogController extends Controller
             ]);
         }
 
-        $title = $article->title;
-
         $comments = $article->comments()
             ->with('childrenRecursive')
             ->where('parent_id', 0)
@@ -118,8 +127,18 @@ class BlogController extends Controller
 
         $article->increment('visit', 1);
 
+        $title = $article->title;
+        $page_header = new \stdClass();
+        $page_header->keywords = $article->keywords;
+        $page_header->description = $article->description;
+        $page_header->author = $article->user->full_name;
+        $page_header->url = route('blog.show', $article->title_en);
+        $page_header->image = asset($article->pic ?? 'images/fallback/article.png');
+        $page_header->type = 'article';
+
         return view('front-v1.blog.show', [
             'title' => $title,
+            'page_header' => $page_header,
             'article' => $article,
             'comments' => $comments,
             'similar_articles' => $similar_articles,
