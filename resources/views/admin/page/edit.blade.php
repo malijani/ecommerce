@@ -128,7 +128,7 @@
                                               placeholder="محتوای صفحه"
                                               required
                                               rows="50"
-                                    >{{ old('content') ?? $page->content }}</textarea>
+                                    >{!! old('content') ?? $page->content !!}</textarea>
                                     @include('partials.form_error', ['input'=>'content'])
                                 </div>
                             </div>
@@ -244,41 +244,6 @@
 
 @section('page-scripts')
     <script src="{{ asset('adminrc/plugins/ckeditor-full/ckeditor.js') }}"></script>
-    <script>
-        $(document).ready(function () {
-            // CKEDITOR CONFIGURATION
-            CKEDITOR.replace('content', {
-                height: 500,
-                baseFloatZIndex: 10005,
-                contentsLangDirection: 'rtl',
-                direction: 'rtl',
-                contentsLanguage: 'fa',
-                content: 'fa',
-                language: 'fa',
-
-
-                filebrowserImageBrowseUrl: '{{route('unisharp.lfm.show')}}',
-                filebrowserImageUploadUrl: '{{route('unisharp.lfm.upload', ['type'=>'Images', '_token'=>csrf_token()])}}',
-                filebrowserBrowseUrl: '{{route('unisharp.lfm.show', ['type'=>'Files'])}}',
-                filebrowserUploadUrl: '{{route('unisharp.lfm.upload', ['type'=>'Files', '_token'=>csrf_token()])}}',
-
-
-                font_names: 'Vazir;' +
-                    'Arial/Arial, Helvetica, sans-serif;' +
-                    'Comic Sans MS/Comic Sans MS, cursive;' +
-                    'Courier New/Courier New, Courier, monospace;' +
-                    'Georgia/Georgia, serif;' +
-                    'Lucida Sans Unicode/Lucida Sans Unicode, Lucida Grande, sans-serif;' +
-                    'Tahoma/Tahoma, Geneva, sans-serif;' +
-                    'Times New Roman/Times New Roman, Times, serif;' +
-                    'Trebuchet MS/Trebuchet MS, Helvetica, sans-serif;' +
-                    'Verdana/Verdana, Geneva, sans-serif',
-                font_defaultLabel: 'Vazir',
-                forcePasteAsPlainText: false,
-                forceEnterMode: true,
-                editorplaceholder: 'محتوای صفحه',
-            });
-        });
-    </script>
+    @include('admin.partials.ckeditor', ['input_id'=>'content'])
 
 @endsection

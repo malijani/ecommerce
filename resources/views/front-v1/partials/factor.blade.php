@@ -600,7 +600,6 @@
                                 url: delete_factor_button.attr('data-url'),
                                 type: 'POST',
                                 data: {
-                                    '_token': '{{ csrf_token() }}',
                                     '_method': 'DELETE',
                                 },
                                 success: function (result) {
@@ -642,7 +641,6 @@
                         url: submit_user_ask.attr('data-url'),
                         type: 'POST',
                         data: {
-                            '_token': '{{ csrf_token() }}',
                             '_method': 'PATCH',
                             'content': user_ask_content.val(),
                         },

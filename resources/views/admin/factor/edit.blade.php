@@ -241,7 +241,6 @@
                     url: $(this).attr('data-url'),
                     type: 'POST',
                     data: {
-                        '_token': '{{ csrf_token() }}',
                         '_method': 'PATCH',
                         'delete': 'true',
                     },

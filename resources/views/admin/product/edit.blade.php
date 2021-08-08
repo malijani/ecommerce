@@ -1088,7 +1088,7 @@
                                       placeholder="متن محصول...."
                                       dir="rtl"
                                       title="مقدار دهی الزامی"
-                            >{{ $product->long_text }}</textarea>
+                            >{!! $product->long_text !!}</textarea>
                                     @include('partials.form_error', ['input'=>'long_text'])
                                 </div>
                             </div>
@@ -1108,7 +1108,7 @@
     <script src="{{ asset('adminrc/plugins/select2/select2.min.js') }}"></script>
     <script src="{{ asset('adminrc/plugins/sweetalert/sweetalert.min.js') }}"></script>
     <script src="{{ asset('adminrc/plugins/img-checkbox/jquery.imgcheckbox.js') }}"></script>
-
+    @include('admin.partials.ckeditor', ['input_id'=>'long_text'])
     <script>
 
         // Configure select2
@@ -1212,39 +1212,6 @@
         });
 
         $(document).ready(function () {
-
-
-            // CKEDITOR CONFIGURATION
-            CKEDITOR.replace('long_text', {
-                height: 400,
-                baseFloatZIndex: 10005,
-                contentsLangDirection: 'rtl',
-                direction: 'rtl',
-                contentsLanguage: 'fa',
-                content: 'fa',
-                language: 'fa',
-
-                filebrowserImageBrowseUrl: '{{route('unisharp.lfm.show')}}',
-                filebrowserImageUploadUrl: '{{route('unisharp.lfm.upload', ['type'=>'Images', '_token'=>csrf_token()])}}',
-                filebrowserBrowseUrl: '{{route('unisharp.lfm.show', ['type'=>'Files'])}}',
-                filebrowserUploadUrl: '{{route('unisharp.lfm.upload', ['type'=>'Files', '_token'=>csrf_token()])}}',
-
-
-                font_names: 'Vazir;' +
-                    'Arial/Arial, Helvetica, sans-serif;' +
-                    'Comic Sans MS/Comic Sans MS, cursive;' +
-                    'Courier New/Courier New, Courier, monospace;' +
-                    'Georgia/Georgia, serif;' +
-                    'Lucida Sans Unicode/Lucida Sans Unicode, Lucida Grande, sans-serif;' +
-                    'Tahoma/Tahoma, Geneva, sans-serif;' +
-                    'Times New Roman/Times New Roman, Times, serif;' +
-                    'Trebuchet MS/Trebuchet MS, Helvetica, sans-serif;' +
-                    'Verdana/Verdana, Geneva, sans-serif',
-                font_defaultLabel: 'Vazir',
-                forcePasteAsPlainText: false,
-                forceEnterMode: true,
-                editorplaceholder: 'متن مقاله...',
-            });
 
             configSelect2('.select2');
 

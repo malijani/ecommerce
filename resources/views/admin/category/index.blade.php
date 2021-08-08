@@ -125,7 +125,6 @@
                             url: $("#del" + id).attr('data-url'),
                             type: 'POST',
                             data: {
-                                '_token': '{{ csrf_token() }}',
                                 '_method': 'DELETE',
                                 'id': id,
                             },
@@ -169,7 +168,6 @@
                 url: url,
                 type: 'GET',
                 data: {
-                    '_token': "{{ csrf_token() }}",
                     'id': id,
                 },
                 success: function (result) {

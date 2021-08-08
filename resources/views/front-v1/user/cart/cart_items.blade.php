@@ -181,7 +181,6 @@
                                 url: $("#del-" + id).attr('data-target'),
                                 type: 'POST',
                                 data: {
-                                    '_token': '{{ csrf_token() }}',
                                     '_method': 'DELETE',
                                     'id': id,
                                 },
@@ -225,7 +224,6 @@
                     url: update_url,
                     type: 'POST',
                     data: {
-                        '_token': "{{ csrf_token() }}",
                         '_method': "PUT",
                         'type': type,
                         'attribute': attribute,

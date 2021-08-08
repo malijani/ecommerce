@@ -166,7 +166,6 @@
                                 url: delete_address,
                                 type: 'POST',
                                 data: {
-                                    '_token': '{{ csrf_token() }}',
                                     '_method': 'DELETE',
                                 },
                                 success: function (result) {

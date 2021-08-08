@@ -53,9 +53,6 @@
                         $.ajax({
                             url: logout_url,
                             type: 'POST',
-                            data: {
-                                '_token': '{{ csrf_token() }}',
-                            },
                             success: function () {
                                 window.location.reload();
                             },

@@ -58,7 +58,7 @@
                                               cols="30"
                                               rows="10"
                                               minlength="10"
-                                    >{{ old('content') ?? $footer_text->content }}</textarea>
+                                    >{!! old('content') ?? $footer_text->content !!}</textarea>
                                     @include('partials.form_error', ['input'=>'content'])
                                 </div>
                             </div>
@@ -86,34 +86,6 @@
 @section('page-scripts')
 
     <script src="{{ asset('adminrc/plugins/ckeditor-full/ckeditor.js') }}"></script>
-    <script>
-        $(document).ready(function () {
-            // CKEDITOR CONFIGURATION
-            CKEDITOR.replace('content', {
-                height: 400,
-                baseFloatZIndex: 10005,
-                contentsLangDirection: 'rtl',
-                direction: 'rtl',
-                contentsLanguage: 'fa',
-                content: 'fa',
-                language: 'fa',
-
-                font_names: 'Vazir;' +
-                    'Arial/Arial, Helvetica, sans-serif;' +
-                    'Comic Sans MS/Comic Sans MS, cursive;' +
-                    'Courier New/Courier New, Courier, monospace;' +
-                    'Georgia/Georgia, serif;' +
-                    'Lucida Sans Unicode/Lucida Sans Unicode, Lucida Grande, sans-serif;' +
-                    'Tahoma/Tahoma, Geneva, sans-serif;' +
-                    'Times New Roman/Times New Roman, Times, serif;' +
-                    'Trebuchet MS/Trebuchet MS, Helvetica, sans-serif;' +
-                    'Verdana/Verdana, Geneva, sans-serif',
-                font_defaultLabel: 'Vazir',
-                forcePasteAsPlainText: false,
-                forceEnterMode: true,
-                editorplaceholder: 'محتوای متن فوتر',
-            });
-        });
-    </script>
+    @include('admin.partials.ckeditor', ['input_id'=>'content'])
 
 @endsection

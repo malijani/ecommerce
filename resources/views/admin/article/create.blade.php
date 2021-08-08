@@ -304,7 +304,7 @@
                                       placeholder="متن مقاله...."
                                       dir="rtl"
                                       title="مقدار دهی الزامی"
-                            >{{ old('long_text') }}</textarea>
+                            >{!! old('long_text') !!}</textarea>
                             @error('long_text')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -326,65 +326,8 @@
 
     <script type="text/javascript" src="{{ asset('adminrc/plugins/ckeditor-full/ckeditor.js') }}"></script>
     <script type="text/javascript" src="{{ asset('adminrc/plugins/select2/select2.min.js') }}"></script>
+    @include('admin.partials.ckeditor')
     <script type="text/javascript">
-        // function add_row() {
-        //     $('.row-file').append(
-        //         '<div class="col-md-6 form-row">' +
-        //         '<label for="file[title]" class="col-md-3 col-form-label text-center">عنوان</label>' +
-        //         '<div class="col-md-9">' +
-        //         '<input name="file[title][]" type="text" class="form-control" ' +
-        //         '</div>' +
-        //         '</div>'+
-        //         '</div>' +
-        //         '<div class="col-md-6 form-row">' +
-        //         '<label for="file[file]" class="col-md-3 col-form-label text-center">فایل تصویر</label>' +
-        //         '<div class="col-md-9">' +
-        //         '<input type="file" id="files" class="form-control" name="file[file][]" />' +
-        //         '</div>' +
-        //         '</div>'
-        //     );
-        // }
-        //
-        // function del_row() {
-        //     $('.row-file .form-row:last').remove();
-        //     $('.row-file .form-row:last').remove();
-        // }
-
-
-        CKEDITOR.replace('long_text', {
-            height: 400,
-            baseFloatZIndex: 10005,
-            contentsLangDirection: 'rtl',
-            direction: 'rtl',
-            contentsLanguage: 'fa',
-            content: 'fa',
-            language: 'fa',
-            exportPdf_tokenUrl: "{{ \Illuminate\Support\Str::random(15) }}",
-
-
-            filebrowserImageBrowseUrl: '{{route('unisharp.lfm.show')}}',
-            filebrowserImageUploadUrl: '{{route('unisharp.lfm.upload', ['type'=>'Images', '_token'=>''])}}',
-            filebrowserBrowseUrl: '{{route('unisharp.lfm.show', ['type'=>'Files'])}}',
-            filebrowserUploadUrl: '{{route('unisharp.lfm.upload', ['type'=>'Files', '_token'=>''])}}',
-
-
-            font_names: 'Vazir;' +
-                'Arial/Arial, Helvetica, sans-serif;' +
-                'Comic Sans MS/Comic Sans MS, cursive;' +
-                'Courier New/Courier New, Courier, monospace;' +
-                'Georgia/Georgia, serif;' +
-                'Lucida Sans Unicode/Lucida Sans Unicode, Lucida Grande, sans-serif;' +
-                'Tahoma/Tahoma, Geneva, sans-serif;' +
-                'Times New Roman/Times New Roman, Times, serif;' +
-                'Trebuchet MS/Trebuchet MS, Helvetica, sans-serif;' +
-                'Verdana/Verdana, Geneva, sans-serif',
-            font_defaultLabel: 'Vazir',
-            forcePasteAsPlainText: false,
-            forceEnterMode: true,
-            editorplaceholder: 'متن مقاله...',
-        });
-
-
         $(".custom-file-input").on("change", function () {
             var fileName = $(this).val().split("\\").pop();
             $(this).siblings(".custom-file-label").addClass("selected").html(fileName);

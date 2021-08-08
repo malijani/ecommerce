@@ -614,9 +614,6 @@
                 $.ajax({
                     url: $(this).attr('data-url'),
                     type: 'POST',
-                    data: {
-                        '_token': '{{ csrf_token() }}',
-                    },
                     success: function (result) {
                         Swal.fire({
                             position: 'top',
@@ -648,9 +645,6 @@
                 $.ajax({
                     url: $(this).attr('data-url'),
                     type: 'POST',
-                    data: {
-                        '_token': '{{ csrf_token() }}',
-                    },
                     success: function (result) {
                         Swal.fire({
                             position: 'top',
@@ -683,7 +677,6 @@
                     url: $(this).attr('data-url'),
                     type: 'POST',
                     data: {
-                        '_token': '{{ csrf_token() }}',
                         'delivery': $(this).val(),
                         'text' : $(this).find("option:selected").text(),
                         'short_access' : true,

@@ -133,7 +133,6 @@
                     url: update_address,
                     type: 'POST',
                     data: {
-                        '_token': '{{ csrf_token() }}',
                         '_method': 'PATCH',
                     },
                     success: function (data) {
@@ -176,7 +175,6 @@
                                 url: delete_address,
                                 type: 'POST',
                                 data: {
-                                    '_token': '{{ csrf_token() }}',
                                     '_method': 'DELETE',
                                 },
                                 success: function (data) {

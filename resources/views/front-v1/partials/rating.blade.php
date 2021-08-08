@@ -54,7 +54,6 @@
                     url: rating_address,
                     type: 'POST',
                     data: {
-                        '_token': '{{ csrf_token() }}',
                         'rate': rate,
                         'rateable': '{{ class_basename($model) }}',
                         'rateable_id': '{{ $model->id }}'

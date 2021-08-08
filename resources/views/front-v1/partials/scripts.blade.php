@@ -34,6 +34,12 @@
         menu_headers.on('click touch', function(e){
             e.preventDefault();
         });*/
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
     });
 </script>
 

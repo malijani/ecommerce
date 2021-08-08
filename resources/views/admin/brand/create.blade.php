@@ -49,14 +49,14 @@
                             <input
                                 name="title_en"
                                 type="text"
-                                   class="form-control @error('title_en') is-invalid @enderror"
-                                   id="title_en"
-                                   placeholder="عنوان به انگلیسی : samsung"
-                                   minlength="3"
-                                   maxlength="70"
-                                   title="مقدار دهی الزامی"
-                                   value="{{ old('title_en') }}"
-                                   required
+                                class="form-control @error('title_en') is-invalid @enderror"
+                                id="title_en"
+                                placeholder="عنوان به انگلیسی : samsung"
+                                minlength="3"
+                                maxlength="70"
+                                title="مقدار دهی الزامی"
+                                value="{{ old('title_en') }}"
+                                required
                             >
                             @error('title_en')
                             <span class="invalid-feedback" role="alert">
@@ -106,7 +106,8 @@
                                     </label>
                                 </div>
                             </div>
-                            <small id="picHelp" class="form-text text-muted">لطفاً تصاویر با طول و عرض یکسان را وارد نمایید تا در تبدیل به 300x300 مشکل تغییر اندازه رخ ندهد.</small>
+                            <small id="picHelp" class="form-text text-muted">لطفاً تصاویر با طول و عرض یکسان را وارد
+                                نمایید تا در تبدیل به 300x300 مشکل تغییر اندازه رخ ندهد.</small>
                             @error('pic')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -208,7 +209,7 @@
                                       class="form-control @error('text') is-invalid @enderror"
                                       placeholder="شرکت کره ای سامسونگ از قدیمی ترین شرکت های عرصه تکنولوژی است..."
                                       dir="rtl"
-                            >{{ old('text') }}</textarea>
+                            >{!! old('text') !!}</textarea>
                             @error('text')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -229,31 +230,9 @@
 @section('page-scripts')
 
     <script type="text/javascript" src="{{ asset('adminrc/plugins/ckeditor-full/ckeditor.js') }}"></script>
+    @include('admin.partials.ckeditor', ['input_id'=>'text'])
     <script type="text/javascript">
-        CKEDITOR.replace('text', {
-            height: 400,
-            baseFloatZIndex: 10005,
-            contentsLangDirection: 'rtl',
-            contentsLanguage:'fa',
-            exportPdf_tokenUrl: "{{ \Illuminate\Support\Str::random(15) }}",
-            font_names :  'Vazir;'+
-                'Arial/Arial, Helvetica, sans-serif;' +
-                'Comic Sans MS/Comic Sans MS, cursive;' +
-                'Courier New/Courier New, Courier, monospace;' +
-                'Georgia/Georgia, serif;' +
-                'Lucida Sans Unicode/Lucida Sans Unicode, Lucida Grande, sans-serif;' +
-                'Tahoma/Tahoma, Geneva, sans-serif;' +
-                'Times New Roman/Times New Roman, Times, serif;' +
-                'Trebuchet MS/Trebuchet MS, Helvetica, sans-serif;' +
-                'Verdana/Verdana, Geneva, sans-serif',
-            font_defaultLabel: 'Vazir',
-            forcePasteAsPlainText: false,
-            forceEnterMode : true,
-            editorplaceholder: 'شرکت کره ای سامسونگ از قدیمی ترین شرکت های عرصه تکنولوژی است...',
-        });
-
-
-        $(".custom-file-input").on("change", function() {
+        $(".custom-file-input").on("change", function () {
             var fileName = $(this).val().split("\\").pop();
             $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
         });

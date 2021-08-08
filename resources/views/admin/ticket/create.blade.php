@@ -132,7 +132,7 @@
                                               placeholder="با تشکر از انتخاب ما، بسته شما به سمت مقصد ارسال شد با کد رهگیری : ..."
                                               required
                                               rows="20"
-                                    >{{ old('message') }}</textarea>
+                                    >{!! old('message') !!}</textarea>
                                     @include('partials.form_error', ['input'=>'message'])
                                 </div>
                             </div>
@@ -239,43 +239,11 @@
 @section('page-scripts')
     <script src="{{ asset('adminrc/plugins/ckeditor-full/ckeditor.js') }}"></script>
     <script src="{{ asset('adminrc/plugins/select2/select2.min.js') }}"></script>
+    @include('admin.partials.ckeditor', ['input_id'=>'message'])
     <script>
         $(document).ready(function () {
             $('.select2').select2({
                 dir: "rtl",
-            });
-
-            // CKEDITOR CONFIGURATION
-            CKEDITOR.replace('message', {
-                height: 400,
-                baseFloatZIndex: 10005,
-                contentsLangDirection: 'rtl',
-                direction: 'rtl',
-                contentsLanguage: 'fa',
-                content: 'fa',
-                language: 'fa',
-
-
-                filebrowserImageBrowseUrl: '{{route('unisharp.lfm.show')}}',
-                filebrowserImageUploadUrl: '{{route('unisharp.lfm.upload', ['type'=>'Images', '_token'=>csrf_token()])}}',
-                filebrowserBrowseUrl: '{{route('unisharp.lfm.show', ['type'=>'Files'])}}',
-                filebrowserUploadUrl: '{{route('unisharp.lfm.upload', ['type'=>'Files', '_token'=>csrf_token()])}}',
-
-
-                font_names: 'Vazir;' +
-                    'Arial/Arial, Helvetica, sans-serif;' +
-                    'Comic Sans MS/Comic Sans MS, cursive;' +
-                    'Courier New/Courier New, Courier, monospace;' +
-                    'Georgia/Georgia, serif;' +
-                    'Lucida Sans Unicode/Lucida Sans Unicode, Lucida Grande, sans-serif;' +
-                    'Tahoma/Tahoma, Geneva, sans-serif;' +
-                    'Times New Roman/Times New Roman, Times, serif;' +
-                    'Trebuchet MS/Trebuchet MS, Helvetica, sans-serif;' +
-                    'Verdana/Verdana, Geneva, sans-serif',
-                font_defaultLabel: 'Vazir',
-                forcePasteAsPlainText: false,
-                forceEnterMode: true,
-                editorplaceholder: 'با تشکر از انتخاب ما، بسته شما به سمت مقصد ارسال شد با کد رهگیری : ...',
             });
         });
     </script>

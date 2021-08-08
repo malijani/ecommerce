@@ -210,7 +210,6 @@
                             url: $("#del" + id).attr('data-url'),
                             type: 'POST',
                             data: {
-                                '_token': '{{ csrf_token() }}',
                                 '_method': 'DELETE',
                                 'id': id,
                             },

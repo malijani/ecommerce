@@ -364,7 +364,6 @@
                 url: $("#set-default-" + id).attr('data-target'),
                 type: 'POST',
                 data: {
-                    '_token': '{{ csrf_token() }}',
                     '_method': 'PATCH',
                 },
                 success: function (data) {
@@ -399,7 +398,6 @@
                 url: $("#del-" + id).attr('data-target'),
                 type: 'POST',
                 data: {
-                    '_token': '{{ csrf_token() }}',
                     '_method': 'DELETE',
                     'id': id,
                 },
@@ -481,7 +479,6 @@
                         url: "{{ route('province.cities') }}",
                         type: 'POST',
                         data: {
-                            '_token': '{{csrf_token()}}',
                             'title': title,
                         },
                         success: function (data) {

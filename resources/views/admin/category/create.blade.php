@@ -246,7 +246,7 @@
                                       class="form-control @error('text') is-invalid @enderror"
                                       placeholder="دسته بندی چیست؟..."
                                       dir="rtl"
-                            >{{ old('text') }}</textarea>
+                            >{!! old('text') !!}</textarea>
                             @error('text')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -267,31 +267,8 @@
 @section('page-scripts')
 
     <script type="text/javascript" src="{{ asset('adminrc/plugins/ckeditor-full/ckeditor.js') }}"></script>
+    @include('admin.partials.ckeditor', ['input_id'=>'text'])
     <script type="text/javascript">
-        // TODO : CONFIGURE CKEDITOR FOR ALL PAGES OF ADMIN
-        CKEDITOR.replace('text', {
-            height: 400,
-            baseFloatZIndex: 10005,
-            contentsLangDirection: 'rtl',
-            contentsLanguage:'fa',
-            exportPdf_tokenUrl: "{{ \Illuminate\Support\Str::random(15) }}",
-            font_names :  'Vazir;'+
-                'Arial/Arial, Helvetica, sans-serif;' +
-                'Comic Sans MS/Comic Sans MS, cursive;' +
-                'Courier New/Courier New, Courier, monospace;' +
-                'Georgia/Georgia, serif;' +
-                'Lucida Sans Unicode/Lucida Sans Unicode, Lucida Grande, sans-serif;' +
-                'Tahoma/Tahoma, Geneva, sans-serif;' +
-                'Times New Roman/Times New Roman, Times, serif;' +
-                'Trebuchet MS/Trebuchet MS, Helvetica, sans-serif;' +
-                'Verdana/Verdana, Geneva, sans-serif',
-            font_defaultLabel: 'Vazir',
-            forcePasteAsPlainText: false,
-            forceEnterMode : true,
-            editorplaceholder: 'دسته بندی چیست؟...',
-        });
-
-
         $(".custom-file-input").on("change", function() {
             var fileName = $(this).val().split("\\").pop();
             $(this).siblings(".custom-file-label").addClass("selected").html(fileName);

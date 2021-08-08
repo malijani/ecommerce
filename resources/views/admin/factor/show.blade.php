@@ -637,7 +637,6 @@
                     url: submit_post_section.attr('data-url'),
                     type: 'POST',
                     data: {
-                        '_token': '{{ csrf_token() }}',
                         'delivery': delivery.val(),
                         'shipping_cost': shipping_cost.val(),
                         'post_tracking': post_tracking.val()
@@ -673,7 +672,6 @@
                         url: submit_admin_comment.attr('data-url'),
                         type: 'POST',
                         data: {
-                            '_token': '{{ csrf_token() }}',
                             'content': admin_comment_content.val(),
                         },
                         success: function (result) {

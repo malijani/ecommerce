@@ -19,7 +19,8 @@
             </div>
             <!-- /.card-header -->
             <!-- form start -->
-            <form role="form" action="{{ route('articles.update', ['article'=>$article->id]) }}" method="POST" enctype="multipart/form-data">
+            <form role="form" action="{{ route('articles.update', ['article'=>$article->id]) }}" method="POST"
+                  enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <div class="card-body">
@@ -77,22 +78,21 @@
                     </div>
 
 
-
-                        @if(isset($article->pic))
-                            <div class="form-group text-center rounded">
-                                <div class="col-md-12">
-                                    <input type="hidden" name="delete_pic" id="delete_pic">
-                                    <img id="image-checkable"
-                                         src="{{ asset($article->pic) }}"
-                                         class="img-fluid align-middle"
-                                         alt="{{ $article->pic_alt ?? $article->title_en }}"
-                                         width="200vw"
-                                         height="200vh"
-                                         title="برای حذف تصویر کلیک کنید."
-                                    >
-                                </div>
+                    @if(isset($article->pic))
+                        <div class="form-group text-center rounded">
+                            <div class="col-md-12">
+                                <input type="hidden" name="delete_pic" id="delete_pic">
+                                <img id="image-checkable"
+                                     src="{{ asset($article->pic) }}"
+                                     class="img-fluid align-middle"
+                                     alt="{{ $article->pic_alt ?? $article->title_en }}"
+                                     width="200vw"
+                                     height="200vh"
+                                     title="برای حذف تصویر کلیک کنید."
+                                >
                             </div>
-                        @endif
+                        </div>
+                    @endif
 
                     {{--PIC--}}
                     <div class="form-group row">
@@ -110,7 +110,8 @@
                                 title="این متن در صورت لود نشدن تصویر نمایش داده خواهد شد، برای سئو هرچه بهتر وارد نمایید"
                                 value="{{ $article->pic_alt }}"
                             >
-                            <small id="picHelp" class="form-text text-muted"> با آپلود تصویر جدید تصویر قبلی به صورت خودکار حذف خواهد شد.</small>
+                            <small id="picHelp" class="form-text text-muted"> با آپلود تصویر جدید تصویر قبلی به صورت
+                                خودکار حذف خواهد شد.</small>
                             @error('pic_alt')
                             <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -150,8 +151,8 @@
                                 @foreach($categories as $category)
                                     <option value="{{ $category->id }}"
                                             @if($category->id == $article->category_id)
-                                                selected
-                                            @endif
+                                            selected
+                                        @endif
                                     >{{ '+>'.' '.$category->title }}</option>
                                     @if($category->childrenRecursive->count())
                                         @include('admin.article.partials.edit_form_category_child', ['category_id'=>$article->category_id, 'children'=>$category->childrenRecursive, 'level'=>1])
@@ -211,8 +212,8 @@
                                 @foreach($articles as $article_item)
                                     <option value="{{ $article_item->id }}"
                                             @if($article->before == $article_item->id)
-                                                selected
-                                            @endif
+                                            selected
+                                        @endif
                                     >{{ $article_item->title }}</option>
                                 @endforeach
                             </select>
@@ -328,7 +329,7 @@
                                       placeholder="متن مقاله...."
                                       dir="rtl"
                                       title="مقدار دهی الزامی"
-                            >{{ $article->long_text }}</textarea>
+                            >{!! $article->long_text !!}</textarea>
                             @error('long_text')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -351,65 +352,8 @@
     <script type="text/javascript" src="{{ asset('adminrc/plugins/ckeditor-full/ckeditor.js') }}"></script>
     <script type="text/javascript" src="{{ asset('adminrc/plugins/select2/select2.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('adminrc/plugins/img-checkbox/jquery.imgcheckbox.js') }}"></script>
+    @include('admin.partials.ckeditor')
     <script type="text/javascript">
-        // function add_row() {
-        //     $('.row-file').append(
-        //         '<div class="col-md-6 form-row">' +
-        //         '<label for="file[title]" class="col-md-3 col-form-label text-center">عنوان</label>' +
-        //         '<div class="col-md-9">' +
-        //         '<input name="file[title][]" type="text" class="form-control" ' +
-        //         '</div>' +
-        //         '</div>'+
-        //         '</div>' +
-        //         '<div class="col-md-6 form-row">' +
-        //         '<label for="file[file]" class="col-md-3 col-form-label text-center">فایل تصویر</label>' +
-        //         '<div class="col-md-9">' +
-        //         '<input type="file" id="files" class="form-control" name="file[file][]" />' +
-        //         '</div>' +
-        //         '</div>'
-        //     );
-        // }
-        //
-        // function del_row() {
-        //     $('.row-file .form-row:last').remove();
-        //     $('.row-file .form-row:last').remove();
-        // }
-
-
-        CKEDITOR.replace('long_text', {
-            height: 400,
-            baseFloatZIndex: 10005,
-            contentsLangDirection: 'rtl',
-            direction: 'rtl',
-            contentsLanguage: 'fa',
-            content: 'fa',
-            language: 'fa',
-            exportPdf_tokenUrl: "{{ \Illuminate\Support\Str::random(15) }}",
-
-
-            filebrowserImageBrowseUrl: '{{route('unisharp.lfm.show')}}',
-            filebrowserImageUploadUrl: '{{route('unisharp.lfm.upload', ['type'=>'Images', '_token'=>''])}}',
-            filebrowserBrowseUrl: '{{route('unisharp.lfm.show', ['type'=>'Files'])}}',
-            filebrowserUploadUrl: '{{route('unisharp.lfm.upload', ['type'=>'Files', '_token'=>''])}}',
-
-
-            font_names: 'Vazir;' +
-                'Arial/Arial, Helvetica, sans-serif;' +
-                'Comic Sans MS/Comic Sans MS, cursive;' +
-                'Courier New/Courier New, Courier, monospace;' +
-                'Georgia/Georgia, serif;' +
-                'Lucida Sans Unicode/Lucida Sans Unicode, Lucida Grande, sans-serif;' +
-                'Tahoma/Tahoma, Geneva, sans-serif;' +
-                'Times New Roman/Times New Roman, Times, serif;' +
-                'Trebuchet MS/Trebuchet MS, Helvetica, sans-serif;' +
-                'Verdana/Verdana, Geneva, sans-serif',
-            font_defaultLabel: 'Vazir',
-            forcePasteAsPlainText: false,
-            forceEnterMode: true,
-            editorplaceholder: 'متن مقاله...',
-        });
-
-
         $(".custom-file-input").on("change", function () {
             var fileName = $(this).val().split("\\").pop();
             $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
@@ -419,7 +363,6 @@
             $('.select2').select2({
                 dir: "rtl",
             });
-
 
 
             $("#image-checkable").imgCheckbox({
@@ -436,15 +379,15 @@
                     }
 
                 },
-                checkMarkSize:"100px",
-                checkMarkPosition:'center',
-                checkMarkImage:"{{ asset('images/asset/delete.png') }}",
-                addToForm:false,
-                onclick: function(el){
+                checkMarkSize: "100px",
+                checkMarkPosition: 'center',
+                checkMarkImage: "{{ asset('images/asset/delete.png') }}",
+                addToForm: false,
+                onclick: function (el) {
                     var isChecked = el.hasClass("imgChked");
                     var input = $("#delete_pic");
                     // imgEl = el.children()[0];  // the img element
-                    if(isChecked===true){
+                    if (isChecked === true) {
                         input.val('on');
                     } else {
                         input.val('');
