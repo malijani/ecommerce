@@ -1,4 +1,4 @@
-<div class="rating-average" title="میانگین رتبه : {{ (float)$model->ratingsAvg() }}">
+<div class="rating-average ltr" title="میانگین رتبه : {{ (float)$model->ratingsAvg() }}">
     <div class="back-stars">
         <i class="fal fa-star fa-2x align-middle" aria-hidden="true"></i>
         <i class="fal fa-star fa-2x align-middle" aria-hidden="true"></i>

@@ -83,13 +83,15 @@
             /*INITIALIZE CAPTCHA*/
             function refreshCaptcha() {
                 $('.comment_captcha_img').attr('src', "{{ captcha_src('default') }}");
+                $(".comment_captcha_input").val('');
             }
+
             let refresh_comment_captcha_btn = $(".refresh_comment_captcha")
             refresh_comment_captcha_btn.on('click', function (e) {
                 e.preventDefault();
                 refreshCaptcha();
-                $(".comment_captcha_input").val('');
             });
+
             refresh_comment_captcha_btn.click();
 
 

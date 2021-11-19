@@ -5,12 +5,11 @@ namespace App\Http\Controllers\Auth;
 use App\Helpers\SmsVerifyMethod;
 use App\Http\Controllers\Controller;
 use App\Rules\Throttle;
-
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use SanjabVerify\Models\VerifyLog;
 use SanjabVerify\Support\Facades\Verify;
 
 class AuthController extends Controller
@@ -61,6 +60,7 @@ class AuthController extends Controller
                 ->with('error', $result['message']);
         }
 
+        session()->forget('login');
         session()->put('login', []);
         session()->put('login.mobile', $user->mobile);
 
@@ -80,8 +80,20 @@ class AuthController extends Controller
 
         $mobile = (array_key_exists('mobile', $login)) ? $login['mobile'] : null;
 
-        /*$lastestLog = VerifyLog::where('ip', request()->ip())->orWhere('receiver', $mobile)->latest()->first();
-        $delay = config('verify.resend_delay') - $lastestLog->created_at->diffInSeconds();*/
+
+        /*TODO : DONE GETTING THE SHOULD END AT!*/
+        if (!empty(session()->get('sanjab_verify'))) {
+            $sanjab_time = session()->get('sanjab_verify');
+            $last_time = end($sanjab_time);
+            $should_end_at = (new Carbon($last_time))
+                ->setTimezone('Asia/Tehran')->addSeconds(config('verify.resend_delay'))->toDateTimeString();
+            /*dd($should_end_at);*/
+        }
+        /*$last_log = VerifyLog::where('ip', request()->ip())->orWhere('receiver', $mobile)->latest()->first();*/
+        /*$delay = config('verify.resend_delay') - $last_log->created_at->diffInSeconds();
+        $delay = ($delay <= 0) ? 0 : $delay;
+        $should_end_at = now()->addSeconds($delay);*/
+
         if (empty(User::withoutTrashed()->where('mobile', $mobile)->first())) {
             session()->forget('login');
             return redirect(route('login'))
@@ -91,7 +103,7 @@ class AuthController extends Controller
         return view('auth.verify', [
             'title' => 'تایید حساب کاربری',
             'mobile' => $mobile,
-            /*'delay' => $delay*/
+            'should_end_at' => $should_end_at
         ]);
 
     }

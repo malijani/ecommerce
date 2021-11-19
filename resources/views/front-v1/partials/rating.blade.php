@@ -12,7 +12,7 @@
 
 <div class="col-12 col-md-6 text-center my-auto">
     <div class="align-middle text-center font-18 font-weight-bold"> شما بین ۱ تا ۵ چه امتیازی میدی؟</div>
-    <div class="starrating risingstar d-flex justify-content-center flex-row-reverse">
+    <div class="starrating risingstar d-flex justify-content-center flex-row">
 
         <input type="radio" id="star5" name="rating" value="5" {{ ($user_rate && $user_rate == 5) ? 'checked' : ''}} />
         <label for="star5" title="۵ ستاره"></label>

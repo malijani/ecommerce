@@ -120,8 +120,10 @@ html, body {
     text-align: right;
     font-size: 16px;
     font-family: Vazir, IranSans, Tahoma, serif !important;
+    font-weight: 400;
     /*line-height: 0;*/
-    font-weight: 300;
+    height: 100%;
+    overflow: inherit;
 }
 
 a,
@@ -325,8 +327,35 @@ input[type=number] {
 }
 
 /******/
-/*INIT*/
+/*END INIT*/
 /******/
+
+/*******/
+/*LOGIN*/
+/*******/
+.login-bg {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    filter: blur(3px);
+    -webkit-filter: blur(3px);
+    -ms-filter: blur(3px);
+    z-index: 0;
+}
+
+.login-card {
+    opacity: 85%;
+}
+
+.login-header {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+/*******/
+/*END LOGIN*/
+/*******/
 
 
 /********/
@@ -1642,8 +1671,8 @@ a, a:hover {
 
 .menu__navbar_nav > li > a {
     text-transform: lowercase;
-    font-size: 1.1rem;
-    font-weight: 700;
+    font-size: inherit;
+    font-weight: inherit;
     display: block;
     padding: 0.6rem 0;
     margin: 0.2rem 0;
@@ -1781,4 +1810,16 @@ a, a:hover {
 
 /*****************/
 /*END DASHBOARD*/
+/*****************/
+
+
+/*****************/
+/*SEARCH PAGE*/
+/*****************/
+.slider-selection {
+    background-image: linear-gradient(to bottom, #F9F9F9, #0a6aa1) !important;
+}
+
+/*****************/
+/*END SEARCH PAGE*/
 /*****************/

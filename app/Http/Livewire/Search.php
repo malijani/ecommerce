@@ -21,13 +21,13 @@ class Search extends Component
         if ($search && strlen($search) >= 4) {
             $search = '%' . $search . '%';
 
-            $products = Product::withoutTrashed()->search($search, 10);
+            $products = Product::withoutTrashed()->search($search, 5);
 
-            $articles = Article::withoutTrashed()->search($search, 10);
+            $articles = Article::withoutTrashed()->search($search, 5);
 
-            $categories = Category::withoutTrashed()->search($search, 10);
+            $categories = Category::withoutTrashed()->search($search, 5);
 
-            $brands = Brand::withoutTrashed()->search($search, 10);
+            $brands = Brand::withoutTrashed()->search($search, 5);
 
             $data = [
                 'products'=>$products,

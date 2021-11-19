@@ -9,6 +9,7 @@
 /resources/front-v1
 /resources/inspina
 /resources/backup
+/resources/sup-pic
 .env
 .env.backup
 .phpunit.result.cache

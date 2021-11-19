@@ -13,29 +13,40 @@
 </head>
 
 <body>
-@include('front-v1.partials.shared.header')
+{{--INITIALIZE TEMPLATE--}}
+@php($current_route_name=request()->route()->getName())
+@php($excluded_route_names=['login', 'verify.show'])
 
-<div class="container">
-    <div class="row">
-        <div class="col-12 mt-3" id="flash-message">
-            @include('partials.flashes')
+@if(!in_array($current_route_name , $excluded_route_names))
+    @include('front-v1.partials.shared.header')
+@endif
+
+@if($errors->any())
+    <div class="container">
+        <div class="row">
+            <div class="col-12 mt-3" id="flash-message">
+                @include('partials.flashes')
+            </div>
         </div>
     </div>
-</div>
+@endif
 
 
 @yield('content')
 
-@include('front-v1.partials.shared.footer')
+{{--REMOVE FROM LOGIN AND VERIFY TEMPLATES--}}
+@if(!in_array($current_route_name ,$excluded_route_names))
 
-<footer id="phone-nav" class="d-block d-md-none sticky-footer bg-light">
-    @include('front-v1.partials.phone_nav')
-</footer>
+    @include('front-v1.partials.shared.footer')
+    <footer id="phone-nav" class="d-block d-md-none sticky-footer bg-light">
+        @include('front-v1.partials.phone_nav')
+    </footer>
+    @include('front-v1.partials.back_to_top')
+    @include('front-v1.partials.shared.social_media_button')
 
-@include('front-v1.partials.back_to_top')
+@endif
 
-@include('front-v1.partials.shared.social_media_button')
-
+{{--SCRIPTS--}}
 @include('front-v1.partials.scripts')
 @yield('page-scripts')
 @stack('scripts')

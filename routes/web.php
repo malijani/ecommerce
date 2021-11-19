@@ -6,8 +6,9 @@ use \Illuminate\Support\Facades\Route;
 use UniSharp\LaravelFilemanager\Middlewares\CreateDefaultFolder;
 use UniSharp\LaravelFilemanager\Middlewares\MultiUser;
 
+
 /*TODO : REMOVE THIS TEST LOGIN*/
-Route::get('custom-login/{mobile}', function (int $mobile) {
+/*Route::get('custom-login/{mobile}', function (int $mobile) {
     $user = User::withoutTrashed()
         ->where('mobile', $mobile)
         ->firstOrCreate(
@@ -16,7 +17,7 @@ Route::get('custom-login/{mobile}', function (int $mobile) {
         );
     Auth::login($user, true);
     return redirect(route('home'))->with('success', 'موفق');
-})->name('custom-login');
+})->name('custom-login');*/
 
 /*CUSTOM VERIFY*/
 Route::group(['middleware' => ['guest']], function () {
@@ -43,6 +44,11 @@ Route::group(['prefix' => '/', 'middleware' => ['web', 'xss.sanitizer']], functi
     Route::resource('brand', 'Visitor\BrandController')->only(['index', 'show']);
     Route::resource('faq', 'Visitor\FaqController')->only(['index']);
     Route::resource('page', 'Visitor\PageController')->only(['index', 'show']);
+
+    Route::group(['prefix'=>'search', 'as'=>'search.'],function(){
+        Route::get('/', 'Visitor\SearchController@index')->name('index');
+        Route::get('search', 'Visitor\SearchController@search')->name('search');
+    });
 
     Route::post('comment/{model}/{id}', 'Visitor\CommentController@store')->name('comment.store');
 
